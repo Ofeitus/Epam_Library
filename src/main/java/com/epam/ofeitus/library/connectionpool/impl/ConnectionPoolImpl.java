@@ -14,7 +14,9 @@ public class ConnectionPoolImpl implements ConnectionPool {
     private final String password;
     private final List<Connection> connectionPool;
     private final List<Connection> usedConnections = new ArrayList<>();
-    private static final int INITIAL_POOL_SIZE = 10;
+    private static final int INITIAL_POOL_SIZE = 5;
+    private static final int MAX_POOL_SIZE = 10;
+    private static final int MAX_TIMEOUT = 28800;
 
     public ConnectionPoolImpl(String url, String user, String password, List<Connection> connectionPool) {
         this.url = url;
@@ -52,8 +54,21 @@ public class ConnectionPoolImpl implements ConnectionPool {
     }
 
     @Override
-    public Connection getConnection() {
+    public Connection getConnection() throws SQLException {
+        if (connectionPool.isEmpty()) {
+            if (usedConnections.size() < MAX_POOL_SIZE) {
+                connectionPool.add(createConnection(url, user, password));
+            } else {
+                throw new RuntimeException("Maximum pool size reached, no available connections.");
+            }
+        }
+
         Connection connection = connectionPool.remove(connectionPool.size() - 1);
+
+        if(!connection.isValid(MAX_TIMEOUT)) {
+            connection = createConnection(url, user, password);
+        }
+
         usedConnections.add(connection);
         return connection;
     }
