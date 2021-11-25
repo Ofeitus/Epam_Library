@@ -1,11 +1,11 @@
 package com.epam.ofeitus.library.dao.factory;
 
-import com.epam.ofeitus.library.dao.BookDao;
-import com.epam.ofeitus.library.dao.UserDao;
-
-import java.sql.Connection;
+import com.epam.ofeitus.library.dao.*;
 
 public interface DaoFactory {
-    BookDao getBookDao(Connection connection);
-    UserDao getUserDao(Connection connection);
+    BookDao getBookDao();
+    AuthorDao getAuthorDao();
+    UserDao getUserDao();
+    LoanDao getLoanDao();
+    ReservationDao getReservationDao();
 }

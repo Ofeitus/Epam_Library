@@ -10,6 +10,9 @@ public class Book {
     private int categoryId;
     private String language;
 
+    public Book() {
+    }
+
     public Book(int inventoryId, String isbn, String title, int publicationYear, int categoryId, String language) {
         this.inventoryId = inventoryId;
         this.isbn = isbn;
@@ -78,6 +81,18 @@ public class Book {
     @Override
     public int hashCode() {
         return Objects.hash(inventoryId, isbn, title, publicationYear, categoryId, language);
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "inventoryId=" + inventoryId +
+                ", isbn='" + isbn + '\'' +
+                ", title='" + title + '\'' +
+                ", publicationYear=" + publicationYear +
+                ", categoryId=" + categoryId +
+                ", language='" + language + '\'' +
+                '}';
     }
 }
 

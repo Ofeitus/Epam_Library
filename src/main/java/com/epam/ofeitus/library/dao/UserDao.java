@@ -1,4 +1,6 @@
 package com.epam.ofeitus.library.dao;
 
-public interface UserDao {
+import com.epam.ofeitus.library.entity.user.User;
+
+public interface UserDao extends AbstractDao<User> {
 }
