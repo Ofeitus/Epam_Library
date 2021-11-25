@@ -1,4 +1,4 @@
-package com.epam.ofeitus.library.dao;
+package com.epam.ofeitus.library.dao.exception;
 
 /**
  * Class to catch Dao exception.
