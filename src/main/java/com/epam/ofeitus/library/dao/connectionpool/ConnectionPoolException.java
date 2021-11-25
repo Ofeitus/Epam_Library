@@ -1,4 +1,4 @@
-package com.epam.ofeitus.library.connectionpool;
+package com.epam.ofeitus.library.dao.connectionpool;
 
 public class ConnectionPoolException extends Exception {
     public ConnectionPoolException() {

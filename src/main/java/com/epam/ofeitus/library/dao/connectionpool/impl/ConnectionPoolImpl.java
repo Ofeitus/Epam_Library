@@ -1,6 +1,6 @@
-package com.epam.ofeitus.library.connectionpool.impl;
+package com.epam.ofeitus.library.dao.connectionpool.impl;
 
-import com.epam.ofeitus.library.connectionpool.ConnectionPool;
+import com.epam.ofeitus.library.dao.connectionpool.ConnectionPool;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

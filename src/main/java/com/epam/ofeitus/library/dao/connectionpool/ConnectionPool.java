@@ -1,4 +1,4 @@
-package com.epam.ofeitus.library.connectionpool;
+package com.epam.ofeitus.library.dao.connectionpool;
 
 import java.sql.Connection;
 import java.sql.SQLException;
