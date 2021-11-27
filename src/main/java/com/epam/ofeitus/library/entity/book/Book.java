@@ -6,21 +6,19 @@ import java.util.Objects;
 
 public class Book {
     private String isbn;
-    private Author author;
     private String title;
     private int publicationYear;
-    private BookCategory category;
+    private int categoryId;
     private String language;
 
     public Book() {
     }
 
-    public Book(String isbn, Author author, String title, int publicationYear, BookCategory category, String language) {
+    public Book(String isbn, String title, int publicationYear, int categoryId, String language) {
         this.isbn = isbn;
-        this.author = author;
         this.title = title;
         this.publicationYear = publicationYear;
-        this.category = category;
+        this.categoryId = categoryId;
         this.language = language;
     }
 
@@ -30,14 +28,6 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
-    }
-
-    public Author getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
     }
 
     public String getTitle() {
@@ -56,12 +46,12 @@ public class Book {
         this.publicationYear = publicationYear;
     }
 
-    public BookCategory getCategory() {
-        return category;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(BookCategory category) {
-        this.category = category;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getLanguage() {
@@ -77,22 +67,21 @@ public class Book {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return publicationYear == book.publicationYear && Objects.equals(isbn, book.isbn) && Objects.equals(author, book.author) && Objects.equals(title, book.title) && Objects.equals(category, book.category) && Objects.equals(language, book.language);
+        return publicationYear == book.publicationYear && categoryId == book.categoryId && Objects.equals(isbn, book.isbn) && Objects.equals(title, book.title) && Objects.equals(language, book.language);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isbn, author, title, publicationYear, category, language);
+        return Objects.hash(isbn, title, publicationYear, categoryId, language);
     }
 
     @Override
     public String toString() {
         return "Book{" +
                 "isbn='" + isbn + '\'' +
-                ", author=" + author +
                 ", title='" + title + '\'' +
                 ", publicationYear=" + publicationYear +
-                ", category=" + category +
+                ", categoryId=" + categoryId +
                 ", language='" + language + '\'' +
                 '}';
     }

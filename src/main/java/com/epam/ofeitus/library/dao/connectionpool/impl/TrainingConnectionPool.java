@@ -1,5 +1,6 @@
 package com.epam.ofeitus.library.dao.connectionpool.impl;
 
+import com.epam.ofeitus.library.dao.connectionpool.ConnectionPool;
 import com.epam.ofeitus.library.dao.connectionpool.ConnectionPoolException;
 
 import java.sql.*;

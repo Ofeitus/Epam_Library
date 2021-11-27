@@ -1,7 +1,5 @@
 package com.epam.ofeitus.library.entity.book;
 
-import com.epam.ofeitus.library.entity.book.constituents.BookCategory;
-
 import java.util.Objects;
 
 public class CopyOfBook extends Book {
@@ -10,8 +8,8 @@ public class CopyOfBook extends Book {
     public CopyOfBook() {
     }
 
-    public CopyOfBook(String isbn, Author author, String title, int publicationYear, BookCategory category, String language, int inventoryId) {
-        super(isbn, author, title, publicationYear, category, language);
+    public CopyOfBook(String isbn, String title, int publicationYear, int categoryId, String language, int inventoryId) {
+        super(isbn, title, publicationYear, categoryId, language);
         this.inventoryId = inventoryId;
     }
 
@@ -40,12 +38,11 @@ public class CopyOfBook extends Book {
     @Override
     public String toString() {
         return "CopyOfBook{" +
-                "inventoryId='" + inventoryId + '\'' +
-                ", isbn='" + this.getIsbn() + '\'' +
-                ", author=" + this.getAuthor() +
+                "inventoryId=" + inventoryId +
+                "isbn='" + this.getIsbn() + '\'' +
                 ", title='" + this.getTitle() + '\'' +
                 ", publicationYear=" + this.getPublicationYear() +
-                ", category=" + this.getCategory() +
+                ", categoryId=" + this.getCategoryId() +
                 ", language='" + this.getLanguage() + '\'' +
                 '}';
     }

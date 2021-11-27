@@ -13,6 +13,7 @@ public class MySqlDaoFactory implements DaoFactory {
     private static final UserDao mySqlUserDao = new MySqlUserDao();
     private static final LoanDao mySqlLoanDao = new MySqlLoanDao();
     private static final ReservationDao mySqlReservationDao = new MySqlReservationDao();
+    private static final FinePaymentDao mySqlFinePaymentDao = new MySqlFinePaymentDao();
 
     private MySqlDaoFactory() {
     }
@@ -49,5 +50,10 @@ public class MySqlDaoFactory implements DaoFactory {
     @Override
     public ReservationDao getReservationDao() {
         return mySqlReservationDao;
+    }
+
+    @Override
+    public FinePaymentDao getFineDao() {
+        return mySqlFinePaymentDao;
     }
 }
