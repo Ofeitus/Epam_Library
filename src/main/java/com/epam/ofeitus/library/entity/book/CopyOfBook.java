@@ -2,15 +2,16 @@ package com.epam.ofeitus.library.entity.book;
 
 import java.util.Objects;
 
-public class CopyOfBook extends Book {
+public class CopyOfBook {
     private int inventoryId;
+    private int bookIsbn;
 
     public CopyOfBook() {
     }
 
-    public CopyOfBook(String isbn, String title, int publicationYear, int categoryId, String language, int inventoryId) {
-        super(isbn, title, publicationYear, categoryId, language);
+    public CopyOfBook(int inventoryId, int bookIsbn) {
         this.inventoryId = inventoryId;
+        this.bookIsbn = bookIsbn;
     }
 
     public int getInventoryId() {
@@ -21,29 +22,32 @@ public class CopyOfBook extends Book {
         this.inventoryId = inventoryId;
     }
 
+    public int getBookIsbn() {
+        return bookIsbn;
+    }
+
+    public void setBookIsbn(int bookIsbn) {
+        this.bookIsbn = bookIsbn;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
         CopyOfBook that = (CopyOfBook) o;
-        return inventoryId == that.inventoryId;
+        return inventoryId == that.inventoryId && bookIsbn == that.bookIsbn;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), inventoryId);
+        return Objects.hash(inventoryId, bookIsbn);
     }
 
     @Override
     public String toString() {
         return "CopyOfBook{" +
                 "inventoryId=" + inventoryId +
-                "isbn='" + this.getIsbn() + '\'' +
-                ", title='" + this.getTitle() + '\'' +
-                ", publicationYear=" + this.getPublicationYear() +
-                ", categoryId=" + this.getCategoryId() +
-                ", language='" + this.getLanguage() + '\'' +
+                ", bookIsbn=" + bookIsbn +
                 '}';
     }
 }
