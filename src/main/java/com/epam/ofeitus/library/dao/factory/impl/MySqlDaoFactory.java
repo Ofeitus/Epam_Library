@@ -8,6 +8,7 @@ public class MySqlDaoFactory implements DaoFactory {
     private static final MySqlDaoFactory instance = new MySqlDaoFactory();
 
     private static final BookDao mySqlBookDao = new MySqlBookDao();
+    private static final BookCategoryDao mySqlBookCategoryDao = new MySqlBookCategoryDao();
     private static final AuthorDao mySqlAuthorDao = new MySqlAuthorDao();
     private static final UserDao mySqlUserDao = new MySqlUserDao();
     private static final LoanDao mySqlLoanDao = new MySqlLoanDao();
@@ -23,6 +24,11 @@ public class MySqlDaoFactory implements DaoFactory {
     @Override
     public BookDao getBookDao() {
         return mySqlBookDao;
+    }
+
+    @Override
+    public BookCategoryDao getBookCategoryDao() {
+        return mySqlBookCategoryDao;
     }
 
     @Override

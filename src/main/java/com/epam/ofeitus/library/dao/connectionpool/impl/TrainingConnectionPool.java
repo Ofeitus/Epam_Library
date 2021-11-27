@@ -10,7 +10,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 
-public final class ConnectionPoolJwd {
+public final class TrainingConnectionPool {
     private final String driverName;
     private final String url;
     private final String user;
@@ -19,7 +19,7 @@ public final class ConnectionPoolJwd {
     private BlockingQueue<Connection> givenAwayConQueue;
     private int poolSize;
 
-    private ConnectionPoolJwd() {
+    private TrainingConnectionPool() {
         DBResourceManager dbResourceManager = DBResourceManager.getInstance();
         this.driverName = dbResourceManager.getValue(DBParameter.DB_DRIVER);
         this.url = dbResourceManager.getValue(DBParameter.DB_URL);

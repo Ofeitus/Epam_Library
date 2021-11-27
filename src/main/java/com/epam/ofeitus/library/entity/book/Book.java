@@ -1,33 +1,27 @@
 package com.epam.ofeitus.library.entity.book;
 
+import com.epam.ofeitus.library.entity.book.constituents.BookCategory;
+
 import java.util.Objects;
 
 public class Book {
-    private int inventoryId;
     private String isbn;
+    private Author author;
     private String title;
     private int publicationYear;
-    private int categoryId;
+    private BookCategory category;
     private String language;
 
     public Book() {
     }
 
-    public Book(int inventoryId, String isbn, String title, int publicationYear, int categoryId, String language) {
-        this.inventoryId = inventoryId;
+    public Book(String isbn, Author author, String title, int publicationYear, BookCategory category, String language) {
         this.isbn = isbn;
+        this.author = author;
         this.title = title;
         this.publicationYear = publicationYear;
-        this.categoryId = categoryId;
+        this.category = category;
         this.language = language;
-    }
-
-    public int getInventoryId() {
-        return inventoryId;
-    }
-
-    public void setInventoryId(int inventoryId) {
-        this.inventoryId = inventoryId;
     }
 
     public String getIsbn() {
@@ -36,6 +30,14 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     public String getTitle() {
@@ -54,12 +56,12 @@ public class Book {
         this.publicationYear = publicationYear;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public BookCategory getCategory() {
+        return category;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(BookCategory category) {
+        this.category = category;
     }
 
     public String getLanguage() {
@@ -75,24 +77,23 @@ public class Book {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return inventoryId == book.inventoryId && publicationYear == book.publicationYear && categoryId == book.categoryId && Objects.equals(isbn, book.isbn) && Objects.equals(title, book.title) && Objects.equals(language, book.language);
+        return publicationYear == book.publicationYear && Objects.equals(isbn, book.isbn) && Objects.equals(author, book.author) && Objects.equals(title, book.title) && Objects.equals(category, book.category) && Objects.equals(language, book.language);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(inventoryId, isbn, title, publicationYear, categoryId, language);
+        return Objects.hash(isbn, author, title, publicationYear, category, language);
     }
 
     @Override
     public String toString() {
         return "Book{" +
-                "inventoryId=" + inventoryId +
-                ", isbn='" + isbn + '\'' +
+                "isbn='" + isbn + '\'' +
+                ", author=" + author +
                 ", title='" + title + '\'' +
                 ", publicationYear=" + publicationYear +
-                ", categoryId=" + categoryId +
+                ", category=" + category +
                 ", language='" + language + '\'' +
                 '}';
     }
 }
-
