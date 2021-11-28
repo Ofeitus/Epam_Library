@@ -1,25 +1,27 @@
 package com.epam.ofeitus.library.entity.user;
 
+import com.epam.ofeitus.library.entity.user.constituents.UserRole;
+
 import java.util.Objects;
 
 public class User {
     private int userId;
-    private String firstName;
-    private String secondName;
+    private String name;
+    private String surName;
     private String email;
     private String passwordHash;
-    private int userRoleId;
+    private UserRole userRole;
 
     public User() {
     }
 
-    public User(int userId, String firstName, String secondName, String email, String passwordHash, int userRoleId) {
+    public User(int userId, String name, String surName, String email, String passwordHash, UserRole userRole) {
         this.userId = userId;
-        this.firstName = firstName;
-        this.secondName = secondName;
+        this.name = name;
+        this.surName = surName;
         this.email = email;
         this.passwordHash = passwordHash;
-        this.userRoleId = userRoleId;
+        this.userRole = userRole;
     }
 
     public int getUserId() {
@@ -30,20 +32,20 @@ public class User {
         this.userId = userId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getSurName() {
+        return surName;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public void setSurName(String surName) {
+        this.surName = surName;
     }
 
     public String getEmail() {
@@ -62,12 +64,12 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public int getUserRoleId() {
-        return userRoleId;
+    public UserRole getUserRole() {
+        return userRole;
     }
 
-    public void setUserRoleId(int userRoleId) {
-        this.userRoleId = userRoleId;
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     @Override
@@ -75,23 +77,23 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userId == user.userId && userRoleId == user.userRoleId && Objects.equals(firstName, user.firstName) && Objects.equals(secondName, user.secondName) && Objects.equals(email, user.email) && Objects.equals(passwordHash, user.passwordHash);
+        return userId == user.userId && userRole == user.userRole && Objects.equals(name, user.name) && Objects.equals(surName, user.surName) && Objects.equals(email, user.email) && Objects.equals(passwordHash, user.passwordHash);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, firstName, secondName, email, passwordHash, userRoleId);
+        return Objects.hash(userId, name, surName, email, passwordHash, userRole);
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "userId=" + userId +
-                ", firstName='" + firstName + '\'' +
-                ", secondName='" + secondName + '\'' +
+                ", firstName='" + name + '\'' +
+                ", secondName='" + surName + '\'' +
                 ", email='" + email + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
-                ", userRoleId=" + userRoleId +
+                ", userRoleId=" + userRole +
                 '}';
     }
 }

@@ -4,12 +4,12 @@ import java.util.Objects;
 
 public class CopyOfBook {
     private int inventoryId;
-    private int bookIsbn;
+    private String bookIsbn;
 
     public CopyOfBook() {
     }
 
-    public CopyOfBook(int inventoryId, int bookIsbn) {
+    public CopyOfBook(int inventoryId, String bookIsbn) {
         this.inventoryId = inventoryId;
         this.bookIsbn = bookIsbn;
     }
@@ -22,11 +22,11 @@ public class CopyOfBook {
         this.inventoryId = inventoryId;
     }
 
-    public int getBookIsbn() {
+    public String getBookIsbn() {
         return bookIsbn;
     }
 
-    public void setBookIsbn(int bookIsbn) {
+    public void setBookIsbn(String bookIsbn) {
         this.bookIsbn = bookIsbn;
     }
 
@@ -35,7 +35,7 @@ public class CopyOfBook {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CopyOfBook that = (CopyOfBook) o;
-        return inventoryId == that.inventoryId && bookIsbn == that.bookIsbn;
+        return inventoryId == that.inventoryId && Objects.equals(bookIsbn, that.bookIsbn);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class CopyOfBook {
     public String toString() {
         return "CopyOfBook{" +
                 "inventoryId=" + inventoryId +
-                ", bookIsbn=" + bookIsbn +
+                ", bookIsbn='" + bookIsbn + '\'' +
                 '}';
     }
 }

@@ -24,7 +24,7 @@ public final class Column {
 
     public static final String RESERVATION_ID = "reservation_id";
     public static final String RESERVATION_USER_ID = "reservation_user_id";
-    public static final String RESERVATION_USER_ISBN = "isbn";
+    public static final String RESERVATION_BOOK_ISBN = "isbn";
     public static final String RESERVATION_DATE = "date";
     public static final String RESERVATION_STATUS_ID = "reservation_status_id";
     public static final String RESERVATION_STATUS_VALUE = "value";

@@ -4,16 +4,16 @@ import java.util.Objects;
 
 public class Author {
     private int authorId;
-    private String firstName;
-    private String secondName;
+    private String name;
+    private String surName;
 
     public Author() {
     }
 
-    public Author(int authorId, String firstName, String secondName) {
+    public Author(int authorId, String name, String surName) {
         this.authorId = authorId;
-        this.firstName = firstName;
-        this.secondName = secondName;
+        this.name = name;
+        this.surName = surName;
     }
 
     public int getAuthorId() {
@@ -24,20 +24,20 @@ public class Author {
         this.authorId = authorId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getSecondName() {
-        return secondName;
+    public String getSurName() {
+        return surName;
     }
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
+    public void setSurName(String surName) {
+        this.surName = surName;
     }
 
     @Override
@@ -45,20 +45,20 @@ public class Author {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Author author = (Author) o;
-        return authorId == author.authorId && Objects.equals(firstName, author.firstName) && Objects.equals(secondName, author.secondName);
+        return authorId == author.authorId && Objects.equals(name, author.name) && Objects.equals(surName, author.surName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(authorId, firstName, secondName);
+        return Objects.hash(authorId, name, surName);
     }
 
     @Override
     public String toString() {
         return "Author{" +
                 "authorId=" + authorId +
-                ", firstName='" + firstName + '\'' +
-                ", secondName='" + secondName + '\'' +
+                ", name='" + name + '\'' +
+                ", surName='" + surName + '\'' +
                 '}';
     }
 }

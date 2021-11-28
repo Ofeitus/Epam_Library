@@ -23,7 +23,7 @@ public class MySqlAuthorDao extends AbstractMySqlDao<Author> implements AuthorDa
     }
 
     @Override
-    public Author findByName(String firstName, String secondName) {
+    public Author findByName(String name, String surName) {
         // TODO
         return null;
     }
