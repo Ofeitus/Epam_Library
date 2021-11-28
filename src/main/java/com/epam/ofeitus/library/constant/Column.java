@@ -1,4 +1,4 @@
-package com.epam.ofeitus.library.dao.rowmapper;
+package com.epam.ofeitus.library.constant;
 
 public final class Column {
     public static final String BOOK_INVENTORY_ID = "inventory_id";

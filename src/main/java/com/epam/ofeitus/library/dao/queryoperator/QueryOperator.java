@@ -1,4 +1,11 @@
 package com.epam.ofeitus.library.dao.queryoperator;
 
-public interface QueryOperator {
+import java.util.List;
+
+public interface QueryOperator<T> {
+    List<T> executeQuery(String query);
+
+    T executeSingleEntityQuery(String query);
+
+    int executeUpdate(String query);
 }

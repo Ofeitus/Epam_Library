@@ -1,6 +1,6 @@
 package com.epam.ofeitus.library.dao.rowmapper.impl;
 
-import com.epam.ofeitus.library.dao.rowmapper.Column;
+import com.epam.ofeitus.library.constant.Column;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapper;
 import com.epam.ofeitus.library.entity.order.Loan;
 

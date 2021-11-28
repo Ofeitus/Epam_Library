@@ -1,11 +1,18 @@
 package com.epam.ofeitus.library.dao.impl;
 
+import com.epam.ofeitus.library.constant.Column;
+import com.epam.ofeitus.library.constant.Table;
 import com.epam.ofeitus.library.dao.BookDao;
+import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
 import com.epam.ofeitus.library.entity.book.Book;
 
 import java.util.List;
 
 public class MySqlBookDao extends AbstractMySqlDao<Book> implements BookDao {
+    public MySqlBookDao() {
+        super(RowMapperFactory.getBookRowMapper(), Table.BOOK_TABLE, Column.BOOK_ISBN);
+    }
+
     @Override
     public int save(Book entity) {
         // TODO
@@ -14,12 +21,6 @@ public class MySqlBookDao extends AbstractMySqlDao<Book> implements BookDao {
 
     @Override
     public int update(Book entity) {
-        // TODO
-        return 0;
-    }
-
-    @Override
-    public int deleteById(int id) {
         // TODO
         return 0;
     }
