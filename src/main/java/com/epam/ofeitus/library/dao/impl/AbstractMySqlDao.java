@@ -1,6 +1,7 @@
 package com.epam.ofeitus.library.dao.impl;
 
 import com.epam.ofeitus.library.dao.AbstractDao;
+import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.dao.queryoperator.QueryOperator;
 import com.epam.ofeitus.library.dao.queryoperator.impl.MySqlQueryOperator;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapper;
@@ -25,19 +26,19 @@ public abstract class AbstractMySqlDao<T> implements AbstractDao<T> {
     }
 
     @Override
-    public T findById(int id) {
+    public T findById(int id) throws DaoException {
         String query = FIND_BY_ID_QUERY + tableName + " WHERE " + idName + "=" + id;
         return queryOperator.executeSingleEntityQuery(query);
     }
 
     @Override
-    public List<T> findAll() {
+    public List<T> findAll() throws DaoException {
         String query = SELECT_ALL_QUERY + tableName;
         return queryOperator.executeQuery(query);
     }
 
     @Override
-    public int deleteById(int id) {
+    public int deleteById(int id) throws DaoException {
         String query = DELETE_BY_ID_QUERY + tableName + " WHERE " + idName + "=" + id;
         return queryOperator.executeUpdate(query);
     }

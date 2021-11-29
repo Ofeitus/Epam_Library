@@ -1,4 +1,4 @@
-package com.epam.ofeitus.library.dao.connectionpool.impl;
+package com.epam.ofeitus.library.dao.connectionpool;
 
 public final class DBParameter {
     public static final String DB_DRIVER = "db.driver";
@@ -8,6 +8,5 @@ public final class DBParameter {
     public static final String DB_POLL_SIZE = "db.poolsize";
 
     private DBParameter() {
-
     }
 }
