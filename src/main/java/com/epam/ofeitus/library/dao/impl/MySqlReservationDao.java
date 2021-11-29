@@ -5,6 +5,7 @@ import com.epam.ofeitus.library.constant.Table;
 import com.epam.ofeitus.library.dao.ReservationDao;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
 import com.epam.ofeitus.library.entity.order.Reservation;
+import com.epam.ofeitus.library.entity.order.constiuents.ReservationStatus;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
     }
 
     @Override
-    public List<Reservation> findUnconfirmedReservations() {
+    public List<Reservation> findByStatus(ReservationStatus status) {
         // TODO
         return null;
     }

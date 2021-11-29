@@ -2,12 +2,16 @@ package com.epam.ofeitus.library.dao.queryoperator;
 
 import com.epam.ofeitus.library.dao.exception.DaoException;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface QueryOperator<T> {
-    List<T> executeQuery(String query) throws DaoException;
+    void setStatementParams(PreparedStatement statement, Object... params) throws SQLException;
 
-    T executeSingleEntityQuery(String query) throws DaoException;
+    List<T> executeQuery(String query, Object... params) throws DaoException;
 
-    int executeUpdate(String query) throws DaoException;
+    T executeSingleEntityQuery(String query, Object... params) throws DaoException;
+
+    int executeUpdate(String query, Object... params) throws DaoException;
 }

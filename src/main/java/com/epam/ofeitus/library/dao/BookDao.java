@@ -1,19 +1,19 @@
 package com.epam.ofeitus.library.dao;
 
+import com.epam.ofeitus.library.dao.exception.DaoException;
+import com.epam.ofeitus.library.entity.book.Author;
 import com.epam.ofeitus.library.entity.book.Book;
 
 import java.util.List;
 
 public interface BookDao extends AbstractDao<Book> {
-    List<Book> getCatalog();
+    int save(Book entity, List<Author> authors) throws DaoException;
 
-    int getNumberOfCopies(String isbn);
+    Book findByIsbn(String isbn) throws DaoException;
 
-    Book findByIsbn(String isbn);
+    List<Book> findByTitle(String title) throws DaoException;
 
-    List<Book> findByTitle(String title);
+    List<Book> findByAuthorId(int authorId) throws DaoException;
 
-    List<Book> findByAuthorId(int authorId);
-
-    List<Book> findByCategoryId(int categoryId);
+    List<Book> findByCategoryId(int categoryId) throws DaoException;
 }

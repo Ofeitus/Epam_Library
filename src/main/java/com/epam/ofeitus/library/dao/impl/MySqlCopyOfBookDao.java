@@ -4,8 +4,9 @@ import com.epam.ofeitus.library.constant.Column;
 import com.epam.ofeitus.library.constant.Table;
 import com.epam.ofeitus.library.dao.CopyOfBookDao;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
-import com.epam.ofeitus.library.entity.book.Book;
 import com.epam.ofeitus.library.entity.book.CopyOfBook;
+
+import java.util.List;
 
 public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements CopyOfBookDao {
     public MySqlCopyOfBookDao() {
@@ -25,7 +26,7 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
     }
 
     @Override
-    public Book getBookByIsbn(String bookIsbn) {
+    public List<CopyOfBook> findByIsbn(String bookIsbn) {
         // TODO
         return null;
     }

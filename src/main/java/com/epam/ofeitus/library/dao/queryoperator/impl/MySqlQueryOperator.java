@@ -18,11 +18,18 @@ public class MySqlQueryOperator<T> implements QueryOperator<T> {
     }
 
     @Override
-    public List<T> executeQuery(String query) throws DaoException {
+    public void setStatementParams(PreparedStatement statement, Object... params) throws SQLException {
+        for (int i = 0; i < params.length; i++) {
+            statement.setObject(i + 1, params[i]);
+        }
+    }
+
+    @Override
+    public List<T> executeQuery(String query, Object... params) throws DaoException {
         List<T> result = new ArrayList<>();
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
-
+            setStatementParams(statement, params);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 T entity = mapper.map(resultSet);
@@ -37,8 +44,8 @@ public class MySqlQueryOperator<T> implements QueryOperator<T> {
     }
 
     @Override
-    public T executeSingleEntityQuery(String query) throws DaoException {
-        List<T> result = executeQuery(query);
+    public T executeSingleEntityQuery(String query, Object... params) throws DaoException {
+        List<T> result = executeQuery(query, params);
         if (result.size() > 0) {
             return result.get(0);
         } else {
@@ -47,9 +54,10 @@ public class MySqlQueryOperator<T> implements QueryOperator<T> {
     }
 
     @Override
-    public int executeUpdate(String query) throws DaoException {
+    public int executeUpdate(String query, Object... params) throws DaoException {
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
              PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            setStatementParams(statement, params);
             int rowsAffected = statement.executeUpdate();
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys != null && generatedKeys.next()) {

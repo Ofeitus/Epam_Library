@@ -1,8 +1,9 @@
 package com.epam.ofeitus.library.dao;
 
-import com.epam.ofeitus.library.entity.book.Book;
 import com.epam.ofeitus.library.entity.book.CopyOfBook;
 
+import java.util.List;
+
 public interface CopyOfBookDao extends AbstractDao<CopyOfBook> {
-    Book getBookByIsbn(String bookIsbn);
+    List<CopyOfBook> findByIsbn(String bookIsbn);
 }

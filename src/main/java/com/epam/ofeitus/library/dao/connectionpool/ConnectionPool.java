@@ -13,8 +13,8 @@ public class ConnectionPool {
     private final String url;
     private final String user;
     private final String password;
-    private static BlockingQueue<Connection> connectionPool;
-    private static BlockingQueue<Connection> usedConnections;
+    private static BlockingQueue<PooledConnection> connectionPool;
+    private static BlockingQueue<PooledConnection> usedConnections;
     private static int poolSize;
 
     private ConnectionPool() {
@@ -63,7 +63,7 @@ public class ConnectionPool {
     }
 
     public Connection takeConnection() throws SQLException, ConnectionPoolException {
-        Connection connection;
+        PooledConnection connection;
         try {
             connection = connectionPool.take();
             usedConnections.add(connection);
@@ -73,17 +73,33 @@ public class ConnectionPool {
         return connection;
     }
 
-    public boolean releaseConnection(Connection connection) throws ConnectionPoolException {
+    public boolean releaseConnection(Connection connection) throws SQLException {
+        if (!(connection instanceof PooledConnection)) {
+            return false;
+        }
         if (!usedConnections.remove(connection)) {
             return false;
         }
         try {
-            connectionPool.put(connection);
+            connectionPool.put((PooledConnection) connection);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new ConnectionPoolException("Unable to release connection.", e);
+            throw new SQLException("Unable to release connection.", e);
         }
         return true;
+    }
+
+    public void dispose() throws ConnectionPoolException {
+        try {
+            for (PooledConnection connection : connectionPool) {
+                connection.close();
+            }
+            for (PooledConnection connection : usedConnections) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            throw new ConnectionPoolException("Unable to close all connections.", e);
+        }
     }
 
     private class PooledConnection implements Connection {
@@ -105,12 +121,8 @@ public class ConnectionPool {
         }
 
         @Override
-        public void close() {
-            try {
-                releaseConnection(this);
-            } catch (ConnectionPoolException e) {
-                // TODO Add logger
-            }
+        public void close() throws SQLException {
+            releaseConnection(this);
         }
 
         @Override
