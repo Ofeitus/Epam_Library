@@ -3,6 +3,7 @@ package com.epam.ofeitus.library.dao.queryoperator.impl;
 import com.epam.ofeitus.library.dao.connectionpool.ConnectionPoolException;
 import com.epam.ofeitus.library.dao.connectionpool.ConnectionPool;
 import com.epam.ofeitus.library.dao.exception.DaoException;
+import com.epam.ofeitus.library.dao.queryoperator.ParametrizedQuery;
 import com.epam.ofeitus.library.dao.queryoperator.QueryOperator;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapper;
 
@@ -69,6 +70,57 @@ public class MySqlQueryOperator<T> implements QueryOperator<T> {
             throw new DaoException("Unable to execute update query.", e);
         } catch (ConnectionPoolException e) {
             throw new DaoException("Unable to get connection.", e);
+        }
+    }
+
+    private void rollbackTransaction(Connection connection) throws DaoException {
+        if (connection != null) {
+            try {
+                connection.rollback();
+            } catch (SQLException sqlException) {
+                throw new DaoException(sqlException);
+            }
+        }
+    }
+
+    private void releaseConnection(Connection connection) throws DaoException {
+        if (connection != null) {
+            try {
+                connection.setAutoCommit(true);
+                connection.close();
+            } catch (SQLException e) {
+                throw new DaoException("Unable to return connection to connection pool.", e);
+            }
+        }
+    }
+
+    @Override
+    public int executeTransaction(List<ParametrizedQuery> queries) throws DaoException {
+        Connection connection = null;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            connection.setAutoCommit(false);
+            int firstQueryGeneratedKey = -1;
+            boolean idSet = false;
+            for (ParametrizedQuery query : queries) {
+                PreparedStatement statement = connection.prepareStatement(query.getQuery(), Statement.RETURN_GENERATED_KEYS);
+                setStatementParams(statement, query.getParams());
+                statement.executeUpdate();
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (!idSet && generatedKeys != null && generatedKeys.next()) {
+                    firstQueryGeneratedKey = generatedKeys.getInt(1);
+                    idSet = true;
+                }
+            }
+            connection.commit();
+            return firstQueryGeneratedKey;
+        } catch (SQLException e) {
+            rollbackTransaction(connection);
+            throw new DaoException("Unable to execute update query.", e);
+        } catch (ConnectionPoolException e) {
+            throw new DaoException("Unable to retrieve connection.", e);
+        } finally {
+            releaseConnection(connection);
         }
     }
 }

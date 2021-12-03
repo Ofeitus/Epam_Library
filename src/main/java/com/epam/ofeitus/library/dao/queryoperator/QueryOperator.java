@@ -4,6 +4,7 @@ import com.epam.ofeitus.library.dao.exception.DaoException;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 public interface QueryOperator<T> {
@@ -14,4 +15,6 @@ public interface QueryOperator<T> {
     T executeSingleEntityQuery(String query, Object... params) throws DaoException;
 
     int executeUpdate(String query, Object... params) throws DaoException;
+
+    int executeTransaction(List<ParametrizedQuery> queries) throws DaoException;
 }

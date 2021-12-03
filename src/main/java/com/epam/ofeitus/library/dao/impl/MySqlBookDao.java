@@ -4,10 +4,12 @@ import com.epam.ofeitus.library.constant.Column;
 import com.epam.ofeitus.library.constant.Table;
 import com.epam.ofeitus.library.dao.BookDao;
 import com.epam.ofeitus.library.dao.exception.DaoException;
+import com.epam.ofeitus.library.dao.queryoperator.ParametrizedQuery;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
 import com.epam.ofeitus.library.entity.book.Author;
 import com.epam.ofeitus.library.entity.book.Book;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlBookDao extends AbstractMySqlDao<Book> implements BookDao {
@@ -64,22 +66,23 @@ public class MySqlBookDao extends AbstractMySqlDao<Book> implements BookDao {
 
     @Override
     public int save(Book entity, List<Author> authors) throws DaoException {
-        int result = queryOperator.executeUpdate(
+        List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
+        parametrizedQueries.add(new ParametrizedQuery(
                 SAVE_BOOK_QUERY,
                 entity.getIsbn(),
                 entity.getTitle(),
                 entity.getPublicationYear(),
                 entity.getCategoryId(),
                 entity.getLanguage()
-        );
+        ));
         for (Author author : authors) {
-            queryOperator.executeUpdate(
+            parametrizedQueries.add(new ParametrizedQuery(
                     ADD_AUTHOR_TO_BOOK_QUERY,
                     entity.getIsbn(),
                     author.getAuthorId()
-            );
+            ));
         }
-        return result;
+        return queryOperator.executeTransaction(parametrizedQueries);
     }
 
     @Override
