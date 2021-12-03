@@ -1,7 +1,7 @@
 package com.epam.ofeitus.library.dao;
 
 import com.epam.ofeitus.library.entity.order.Reservation;
-import com.epam.ofeitus.library.entity.order.constiuents.ReservationStatus;
+import com.epam.ofeitus.library.entity.order.constiuent.ReservationStatus;
 
 import java.util.List;
 

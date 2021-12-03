@@ -1,7 +1,7 @@
 package com.epam.ofeitus.library.dao;
 
 import com.epam.ofeitus.library.entity.user.User;
-import com.epam.ofeitus.library.entity.user.constituents.UserRole;
+import com.epam.ofeitus.library.entity.user.constituent.UserRole;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.epam.ofeitus.library.entity.order.constiuents;
+package com.epam.ofeitus.library.entity.order.constiuent;
 
 public enum ReservationStatus {
     PROCESSING,

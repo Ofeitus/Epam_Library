@@ -1,8 +1,9 @@
 package com.epam.ofeitus.library.entity.book;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Author {
+public class Author implements Serializable {
     private int authorId;
     private String name;
     private String surName;

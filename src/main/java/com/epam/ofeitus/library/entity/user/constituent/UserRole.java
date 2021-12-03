@@ -1,4 +1,4 @@
-package com.epam.ofeitus.library.entity.user.constituents;
+package com.epam.ofeitus.library.entity.user.constituent;
 
 public enum UserRole {
     ADMIN,

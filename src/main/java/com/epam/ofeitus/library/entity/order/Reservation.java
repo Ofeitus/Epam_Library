@@ -1,11 +1,12 @@
 package com.epam.ofeitus.library.entity.order;
 
-import com.epam.ofeitus.library.entity.order.constiuents.ReservationStatus;
+import com.epam.ofeitus.library.entity.order.constiuent.ReservationStatus;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
-public class Reservation {
+public class Reservation implements Serializable {
     private int reservationId;
     private int userId;
     private String bookIsbn;

@@ -1,8 +1,9 @@
 package com.epam.ofeitus.library.entity.book;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class CopyOfBook {
+public class CopyOfBook implements Serializable {
     private int inventoryId;
     private String bookIsbn;
 

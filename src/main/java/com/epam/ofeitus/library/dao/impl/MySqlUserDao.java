@@ -5,7 +5,7 @@ import com.epam.ofeitus.library.constant.Table;
 import com.epam.ofeitus.library.dao.UserDao;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
 import com.epam.ofeitus.library.entity.user.User;
-import com.epam.ofeitus.library.entity.user.constituents.UserRole;
+import com.epam.ofeitus.library.entity.user.constituent.UserRole;
 
 import java.util.List;
 

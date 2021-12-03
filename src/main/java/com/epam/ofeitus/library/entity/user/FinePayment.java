@@ -1,10 +1,11 @@
 package com.epam.ofeitus.library.entity.user;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
-public class FinePayment {
+public class FinePayment implements Serializable {
     private int paymentId;
     private int userId;
     private Date date;

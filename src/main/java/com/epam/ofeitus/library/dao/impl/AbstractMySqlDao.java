@@ -9,37 +9,33 @@ import com.epam.ofeitus.library.dao.rowmapper.RowMapper;
 import java.util.List;
 
 public abstract class AbstractMySqlDao<T> implements AbstractDao<T> {
-    private static final String SELECT_ALL_QUERY = "SELECT * FROM ";
-    private static final String FIND_BY_ID_QUERY = "SELECT * FROM ";
-    private static final String DELETE_BY_ID_QUERY = "DELETE FROM ";
+    private final String SELECT_ALL_QUERY;
+    private final String FIND_BY_ID_QUERY;
+    private final String DELETE_BY_ID_QUERY;
 
     protected final RowMapper<T> mapper;
     protected final QueryOperator<T> queryOperator;
-    private final String tableName;
-    private final String idName;
 
     protected AbstractMySqlDao(RowMapper<T> mapper, String tableName, String idName) {
         queryOperator = new MySqlQueryOperator<>(mapper);
         this.mapper = mapper;
-        this.tableName = tableName;
-        this.idName = idName;
+        SELECT_ALL_QUERY = "SELECT * FROM " + tableName;
+        FIND_BY_ID_QUERY = "SELECT * FROM " + tableName + " WHERE " + idName + "=?";
+        DELETE_BY_ID_QUERY = "DELETE FROM " + tableName + " WHERE " + idName + "=?";
     }
 
     @Override
     public T findById(int id) throws DaoException {
-        String query = FIND_BY_ID_QUERY + tableName + " WHERE " + idName + "=" + id;
-        return queryOperator.executeSingleEntityQuery(query);
+        return queryOperator.executeSingleEntityQuery(FIND_BY_ID_QUERY, id);
     }
 
     @Override
     public List<T> findAll() throws DaoException {
-        String query = SELECT_ALL_QUERY + tableName;
-        return queryOperator.executeQuery(query);
+        return queryOperator.executeQuery(SELECT_ALL_QUERY);
     }
 
     @Override
     public int deleteById(int id) throws DaoException {
-        String query = DELETE_BY_ID_QUERY + tableName + " WHERE " + idName + "=" + id;
-        return queryOperator.executeUpdate(query);
+        return queryOperator.executeUpdate(DELETE_BY_ID_QUERY, id);
     }
 }

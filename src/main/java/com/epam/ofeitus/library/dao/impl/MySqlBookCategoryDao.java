@@ -4,7 +4,7 @@ import com.epam.ofeitus.library.constant.Column;
 import com.epam.ofeitus.library.constant.Table;
 import com.epam.ofeitus.library.dao.BookCategoryDao;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
-import com.epam.ofeitus.library.entity.book.constituents.BookCategory;
+import com.epam.ofeitus.library.entity.book.constituent.BookCategory;
 
 public class MySqlBookCategoryDao extends AbstractMySqlDao<BookCategory> implements BookCategoryDao {
     public MySqlBookCategoryDao() {

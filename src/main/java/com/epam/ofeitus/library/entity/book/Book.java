@@ -1,10 +1,9 @@
 package com.epam.ofeitus.library.entity.book;
 
-import com.epam.ofeitus.library.entity.book.constituents.BookCategory;
-
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Book {
+public class Book implements Serializable {
     private String isbn;
     private String title;
     private int publicationYear;

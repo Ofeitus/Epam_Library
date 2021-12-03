@@ -1,8 +1,9 @@
-package com.epam.ofeitus.library.entity.book.constituents;
+package com.epam.ofeitus.library.entity.book.constituent;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class BookCategory {
+public class BookCategory implements Serializable {
     private int categoryId;
     private String name;
 

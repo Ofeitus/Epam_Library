@@ -1,10 +1,11 @@
 package com.epam.ofeitus.library.entity.order;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Objects;
 
-public class Loan {
+public class Loan implements Serializable {
     private int loanId;
     private Date issueDate;
     private Date dueDate;

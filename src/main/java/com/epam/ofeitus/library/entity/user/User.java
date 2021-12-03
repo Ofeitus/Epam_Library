@@ -1,10 +1,11 @@
 package com.epam.ofeitus.library.entity.user;
 
-import com.epam.ofeitus.library.entity.user.constituents.UserRole;
+import com.epam.ofeitus.library.entity.user.constituent.UserRole;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class User {
+public class User implements Serializable {
     private int userId;
     private String name;
     private String surName;
