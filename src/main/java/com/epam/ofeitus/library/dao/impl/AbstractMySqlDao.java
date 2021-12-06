@@ -9,7 +9,7 @@ import com.epam.ofeitus.library.dao.rowmapper.RowMapper;
 import java.util.List;
 
 public abstract class AbstractMySqlDao<T> implements AbstractDao<T> {
-    private final String SELECT_ALL_QUERY;
+    private final String FIND_ALL_QUERY;
     private final String FIND_BY_ID_QUERY;
     private final String DELETE_BY_ID_QUERY;
 
@@ -19,7 +19,7 @@ public abstract class AbstractMySqlDao<T> implements AbstractDao<T> {
     protected AbstractMySqlDao(RowMapper<T> mapper, String tableName, String idName) {
         queryOperator = new MySqlQueryOperator<>(mapper);
         this.mapper = mapper;
-        SELECT_ALL_QUERY = "SELECT * FROM " + tableName;
+        FIND_ALL_QUERY = "SELECT * FROM " + tableName;
         FIND_BY_ID_QUERY = "SELECT * FROM " + tableName + " WHERE " + idName + "=?";
         DELETE_BY_ID_QUERY = "DELETE FROM " + tableName + " WHERE " + idName + "=?";
     }
@@ -31,7 +31,7 @@ public abstract class AbstractMySqlDao<T> implements AbstractDao<T> {
 
     @Override
     public List<T> findAll() throws DaoException {
-        return queryOperator.executeQuery(SELECT_ALL_QUERY);
+        return queryOperator.executeQuery(FIND_ALL_QUERY);
     }
 
     @Override

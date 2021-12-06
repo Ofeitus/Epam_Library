@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface CopyOfBookDao extends AbstractDao<CopyOfBook> {
     List<CopyOfBook> findByIsbn(String bookIsbn) throws DaoException;
+
+    List<CopyOfBook> findByLoanId(int loanId) throws DaoException;
 }

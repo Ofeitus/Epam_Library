@@ -11,7 +11,7 @@ import java.util.List;
 
 public class MySqlAuthorDao extends AbstractMySqlDao<Author> implements AuthorDao {
     public final static String SAVE_AUTHOR_QUERY = String.format(
-            "INSERT INTO %s (%s, %s, %s) VALUES (?, ?, ?)",
+            "INSERT INTO %s (%s, %s, %s) VALUES (0, ?, ?)",
             Table.AUTHOR_TABLE,
             Column.AUTHOR_ID,
             Column.AUTHOR_NAME,
@@ -27,6 +27,14 @@ public class MySqlAuthorDao extends AbstractMySqlDao<Author> implements AuthorDa
             Table.AUTHOR_TABLE,
             Column.AUTHOR_NAME,
             Column.AUTHOR_SURNAME);
+    private static final String FIND_BY_BOOK_QUERY = String.format(
+            "SELECT * FROM %s JOIN %s BhA ON %s.%s = BhA.%s WHERE %s=?",
+            Table.AUTHOR_TABLE,
+            Table.BOOK_HAS_AUTHOR_TABLE,
+            Table.AUTHOR_TABLE,
+            Column.AUTHOR_ID,
+            Column.AUTHOR_ID,
+            Column.BOOK_ISBN);
 
     public MySqlAuthorDao() {
         super(RowMapperFactory.getAuthorRowMapper(), Table.AUTHOR_TABLE, Column.AUTHOR_ID);
@@ -36,7 +44,6 @@ public class MySqlAuthorDao extends AbstractMySqlDao<Author> implements AuthorDa
     public int save(Author entity) throws DaoException {
         return queryOperator.executeUpdate(
                 SAVE_AUTHOR_QUERY,
-                entity.getAuthorId(),
                 entity.getName(),
                 entity.getSurName());
     }
@@ -53,5 +60,10 @@ public class MySqlAuthorDao extends AbstractMySqlDao<Author> implements AuthorDa
     @Override
     public Author findByName(String name, String surName) throws DaoException {
         return queryOperator.executeSingleEntityQuery(FIND_BY_NAME_QUERY, name, surName);
+    }
+
+    @Override
+    public List<Author> findByBookIsbn(String isbn) throws DaoException {
+        return queryOperator.executeQuery(FIND_BY_BOOK_QUERY, isbn);
     }
 }

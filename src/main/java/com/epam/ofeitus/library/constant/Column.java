@@ -43,6 +43,7 @@ public final class Column {
     public static final String FINE_USER_ID = "user_id";
     public static final String FINE_DATE = "date";
     public static final String FINE_AMOUNT = "amount";
+    public static final String USER_DELETED = "deleted";
 
 
     private Column() {

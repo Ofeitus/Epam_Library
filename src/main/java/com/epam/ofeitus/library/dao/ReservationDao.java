@@ -1,12 +1,12 @@
 package com.epam.ofeitus.library.dao;
 
+import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.entity.order.Reservation;
-import com.epam.ofeitus.library.entity.order.constiuent.ReservationStatus;
 
 import java.util.List;
 
 public interface ReservationDao extends AbstractDao<Reservation> {
-    List<Reservation> findByUserId(int userId);
+    List<Reservation> findByUserId(int userId) throws DaoException;
 
-    List<Reservation> findByStatus(ReservationStatus status);
+    List<Reservation> findByStatusId(int statusId) throws DaoException;
 }

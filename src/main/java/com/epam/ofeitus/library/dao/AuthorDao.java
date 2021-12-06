@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface AuthorDao extends AbstractDao<Author> {
     Author findByName(String name, String surName) throws DaoException;
+
+    List<Author> findByBookIsbn(String isbn) throws DaoException;
 }
