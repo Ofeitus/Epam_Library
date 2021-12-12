@@ -1,0 +1,106 @@
+.form-container{
+    margin-top: 150px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 10px 10px 15px 0 rgba(0, 0, 0, 0.2);
+}
+
+.form-container .title{
+    color: #000;
+    font-size: 25px;
+    font-weight: 600;
+    margin: 0 0 25px;
+}
+
+.form-container .title:after{
+    content: '';
+    background-color: #0044ef;
+    height: 3px;
+    width: 60px;
+    margin: 10px 0 0;
+    display: block;
+    clear: both;
+}
+
+.form-container .sub-title{
+    color: #333;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0 0 20px;
+}
+
+.form-container .form-horizontal{
+    font-size: 0;
+}
+
+.form-container .form-horizontal .form-group{
+    color: #333;
+    width: 50%;
+    padding: 0 8px;
+    margin: 0 0 15px;
+    display: inline-block;
+}
+
+.form-container .form-horizontal .form-group:nth-child(4){
+    margin-bottom: 30px;
+}
+
+.form-container .form-horizontal .form-group label{
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.form-container .form-horizontal .form-control{
+    color: #333;
+    background: #fff;
+    font-weight: 700;
+    letter-spacing: 1px;
+    height: 40px;
+    padding: 6px 12px;
+    border-radius: 10px;
+    border: 2px solid #e7e7e7;
+    box-shadow: none;
+}
+
+.form-container .form-horizontal .form-control::placeholder{
+    font-weight: 500;
+}
+
+.form-container .form-horizontal .form-control:focus{
+    box-shadow: 0 0 5px #dcdcdc;
+}
+
+.form-container .sign-link{
+    color: #333;
+    font-size: 18px;
+    margin-left: 8px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.form-container .sign-link a{
+    color: #0044ef;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease 0s;
+}
+
+.form-container .form-horizontal .submit{
+    color: #fff;
+    background: #0044ef;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-radius: 10px;
+    transition: all 0.3s ease 0s;
+}
+
+.form-container .form-horizontal .btn:hover,
+.form-container .form-horizontal .btn:focus{
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    box-shadow: 3px 3px rgba(0,0,0,0.15),5px 5px rgba(0,0,0,0.1);
+    outline: none;
+}

@@ -1,0 +1,88 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10%;
+    font-weight: 700;
+    height: 80px;
+    background: linear-gradient(#c7d6dd, #e8edf1);
+}
+
+#home-link {
+    padding: 10px;
+    font-size: 46px;
+    font-weight: 500;
+    text-decoration: none;
+    color: black;
+}
+
+.info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info i {
+    color: #0044ef;
+}
+
+.info a {
+    font-size: 16px;
+    text-align: right;
+    color: black;
+    text-decoration: none;
+    padding: 10px 20px 10px 20px;
+}
+
+#location {
+    height: 40px;
+    border-right: 1px solid;
+}
+
+.auth {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    height: 40px;
+    color: #E8EDF1;
+    font-size: 18px;
+    background-color: #0044ef;
+    border: 2px solid #0044ef;
+    border-radius: 60px;
+    transition: all 0.3s ease;
+}
+
+.auth:hover {
+    color: #0044ef;
+    background-color: #E8EDF1;
+}
+
+.auth:hover #log-link {
+    color: #0044ef;
+}
+
+.auth-button a {
+    padding: 0 15px;
+    cursor: pointer;
+    color: #E8EDF1;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.user-email {
+    cursor: pointer;
+}
+
+.account {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    min-width: 20px;
+    padding: 0 10px;
+    color: #0044ef;
+    font-size: 18px;
+    background-color: #E8EDF1;
+    border-radius: 60px;
+    transition: all 0.3s ease;
+}
