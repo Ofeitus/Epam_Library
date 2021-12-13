@@ -8,4 +8,5 @@ public class Page {
     public static final String SIGN_UP_PAGE = "WEB-INF/pages/sign-up.jsp";
 
     public static final String ERROR_404_PAGE = "WEB-INF/pages/404.jsp";
+    public static final String ERROR_500_PAGE = "WEB-INF/pages/500.jsp";
 }

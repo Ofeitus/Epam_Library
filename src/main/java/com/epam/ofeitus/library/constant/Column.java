@@ -37,7 +37,7 @@ public final class Column {
     public static final String USER_ROLE_ID = "user_role_id";
 
     public static final String ROLE_ID = "role_id";
-    public static final String ROLE_NAME = "name";
+    public static final String ROLE_NAME = "role_name";
 
     public static final String FINE_PAYMENT_ID = "payment_id";
     public static final String FINE_USER_ID = "user_id";

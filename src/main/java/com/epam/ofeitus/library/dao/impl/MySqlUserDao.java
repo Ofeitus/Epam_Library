@@ -37,8 +37,12 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
             Table.USER_TABLE,
             Column.USER_ROLE_ID);
     private static final String FIND_ALL_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=false",
+            "SELECT * FROM %s JOIN %s UserRole ON %s.%s = UserRole.%s WHERE %s=false",
             Table.USER_TABLE,
+            Table.USER_ROLE_TABLE,
+            Table.USER_TABLE,
+            Column.USER_ROLE_ID,
+            Column.ROLE_ID,
             Column.USER_DELETED);
     private static final String DELETE_USER_QUERY = String.format(
             "UPDATE %s SET %s=true WHERE %s=?",
@@ -60,7 +64,7 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
         return queryOperator.executeUpdate(
                 SAVE_USER_QUERY,
                 entity.getName(),
-                entity.getSurName(),
+                entity.getSurname(),
                 entity.getEmail(),
                 entity.getPasswordHash(),
                 entity.getUserRole().ordinal());
@@ -71,7 +75,7 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
         return queryOperator.executeUpdate(
                 UPDATE_USER_QUERY,
                 entity.getName(),
-                entity.getSurName(),
+                entity.getSurname(),
                 entity.getEmail(),
                 entity.getPasswordHash(),
                 entity.getUserRole().ordinal(),

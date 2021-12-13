@@ -8,7 +8,7 @@ import java.util.Objects;
 public class User implements Serializable {
     private int userId;
     private String name;
-    private String surName;
+    private String surname;
     private String email;
     private String passwordHash;
     private UserRole userRole;
@@ -16,10 +16,10 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(int userId, String name, String surName, String email, String passwordHash, UserRole userRole) {
+    public User(int userId, String name, String surname, String email, String passwordHash, UserRole userRole) {
         this.userId = userId;
         this.name = name;
-        this.surName = surName;
+        this.surname = surname;
         this.email = email;
         this.passwordHash = passwordHash;
         this.userRole = userRole;
@@ -41,12 +41,12 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public String getSurName() {
-        return surName;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setSurName(String surName) {
-        this.surName = surName;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getEmail() {
@@ -78,12 +78,12 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userId == user.userId && userRole == user.userRole && Objects.equals(name, user.name) && Objects.equals(surName, user.surName) && Objects.equals(email, user.email) && Objects.equals(passwordHash, user.passwordHash);
+        return userId == user.userId && userRole == user.userRole && Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(email, user.email) && Objects.equals(passwordHash, user.passwordHash);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, name, surName, email, passwordHash, userRole);
+        return Objects.hash(userId, name, surname, email, passwordHash, userRole);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class User implements Serializable {
         return "User{" +
                 "userId=" + userId +
                 ", firstName='" + name + '\'' +
-                ", secondName='" + surName + '\'' +
+                ", secondName='" + surname + '\'' +
                 ", email='" + email + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
                 ", userRoleId=" + userRole +
