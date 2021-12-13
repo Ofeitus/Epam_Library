@@ -13,17 +13,17 @@
         <a><i class="fa fa-phone"></i>&nbsp;&nbsp; +375(12)345-67-89 <br><i class="fa fa-mail-bulk"></i>&nbsp;&nbsp; sampleEmail@email.com</a>
         <div class="auth">
             <label class="auth-button">
-                <c:if test="${sessionScope.userId == null}">
+                <c:if test="${sessionScope.user_id == null}">
                     <a id="log-link" href="?command=goto-log-in-page">Log in</a>
                 </c:if>
-                <c:if test="${sessionScope.userId != null}">
-                    Log out
+                <c:if test="${sessionScope.user_id != null}">
+                    <a id="log-link" href="?command=goto-log-out-page">Log out</a>
                 </c:if>
             </label>
             <div class="account">
                 <label class="user-email">
-                    <c:if test="${sessionScope.userEmail != null}">
-                        sessionScope.userEmail
+                    <c:if test="${sessionScope.user_email != null}">
+                        ${sessionScope.user_email}
                     </c:if>
                 </label>
                 <i class="fa fa-user"></i>

@@ -8,6 +8,7 @@
 <body>
 <jsp:include page="tamplate/header.jsp" />
     <h2>This is the test home page</h2>
+    <h3>Registered users:</h3>
     <table class="table table-hover table-striped">
         <thead>
         <tr>
@@ -25,7 +26,7 @@
                 <td>${user.name}</td>
                 <td>${user.surname}</td>
                 <td>${user.email}</td>
-                <td>${user.userRole}</td>
+                <td>${user.userRole.toString()}</td>
             </tr>
         </c:forEach>
         </tbody>

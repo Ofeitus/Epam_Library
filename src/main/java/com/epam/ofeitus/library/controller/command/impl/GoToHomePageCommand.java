@@ -23,7 +23,7 @@ public class GoToHomePageCommand implements Command {
             request.setAttribute(RequestAttribute.USERS, users);
             return new CommandResult(Page.HOME_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
-            //logger.error("Unable to fetch all users' DTOs. {}", e.getMessage());
+            // TODO logger.error("Unable to fetch all users' DTOs. {}", e.getMessage());
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.REDIRECT);
         }
     }
