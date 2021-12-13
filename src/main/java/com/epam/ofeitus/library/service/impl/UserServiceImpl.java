@@ -16,9 +16,6 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Override
     public User login(String email, String password) throws ServiceException {
-        if (email == null || password == null) {
-            return null;
-        }
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
 
         User user = null;
@@ -37,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(String firstName, String lastName, String email, String password) throws ServiceException {
-        User user = new User(0, firstName, lastName, email, password, UserRole.MEMBER);
+        User user = new User(0, firstName, lastName, email, DigestUtils.sha256Hex(password), UserRole.MEMBER);
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
         try {
             userDao.save(user);

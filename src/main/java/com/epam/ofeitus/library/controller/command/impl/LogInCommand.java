@@ -23,6 +23,7 @@ public class LogInCommand implements Command {
 
         String email = request.getParameter(RequestParameter.EMAIL);
         String password = request.getParameter((RequestParameter.PASSWORD));
+
         if (email == null || password == null) {
             request.getSession().setAttribute(SessionAttribute.ERROR, "invalid_login_data");
             return new CommandResult(Page.ERROR_PAGE, RoutingType.REDIRECT);
@@ -31,7 +32,7 @@ public class LogInCommand implements Command {
         UserService userService = ServiceFactory.getInstance().getUserService();
         User user;
         try {
-            user = userService.login(email, String.valueOf(password));
+            user = userService.login(email, password);
         } catch (ServiceException e) {
             // TODO logger.error("Unable to test user sign in data. {}", e.getMessage());
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.REDIRECT);
