@@ -22,6 +22,9 @@ public class SignUpCommand implements Command {
 
         UserService userService = ServiceFactory.getInstance().getUserService();
         try {
+            if (userService.getByEmail(email) != null) {
+                return new CommandResult(Page.SIGN_UP_PAGE, RoutingType.FORWARD);
+            }
             userService.register(
                     firstName,
                     lastName,

@@ -11,4 +11,6 @@ public interface UserService {
     void register(String firstName, String lastName, String email, String password) throws ServiceException;
 
     List<User> getAll() throws ServiceException;
+
+    User getByEmail(String email) throws ServiceException;
 }

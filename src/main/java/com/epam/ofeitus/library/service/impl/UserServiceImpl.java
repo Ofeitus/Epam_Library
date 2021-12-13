@@ -56,4 +56,14 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public User getByEmail(String email) throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+        try {
+            return userDao.findByEmail(email);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

@@ -22,11 +22,11 @@ public class LogInCommand implements Command {
         HttpSession session = request.getSession();
 
         String email = request.getParameter(RequestParameter.EMAIL);
-        if (email == null || request.getParameter((RequestParameter.PASSWORD)) == null) {
+        String password = request.getParameter((RequestParameter.PASSWORD));
+        if (email == null || password == null) {
             request.getSession().setAttribute(SessionAttribute.ERROR, "invalid_login_data");
             return new CommandResult(Page.ERROR_PAGE, RoutingType.REDIRECT);
         }
-        char[] password = request.getParameter(RequestParameter.PASSWORD).toCharArray();
 
         UserService userService = ServiceFactory.getInstance().getUserService();
         User user;
@@ -36,7 +36,6 @@ public class LogInCommand implements Command {
             // TODO logger.error("Unable to test user sign in data. {}", e.getMessage());
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.REDIRECT);
         }
-        Arrays.fill(password, ' ');
         if (user != null) {
             session.setAttribute(SessionAttribute.USER_ID, user.getUserId());
             session.setAttribute(SessionAttribute.USER_EMAIL, user.getEmail());
