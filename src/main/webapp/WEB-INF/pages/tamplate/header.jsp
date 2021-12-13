@@ -17,7 +17,7 @@
                     <a id="log-link" href="?command=goto-log-in-page">Log in</a>
                 </c:if>
                 <c:if test="${sessionScope.user_id != null}">
-                    <a id="log-link" href="?command=goto-log-out-page">Log out</a>
+                    <a id="log-link" href="?command=log-out">Log out</a>
                 </c:if>
             </label>
             <div class="account">

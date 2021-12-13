@@ -1,4 +1,4 @@
-package com.epam.ofeitus.library.controller.command.factory;
+package com.epam.ofeitus.library.controller.command.impl;
 
 import com.epam.ofeitus.library.controller.command.Command;
 import com.epam.ofeitus.library.controller.command.CommandResult;
