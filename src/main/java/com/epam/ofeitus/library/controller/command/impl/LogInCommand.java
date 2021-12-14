@@ -14,7 +14,6 @@ import com.epam.ofeitus.library.service.factory.ServiceFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
 
 public class LogInCommand implements Command {
     @Override
@@ -23,11 +22,6 @@ public class LogInCommand implements Command {
 
         String email = request.getParameter(RequestParameter.EMAIL);
         String password = request.getParameter((RequestParameter.PASSWORD));
-
-        if (email == null || password == null) {
-            request.getSession().setAttribute(SessionAttribute.ERROR, "invalid_login_data");
-            return new CommandResult(Page.ERROR_PAGE, RoutingType.REDIRECT);
-        }
 
         UserService userService = ServiceFactory.getInstance().getUserService();
         User user;
@@ -38,11 +32,12 @@ public class LogInCommand implements Command {
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.REDIRECT);
         }
         if (user != null) {
+            session.removeAttribute(SessionAttribute.ERROR);
             session.setAttribute(SessionAttribute.USER_ID, user.getUserId());
             session.setAttribute(SessionAttribute.USER_EMAIL, user.getEmail());
             session.setAttribute(SessionAttribute.USER_ROLE, user.getUserRole());
         } else {
-            session.setAttribute(SessionAttribute.ERROR, "invalid_login_data");
+            session.setAttribute(SessionAttribute.ERROR, "Invalid login or password");
             return new CommandResult(Page.SIGN_IN_PAGE, RoutingType.FORWARD);
         }
 

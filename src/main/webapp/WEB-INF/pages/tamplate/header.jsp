@@ -24,6 +24,8 @@
                 <label class="user-email">
                     <c:if test="${sessionScope.user_email != null}">
                         ${sessionScope.user_email}
+                        &nbsp;
+                        &nbsp;
                     </c:if>
                 </label>
                 <i class="fa fa-user"></i>

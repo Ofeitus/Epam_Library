@@ -1,0 +1,27 @@
+.error-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-container img {
+    width: 300px;
+}
+
+.error-container h2 {
+    font-weight: 200;
+    font-size: 200px;
+    line-height: 1;
+}
+
+.error-container h3 {
+    font-weight: 300;
+    font-size: 28px;
+}
+
+.error-container h4 {
+    font-weight: 300;
+    font-size: 18px;
+}

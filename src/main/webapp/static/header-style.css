@@ -5,7 +5,7 @@
     padding: 0 10%;
     font-weight: 700;
     height: 80px;
-    background: linear-gradient(#c7d6dd, #e8edf1);
+    background: linear-gradient(#cdc2b9, #f5f2f0);
 }
 
 #home-link {
@@ -23,13 +23,13 @@
 }
 
 .info i {
-    color: #0044ef;
+    color: #5f5148;
 }
 
 .info a {
     font-size: 16px;
     font-weight: lighter;
-    text-align: right;
+    text-align: left;
     color: black;
     text-decoration: none;
     padding: 10px 20px 10px 20px;
@@ -45,28 +45,29 @@
     align-items: center;
     justify-content: right;
     height: 40px;
-    color: #E8EDF1;
-    font-size: 18px;
-    background-color: #0044ef;
-    border: 2px solid #0044ef;
+    color: #f5f2f0;
+    background-color: #5f5148;
+    border: 2px solid #5f5148;
     border-radius: 60px;
     transition: all 0.3s ease;
 }
 
 .auth:hover {
-    color: #0044ef;
-    background-color: #E8EDF1;
+    color: #5f5148;
+    background-color: #f5f2f0;
 }
 
 .auth:hover #log-link {
-    color: #0044ef;
+    color: #5f5148;
 }
 
 .auth-button a {
     padding: 0 15px;
     cursor: pointer;
-    color: #E8EDF1;
+    color: #f5f2f0;
+    font-size: 18px;
     text-decoration: none;
+    word-break: keep-all;
     transition: all 0.3s ease;
 }
 
@@ -81,9 +82,9 @@
     height: 36px;
     min-width: 20px;
     padding: 0 10px;
-    color: #0044ef;
+    color: #5f5148;
     font-size: 18px;
-    background-color: #E8EDF1;
+    background-color: #f5f2f0;
     border-radius: 60px;
     transition: all 0.3s ease;
 }

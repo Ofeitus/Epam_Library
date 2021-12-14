@@ -15,7 +15,7 @@
 
 .form-container .title:after{
     content: '';
-    background-color: #0044ef;
+    background-color: #5f5148;
     height: 3px;
     width: 60px;
     margin: 10px 0 0;
@@ -42,10 +42,6 @@
     padding: 0 8px;
     margin: 0 0 15px;
     display: inline-block;
-}
-
-.form-container .form-horizontal .form-group:nth-child(4){
-    margin-bottom: 30px;
 }
 
 .form-container .form-horizontal .form-group label{
@@ -82,15 +78,19 @@
 }
 
 .form-container .sign-link a{
-    color: #0044ef;
+    color: #5f5148;
     text-decoration: none;
     font-weight: 600;
     transition: all 0.3s ease 0s;
 }
 
+.form-container .sign-link a:hover {
+    text-decoration: underline;
+}
+
 .form-container .form-horizontal .submit{
     color: #fff;
-    background: #0044ef;
+    background: #5f5148;
     font-size: 15px;
     font-weight: 700;
     letter-spacing: 1px;
@@ -103,4 +103,10 @@
     text-shadow: 0 0 5px rgba(0,0,0,0.5);
     box-shadow: 3px 3px rgba(0,0,0,0.15),5px 5px rgba(0,0,0,0.1);
     outline: none;
+}
+
+#login-error-message {
+    font-size: 16px;
+    color: firebrick;
+    margin-bottom: 20px;
 }
