@@ -34,7 +34,7 @@ public class SignUpCommand implements Command {
             // TODO logger.debug("IS REGISTERED {}", isRegistered);
         } catch (ServiceException e) {
             // TODO logger.error("Unable to register new user. {}", e.getMessage());
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.REDIRECT);
+            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
         return new CommandResult(Page.HOME_PAGE_REDIRECT, RoutingType.REDIRECT);
     }

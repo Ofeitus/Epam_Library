@@ -24,7 +24,7 @@ public class GoToManageUsersPageCommand implements Command {
             return new CommandResult(Page.MANAGE_USERS_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
             // TODO logger.error("Unable to fetch all users' DTOs. {}", e.getMessage());
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.REDIRECT);
+            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
     }
 }

@@ -23,7 +23,7 @@ public class MySqlAuthorDao extends AbstractMySqlDao<Author> implements AuthorDa
             Column.AUTHOR_SURNAME,
             Column.AUTHOR_ID);
     private static final String FIND_BY_NAME_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=? AND %s=?",
+            "SELECT * FROM %s WHERE %s=? OR %s=?",
             Table.AUTHOR_TABLE,
             Column.AUTHOR_NAME,
             Column.AUTHOR_SURNAME);

@@ -29,7 +29,7 @@ public class LogInCommand implements Command {
             user = userService.login(email, password);
         } catch (ServiceException e) {
             // TODO logger.error("Unable to test user sign in data. {}", e.getMessage());
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.REDIRECT);
+            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
         if (user != null) {
             session.removeAttribute(SessionAttribute.ERROR);

@@ -36,6 +36,14 @@
     border-right: 1px solid;
 }
 
+#location i {
+    color: #5f5148;
+}
+
+#contacts i {
+    color: #5f5148;
+}
+
 .auth {
     display: inline-block;
     position: relative;
@@ -81,7 +89,7 @@
     margin: -2px;
     height: 100%;
     min-width: 20px;
-    padding: 0 10px;
+    padding: 0 15px;
     font-size: 18px;
     background-color: #5f5148;
     border-radius: 60px;

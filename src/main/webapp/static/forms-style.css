@@ -49,6 +49,10 @@
     font-weight: 700;
 }
 
+.form-container .form-group .input-group {
+    display: flex;
+}
+
 .form-container .form-horizontal .form-control{
     color: #333;
     background: #fff;
@@ -88,7 +92,7 @@
     text-decoration: underline;
 }
 
-.form-container .form-horizontal .submit{
+.form-container .form-horizontal .btn{
     color: #fff;
     background: #5f5148;
     font-size: 15px;
@@ -102,6 +106,10 @@
     text-shadow: 0 0 5px rgba(0,0,0,0.5);
     box-shadow: 3px 3px rgba(0,0,0,0.15),5px 5px rgba(0,0,0,0.1);
     outline: none;
+}
+
+#search-buttons {
+    margin: 0;
 }
 
 #login-error-message {

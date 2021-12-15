@@ -9,4 +9,5 @@ public class CommandName {
     public static final String SIGN_UP_COMMAND = "sign-up";
     public static final String LOG_OUT_COMMAND = "log-out";
     public static final String GOTO_MANAGE_USERS_PAGE_COMMAND = "goto-manage-users-page";
+    public static final String SEARCH_BOOKS_COMMAND = "search-books";
 }

@@ -116,4 +116,60 @@ public class MySqlBookDao extends AbstractMySqlDao<Book> implements BookDao {
     public List<Book> findByCategoryId(int categoryId) throws DaoException {
         return queryOperator.executeQuery(FIND_BY_CATEGORY_ID_QUERY, categoryId);
     }
+
+    @Override
+    public List<Book> findBySearchRequest(String isbnOrTitle, int categoryId, int authorId, int yearFrom, int yearTo) throws DaoException {
+        List<Object> parameters = new ArrayList<>();
+
+        String FIND_BY_SEARCH_REQUEST_QUERY = String.format(
+                "SELECT * FROM %s ",
+                Table.BOOK_TABLE);
+
+        if (authorId != 0) {
+            FIND_BY_SEARCH_REQUEST_QUERY += String.format(
+                    "JOIN %s BhA ON %s.%s = BhA.%s WHERE %s=? ",
+                    Table.BOOK_HAS_AUTHOR_TABLE,
+                    Table.BOOK_TABLE,
+                    Column.BOOK_ISBN,
+                    Column.BOOK_ISBN,
+                    Column.AUTHOR_ID);
+            parameters.add(authorId);
+        } else {
+            FIND_BY_SEARCH_REQUEST_QUERY += "WHERE 1=1 ";
+        }
+
+        if (!isbnOrTitle.equals("")) {
+            FIND_BY_SEARCH_REQUEST_QUERY += String.format(
+                    "AND (%s.%s=? OR %s=?) ",
+                    Table.BOOK_TABLE,
+                    Column.BOOK_ISBN,
+                    Column.BOOK_TITLE);
+            parameters.add(isbnOrTitle);
+            parameters.add(isbnOrTitle);
+        }
+
+        if (yearFrom != 0 || yearTo != 0) {
+            FIND_BY_SEARCH_REQUEST_QUERY += String.format(
+                    "AND (%s BETWEEN ? AND ?) ",
+                    Column.BOOK_PUBLICATION_YEAR);
+            parameters.add(yearFrom);
+            parameters.add(yearTo);
+        }
+
+        if (categoryId != 0) {
+            FIND_BY_SEARCH_REQUEST_QUERY += String.format(
+                    "AND %s=? ",
+                    Column.CATEGORY_ID);
+            parameters.add(categoryId);
+        }
+
+        if (parameters.size() == 0) {
+            return new ArrayList<>();
+        }
+
+        return queryOperator.executeQuery(
+                FIND_BY_SEARCH_REQUEST_QUERY,
+                parameters.toArray()
+        );
+    }
 }

@@ -19,6 +19,7 @@ public class CommandFactory {
         put(CommandName.LOG_IN_COMMAND, new LogInCommand());
         put(CommandName.LOG_OUT_COMMAND, new LogOutCommand());
         put(CommandName.SIGN_UP_COMMAND, new SignUpCommand());
+        put(CommandName.SEARCH_BOOKS_COMMAND, new SearchBooksCommand());
     }};
 
     private CommandFactory() {
