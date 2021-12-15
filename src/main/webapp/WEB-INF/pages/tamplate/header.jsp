@@ -12,24 +12,47 @@
             <i class="fa fa-map-marker-alt"></i>&nbsp;&nbsp;Minsk, Belarus</a>
         <a><i class="fa fa-phone"></i>&nbsp;&nbsp; +375(12)345-67-89 <br><i class="fa fa-mail-bulk"></i>&nbsp;&nbsp; sampleEmail@email.com</a>
         <div class="auth">
-            <label class="auth-button">
-                <c:if test="${sessionScope.user_id == null}">
+            <c:if test="${sessionScope.user_id == null}">
+                <label class="auth-button">
                     <a id="log-link" href="?command=goto-log-in-page">Log in</a>
-                </c:if>
-                <c:if test="${sessionScope.user_id != null}">
-                    <a id="log-link" href="?command=log-out">Log out</a>
-                </c:if>
-            </label>
-            <div class="account">
-                <label class="user-email">
-                    <c:if test="${sessionScope.user_email != null}">
-                        ${sessionScope.user_email}
-                        &nbsp;
-                        &nbsp;
-                    </c:if>
                 </label>
-                <i class="fa fa-user"></i>
-            </div>
+            </c:if>
+            <c:if test="${sessionScope.user_email != null}">
+                <div class="account">
+                    ${sessionScope.user_email}
+                    &nbsp;
+                    &nbsp;
+                    <i class="fa fa-user"></i>
+
+                </div>
+                <div class="dropdown-content">
+                    <hr>
+                    <c:if test="${sessionScope.user_role.toString() == 'MEMBER'}">
+                        <a href="#">Member profile</a>
+                        <hr>
+                        <a href="#">Your loans</a>
+                        <a href="#">Your reservations</a>
+                        <a href="#">Your fines</a>
+                    </c:if>
+                    <c:if test="${sessionScope.user_role.toString() == 'MANAGER'}">
+                        <a href="#">Manager profile</a>
+                        <hr>
+                        <a href="#">Manage books</a>
+                        <a href="#">Manage loans</a>
+                        <a href="#">Manage reservations</a>
+                        <a href="#">Manage fines</a>
+                    </c:if>
+                    <c:if test="${sessionScope.user_role.toString() == 'ADMIN'}">
+                        <a href="#">Admin profile</a>
+                        <hr>
+                        <a href="?command=goto-manage-users-page">Manage users</a>
+                        <a href="#">Loans report</a>
+                        <a href="#">Fines report</a>
+                    </c:if>
+                    <hr>
+                    <a href="?command=log-out">Log out</a>
+                </div>
+            </c:if>
         </div>
     </div>
 </header>

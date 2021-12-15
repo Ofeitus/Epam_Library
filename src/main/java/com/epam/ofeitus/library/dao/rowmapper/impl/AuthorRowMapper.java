@@ -13,7 +13,7 @@ public class AuthorRowMapper implements RowMapper<Author> {
         Author author = new Author();
         author.setAuthorId(resultSet.getInt(Column.AUTHOR_ID));
         author.setName(resultSet.getString(Column.AUTHOR_NAME));
-        author.setSurName(resultSet.getString(Column.AUTHOR_SURNAME));
+        author.setSurname(resultSet.getString(Column.AUTHOR_SURNAME));
         return author;
     }
 }

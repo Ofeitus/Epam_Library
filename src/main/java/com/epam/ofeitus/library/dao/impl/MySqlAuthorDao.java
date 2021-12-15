@@ -45,7 +45,7 @@ public class MySqlAuthorDao extends AbstractMySqlDao<Author> implements AuthorDa
         return queryOperator.executeUpdate(
                 SAVE_AUTHOR_QUERY,
                 entity.getName(),
-                entity.getSurName());
+                entity.getSurname());
     }
 
     @Override
@@ -53,7 +53,7 @@ public class MySqlAuthorDao extends AbstractMySqlDao<Author> implements AuthorDa
         return queryOperator.executeUpdate(
                 UPDATE_AUTHOR_QUERY,
                 entity.getName(),
-                entity.getSurName(),
+                entity.getSurname(),
                 entity.getAuthorId());
     }
 

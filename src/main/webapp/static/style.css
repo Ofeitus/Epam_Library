@@ -12,6 +12,34 @@ body {
 }
 
 h2 {
+    margin-top: 150px;
+    color: #5f5148;
     align-self: center;
-    font-size: 42px;
+    font-size: 72px;
+    font-weight: 200;
+}
+
+.home-container {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-container .btn {
+    color: #fff;
+    background: #5f5148;
+    font-size: 28px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    border: none;
+    border-radius: 15px;
+    transition: all 0.3s ease 0s;
+}
+
+.home-container .btn:hover {
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    box-shadow: 3px 3px rgba(0,0,0,0.15),5px 5px rgba(0,0,0,0.1);
+    outline: none;
 }

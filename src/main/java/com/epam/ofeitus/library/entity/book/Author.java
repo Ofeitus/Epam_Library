@@ -6,15 +6,15 @@ import java.util.Objects;
 public class Author implements Serializable {
     private int authorId;
     private String name;
-    private String surName;
+    private String surname;
 
     public Author() {
     }
 
-    public Author(int authorId, String name, String surName) {
+    public Author(int authorId, String name, String surname) {
         this.authorId = authorId;
         this.name = name;
-        this.surName = surName;
+        this.surname = surname;
     }
 
     public int getAuthorId() {
@@ -33,12 +33,12 @@ public class Author implements Serializable {
         this.name = name;
     }
 
-    public String getSurName() {
-        return surName;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setSurName(String surName) {
-        this.surName = surName;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     @Override
@@ -46,12 +46,12 @@ public class Author implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Author author = (Author) o;
-        return authorId == author.authorId && Objects.equals(name, author.name) && Objects.equals(surName, author.surName);
+        return authorId == author.authorId && Objects.equals(name, author.name) && Objects.equals(surname, author.surname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(authorId, name, surName);
+        return Objects.hash(authorId, name, surname);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class Author implements Serializable {
         return "Author{" +
                 "authorId=" + authorId +
                 ", name='" + name + '\'' +
-                ", surName='" + surName + '\'' +
+                ", surName='" + surname + '\'' +
                 '}';
     }
 }

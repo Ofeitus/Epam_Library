@@ -10,4 +10,5 @@
 <link rel="stylesheet" href="static/style.css">
 <link rel="stylesheet" href="static/forms-style.css">
 <link rel="stylesheet" href="static/header-style.css">
-<link rel="stylesheet" href="static/error.css">
+<link rel="stylesheet" href="static/error-style.css">
+<link rel="stylesheet" href="static/catalog-style.css">

@@ -33,7 +33,7 @@ public class Controller extends HttpServlet {
         Command command = CommandFactory.getInstance().getCommand(commandName);
 
         if (commandName == null || command == null) {
-            request.getRequestDispatcher(Page.ERROR_404_PAGE).forward(request, response);
+            request.getRequestDispatcher(Page.ERROR_500_PAGE).forward(request, response);
             return;
         }
 

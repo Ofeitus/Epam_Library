@@ -2,4 +2,5 @@ package com.epam.ofeitus.library.controller.constant;
 
 public class RequestAttribute {
     public static final String USERS = "users";
+    public static final String BOOKS = "books";
 }

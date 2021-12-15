@@ -7,29 +7,12 @@
 </head>
 <body>
 <jsp:include page="tamplate/header.jsp" />
-    <h2>This is the test home page</h2>
-    <h3>Registered users:</h3>
-    <table class="table table-hover table-striped">
-        <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">name</th>
-            <th scope="col" >surname</th>
-            <th scope="col">email</th>
-            <th scope="col" >role</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${requestScope.users}" var="user">
-            <tr>
-                <th scope="col">${user.userId}</th>
-                <td>${user.name}</td>
-                <td>${user.surname}</td>
-                <td>${user.email}</td>
-                <td>${user.userRole.toString()}</td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+    <h2>Welcome to Web Library!</h2>
+    <div class="home-container">
+        <form action="controller" method="get">
+            <input type="hidden" name="command" value="goto-catalog-page">
+            <button type="submit" class="btn submit">View catalog</button>
+        </form>
+    </div>
 </body>
 </html>
