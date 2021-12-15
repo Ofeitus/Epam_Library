@@ -1,0 +1,35 @@
+.details-container {
+    background-color: #ffffff;
+    display: flex;
+    margin: 50px 15%;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 10px 10px 15px 0 rgba(0, 0, 0, 0.2);
+}
+
+.details-container .book-title {
+    font-size: 36px;
+    font-weight: 300;
+}
+
+.details-container .img-container {
+    display: flex;
+    justify-content: center;
+    width: 40%;
+}
+
+.details-container .img-container img {
+    width: 60%;
+}
+
+.details-container .book-data {
+    font-size: 18px;
+}
+
+.details-container .book-data td {
+    padding: 10px;
+}
+
+.details-container .book-data .book-field-name {
+    color: #888888;
+}

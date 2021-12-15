@@ -40,6 +40,9 @@ public class Controller extends HttpServlet {
         CommandResult result = command.execute(request, response);
 
         String resource = result.getResource();
+        response.setHeader("Pragma", "No-cache");
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setDateHeader("Expires", -1);
         switch (result.getRoutingType()) {
             case FORWARD:
                 request.getRequestDispatcher(resource).forward(request, response);

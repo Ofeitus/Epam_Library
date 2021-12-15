@@ -16,7 +16,7 @@
                     <input type="hidden" name="command" value="log-in">
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" name="email" value="" class="form-control" placeholder="Email" required>
+                        <input type="email" name="email" value="${requestScope.user_email}" class="form-control" placeholder="Email" required>
                     </div>
                     <div class="form-group">
                         <label>Password</label>

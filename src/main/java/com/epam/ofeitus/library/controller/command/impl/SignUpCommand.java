@@ -4,6 +4,7 @@ import com.epam.ofeitus.library.controller.command.Command;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
+import com.epam.ofeitus.library.controller.constant.RequestAttribute;
 import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.service.UserService;
@@ -31,11 +32,12 @@ public class SignUpCommand implements Command {
                 return new CommandResult(Page.SIGN_UP_PAGE, RoutingType.FORWARD);
             }
             userService.register(firstName, lastName, email, password);
+            request.setAttribute(RequestAttribute.EMAIL, email);
             // TODO logger.debug("IS REGISTERED {}", isRegistered);
         } catch (ServiceException e) {
             // TODO logger.error("Unable to register new user. {}", e.getMessage());
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
-        return new CommandResult(Page.HOME_PAGE_REDIRECT, RoutingType.REDIRECT);
+        return new CommandResult(Page.SIGN_IN_PAGE, RoutingType.FORWARD);
     }
 }

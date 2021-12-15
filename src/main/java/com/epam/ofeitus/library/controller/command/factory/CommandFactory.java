@@ -13,6 +13,7 @@ public class CommandFactory {
     private static final Map<String, Command> commands = new HashMap<>() {{
         put(CommandName.GOTO_HOME_PAGE_COMMAND, new GoToHomePageCommand());
         put(CommandName.GOTO_CATALOG_PAGE_COMMAND, new GoToCatalogPageCommand());
+        put(CommandName.GOTO_BOOK_DETAILS_COMMAND, new GoToBookDetailsPageCommand());
         put(CommandName.GOTO_LOG_IN_PAGE_COMMAND, new GoToLogInPageCommand());
         put(CommandName.GOTO_SIGN_UP_PAGE_COMMAND, new GoToSignUpPageCommand());
         put(CommandName.GOTO_MANAGE_USERS_PAGE_COMMAND, new GoToManageUsersPageCommand());

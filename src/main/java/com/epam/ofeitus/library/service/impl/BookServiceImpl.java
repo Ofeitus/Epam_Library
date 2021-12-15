@@ -74,4 +74,27 @@ public class BookServiceImpl implements BookService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public BookDto getBookDtoByIsbn(String bookIsbn) throws ServiceException {
+        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
+        BookDao bookDao = daoFactory.getBookDao();
+        AuthorDao authorDao = daoFactory.getAuthorDao();
+        BookCategoryDao bookCategoryDao = daoFactory.getBookCategoryDao();
+
+        try {
+            Book book = bookDao.findByIsbn(bookIsbn);
+            List<Author> authors = authorDao.findByBookIsbn(book.getIsbn());
+            BookCategory category = bookCategoryDao.findById(book.getCategoryId());
+            return new BookDto(
+                        book.getIsbn(),
+                        book.getTitle(),
+                        authors,
+                        book.getPublicationYear(),
+                        category.getName(),
+                        book.getLanguage());
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

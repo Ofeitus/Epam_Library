@@ -17,13 +17,10 @@
                     <a id="log-link" href="?command=goto-log-in-page">Log in</a>
                 </label>
             </c:if>
-            <c:if test="${sessionScope.user_email != null}">
+            <c:if test="${sessionScope.user_id != null}">
                 <div class="account">
-                    ${sessionScope.user_email}
-                    &nbsp;
-                    &nbsp;
+                    ${sessionScope.user_email}&nbsp;&nbsp;
                     <i class="fa fa-user"></i>
-
                 </div>
                 <div class="dropdown-content">
                     <hr>

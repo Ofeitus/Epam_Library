@@ -10,9 +10,10 @@ public class Page {
     public static final String HOME_PAGE_REDIRECT = "/controller?command=goto-home-page";
     public static final String CATALOG_PAGE = "WEB-INF/pages/catalog.jsp";
     public static final String SIGN_IN_PAGE = "WEB-INF/pages/log-in.jsp";
-    public static final String SIGN_IN_PAGE_REDIRECT = "/controller?command=goto-sign-in";
+    public static final String SIGN_IN_PAGE_REDIRECT = "/controller?command=goto-log-in-page";
     public static final String SIGN_UP_PAGE = "WEB-INF/pages/sign-up.jsp";
 
     //admin
     public static final String MANAGE_USERS_PAGE = "WEB-INF/pages/admin/manage-users.jsp";
+    public static final String BOOK_DETAILS_PAGE = "WEB-INF/pages/book-details.jsp";
 }
