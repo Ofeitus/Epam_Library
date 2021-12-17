@@ -21,7 +21,7 @@ USE `Library` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Library`.`book_categories` (
   `category_id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL,
+  `category_name` VARCHAR(45) NULL,
   PRIMARY KEY (`category_id`))
 ENGINE = InnoDB;
 
@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `Library`.`books` (
   `publication_year` INT NULL,
   `category_id` INT NOT NULL,
   `language` VARCHAR(45) NULL,
+  `key_words` TEXT NULL,
   PRIMARY KEY (`isbn`),
   INDEX `fk_book_book_cetergory1_idx` (`category_id` ASC) VISIBLE,
   CONSTRAINT `fk_book_book_cetergory1`
@@ -53,28 +54,6 @@ CREATE TABLE IF NOT EXISTS `Library`.`authors` (
   `name` VARCHAR(45) NULL,
   `surname` VARCHAR(45) NULL,
   PRIMARY KEY (`author_id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `Library`.`book_has_author`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Library`.`book_has_author` (
-  `author_id` INT NOT NULL,
-  `isbn` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`author_id`, `isbn`),
-  INDEX `fk_book_has_author_author1_idx` (`author_id` ASC) VISIBLE,
-  INDEX `fk_book_has_author_book_idx` (`isbn` ASC) VISIBLE,
-  CONSTRAINT `fk_book_has_author_book`
-    FOREIGN KEY (`isbn`)
-    REFERENCES `Library`.`books` (`isbn`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_book_has_author_author1`
-    FOREIGN KEY (`author_id`)
-    REFERENCES `Library`.`authors` (`author_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -172,7 +151,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Library`.`reservation_status` (
   `reservation_status_id` INT NOT NULL,
-  `value` VARCHAR(45) NULL,
+  `reservations_status_value` VARCHAR(45) NULL,
   PRIMARY KEY (`reservation_status_id`))
 ENGINE = InnoDB;
 
@@ -221,6 +200,28 @@ CREATE TABLE IF NOT EXISTS `Library`.`fines_payments` (
   CONSTRAINT `fk_fines_payments_users1`
     FOREIGN KEY (`user_id`)
     REFERENCES `Library`.`users` (`user_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Library`.`book_has_author`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Library`.`book_has_author` (
+  `book_isbn` VARCHAR(45) NOT NULL,
+  `author_id` INT NOT NULL,
+  PRIMARY KEY (`book_isbn`, `author_id`),
+  INDEX `fk_books_has_authors_authors1_idx` (`author_id` ASC) VISIBLE,
+  INDEX `fk_books_has_authors_books1_idx` (`book_isbn` ASC) VISIBLE,
+  CONSTRAINT `fk_books_has_authors_books1`
+    FOREIGN KEY (`book_isbn`)
+    REFERENCES `Library`.`books` (`isbn`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_books_has_authors_authors1`
+    FOREIGN KEY (`author_id`)
+    REFERENCES `Library`.`authors` (`author_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

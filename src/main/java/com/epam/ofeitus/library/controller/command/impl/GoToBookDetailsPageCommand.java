@@ -10,12 +10,15 @@ import com.epam.ofeitus.library.entity.dto.BookDto;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 import com.epam.ofeitus.library.service.factory.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 public class GoToBookDetailsPageCommand implements Command {
+    //Logger logger = LogManager.getLogger(GoToBookDetailsPageCommand.class);
+
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         BookService bookService = ServiceFactory.getInstance().getBookService();

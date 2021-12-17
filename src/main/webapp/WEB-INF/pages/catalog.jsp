@@ -15,7 +15,7 @@
             <input type="hidden" name="command" value="search-books">
             <div class="form-group">
                 <label>ISBN/Title</label>
-                <input type="text" name="isbn-title" value="" class="form-control" placeholder="isbn/title">
+                <input type="text" name="search-request" value="" class="form-control" placeholder="isbn / title / key word">
             </div>
             <div class="form-group">
                 <label>Category</label>

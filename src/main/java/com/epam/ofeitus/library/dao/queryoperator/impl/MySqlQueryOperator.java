@@ -37,8 +37,10 @@ public class MySqlQueryOperator<T> implements QueryOperator<T> {
                 result.add(entity);
             }
         } catch (SQLException e) {
+            // TODO logger
             throw new DaoException("Unable to execute select query.", e);
         } catch (ConnectionPoolException e) {
+            // TODO logger
             throw new DaoException("Unable to get connection.", e);
         }
         return result;
@@ -67,8 +69,10 @@ public class MySqlQueryOperator<T> implements QueryOperator<T> {
                 return rowsAffected;
             }
         } catch (SQLException e) {
+            // TODO logger
             throw new DaoException("Unable to execute update query.", e);
         } catch (ConnectionPoolException e) {
+            // TODO logger
             throw new DaoException("Unable to get connection.", e);
         }
     }
@@ -76,6 +80,7 @@ public class MySqlQueryOperator<T> implements QueryOperator<T> {
     private void rollbackTransaction(Connection connection) throws DaoException {
         if (connection != null) {
             try {
+                // TODO logger
                 connection.rollback();
             } catch (SQLException sqlException) {
                 throw new DaoException(sqlException);
@@ -89,6 +94,7 @@ public class MySqlQueryOperator<T> implements QueryOperator<T> {
                 connection.setAutoCommit(true);
                 connection.close();
             } catch (SQLException e) {
+                // TODO logger
                 throw new DaoException("Unable to return connection to connection pool.", e);
             }
         }
@@ -115,9 +121,11 @@ public class MySqlQueryOperator<T> implements QueryOperator<T> {
             connection.commit();
             return firstQueryGeneratedKey;
         } catch (SQLException e) {
+            // TODO logger
             rollbackTransaction(connection);
             throw new DaoException("Unable to execute update query.", e);
         } catch (ConnectionPoolException e) {
+            // TODO logger
             throw new DaoException("Unable to retrieve connection.", e);
         } finally {
             releaseConnection(connection);

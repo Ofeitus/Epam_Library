@@ -118,7 +118,7 @@ public class MySqlBookDao extends AbstractMySqlDao<Book> implements BookDao {
     }
 
     @Override
-    public List<Book> findBySearchRequest(String isbnOrTitle, int categoryId, int authorId, int yearFrom, int yearTo) throws DaoException {
+    public List<Book> findBySearchRequest(String searchRequest, int categoryId, int authorId, int yearFrom, int yearTo) throws DaoException {
         List<Object> parameters = new ArrayList<>();
 
         String FIND_BY_SEARCH_REQUEST_QUERY = String.format(
@@ -131,21 +131,23 @@ public class MySqlBookDao extends AbstractMySqlDao<Book> implements BookDao {
                     Table.BOOK_HAS_AUTHOR_TABLE,
                     Table.BOOK_TABLE,
                     Column.BOOK_ISBN,
-                    Column.BOOK_ISBN,
+                    Column.BOOK_HAS_AUTHOR_BOOK_ISBN,
                     Column.AUTHOR_ID);
             parameters.add(authorId);
         } else {
             FIND_BY_SEARCH_REQUEST_QUERY += "WHERE 1=1 ";
         }
 
-        if (!isbnOrTitle.equals("")) {
+        if (!searchRequest.equals("")) {
             FIND_BY_SEARCH_REQUEST_QUERY += String.format(
-                    "AND (%s.%s=? OR %s=?) ",
+                    "AND (%s.%s=? OR %s LIKE ? OR %s LIKE ?) ",
                     Table.BOOK_TABLE,
                     Column.BOOK_ISBN,
-                    Column.BOOK_TITLE);
-            parameters.add(isbnOrTitle);
-            parameters.add(isbnOrTitle);
+                    Column.BOOK_TITLE,
+                    Column.BOOK_KEY_WORDS);
+            parameters.add(searchRequest);
+            parameters.add("%" + searchRequest + "%");
+            parameters.add("%" + searchRequest + "%");
         }
 
         if (yearFrom != 0 || yearTo != 0) {

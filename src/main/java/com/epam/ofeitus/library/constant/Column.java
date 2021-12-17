@@ -7,13 +7,17 @@ public final class Column {
     public static final String BOOK_PUBLICATION_YEAR = "publication_year";
     public static final String BOOK_CATEGORY_ID = "category_id";
     public static final String BOOK_LANGUAGE = "language";
+    public static final String BOOK_KEY_WORDS = "key_words";
 
     public static final String AUTHOR_ID = "author_id";
     public static final String AUTHOR_NAME = "name";
     public static final String AUTHOR_SURNAME = "surname";
 
+    public static final String BOOK_HAS_AUTHOR_BOOK_ISBN = "book_isbn";
+    public static final String BOOK_HAS_AUTHOR_AUTHOR = "author_id";
+
     public static final String CATEGORY_ID = "category_id";
-    public static final String CATEGORY_NAME = "name";
+    public static final String CATEGORY_NAME = "category_name";
 
     public static final String LOAN_ID = "loan_id";
     public static final String LOAN_ISSUE_DATE = "issue_date";
@@ -26,8 +30,9 @@ public final class Column {
     public static final String RESERVATION_USER_ID = "reservation_user_id";
     public static final String RESERVATION_BOOK_ISBN = "isbn";
     public static final String RESERVATION_DATE = "date";
+
     public static final String RESERVATION_STATUS_ID = "reservation_status_id";
-    public static final String RESERVATION_STATUS_VALUE = "value";
+    public static final String RESERVATION_STATUS_VALUE = "reservation_status_value";
 
     public static final String USER_ID = "user_id";
     public static final String USER_NAME = "name";

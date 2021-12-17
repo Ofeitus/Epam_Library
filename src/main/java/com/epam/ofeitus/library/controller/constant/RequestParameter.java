@@ -6,7 +6,7 @@ public class RequestParameter {
     public static final String PASSWORD = "password";
     public static final String FIRST_NAME = "first-name";
     public static final String SECOND_NAME = "second-name";
-    public static final String ISBN_OR_TITLE = "isbn-title";
+    public static final String SEARCH_REQUEST = "search-request";
     public static final String CATEGORY = "category";
     public static final String AUTHOR_NAME = "author-name";
     public static final String AUTHOR_SURNAME = "author-surname";

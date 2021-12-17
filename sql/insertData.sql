@@ -11,9 +11,7 @@ INSERT INTO `library`.`users` (user_id, name, surname, email, password_hash, use
 INSERT INTO `library`.`users` (user_id, name, surname, email, password_hash, user_role_id, deleted) VALUES ('0', 'Kliment', 'Severin', 'severin@email.com', '6bd9ce43d5c204a559a81d33d4739199e0339de5cb3448470f6698f4ebf3716f', '3', '0');
 
 -- Book Categories
-INSERT INTO `library`.`book_categories` (`category_id`, `name`) VALUES ('0', 'Фентези');
-INSERT INTO `library`.`book_categories` (`category_id`, `name`) VALUES ('0', 'Роман-антиутопия');
-INSERT INTO `library`.`book_categories` (`category_id`, `name`) VALUES ('0', 'Детектив');
+INSERT INTO `library`.`book_categories` (`category_id`, `category_name`) VALUES ('0', 'Художественная литература');
 
 -- Authors
 INSERT INTO `library`.`authors` (`author_id`, `name`, `surname`) VALUES ('0', 'Джоан', 'Роулинг');
@@ -25,18 +23,30 @@ INSERT INTO `library`.`authors` (`author_id`, `name`, `surname`) VALUES ('0', '�
 INSERT INTO `library`.`authors` (`author_id`, `name`, `surname`) VALUES ('0', 'Марио', 'Пьюзо');
 
 -- Books
-INSERT INTO `library`.`books` (`isbn`, `title`, `publication_year`, `category_id`, `language`) VALUES ('9785389074354', 'Гарри Поттер и философский камень', '2016', '1', 'Русский');
-INSERT INTO `library`.`books` (`isbn`, `title`, `publication_year`, `category_id`, `language`) VALUES ('5941170688', 'Порри Гаттер и Каменный Философ', '2003', '1', 'Русский');
-INSERT INTO `library`.`books` (`isbn`, `title`, `publication_year`, `category_id`, `language`) VALUES ('9785699923595', '451 градус по Фаренгейту', '2017', '2', 'Русский');
-INSERT INTO `library`.`books` (`isbn`, `title`, `publication_year`, `category_id`, `language`) VALUES ('9785170801152', '1984', '2017', '2', 'English');
-INSERT INTO `library`.`books` (`isbn`, `title`, `publication_year`, `category_id`, `language`) VALUES ('9785041034979', 'Десять негритят', '2021', '3', 'Русский');
-INSERT INTO `library`.`books` (`isbn`, `title`, `publication_year`, `category_id`, `language`) VALUES ('9785041078713', 'Крестный отец', '2020', '3', 'Русский');
+INSERT INTO `library`.`books` (`isbn`, `title`, `publication_year`, `category_id`, `language`, `key_words`) VALUES ('9785389074354', 'Гарри Поттер и философский камень', '2016', '1', 'Русский', 'Фентези, фантастика');
+INSERT INTO `library`.`books` (`isbn`, `title`, `publication_year`, `category_id`, `language`, `key_words`) VALUES ('9785389077812', 'Гарри Поттер и Тайная комната', '2019', '1', 'Русский', 'Фентези');
+INSERT INTO `library`.`books` (`isbn`, `title`, `publication_year`, `category_id`, `language`, `key_words`) VALUES ('9785389077881', 'Гарри Поттер и ухник Азкабана', '2016', '1', 'Русский', 'Фентези');
+INSERT INTO `library`.`books` (`isbn`, `title`, `publication_year`, `category_id`, `language`, `key_words`) VALUES ('9785389077898', 'Гарри Поттер и Кубок огня', '2019', '1', 'Русский', 'Фентези, фантастика');
+INSERT INTO `library`.`books` (`isbn`, `title`, `publication_year`, `category_id`, `language`, `key_words`) VALUES ('9785389077904', 'Гарри Поттер и Орден Феникса', '2016', '1', 'Русский', 'Фентези');
+INSERT INTO `library`.`books` (`isbn`, `title`, `publication_year`, `category_id`, `language`, `key_words`) VALUES ('9785389077911', 'Гарри Поттер и Принц-полукровка', '2016', '1', 'Русский', 'Фентези');
+INSERT INTO `library`.`books` (`isbn`, `title`, `publication_year`, `category_id`, `language`, `key_words`) VALUES ('9785389077928', 'Гарри Поттер и Дары Смерти', '2015', '1', 'Русский', 'Фентези');
+INSERT INTO `library`.`books` (`isbn`, `title`, `publication_year`, `category_id`, `language`, `key_words`) VALUES ('5941170688', 'Порри Гаттер и Каменный Философ', '2003', '1', 'Русский', '');
+INSERT INTO `library`.`books` (`isbn`, `title`, `publication_year`, `category_id`, `language`, `key_words`) VALUES ('9785699923595', '451 градус по Фаренгейту', '2017', '1', 'Русский', '');
+INSERT INTO `library`.`books` (`isbn`, `title`, `publication_year`, `category_id`, `language`, `key_words`) VALUES ('9785170801152', '1984', '2017', '1', 'English', '');
+INSERT INTO `library`.`books` (`isbn`, `title`, `publication_year`, `category_id`, `language`, `key_words`) VALUES ('9785041034979', 'Десять негритят', '2021', '1', 'Русский', '');
+INSERT INTO `library`.`books` (`isbn`, `title`, `publication_year`, `category_id`, `language`, `key_words`) VALUES ('9785041078713', 'Крестный отец', '2020', '1', 'Русский', '');
 
 -- Book has Author
-INSERT INTO `library`.`book_has_author` (author_id, isbn) VALUES ('1', '9785389074354');
-INSERT INTO `library`.`book_has_author` (author_id, isbn) VALUES ('2', '5941170688');
-INSERT INTO `library`.`book_has_author` (author_id, isbn) VALUES ('3', '5941170688');
-INSERT INTO `library`.`book_has_author` (author_id, isbn) VALUES ('4', '9785699923595');
-INSERT INTO `library`.`book_has_author` (author_id, isbn) VALUES ('5', '9785170801152');
-INSERT INTO `library`.`book_has_author` (author_id, isbn) VALUES ('6', '9785041034979');
-INSERT INTO `library`.`book_has_author` (author_id, isbn) VALUES ('7', '9785041078713');
+INSERT INTO `library`.`book_has_author` (book_isbn, author_id) VALUES ('9785389074354', '1');
+INSERT INTO `library`.`book_has_author` (book_isbn, author_id) VALUES ('9785389077812', '1');
+INSERT INTO `library`.`book_has_author` (book_isbn, author_id) VALUES ('9785389077881', '1');
+INSERT INTO `library`.`book_has_author` (book_isbn, author_id) VALUES ('9785389077898', '1');
+INSERT INTO `library`.`book_has_author` (book_isbn, author_id) VALUES ('9785389077904', '1');
+INSERT INTO `library`.`book_has_author` (book_isbn, author_id) VALUES ('9785389077911', '1');
+INSERT INTO `library`.`book_has_author` (book_isbn, author_id) VALUES ('9785389077928', '1');
+INSERT INTO `library`.`book_has_author` (book_isbn, author_id) VALUES ('5941170688', '2');
+INSERT INTO `library`.`book_has_author` (book_isbn, author_id) VALUES ('5941170688', '3');
+INSERT INTO `library`.`book_has_author` (book_isbn, author_id) VALUES ('9785699923595', '4');
+INSERT INTO `library`.`book_has_author` (book_isbn, author_id) VALUES ('9785170801152', '5');
+INSERT INTO `library`.`book_has_author` (book_isbn, author_id) VALUES ('9785041034979', '6');
+INSERT INTO `library`.`book_has_author` (book_isbn, author_id) VALUES ('9785041078713', '7');

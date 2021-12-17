@@ -34,6 +34,10 @@
                 <td class="book-field-name">Language</td>
                 <td class="book-field-value">${requestScope.book.language}</td>
             </tr>
+            <tr>
+                <td class="book-field-name">Key words</td>
+                <td class="book-field-value">${requestScope.book.keyWords}</td>
+            </tr>
         </table>
     </div>
 </div>

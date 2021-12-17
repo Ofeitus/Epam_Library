@@ -16,6 +16,7 @@ public class BookRowMapper implements RowMapper<Book> {
         book.setPublicationYear(resultSet.getInt(Column.BOOK_PUBLICATION_YEAR));
         book.setCategoryId(resultSet.getInt(Column.BOOK_CATEGORY_ID));
         book.setLanguage(resultSet.getString(Column.BOOK_LANGUAGE));
+        book.setKeyWords(resultSet.getString(Column.BOOK_KEY_WORDS));
         return book;
     }
 }

@@ -49,6 +49,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.findAll();
         } catch (DaoException e) {
+            //TODO logger
             throw new ServiceException(e);
         }
     }
@@ -59,6 +60,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.findByEmail(email);
         } catch (DaoException e) {
+            // TODO logger
             throw new ServiceException(e);
         }
     }

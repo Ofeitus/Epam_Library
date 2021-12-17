@@ -35,16 +35,18 @@ public class BookServiceImpl implements BookService {
                         authors,
                         book.getPublicationYear(),
                         category.getName(),
-                        book.getLanguage()));
+                        book.getLanguage(),
+                        book.getKeyWords()));
             }
             return booksDto;
         } catch (DaoException e) {
+            // TODO logger
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<BookDto> getBooksDtoBySearchRequest(String isbnOrTitle, String category, String authorName, String authorSurname, int yearFrom, int yearTo) throws ServiceException {
+    public List<BookDto> getBooksDtoBySearchRequest(String searchRequest, String category, String authorName, String authorSurname, int yearFrom, int yearTo) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         BookDao bookDao = daoFactory.getBookDao();
         AuthorDao authorDao = daoFactory.getAuthorDao();
@@ -57,7 +59,7 @@ public class BookServiceImpl implements BookService {
             BookCategory bookCategory = bookCategoryDao.findByName(category);
             int categoryId = bookCategory != null ? bookCategory.getCategoryId() : 0;
 
-            List<Book> books = bookDao.findBySearchRequest(isbnOrTitle, categoryId, authorId, yearFrom, yearTo);
+            List<Book> books = bookDao.findBySearchRequest(searchRequest, categoryId, authorId, yearFrom, yearTo);
             List<BookDto> booksDto = new ArrayList<>();
             for (Book book : books) {
                 List<Author> authors = authorDao.findByBookIsbn(book.getIsbn());
@@ -67,10 +69,14 @@ public class BookServiceImpl implements BookService {
                         authors,
                         book.getPublicationYear(),
                         category,
-                        book.getLanguage()));
+                        book.getLanguage(),
+                        book.getKeyWords()
+                        )
+                );
             }
             return booksDto;
         } catch (DaoException e) {
+            // TODO logger
             throw new ServiceException(e);
         }
     }
@@ -87,12 +93,14 @@ public class BookServiceImpl implements BookService {
             List<Author> authors = authorDao.findByBookIsbn(book.getIsbn());
             BookCategory category = bookCategoryDao.findById(book.getCategoryId());
             return new BookDto(
-                        book.getIsbn(),
-                        book.getTitle(),
-                        authors,
-                        book.getPublicationYear(),
-                        category.getName(),
-                        book.getLanguage());
+                    book.getIsbn(),
+                    book.getTitle(),
+                    authors,
+                    book.getPublicationYear(),
+                    category.getName(),
+                    book.getLanguage(),
+                    book.getKeyWords()
+            );
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

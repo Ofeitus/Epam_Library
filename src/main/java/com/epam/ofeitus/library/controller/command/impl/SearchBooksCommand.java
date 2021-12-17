@@ -20,7 +20,7 @@ public class SearchBooksCommand implements Command {
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         BookService bookService = ServiceFactory.getInstance().getBookService();
 
-        String isbnOrTitle = request.getParameter(RequestParameter.ISBN_OR_TITLE);
+        String searchRequest = request.getParameter(RequestParameter.SEARCH_REQUEST);
         String category = request.getParameter(RequestParameter.CATEGORY);
         String authorName = request.getParameter(RequestParameter.AUTHOR_NAME);
         String authorSurname = request.getParameter(RequestParameter.AUTHOR_SURNAME);
@@ -29,7 +29,7 @@ public class SearchBooksCommand implements Command {
 
         try {
             List<BookDto> books = bookService.getBooksDtoBySearchRequest(
-                    isbnOrTitle,
+                    searchRequest,
                     category,
                     authorName,
                     authorSurname,

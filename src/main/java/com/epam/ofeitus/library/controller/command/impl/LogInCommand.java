@@ -32,6 +32,7 @@ public class LogInCommand implements Command {
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
         if (user != null) {
+            // TODO log admin login
             session.removeAttribute(SessionAttribute.ERROR);
             session.setAttribute(SessionAttribute.USER_ID, user.getUserId());
             session.setAttribute(SessionAttribute.USER_EMAIL, user.getEmail());

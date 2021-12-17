@@ -12,17 +12,19 @@ public class BookDto {
     private int publicationYear;
     private String category;
     private String language;
+    private String keyWords;
 
     public BookDto() {
     }
 
-    public BookDto(String isbn, String title, List<Author> authors, int publicationYear, String category, String language) {
+    public BookDto(String isbn, String title, List<Author> authors, int publicationYear, String category, String language, String keyWords) {
         this.isbn = isbn;
         this.title = title;
         this.authors = authors;
         this.publicationYear = publicationYear;
         this.category = category;
         this.language = language;
+        this.keyWords = keyWords;
     }
 
     public String getIsbn() {
@@ -73,17 +75,25 @@ public class BookDto {
         this.language = language;
     }
 
+    public String getKeyWords() {
+        return keyWords;
+    }
+
+    public void setKeyWords(String keyWords) {
+        this.keyWords = keyWords;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BookDto bookDto = (BookDto) o;
-        return publicationYear == bookDto.publicationYear && Objects.equals(isbn, bookDto.isbn) && Objects.equals(title, bookDto.title) && Objects.equals(authors, bookDto.authors) && Objects.equals(category, bookDto.category) && Objects.equals(language, bookDto.language);
+        return publicationYear == bookDto.publicationYear && Objects.equals(isbn, bookDto.isbn) && Objects.equals(title, bookDto.title) && Objects.equals(authors, bookDto.authors) && Objects.equals(category, bookDto.category) && Objects.equals(language, bookDto.language) && Objects.equals(keyWords, bookDto.keyWords);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isbn, title, authors, publicationYear, category, language);
+        return Objects.hash(isbn, title, authors, publicationYear, category, language, keyWords);
     }
 
     @Override
@@ -95,6 +105,7 @@ public class BookDto {
                 ", publicationYear=" + publicationYear +
                 ", category='" + category + '\'' +
                 ", language='" + language + '\'' +
+                ", keyWords='" + keyWords + '\'' +
                 '}';
     }
 }
