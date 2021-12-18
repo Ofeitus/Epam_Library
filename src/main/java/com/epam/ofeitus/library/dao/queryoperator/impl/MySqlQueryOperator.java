@@ -6,12 +6,15 @@ import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.dao.queryoperator.ParametrizedQuery;
 import com.epam.ofeitus.library.dao.queryoperator.QueryOperator;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlQueryOperator<T> implements QueryOperator<T> {
+    Logger logger = LogManager.getLogger(MySqlQueryOperator.class);
     private final RowMapper<T> mapper;
 
     public MySqlQueryOperator(RowMapper<T> mapper) {
@@ -37,10 +40,10 @@ public class MySqlQueryOperator<T> implements QueryOperator<T> {
                 result.add(entity);
             }
         } catch (SQLException e) {
-            // TODO logger
+            logger.error("Unable to execute select query.", e);
             throw new DaoException("Unable to execute select query.", e);
         } catch (ConnectionPoolException e) {
-            // TODO logger
+            logger.error("Unable to get connection.", e);
             throw new DaoException("Unable to get connection.", e);
         }
         return result;
@@ -69,10 +72,10 @@ public class MySqlQueryOperator<T> implements QueryOperator<T> {
                 return rowsAffected;
             }
         } catch (SQLException e) {
-            // TODO logger
+            logger.error("Unable to execute update query.", e);
             throw new DaoException("Unable to execute update query.", e);
         } catch (ConnectionPoolException e) {
-            // TODO logger
+            logger.error("Unable to get connection.", e);
             throw new DaoException("Unable to get connection.", e);
         }
     }
@@ -80,10 +83,10 @@ public class MySqlQueryOperator<T> implements QueryOperator<T> {
     private void rollbackTransaction(Connection connection) throws DaoException {
         if (connection != null) {
             try {
-                // TODO logger
                 connection.rollback();
-            } catch (SQLException sqlException) {
-                throw new DaoException(sqlException);
+            } catch (SQLException e) {
+                logger.error("Unable to rollback transaction", e);
+                throw new DaoException("Unable to rollback transaction", e);
             }
         }
     }
@@ -94,7 +97,7 @@ public class MySqlQueryOperator<T> implements QueryOperator<T> {
                 connection.setAutoCommit(true);
                 connection.close();
             } catch (SQLException e) {
-                // TODO logger
+                logger.error("Unable to return connection to connection pool.", e);
                 throw new DaoException("Unable to return connection to connection pool.", e);
             }
         }
@@ -121,12 +124,12 @@ public class MySqlQueryOperator<T> implements QueryOperator<T> {
             connection.commit();
             return firstQueryGeneratedKey;
         } catch (SQLException e) {
-            // TODO logger
+            logger.error("Unable to execute update query.", e);
             rollbackTransaction(connection);
             throw new DaoException("Unable to execute update query.", e);
         } catch (ConnectionPoolException e) {
-            // TODO logger
-            throw new DaoException("Unable to retrieve connection.", e);
+            logger.error("Unable to take connection.", e);
+            throw new DaoException("Unable to take connection.", e);
         } finally {
             releaseConnection(connection);
         }

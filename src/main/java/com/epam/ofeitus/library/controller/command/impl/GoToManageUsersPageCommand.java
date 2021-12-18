@@ -9,12 +9,16 @@ import com.epam.ofeitus.library.entity.user.User;
 import com.epam.ofeitus.library.service.UserService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 import com.epam.ofeitus.library.service.factory.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class GoToManageUsersPageCommand implements Command {
+    Logger logger = LogManager.getLogger(GoToManageUsersPageCommand.class);
+
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         UserService userService = ServiceFactory.getInstance().getUserService();
@@ -23,7 +27,7 @@ public class GoToManageUsersPageCommand implements Command {
             request.setAttribute(RequestAttribute.USERS, users);
             return new CommandResult(Page.MANAGE_USERS_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
-            // TODO logger.error("Unable to fetch all users' DTOs. {}", e.getMessage());
+            logger.error("Unable to get all users DTO", e);
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
     }

@@ -12,11 +12,14 @@ import com.epam.ofeitus.library.entity.book.constituent.BookCategory;
 import com.epam.ofeitus.library.entity.dto.BookDto;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookServiceImpl implements BookService {
+
     @Override
     public List<BookDto> getAllBooksDto() throws ServiceException {
         BookDao bookDao = MySqlDaoFactory.getInstance().getBookDao();
@@ -40,7 +43,6 @@ public class BookServiceImpl implements BookService {
             }
             return booksDto;
         } catch (DaoException e) {
-            // TODO logger
             throw new ServiceException(e);
         }
     }
@@ -76,7 +78,6 @@ public class BookServiceImpl implements BookService {
             }
             return booksDto;
         } catch (DaoException e) {
-            // TODO logger
             throw new ServiceException(e);
         }
     }

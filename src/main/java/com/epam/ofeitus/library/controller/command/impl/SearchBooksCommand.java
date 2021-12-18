@@ -10,12 +10,16 @@ import com.epam.ofeitus.library.entity.dto.BookDto;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 import com.epam.ofeitus.library.service.factory.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class SearchBooksCommand implements Command {
+    Logger logger = LogManager.getLogger(SearchBooksCommand.class);
+
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         BookService bookService = ServiceFactory.getInstance().getBookService();
@@ -39,7 +43,7 @@ public class SearchBooksCommand implements Command {
             request.setAttribute(RequestAttribute.BOOKS, books);
             return new CommandResult(Page.CATALOG_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
-            // TODO logger.error("Unable to fetch all users' DTOs. {}", e.getMessage());
+            logger.error("Unable to get books DTO by search request.", e);
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
     }

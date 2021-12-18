@@ -24,7 +24,6 @@ public class UserServiceImpl implements UserService {
                 user = userFromDB;
             }
         } catch (DaoException e) {
-            // TODO logger.error("Unable to retrieve user from DB. {}", e.getMessage());
             throw new ServiceException("Unable to retrieve user from DB.", e);
         }
 
@@ -38,7 +37,6 @@ public class UserServiceImpl implements UserService {
         try {
             userDao.save(user);
         } catch (DaoException e) {
-            // TODO logger.error("Unable to save new user to Data Source. {}", e.getMessage());
             throw new ServiceException("Unable to save new user to Data Source.", e);
         }
     }
@@ -49,7 +47,6 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.findAll();
         } catch (DaoException e) {
-            //TODO logger
             throw new ServiceException(e);
         }
     }
@@ -60,7 +57,6 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.findByEmail(email);
         } catch (DaoException e) {
-            // TODO logger
             throw new ServiceException(e);
         }
     }

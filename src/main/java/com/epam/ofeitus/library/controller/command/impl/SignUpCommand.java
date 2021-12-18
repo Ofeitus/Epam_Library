@@ -10,12 +10,16 @@ import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.service.UserService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 import com.epam.ofeitus.library.service.factory.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class SignUpCommand implements Command {
+    Logger logger = LogManager.getLogger(SignUpCommand.class);
+
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
@@ -33,9 +37,9 @@ public class SignUpCommand implements Command {
             }
             userService.register(firstName, lastName, email, password);
             request.setAttribute(RequestAttribute.EMAIL, email);
-            // TODO logger.debug("IS REGISTERED {}", isRegistered);
+            logger.info("User" + email + "is registered.");
         } catch (ServiceException e) {
-            // TODO logger.error("Unable to register new user. {}", e.getMessage());
+            logger.error("Unable to register new user.", e);
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
         return new CommandResult(Page.SIGN_IN_PAGE, RoutingType.FORWARD);

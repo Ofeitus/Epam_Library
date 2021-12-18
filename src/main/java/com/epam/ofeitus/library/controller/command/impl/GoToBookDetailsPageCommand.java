@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class GoToBookDetailsPageCommand implements Command {
-    //Logger logger = LogManager.getLogger(GoToBookDetailsPageCommand.class);
+    Logger logger = LogManager.getLogger(GoToBookDetailsPageCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
@@ -30,7 +30,7 @@ public class GoToBookDetailsPageCommand implements Command {
             request.setAttribute(RequestAttribute.BOOK, book);
             return new CommandResult(Page.BOOK_DETAILS_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
-            // TODO logger.error("Unable to fetch all users' DTOs. {}", e.getMessage());
+            logger.error("Unable to get book DTO.", e);
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
     }
