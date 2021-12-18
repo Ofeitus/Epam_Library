@@ -7,6 +7,11 @@
 </head>
 <body>
 <jsp:include page="tamplate/header.jsp" />
+<style>
+    #catalog-page {
+        border-bottom: 3px solid #5f5148;
+    }
+</style>
 <div class="catalog-container">
     <h2>Catalog</h2>
     <div class="form-container">

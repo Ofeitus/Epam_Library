@@ -5,7 +5,8 @@
     padding: 0 10%;
     font-weight: 700;
     height: 80px;
-    background: linear-gradient(#cdc2b9, #f5f2f0);
+    background: #ffffff;
+    z-index: 1001;
 }
 
 #home-link {
@@ -50,10 +51,10 @@
     align-items: center;
     justify-content: right;
     height: 40px;
-    color: #f5f2f0;
+    color: #ffffff;
     border-radius: 60px;
     transition: all 0.3s ease;
-    z-index: 2;
+    z-index: 1001;
 }
 
 .auth-button {
@@ -69,7 +70,7 @@
 .auth-button a {
     padding: 0 15px;
     cursor: pointer;
-    color: #f5f2f0;
+    color: #ffffff;
     font-size: 18px;
     text-decoration: none;
     word-break: keep-all;
@@ -98,7 +99,7 @@
 
 .auth:hover .account {
     color: #5f5148;
-    background-color: #f5f2f0;
+    background-color: #ffffff;
 }
 
 .dropdown-content {
@@ -108,7 +109,7 @@
     padding: 30px 0 1px 0;
     border-radius: 10px;
     box-shadow: 0 8px 10px 0 rgba(0,0,0,0.2);
-    background-color: #f5f2f0;
+    background-color: #ffffff;
     z-index: -1;
 }
 
@@ -121,7 +122,7 @@
 }
 
 .dropdown-content a:hover {
-    background-color: #cdc2b9;
+    background-color: #d0d0d0;
 }
 
 .auth:hover .dropdown-content {

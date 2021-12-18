@@ -53,3 +53,4 @@
         </div>
     </div>
 </header>
+<jsp:include page="navbar.jsp" />

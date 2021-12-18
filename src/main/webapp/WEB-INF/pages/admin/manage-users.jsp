@@ -7,28 +7,30 @@
 </head>
 <body>
 <jsp:include page="../tamplate/header.jsp" />
-<h3>Registered users:</h3>
-<table class="table table-hover table-striped">
-    <thead>
-    <tr>
-        <th scope="col">ID</th>
-        <th scope="col">name</th>
-        <th scope="col" >surname</th>
-        <th scope="col">email</th>
-        <th scope="col" >role</th>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${requestScope.users}" var="user">
+<div class="table-container">
+    <h3>Registered users:</h3>
+    <table class="table table-hover table-striped">
+        <thead>
         <tr>
-            <th scope="col">${user.userId}</th>
-            <td>${user.name}</td>
-            <td>${user.surname}</td>
-            <td>${user.email}</td>
-            <td>${user.userRole.toString()}</td>
+            <th scope="col">ID</th>
+            <th scope="col">name</th>
+            <th scope="col" >surname</th>
+            <th scope="col">email</th>
+            <th scope="col" >role</th>
         </tr>
-    </c:forEach>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        <c:forEach items="${requestScope.users}" var="user">
+            <tr>
+                <th scope="col">${user.userId}</th>
+                <td>${user.name}</td>
+                <td>${user.surname}</td>
+                <td>${user.email}</td>
+                <td>${user.userRole.toString()}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
