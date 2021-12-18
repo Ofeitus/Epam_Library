@@ -7,10 +7,41 @@
 </header>
 <header class="header">
     <a id="home-link" href="?command=goto-home-page">Library</a>
+    <div class="navbar-container">
+        <ul class="navbar-menu">
+            <li class="navbar-item" id="home-page">
+                <a href="?command=goto-home-page" class="navbar-link">Home</a>
+            </li>
+            <li class="navbar-item" id="about-page">
+                <a href="#" class="navbar-link">About</a>
+            </li>
+            <li class="navbar-item" id="catalog-page">
+                <a href="?command=goto-catalog-page" class="navbar-link">Catalog</a>
+            </li>
+            <li class="navbar-item" id="contacts-page">
+                <a href="#" class="navbar-link">Contacts</a>
+            </li>
+        </ul>
+    </div>
     <div class="info">
-        <a id="location" href="https://www.google.com/maps/place/%D0%9C%D0%B8%D0%BD%D1%81%D0%BA/@53.7670988,24.7025942,6.46z/data=!4m5!3m4!1s0x46dbcfd35b1e6ad3:0xb61b853ddb570d9!8m2!3d53.9006011!4d27.558972">
-            <i class="fa fa-map-marker-alt"></i>&nbsp;&nbsp;Minsk, Belarus</a>
-        <a id="contacts"><i class="fa fa-phone"></i>&nbsp;&nbsp; +375(12)345-67-89 <br><i class="fa fa-mail-bulk"></i>&nbsp;&nbsp; sampleEmail@email.com</a>
+        <div class="locale">
+            <div class="locale-button">
+                <c:if test="${sessionScope.locale == 'ru'}">
+                    <a href="?command=set-locale&locale=ru">Рус</a>
+                </c:if>
+                <c:if test="${sessionScope.locale == 'en'}">
+                    <a href="?command=set-locale&locale=en">Eng</a>
+                </c:if>
+            </div>
+            <div class="locale-dropdown">
+                <c:if test="${sessionScope.locale == 'ru'}">
+                    <a href="?command=set-locale&locale=en">Eng</a>
+                </c:if>
+                <c:if test="${sessionScope.locale == 'en'}">
+                    <a href="?command=set-locale&locale=ru">Рус</a>
+                </c:if>
+            </div>
+        </div>
         <div class="auth">
             <c:if test="${sessionScope.user_id == null}">
                 <label class="auth-button">
@@ -22,7 +53,7 @@
                     ${sessionScope.user_email}&nbsp;&nbsp;
                     <i class="fa fa-user"></i>
                 </div>
-                <div class="dropdown-content">
+                <div class="account-dropdown">
                     <hr>
                     <c:if test="${sessionScope.user_role.toString() == 'MEMBER'}">
                         <a href="#">Member profile</a>
@@ -53,4 +84,3 @@
         </div>
     </div>
 </header>
-<jsp:include page="navbar.jsp" />

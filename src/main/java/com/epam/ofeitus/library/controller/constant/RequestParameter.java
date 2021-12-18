@@ -13,4 +13,5 @@ public class RequestParameter {
     public static final String YEAR_FROM = "year-from";
     public static final String YEAR_TO = "year-to";
     public static final String BOOK_ISBN = "book-isbn";
+    public static final String LOCALE = "locale";
 }

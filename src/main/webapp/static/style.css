@@ -8,7 +8,7 @@
 body {
     display: flex;
     flex-direction: column;
-    background-image: url("../images/home.png");
+    background-image: url("../images/home1.png");
     background-size: cover;
     background-attachment: fixed;
 }
@@ -23,16 +23,21 @@ h2 {
 }
 
 .home-container {
-    height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+.home-container img {
+    width: 300px;
+}
 
-.home-container .btn:hover {
-    text-shadow: 0 0 5px rgba(0,0,0,0.5);
-    box-shadow: 3px 3px rgba(0,0,0,0.15),5px 5px rgba(0,0,0,0.1);
-    outline: none;
+.home-container h3 {
+    color: #fff;
+    margin: 50px 0;
+    align-self: center;
+    font-size: 42px;
+    font-weight: 300;
+    text-shadow: 2px 2px 3px rgba(0,0,0,0.7);
 }

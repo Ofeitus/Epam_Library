@@ -7,6 +7,11 @@
 </head>
 <body>
 <jsp:include page="tamplate/header.jsp" />
+<style>
+    #catalog-page {
+        border-bottom: 3px solid #5f5148;
+    }
+</style>
 <div class="details-container">
     <div class="img-container">
         <img src="${pageContext.request.contextPath}/images/books/${requestScope.book.isbn}.jpg" alt="">

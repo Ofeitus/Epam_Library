@@ -28,6 +28,9 @@ public class Controller extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.removeAttribute(SessionAttribute.ERROR);
+        if (session.getAttribute(SessionAttribute.LOCALE) == null) {
+            session.setAttribute(SessionAttribute.LOCALE, "en");
+        }
 
         String commandName = request.getParameter(RequestParameter.COMMAND);
         Command command = CommandFactory.getInstance().getCommand(commandName);

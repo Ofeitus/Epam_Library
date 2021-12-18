@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'ru'}"/>
+<fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
 <fmt:bundle basename="labels"/>
 <html>
 <head>
@@ -18,6 +18,8 @@
 </style>
     <h2>Welcome to WebLib!</h2>
     <div class="home-container">
+        <h3>Novelties and bestsellers, quality service!</h3>
+        <img src="${pageContext.request.contextPath}/images/book-pusheen.png" alt="">
     </div>
 </body>
 </html>
