@@ -1,4 +1,8 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
+<fmt:setBundle basename="locale"/>
 <html>
 <head>
     <jsp:include page="../tamplate/links.jsp" />
@@ -9,8 +13,8 @@
 <div class="error-container">
     <img src="${pageContext.request.contextPath}/images/500-pusheen.png" alt="">
     <h2>500</h2>
-    <h3>Internal Server Error</h3>
-    <h4>Server encountered an unexpected condition that prevented it from fulfilling the request</h4>
+    <h3><fmt:message key="500.error" /></h3>
+    <h4><fmt:message key="500.message" /></h4>
 </div>
 </body>
 </html>

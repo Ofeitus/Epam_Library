@@ -36,16 +36,13 @@ public class Controller extends HttpServlet {
         Command command = CommandFactory.getInstance().getCommand(commandName);
 
         if (commandName == null || command == null) {
-            request.getRequestDispatcher(Page.ERROR_500_PAGE).forward(request, response);
+            request.getRequestDispatcher(Page.ERROR_404_PAGE).forward(request, response);
             return;
         }
 
         CommandResult result = command.execute(request, response);
 
         String resource = result.getResource();
-        response.setHeader("Pragma", "No-cache");
-        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        response.setDateHeader("Expires", -1);
         switch (result.getRoutingType()) {
             case FORWARD:
                 request.getRequestDispatcher(resource).forward(request, response);

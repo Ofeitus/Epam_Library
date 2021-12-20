@@ -1,25 +1,28 @@
 <%@ page contentType="text/html; charset=utf-8" language="java"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
+<fmt:setBundle basename="locale"/>
 <header>
     <jsp:include page="links.jsp" />
 </header>
 <header class="header">
-    <a id="home-link" href="?command=goto-home-page">Library</a>
+    <a id="home-link" href="?command=goto-home-page">WebLib</a>
     <div class="navbar-container">
         <ul class="navbar-menu">
             <li class="navbar-item" id="home-page">
-                <a href="?command=goto-home-page" class="navbar-link">Home</a>
+                <a href="?command=goto-home-page" class="navbar-link"><fmt:message key="header.home" /></a>
             </li>
             <li class="navbar-item" id="about-page">
-                <a href="#" class="navbar-link">About</a>
+                <a href="#" class="navbar-link"><fmt:message key="header.about" /></a>
             </li>
             <li class="navbar-item" id="catalog-page">
-                <a href="?command=goto-catalog-page" class="navbar-link">Catalog</a>
+                <a href="?command=goto-catalog-page" class="navbar-link"><fmt:message key="header.catalog" /></a>
             </li>
             <li class="navbar-item" id="contacts-page">
-                <a href="#" class="navbar-link">Contacts</a>
+                <a href="#" class="navbar-link"><fmt:message key="header.contacts" /></a>
             </li>
         </ul>
     </div>
@@ -45,7 +48,7 @@
         <div class="auth">
             <c:if test="${sessionScope.user_id == null}">
                 <label class="auth-button">
-                    <a id="log-link" href="?command=goto-log-in-page">Log in</a>
+                    <a id="log-link" href="?command=goto-log-in-page"><fmt:message key="header.log-in" /></a>
                 </label>
             </c:if>
             <c:if test="${sessionScope.user_id != null}">
@@ -56,29 +59,29 @@
                 <div class="account-dropdown">
                     <hr>
                     <c:if test="${sessionScope.user_role.toString() == 'MEMBER'}">
-                        <a href="#">Member profile</a>
+                        <a href="#"><fmt:message key="header.member-profile" /></a>
                         <hr>
-                        <a href="#">Your loans</a>
-                        <a href="#">Your reservations</a>
-                        <a href="#">Your fines</a>
+                        <a href="#"><fmt:message key="header.your-loans" /></a>
+                        <a href="#"><fmt:message key="header.your-reservations" /></a>
+                        <a href="#"><fmt:message key="header.your-fines" /></a>
                     </c:if>
                     <c:if test="${sessionScope.user_role.toString() == 'MANAGER'}">
-                        <a href="#">Manager profile</a>
+                        <a href="#"><fmt:message key="header.manager-profile" /></a>
                         <hr>
-                        <a href="#">Manage books</a>
-                        <a href="#">Manage loans</a>
-                        <a href="#">Manage reservations</a>
-                        <a href="#">Manage fines</a>
+                        <a href="#"><fmt:message key="header.manage-books" /></a>
+                        <a href="#"><fmt:message key="header.manage-loans" /></a>
+                        <a href="#"><fmt:message key="header.manage-reservations" /></a>
+                        <a href="#"><fmt:message key="header.manage-fines" /></a>
                     </c:if>
                     <c:if test="${sessionScope.user_role.toString() == 'ADMIN'}">
-                        <a href="#">Admin profile</a>
+                        <a href="#"><fmt:message key="header.admin-profile" /></a>
                         <hr>
-                        <a href="?command=goto-manage-users-page">Manage users</a>
-                        <a href="#">Loans report</a>
-                        <a href="#">Fines report</a>
+                        <a href="?command=goto-manage-users-page"><fmt:message key="header.manage-users" /></a>
+                        <a href="#"><fmt:message key="header.loans-report" /></a>
+                        <a href="#"><fmt:message key="header.fines-report" /></a>
                     </c:if>
                     <hr>
-                    <a href="?command=log-out">Log out</a>
+                    <a href="?command=log-out"><fmt:message key="header.log-out" /></a>
                 </div>
             </c:if>
         </div>

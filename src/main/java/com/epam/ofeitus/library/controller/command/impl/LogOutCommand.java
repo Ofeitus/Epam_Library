@@ -17,7 +17,6 @@ public class LogOutCommand implements Command {
         session.removeAttribute(SessionAttribute.USER_ID);
         session.removeAttribute(SessionAttribute.USER_EMAIL);
         session.removeAttribute(SessionAttribute.USER_ROLE);
-        session.invalidate();
         return new CommandResult(Page.HOME_PAGE_REDIRECT, RoutingType.REDIRECT);
     }
 }

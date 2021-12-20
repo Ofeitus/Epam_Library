@@ -1,4 +1,8 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
+<fmt:setBundle basename="locale"/>
 <html>
 <head>
     <jsp:include page="../tamplate/links.jsp" />
@@ -9,8 +13,8 @@
 <div class="error-container">
     <img src="${pageContext.request.contextPath}/images/404-pusheen.png" alt="">
     <h2>404</h2>
-    <h3>Not Found</h3>
-    <h4>The requested url was not found on server</h4>
+    <h3><fmt:message key="404.not-found" /></h3>
+    <h4><fmt:message key="404.message" /></h4>
 </div>
 </body>
 </html>
