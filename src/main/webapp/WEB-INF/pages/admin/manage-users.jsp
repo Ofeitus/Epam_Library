@@ -26,7 +26,7 @@
         <tbody>
         <c:forEach items="${requestScope.users}" var="user">
             <tr>
-                <th scope="col">${user.userId}</th>
+                <td>${user.userId}</td>
                 <td>${user.name}</td>
                 <td>${user.surname}</td>
                 <td>${user.email}</td>

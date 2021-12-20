@@ -1,8 +1,10 @@
 package com.epam.ofeitus.library.service.factory;
 
 import com.epam.ofeitus.library.service.BookService;
+import com.epam.ofeitus.library.service.LoansService;
 import com.epam.ofeitus.library.service.UserService;
 import com.epam.ofeitus.library.service.impl.BookServiceImpl;
+import com.epam.ofeitus.library.service.impl.LoanServiceImpl;
 import com.epam.ofeitus.library.service.impl.UserServiceImpl;
 
 public class ServiceFactory {
@@ -10,6 +12,7 @@ public class ServiceFactory {
 
     private static final UserService userService = new UserServiceImpl();
     private static final BookService bookService = new BookServiceImpl();
+    private static final LoansService loanService = new LoanServiceImpl();
 
     private ServiceFactory() {
     }
@@ -24,5 +27,9 @@ public class ServiceFactory {
 
     public BookService getBookService() {
         return bookService;
+    }
+
+    public LoansService getLoansService() {
+        return loanService;
     }
 }
