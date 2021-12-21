@@ -22,20 +22,23 @@ public class LoanServiceImpl implements LoansService {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         LoanDao loanDao = daoFactory.getLoanDao();
         CopyOfBookDao copyOfBookDao = daoFactory.getCopyOfBookDao();
+        BookDao bookDao = daoFactory.getBookDao();
 
         try {
             List<Loan> loans = loanDao.findByUserId(userId);
             List<LoanDto> loansDto = new ArrayList<>();
             for (Loan loan : loans) {
-                List<CopyOfBook> copiesOfBooks = copyOfBookDao.findByLoanId(loan.getLoanId());
+                CopyOfBook copyOfBook = copyOfBookDao.findById(loan.getInventoryId());
+                Book book = bookDao.findByIsbn(copyOfBook.getBookIsbn());
                 loansDto.add(new LoanDto(
                         loan.getLoanId(),
-                        copiesOfBooks,
                         loan.getIssueDate(),
                         loan.getDueDate(),
                         loan.getReturnDate(),
                         loan.getFineAmount(),
-                        loan.getUserId()
+                        loan.getUserId(),
+                        loan.getInventoryId(),
+                        book
                         )
                 );
             }

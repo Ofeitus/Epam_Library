@@ -13,28 +13,20 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
     public final static String SAVE_COPY_OF_BOOK_QUERY = String.format(
             "INSERT INTO %s (%s, %s) VALUES (0, ?)",
             Table.COPY_OF_BOOK_TABLE,
-            Column.BOOK_INVENTORY_ID,
+            Column.COPY_OF_BOOK_INVENTORY_ID,
             Column.BOOK_ISBN);
     public final static String UPDATE_COPY_OF_BOOK_QUERY = String.format(
             "UPDATE %s SET %s=? WHERE %s=?",
             Table.COPY_OF_BOOK_TABLE,
             Column.BOOK_ISBN,
-            Column.BOOK_INVENTORY_ID);
+            Column.COPY_OF_BOOK_INVENTORY_ID);
     private static final String FIND_BY_ISBN_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=?",
             Table.COPY_OF_BOOK_TABLE,
             Column.BOOK_ISBN);
-    private static final String FIND_BY_LOAN_ID_QUERY = String.format(
-            "SELECT * FROM %s JOIN %s LhCoB ON %s.%s = LhCoB.%s WHERE %s=?",
-            Table.COPY_OF_BOOK_TABLE,
-            Table.LOAN_HAS_COPY_OF_BOOK_TABLE,
-            Table.COPY_OF_BOOK_TABLE,
-            Column.BOOK_INVENTORY_ID,
-            Column.BOOK_INVENTORY_ID,
-            Column.LOAN_ID);
 
     public MySqlCopyOfBookDao() {
-        super(RowMapperFactory.getCopyOfBookRowMapper(), Table.COPY_OF_BOOK_TABLE, Column.BOOK_INVENTORY_ID);
+        super(RowMapperFactory.getCopyOfBookRowMapper(), Table.COPY_OF_BOOK_TABLE, Column.COPY_OF_BOOK_INVENTORY_ID);
     }
 
     @Override
@@ -55,10 +47,5 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
     @Override
     public List<CopyOfBook> findByIsbn(String bookIsbn) throws DaoException {
         return queryOperator.executeQuery(FIND_BY_ISBN_QUERY, bookIsbn);
-    }
-
-    @Override
-    public List<CopyOfBook> findByLoanId(int loanId) throws DaoException {
-        return queryOperator.executeQuery(FIND_BY_LOAN_ID_QUERY, loanId);
     }
 }

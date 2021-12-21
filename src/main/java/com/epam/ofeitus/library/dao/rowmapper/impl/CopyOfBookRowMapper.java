@@ -11,7 +11,7 @@ public class CopyOfBookRowMapper implements RowMapper<CopyOfBook> {
     @Override
     public CopyOfBook map(ResultSet resultSet) throws SQLException {
         CopyOfBook copyOfBook = new CopyOfBook();
-        copyOfBook.setInventoryId(resultSet.getInt(Column.BOOK_INVENTORY_ID));
+        copyOfBook.setInventoryId(resultSet.getInt(Column.COPY_OF_BOOK_INVENTORY_ID));
         copyOfBook.setBookIsbn(resultSet.getString(Column.COPY_OF_BOOK_ISBN));
         return copyOfBook;
     }

@@ -17,6 +17,7 @@ public class LoanRowMapper implements RowMapper<Loan> {
         loan.setReturnDate(resultSet.getDate(Column.LOAN_RETURN_DATE));
         loan.setFineAmount(resultSet.getBigDecimal(Column.LOAN_FINE_AMOUNT));
         loan.setUserId(resultSet.getInt(Column.LOAN_USER_ID));
+        loan.setInventoryId(resultSet.getInt(Column.LOAN_INVENTORY_ID));
         return loan;
     }
 }

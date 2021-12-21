@@ -5,7 +5,7 @@ INSERT INTO `library`.`users_roles` (`role_id`, `role_name`) VALUES
     ('3', 'MEMBER');
 
 -- Users
-INSERT INTO `library`.`users` (user_id, name, surname, email, password_hash, user_role_id, deleted) VALUES
+INSERT INTO `library`.`users` (user_id, name, surname, email, password_hash, role_id, deleted) VALUES
     ('0', 'Timothy', 'Tyushev', '2008655z@gmail.com', '9e1774b83c29e5886cfad800a09529700838f61203851bde75bf8bea4e3a0d81', '1', '0'),
     ('0', 'Nikita', 'Strachinski', 'strachinski@email.com', '598e7086cebecbf663325f771c0bf44382ea367fa0702a0c26c6978a1971ccb4', '2', '0'),
     ('0', 'Maxim', 'Melnikov', 'melnikov@email.com', '9e2939ae2775f6e406f052361b0cc679f6d83f742c9309a2dd781572c402f430', '3', '0'),
@@ -27,7 +27,7 @@ INSERT INTO `library`.`authors` (`author_id`, `name`, `surname`) VALUES
     ('0', 'Марио', 'Пьюзо');
 
 -- Books
-INSERT INTO `library`.`books` (`isbn`, `title`, `publication_year`, `category_id`, `language`, `key_words`) VALUES
+INSERT INTO `library`.`books` (`book_isbn`, `title`, `publication_year`, `category_id`, `language`, `key_words`) VALUES
     ('9785389074354', 'Гарри Поттер и философский камень', '2016', '1', 'Русский', 'Фентези, фантастика'),
     ('9785389077812', 'Гарри Поттер и Тайная комната', '2019', '1', 'Русский', 'Фентези'),
     ('9785389077881', 'Гарри Поттер и узник Азкабана', '2016', '1', 'Русский', 'Фентези'),
@@ -73,14 +73,9 @@ INSERT INTO `library`.`copies_of_books` (inventory_id, book_isbn) VALUES
     ('0', '9785041078713');
 
 -- Loans
-INSERT INTO `library`.`loans` (loan_id, issue_date, due_date, return_date, fine_amount, user_id) VALUES
-    ('0', '2021-12-14', '2022-01-14', null, null, '3'),
-    ('0', '2021-12-20', '2022-01-20', null, null, '3');
-
--- Loan has Copy of book
-INSERT INTO `library`.`loan_has_copy_of_book` (inventory_id, loan_id) VALUES
-    ('1', '1'),
-    ('5', '1'),
-    ('10', '1'),
-    ('3', '2'),
-    ('7', '2');
+INSERT INTO `library`.`loans` (loan_id, issue_date, due_date, return_date, fine_amount, user_id, inventory_id) VALUES
+    ('0', '2021-12-14', '2022-01-14', null, null, '3', '1'),
+    ('0', '2021-12-14', '2022-01-14', null, null, '3', '3'),
+    ('0', '2021-12-20', '2022-01-20', null, null, '3', '2'),
+    ('0', '2021-12-20', '2022-01-20', null, null, '3', '6'),
+    ('0', '2021-12-20', '2022-01-20', null, null, '3', '9');

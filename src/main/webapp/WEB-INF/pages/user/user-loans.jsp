@@ -29,34 +29,22 @@
                 </tr>
                 <tr>
                     <th scope="col" rowspan="1"><fmt:message key="user-loans.book-inventory-id" /></th>
-                    <th scope="col" rowspan="1"><fmt:message key="user-loans.book-isbn" /></th>
+                    <th scope="col" rowspan="1"><fmt:message key="user-loans.book-title" /></th>
                 </tr>
             </thead>
             <tbody>
             <c:forEach items="${requestScope.loans}" var="loan">
-                <tr style="border-top: 2px solid #000000">
-                    <td rowspan="${loan.copiesOfBooks.size()}">${loan.loanId}</td>
-                    <td>${loan.copiesOfBooks[0].inventoryId}</td>
-                    <td><a href="?command=goto-book-details-page&book-isbn=${loan.copiesOfBooks[0].bookIsbn}">
-                            ${loan.copiesOfBooks[0].bookIsbn}
+                <tr>
+                    <td>${loan.loanId}</td>
+                    <td>${loan.inventoryId}</td>
+                    <td><a href="?command=goto-book-details-page&book-isbn=${loan.book.isbn}">
+                            ${loan.book.title}
                     </a></td>
                     <td>${loan.issueDate}</td>
                     <td>${loan.dueDate}</td>
                     <td>${loan.returnDate}</td>
                     <td>${loan.fineAmount}</td>
                 </tr>
-                <c:forEach items="${loan.copiesOfBooks}" var="copyOfBook" begin="1">
-                    <tr>
-                        <td>${copyOfBook.inventoryId}</td>
-                        <td><a href="?command=goto-book-details-page&book-isbn=${loan.copiesOfBooks[0].bookIsbn}">
-                                ${loan.copiesOfBooks[0].bookIsbn}
-                        </a></td>
-                        <td>${loan.issueDate}</td>
-                        <td>${loan.dueDate}</td>
-                        <td>${loan.returnDate}</td>
-                        <td>${loan.fineAmount}</td>
-                    </tr>
-                </c:forEach>
             </c:forEach>
             </tbody>
         </table>
