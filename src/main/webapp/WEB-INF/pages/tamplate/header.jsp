@@ -61,7 +61,7 @@
                     <c:if test="${sessionScope.user_role.toString() == 'MEMBER'}">
                         <a href="#"><fmt:message key="header.member-profile" /></a>
                         <hr>
-                        <a href="#"><fmt:message key="header.your-loans" /></a>
+                        <a href="?command=goto-user-loans-page"><fmt:message key="header.your-loan" /></a>
                         <a href="#"><fmt:message key="header.your-reservations" /></a>
                         <a href="#"><fmt:message key="header.your-fines" /></a>
                     </c:if>

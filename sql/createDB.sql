@@ -128,10 +128,10 @@ ENGINE = InnoDB;
 -- Table `Library`.`loan_has_copy_of_book`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Library`.`loan_has_copy_of_book` (
-  `copy_of_book_inventory_id` INT NOT NULL,
+  `inventory_id` INT NOT NULL,
   `loan_id` INT NOT NULL,
-  PRIMARY KEY (`copy_of_book_inventory_id`, `loan_id`),
-  INDEX `fk_loan_has_book_item_book_item1_idx` (`copy_of_book_inventory_id` ASC) VISIBLE,
+  PRIMARY KEY (`inventory_id`, `loan_id`),
+  INDEX `fk_loan_has_book_item_book_item1_idx` (`inventory_id` ASC) VISIBLE,
   INDEX `fk_loan_has_book_item_loan1_idx` (`loan_id` ASC) VISIBLE,
   CONSTRAINT `fk_loan_has_book_item_loan1`
     FOREIGN KEY (`loan_id`)
@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `Library`.`loan_has_copy_of_book` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_loan_has_book_item_book_item1`
-    FOREIGN KEY (`copy_of_book_inventory_id`)
+    FOREIGN KEY (`inventory_id`)
     REFERENCES `Library`.`copies_of_books` (`inventory_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)

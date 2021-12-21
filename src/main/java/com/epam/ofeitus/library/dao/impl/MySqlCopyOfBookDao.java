@@ -25,7 +25,7 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
             Table.COPY_OF_BOOK_TABLE,
             Column.BOOK_ISBN);
     private static final String FIND_BY_LOAN_ID_QUERY = String.format(
-            "SELECT * FROM %s JOIN %s BhA ON %s.%s = BhA.%s WHERE %s=?",
+            "SELECT * FROM %s JOIN %s LhCoB ON %s.%s = LhCoB.%s WHERE %s=?",
             Table.COPY_OF_BOOK_TABLE,
             Table.LOAN_HAS_COPY_OF_BOOK_TABLE,
             Table.COPY_OF_BOOK_TABLE,

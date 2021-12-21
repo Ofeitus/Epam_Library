@@ -74,10 +74,13 @@ INSERT INTO `library`.`copies_of_books` (inventory_id, book_isbn) VALUES
 
 -- Loans
 INSERT INTO `library`.`loans` (loan_id, issue_date, due_date, return_date, fine_amount, user_id) VALUES
+    ('0', '2021-12-14', '2022-01-14', null, null, '3'),
     ('0', '2021-12-20', '2022-01-20', null, null, '3');
 
 -- Loan has Copy of book
-INSERT INTO `library`.`loan_has_copy_of_book` (copy_of_book_inventory_id, loan_id) VALUES
+INSERT INTO `library`.`loan_has_copy_of_book` (inventory_id, loan_id) VALUES
     ('1', '1'),
     ('5', '1'),
-    ('10', '1');
+    ('10', '1'),
+    ('3', '2'),
+    ('7', '2');

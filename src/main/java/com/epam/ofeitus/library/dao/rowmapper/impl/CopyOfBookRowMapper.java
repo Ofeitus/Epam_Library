@@ -12,7 +12,7 @@ public class CopyOfBookRowMapper implements RowMapper<CopyOfBook> {
     public CopyOfBook map(ResultSet resultSet) throws SQLException {
         CopyOfBook copyOfBook = new CopyOfBook();
         copyOfBook.setInventoryId(resultSet.getInt(Column.BOOK_INVENTORY_ID));
-        copyOfBook.setBookIsbn(resultSet.getString(Column.BOOK_ISBN));
+        copyOfBook.setBookIsbn(resultSet.getString(Column.COPY_OF_BOOK_ISBN));
         return copyOfBook;
     }
 }

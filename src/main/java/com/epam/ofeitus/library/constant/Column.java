@@ -9,6 +9,8 @@ public final class Column {
     public static final String BOOK_LANGUAGE = "language";
     public static final String BOOK_KEY_WORDS = "key_words";
 
+    public static final String COPY_OF_BOOK_ISBN = "book_isbn";
+
     public static final String AUTHOR_ID = "author_id";
     public static final String AUTHOR_NAME = "name";
     public static final String AUTHOR_SURNAME = "surname";
@@ -40,6 +42,7 @@ public final class Column {
     public static final String USER_EMAIL = "email";
     public static final String USER_PASSWORD_HASH = "password_hash";
     public static final String USER_ROLE_ID = "user_role_id";
+    public static final String USER_DELETED = "deleted";
 
     public static final String ROLE_ID = "role_id";
     public static final String ROLE_NAME = "role_name";
@@ -48,8 +51,6 @@ public final class Column {
     public static final String FINE_USER_ID = "user_id";
     public static final String FINE_DATE = "date";
     public static final String FINE_AMOUNT = "amount";
-    public static final String USER_DELETED = "deleted";
-
 
     private Column() {
     }
