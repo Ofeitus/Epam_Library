@@ -13,4 +13,5 @@ public class CommandName {
     public static final String GOTO_MANAGE_USERS_PAGE_COMMAND = "goto-manage-users-page";
     public static final String SEARCH_BOOKS_COMMAND = "search-books";
     public static final String GOTO_USER_LOANS_PAGE_COMMAND = "goto-user-loans-page";
+    public static final String GOTO_USER_RESERVATIONS_PAGE_COMMAND = "goto-user-reservations-page";
 }

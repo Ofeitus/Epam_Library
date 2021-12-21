@@ -15,6 +15,7 @@ public class Page {
 
     // user
     public static final String USER_LOANS_PAGE = "WEB-INF/pages/user/user-loans.jsp";
+    public static final String USER_RESERVATIONS_PAGE = "WEB-INF/pages/user/user-reservations.jsp";
 
     //admin
     public static final String MANAGE_USERS_PAGE = "WEB-INF/pages/admin/manage-users.jsp";

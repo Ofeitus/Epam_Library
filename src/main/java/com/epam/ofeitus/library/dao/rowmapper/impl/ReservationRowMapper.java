@@ -16,7 +16,7 @@ public class ReservationRowMapper implements RowMapper<Reservation> {
         reservation.setUserId(resultSet.getInt(Column.RESERVATION_USER_ID));
         reservation.setBookIsbn(resultSet.getString(Column.RESERVATION_BOOK_ISBN));
         reservation.setDate(resultSet.getDate(Column.RESERVATION_DATE));
-        reservation.setReservationStatus(ReservationStatus.valueOf(resultSet.getString(Column.RESERVATION_STATUS_VALUE).toUpperCase()));
-        return null;
+        reservation.setReservationStatus(ReservationStatus.values()[resultSet.getInt(Column.RESERVATION_STATUS_ID) - 1]);
+        return reservation;
     }
 }

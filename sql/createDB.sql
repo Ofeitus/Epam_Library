@@ -145,7 +145,7 @@ ENGINE = InnoDB;
 -- Table `Library`.`reservations`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Library`.`reservations` (
-  `reservation_id` VARCHAR(45) NOT NULL,
+  `reservation_id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `book_isbn` VARCHAR(45) NOT NULL,
   `date` DATE NULL,
