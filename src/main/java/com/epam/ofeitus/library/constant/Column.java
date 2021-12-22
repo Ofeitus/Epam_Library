@@ -33,9 +33,9 @@ public final class Column {
     public static final String LOAN_STATUS_VALUE = "loan_status_value";
 
     public static final String RESERVATION_ID = "reservation_id";
-    public static final String RESERVATION_USER_ID = "user_id";
-    public static final String RESERVATION_BOOK_ISBN = "book_isbn";
     public static final String RESERVATION_DATE = "date";
+    public static final String RESERVATION_USER_ID = "user_id";
+    public static final String RESERVATION_INVENTORY_ID = "inventory_id";
     public static final String RESERVATION_STATUS_ID = "reservation_status_id";
 
     public static final String RESERVATION_STATUS_VALUE = "reservation_status_value";

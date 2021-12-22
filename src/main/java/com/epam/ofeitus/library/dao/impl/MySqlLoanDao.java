@@ -39,6 +39,12 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             "SELECT * FROM %s WHERE %s=?",
             Table.LOAN_TABLE,
             Column.LOAN_USER_ID);
+    private static final String FIND_BY_USER_ID_WITH_FINE_QUERY = String.format(
+            "SELECT * FROM %s WHERE %s=? AND (%s='3' OR %s='4')",
+            Table.LOAN_TABLE,
+            Column.LOAN_USER_ID,
+            Column.LOAN_STATUS_ID,
+            Column.LOAN_STATUS_ID);
 
     public MySqlLoanDao() {
         super(RowMapperFactory.getLoanRowMapper(), Table.LOAN_TABLE, Column.LOAN_ID);
@@ -54,7 +60,7 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
                 entity.getFineAmount(),
                 entity.getUserId(),
                 entity.getInventoryId(),
-                entity.getLoanStatus()
+                entity.getLoanStatus().ordinal() + 1
         );
     }
 
@@ -76,5 +82,10 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
     @Override
     public List<Loan> findByUserId(int userId) throws DaoException {
         return queryOperator.executeQuery(FIND_BY_USER_ID_QUERY, userId);
+    }
+
+    @Override
+    public List<Loan> findByUserIdWithFine(int userId) throws DaoException {
+        return queryOperator.executeQuery(FIND_BY_USER_ID_WITH_FINE_QUERY, userId);
     }
 }

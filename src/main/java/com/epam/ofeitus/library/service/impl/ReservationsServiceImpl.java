@@ -1,11 +1,13 @@
 package com.epam.ofeitus.library.service.impl;
 
 import com.epam.ofeitus.library.dao.BookDao;
+import com.epam.ofeitus.library.dao.CopyOfBookDao;
 import com.epam.ofeitus.library.dao.ReservationDao;
 import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.dao.factory.DaoFactory;
 import com.epam.ofeitus.library.dao.factory.impl.MySqlDaoFactory;
 import com.epam.ofeitus.library.entity.book.Book;
+import com.epam.ofeitus.library.entity.book.CopyOfBook;
 import com.epam.ofeitus.library.entity.dto.ReservationDto;
 import com.epam.ofeitus.library.entity.order.Reservation;
 import com.epam.ofeitus.library.service.ReservationsService;
@@ -19,19 +21,21 @@ public class ReservationsServiceImpl implements ReservationsService {
     public List<ReservationDto> getReservationsDtoByUserId(int userId) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         ReservationDao reservationDao = daoFactory.getReservationDao();
+        CopyOfBookDao copyOfBookDao = daoFactory.getCopyOfBookDao();
         BookDao bookDao = daoFactory.getBookDao();
 
         try {
             List<Reservation> reservations = reservationDao.findByUserId(userId);
             List<ReservationDto> reservationsDto = new ArrayList<>();
             for (Reservation reservation : reservations) {
-                Book book = bookDao.findByIsbn(reservation.getBookIsbn());
+                CopyOfBook copyOfBook = copyOfBookDao.findById(reservation.getInventoryId());
+                Book book = bookDao.findByIsbn(copyOfBook.getBookIsbn());
                 reservationsDto.add(new ReservationDto(
                         reservation.getReservationId(),
-                        reservation.getUserId(),
-                        reservation.getBookIsbn(),
-                        book,
                         reservation.getDate(),
+                        reservation.getUserId(),
+                        reservation.getInventoryId(),
+                        book,
                         reservation.getReservationStatus()
                         )
                 );

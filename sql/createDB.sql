@@ -89,16 +89,33 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `Library`.`copy_of_book_status`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Library`.`copy_of_book_status` (
+  `copy_of_book_status_id` INT NOT NULL,
+  `copy_of_book_status_value` VARCHAR(45) NULL,
+  PRIMARY KEY (`copy_of_book_status_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `Library`.`copies_of_books`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Library`.`copies_of_books` (
   `inventory_id` INT NOT NULL AUTO_INCREMENT,
   `book_isbn` VARCHAR(45) NOT NULL,
+  `copy_of_book_status_id` INT NOT NULL,
   PRIMARY KEY (`inventory_id`),
   INDEX `fk_book_item_book1_idx` (`book_isbn` ASC) VISIBLE,
+  INDEX `fk_copies_of_books_copy_of_book_status1_idx` (`copy_of_book_status_id` ASC) VISIBLE,
   CONSTRAINT `fk_book_item_book1`
     FOREIGN KEY (`book_isbn`)
     REFERENCES `Library`.`books` (`book_isbn`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_copies_of_books_copy_of_book_status1`
+    FOREIGN KEY (`copy_of_book_status_id`)
+    REFERENCES `Library`.`copy_of_book_status` (`copy_of_book_status_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -163,27 +180,27 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Library`.`reservations` (
   `reservation_id` INT NOT NULL AUTO_INCREMENT,
-  `user_id` INT NOT NULL,
-  `book_isbn` VARCHAR(45) NOT NULL,
   `date` DATE NULL,
+  `user_id` INT NOT NULL,
+  `inventory_id` INT NOT NULL,
   `reservation_status_id` INT NOT NULL,
   PRIMARY KEY (`reservation_id`),
-  INDEX `fk_user_has_book_book1_idx` (`book_isbn` ASC) VISIBLE,
   INDEX `fk_user_has_book_user1_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_reservation_reservation_status1_idx` (`reservation_status_id` ASC) VISIBLE,
+  INDEX `fk_reservations_copies_of_books1_idx` (`inventory_id` ASC) VISIBLE,
   CONSTRAINT `fk_user_has_book_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `Library`.`users` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_has_book_book1`
-    FOREIGN KEY (`book_isbn`)
-    REFERENCES `Library`.`books` (`book_isbn`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_reservation_reservation_status1`
     FOREIGN KEY (`reservation_status_id`)
     REFERENCES `Library`.`reservation_status` (`reservation_status_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_reservations_copies_of_books1`
+    FOREIGN KEY (`inventory_id`)
+    REFERENCES `Library`.`copies_of_books` (`inventory_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

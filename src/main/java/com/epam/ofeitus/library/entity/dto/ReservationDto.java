@@ -8,21 +8,21 @@ import java.util.Objects;
 
 public class ReservationDto {
     private int reservationId;
-    private int userId;
-    private String bookIsbn;
-    private Book book;
     private Date date;
+    private int userId;
+    private int inventoryId;
+    private Book book;
     private ReservationStatus reservationStatus;
 
     public ReservationDto() {
     }
 
-    public ReservationDto(int reservationId, int userId, String bookIsbn, Book book, Date date, ReservationStatus reservationStatus) {
+    public ReservationDto(int reservationId, Date date, int userId, int inventoryId, Book book, ReservationStatus reservationStatus) {
         this.reservationId = reservationId;
-        this.userId = userId;
-        this.bookIsbn = bookIsbn;
-        this.book = book;
         this.date = date;
+        this.userId = userId;
+        this.inventoryId = inventoryId;
+        this.book = book;
         this.reservationStatus = reservationStatus;
     }
 
@@ -34,6 +34,14 @@ public class ReservationDto {
         this.reservationId = reservationId;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public int getUserId() {
         return userId;
     }
@@ -42,12 +50,12 @@ public class ReservationDto {
         this.userId = userId;
     }
 
-    public String getBookIsbn() {
-        return bookIsbn;
+    public int getInventoryId() {
+        return inventoryId;
     }
 
-    public void setBookIsbn(String bookIsbn) {
-        this.bookIsbn = bookIsbn;
+    public void setInventoryId(int inventoryId) {
+        this.inventoryId = inventoryId;
     }
 
     public Book getBook() {
@@ -56,14 +64,6 @@ public class ReservationDto {
 
     public void setBook(Book book) {
         this.book = book;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public ReservationStatus getReservationStatus() {
@@ -79,22 +79,22 @@ public class ReservationDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ReservationDto that = (ReservationDto) o;
-        return reservationId == that.reservationId && userId == that.userId && Objects.equals(bookIsbn, that.bookIsbn) && Objects.equals(book, that.book) && Objects.equals(date, that.date) && reservationStatus == that.reservationStatus;
+        return reservationId == that.reservationId && userId == that.userId && inventoryId == that.inventoryId && Objects.equals(date, that.date) && Objects.equals(book, that.book) && reservationStatus == that.reservationStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(reservationId, userId, bookIsbn, book, date, reservationStatus);
+        return Objects.hash(reservationId, date, userId, inventoryId, book, reservationStatus);
     }
 
     @Override
     public String toString() {
         return "ReservationDto{" +
                 "reservationId=" + reservationId +
-                ", userId=" + userId +
-                ", bookIsbn='" + bookIsbn + '\'' +
-                ", book=" + book +
                 ", date=" + date +
+                ", userId=" + userId +
+                ", inventoryId=" + inventoryId +
+                ", book=" + book +
                 ", reservationStatus=" + reservationStatus +
                 '}';
     }

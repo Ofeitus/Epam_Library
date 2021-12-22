@@ -57,20 +57,27 @@ INSERT INTO `library`.`book_has_author` (book_isbn, author_id) VALUES
     ('9785041034979', '6'),
     ('9785041078713', '7');
 
+-- Copy of book statuses
+INSERT INTO `library`.`copy_of_book_status` (copy_of_book_status_id, copy_of_book_status_value) VALUES
+    ('1', 'AVAILABLE'),
+    ('2', 'READING_ROOM'),
+    ('3', 'RESERVED'),
+    ('4', 'LOANED');
+
 -- Copies of Books
-INSERT INTO `library`.`copies_of_books` (inventory_id, book_isbn) VALUES
-    ('0', '9785389074354'),
-    ('0', '9785389077812'),
-    ('0', '9785389077881'),
-    ('0', '9785389077898'),
-    ('0', '9785389077904'),
-    ('0', '9785389077911'),
-    ('0', '9785389077928'),
-    ('0', '5941170688'),
-    ('0', '9785699923595'),
-    ('0', '9785170801152'),
-    ('0', '9785041034979'),
-    ('0', '9785041078713');
+INSERT INTO `library`.`copies_of_books` (inventory_id, book_isbn, copy_of_book_status_id) VALUES
+    ('0', '9785389074354', '4'),
+    ('0', '9785389077812', '4'),
+    ('0', '9785389077881', '1'),
+    ('0', '9785389077898', '1'),
+    ('0', '9785389077904', '1'),
+    ('0', '9785389077911', '4'),
+    ('0', '9785389077928', '1'),
+    ('0', '5941170688', '1'),
+    ('0', '9785699923595', '1'),
+    ('0', '9785170801152', '1'),
+    ('0', '9785041034979', '1'),
+    ('0', '9785041078713', '1');
 
 -- Loan statuses
 INSERT INTO `library`.`loan_status` (loan_status_id, loan_status_value) VALUES
@@ -83,18 +90,18 @@ INSERT INTO `library`.`loan_status` (loan_status_id, loan_status_value) VALUES
 INSERT INTO `library`.`loans` (loan_id, issue_date, due_date, return_date, fine_amount, user_id, inventory_id, loan_status_id) VALUES
     ('0', '2021-12-20', '2022-01-20', null, null, '3', '2', '1'),
     ('0', '2021-12-20', '2022-01-20', null, null, '3', '6', '1'),
-    ('0', '2021-12-20', '2022-01-20', null, null, '3', '9', '2'),
-    ('0', '2021-12-14', '2022-01-14', null, null, '3', '1', '3'),
-    ('0', '2021-12-14', '2022-01-14', null, null, '3', '3', '4');
+    ('0', '2021-12-10', '2022-01-09', '2021-12-20', null, '3', '9', '2'),
+    ('0', '2021-11-01', '2022-12-01', null, null, '3', '1', '3'),
+    ('0', '2021-11-01', '2021-12-01', '2021-12-11', '1.5', '3', '3', '4');
 
 -- Reservation statuses
 INSERT INTO `library`.`reservation_status` (reservation_status_id, reservations_status_value) VALUES
-    ('1', 'WAITING'),
-    ('2', 'PACKED'),
-    ('3', 'CLOSED');
+    ('1', 'RESERVED'),
+    ('2', 'READY_TO_ISSUE'),
+    ('3', 'ISSUED');
 
 -- Reservations
-INSERT INTO `library`.`reservations` (reservation_id, user_id, book_isbn, date, reservation_status_id) VALUES
-    ('0', '3', '5941170688', '2021-12-22', '1'),
-    ('0', '3', '9785041078713', '2021-12-18', '2'),
-    ('0', '3', '9785389074354', '2021-12-10', '3');
+INSERT INTO `library`.`reservations` (reservation_id, date, user_id, inventory_id, reservation_status_id) VALUES
+    ('0', '2021-12-22', '3', '8', '1'),
+    ('0', '2021-12-18', '3', '12', '2'),
+    ('0', '2021-12-10', '3', '1', '3');

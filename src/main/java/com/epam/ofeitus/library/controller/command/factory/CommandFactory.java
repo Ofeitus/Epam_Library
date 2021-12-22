@@ -19,6 +19,7 @@ public class CommandFactory {
         put(CommandName.GOTO_SIGN_UP_PAGE_COMMAND, new GoToSignUpPageCommand());
         put(CommandName.GOTO_USER_LOANS_PAGE_COMMAND, new GoToUserLoanPageCommand());
         put(CommandName.GOTO_USER_RESERVATIONS_PAGE_COMMAND, new GoToUserReservationsPageCommand());
+        put(CommandName.GOTO_USER_FINES_PAGE_COMMAND, new GoToUserFinesPageCommand());
         put(CommandName.GOTO_MANAGE_USERS_PAGE_COMMAND, new GoToManageUsersPageCommand());
         put(CommandName.LOG_IN_COMMAND, new LogInCommand());
         put(CommandName.LOG_OUT_COMMAND, new LogOutCommand());

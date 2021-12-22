@@ -8,19 +8,19 @@ import java.util.Objects;
 
 public class Reservation implements Serializable {
     private int reservationId;
-    private int userId;
-    private String bookIsbn;
     private Date date;
+    private int userId;
+    private int inventoryId;
     private ReservationStatus reservationStatus;
 
     public Reservation() {
     }
 
-    public Reservation(int reservationId, int userId, String bookIsbn, Date date, ReservationStatus reservationStatus) {
+    public Reservation(int reservationId, Date date, int userId, int inventoryId, ReservationStatus reservationStatus) {
         this.reservationId = reservationId;
-        this.userId = userId;
-        this.bookIsbn = bookIsbn;
         this.date = date;
+        this.userId = userId;
+        this.inventoryId = inventoryId;
         this.reservationStatus = reservationStatus;
     }
 
@@ -32,6 +32,14 @@ public class Reservation implements Serializable {
         this.reservationId = reservationId;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public int getUserId() {
         return userId;
     }
@@ -40,20 +48,12 @@ public class Reservation implements Serializable {
         this.userId = userId;
     }
 
-    public String getBookIsbn() {
-        return bookIsbn;
+    public int getInventoryId() {
+        return inventoryId;
     }
 
-    public void setBookIsbn(String bookIsbn) {
-        this.bookIsbn = bookIsbn;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
+    public void setInventoryId(int inventoryId) {
+        this.inventoryId = inventoryId;
     }
 
     public ReservationStatus getReservationStatus() {
@@ -69,22 +69,22 @@ public class Reservation implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Reservation that = (Reservation) o;
-        return reservationId == that.reservationId && userId == that.userId && bookIsbn.equals(that.bookIsbn) && reservationStatus == that.reservationStatus && Objects.equals(date, that.date);
+        return reservationId == that.reservationId && userId == that.userId && inventoryId == that.inventoryId && Objects.equals(date, that.date) && reservationStatus == that.reservationStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(reservationId, userId, bookIsbn, date, reservationStatus);
+        return Objects.hash(reservationId, date, userId, inventoryId, reservationStatus);
     }
 
     @Override
     public String toString() {
         return "Reservation{" +
                 "reservationId=" + reservationId +
-                ", userId=" + userId +
-                ", bookIsbn=" + bookIsbn +
                 ", date=" + date +
-                ", reservationStatusId=" + reservationStatus +
+                ", userId=" + userId +
+                ", inventoryId=" + inventoryId +
+                ", reservationStatus=" + reservationStatus +
                 '}';
     }
 }

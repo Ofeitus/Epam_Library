@@ -63,7 +63,7 @@
                         <hr>
                         <a href="?command=goto-user-loans-page"><fmt:message key="header.your-loan" /></a>
                         <a href="?command=goto-user-reservations-page"><fmt:message key="header.your-reservations" /></a>
-                        <a href="#"><fmt:message key="header.your-fines" /></a>
+                        <a href="?command=goto-user-fines-page"><fmt:message key="header.your-fines" /></a>
                     </c:if>
                     <c:if test="${sessionScope.user_role.toString() == 'MANAGER'}">
                         <a href="#"><fmt:message key="header.manager-profile" /></a>

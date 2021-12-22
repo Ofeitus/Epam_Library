@@ -48,4 +48,36 @@ public class LoanServiceImpl implements LoansService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public List<LoanDto> getLoansDtoByUserIdWithFine(int userId) throws ServiceException {
+        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
+        LoanDao loanDao = daoFactory.getLoanDao();
+        CopyOfBookDao copyOfBookDao = daoFactory.getCopyOfBookDao();
+        BookDao bookDao = daoFactory.getBookDao();
+
+        try {
+            List<Loan> loans = loanDao.findByUserIdWithFine(userId);
+            List<LoanDto> loansDto = new ArrayList<>();
+            for (Loan loan : loans) {
+                CopyOfBook copyOfBook = copyOfBookDao.findById(loan.getInventoryId());
+                Book book = bookDao.findByIsbn(copyOfBook.getBookIsbn());
+                loansDto.add(new LoanDto(
+                                loan.getLoanId(),
+                                loan.getIssueDate(),
+                                loan.getDueDate(),
+                                loan.getReturnDate(),
+                                loan.getFineAmount(),
+                                loan.getUserId(),
+                                loan.getInventoryId(),
+                                loan.getLoanStatus(),
+                                book
+                        )
+                );
+            }
+            return loansDto;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

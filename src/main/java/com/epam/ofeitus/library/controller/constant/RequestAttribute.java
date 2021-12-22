@@ -7,4 +7,5 @@ public class RequestAttribute {
     public static final String BOOK = "book";
     public static final String LOANS = "loans";
     public static final String RESERVATIONS = "reservations";
+    public static final String FINES = "fines";
 }

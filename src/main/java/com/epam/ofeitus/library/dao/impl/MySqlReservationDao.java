@@ -14,16 +14,16 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
             "INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (0, ?, ?, ?, ?)",
             Table.RESERVATION_TABLE,
             Column.RESERVATION_ID,
-            Column.RESERVATION_USER_ID,
-            Column.RESERVATION_BOOK_ISBN,
             Column.RESERVATION_DATE,
+            Column.RESERVATION_USER_ID,
+            Column.RESERVATION_INVENTORY_ID,
             Column.RESERVATION_STATUS_ID);
     public final static String UPDATE_RESERVATION_QUERY = String.format(
             "UPDATE %s SET %s=?, %s=?, %s=?, %s=? WHERE %s=?",
             Table.RESERVATION_TABLE,
-            Column.RESERVATION_USER_ID,
-            Column.RESERVATION_BOOK_ISBN,
             Column.RESERVATION_DATE,
+            Column.RESERVATION_USER_ID,
+            Column.RESERVATION_INVENTORY_ID,
             Column.RESERVATION_STATUS_ID,
             Column.RESERVATION_ID);
     private static final String FIND_BY_USER_ID_QUERY = String.format(
@@ -43,20 +43,21 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
     public int save(Reservation entity) throws DaoException {
         return queryOperator.executeUpdate(
                 SAVE_RESERVATION_QUERY,
-                entity.getBookIsbn(),
-                entity.getBookIsbn(),
                 entity.getDate(),
-                entity.getReservationStatus().ordinal());
+                entity.getUserId(),
+                entity.getInventoryId(),
+                entity.getReservationStatus().ordinal() + 1
+        );
     }
 
     @Override
     public int update(Reservation entity) throws DaoException {
         return queryOperator.executeUpdate(
                 UPDATE_RESERVATION_QUERY,
-                entity.getBookIsbn(),
-                entity.getBookIsbn(),
                 entity.getDate(),
-                entity.getReservationStatus().ordinal(),
+                entity.getUserId(),
+                entity.getInventoryId(),
+                entity.getReservationStatus().ordinal() + 1,
                 entity.getReservationId());
     }
 

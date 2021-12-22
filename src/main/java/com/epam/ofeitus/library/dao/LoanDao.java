@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface LoanDao extends AbstractDao<Loan> {
     List<Loan> findByUserId(int userId) throws DaoException;
+
+    List<Loan> findByUserIdWithFine(int userId) throws DaoException;
 }

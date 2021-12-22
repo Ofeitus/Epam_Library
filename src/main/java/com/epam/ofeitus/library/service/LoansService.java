@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface LoansService {
     List<LoanDto> getLoansDtoByUserId(int userId) throws ServiceException;
+
+    List<LoanDto> getLoansDtoByUserIdWithFine(int userId) throws ServiceException;
 }
