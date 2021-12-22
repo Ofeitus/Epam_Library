@@ -1,6 +1,7 @@
 package com.epam.ofeitus.library.entity.dto;
 
 import com.epam.ofeitus.library.entity.book.Book;
+import com.epam.ofeitus.library.entity.order.constiuent.LoanStatus;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -14,12 +15,13 @@ public class LoanDto {
     private BigDecimal fineAmount;
     private int userId;
     private int inventoryId;
+    private LoanStatus loanStatus;
     private Book book;
 
     public LoanDto() {
     }
 
-    public LoanDto(int loanId, Date issueDate, Date dueDate, Date returnDate, BigDecimal fineAmount, int userId, int inventoryId, Book book) {
+    public LoanDto(int loanId, Date issueDate, Date dueDate, Date returnDate, BigDecimal fineAmount, int userId, int inventoryId, LoanStatus loanStatus, Book book) {
         this.loanId = loanId;
         this.issueDate = issueDate;
         this.dueDate = dueDate;
@@ -27,6 +29,7 @@ public class LoanDto {
         this.fineAmount = fineAmount;
         this.userId = userId;
         this.inventoryId = inventoryId;
+        this.loanStatus = loanStatus;
         this.book = book;
     }
 
@@ -86,6 +89,14 @@ public class LoanDto {
         this.inventoryId = inventoryId;
     }
 
+    public LoanStatus getLoanStatus() {
+        return loanStatus;
+    }
+
+    public void setLoanStatus(LoanStatus loanStatus) {
+        this.loanStatus = loanStatus;
+    }
+
     public Book getBook() {
         return book;
     }
@@ -99,12 +110,12 @@ public class LoanDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LoanDto loanDto = (LoanDto) o;
-        return loanId == loanDto.loanId && userId == loanDto.userId && inventoryId == loanDto.inventoryId && Objects.equals(issueDate, loanDto.issueDate) && Objects.equals(dueDate, loanDto.dueDate) && Objects.equals(returnDate, loanDto.returnDate) && Objects.equals(fineAmount, loanDto.fineAmount) && Objects.equals(book, loanDto.book);
+        return loanId == loanDto.loanId && userId == loanDto.userId && inventoryId == loanDto.inventoryId && Objects.equals(issueDate, loanDto.issueDate) && Objects.equals(dueDate, loanDto.dueDate) && Objects.equals(returnDate, loanDto.returnDate) && Objects.equals(fineAmount, loanDto.fineAmount) && loanStatus == loanDto.loanStatus && Objects.equals(book, loanDto.book);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(loanId, issueDate, dueDate, returnDate, fineAmount, userId, inventoryId, book);
+        return Objects.hash(loanId, issueDate, dueDate, returnDate, fineAmount, userId, inventoryId, loanStatus, book);
     }
 
     @Override
@@ -117,6 +128,7 @@ public class LoanDto {
                 ", fineAmount=" + fineAmount +
                 ", userId=" + userId +
                 ", inventoryId=" + inventoryId +
+                ", loanStatus=" + loanStatus +
                 ", book=" + book +
                 '}';
     }

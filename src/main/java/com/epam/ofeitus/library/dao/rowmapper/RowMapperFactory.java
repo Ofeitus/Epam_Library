@@ -7,7 +7,6 @@ public class RowMapperFactory {
     public static final BookCategoryRowMapper bookCategoryRowMapper = new BookCategoryRowMapper();
     public static final BookRowMapper bookRowMapper = new BookRowMapper();
     public static final CopyOfBookRowMapper copyOfBookRowMapper = new CopyOfBookRowMapper();
-    public static final FinePaymentRowMapper finePaymentRowMapper = new FinePaymentRowMapper();
     public static final LoanRowMapper loanRowMapper = new LoanRowMapper();
     public static final ReservationRowMapper reservationRowMapper = new ReservationRowMapper();
     public static final UserRowMapper userRowMapper = new UserRowMapper();
@@ -26,10 +25,6 @@ public class RowMapperFactory {
 
     public static CopyOfBookRowMapper getCopyOfBookRowMapper() {
         return copyOfBookRowMapper;
-    }
-
-    public static FinePaymentRowMapper getFinePaymentRowMapper() {
-        return finePaymentRowMapper;
     }
 
     public static LoanRowMapper getLoanRowMapper() {

@@ -38,6 +38,7 @@ public class LoanServiceImpl implements LoansService {
                         loan.getFineAmount(),
                         loan.getUserId(),
                         loan.getInventoryId(),
+                        loan.getLoanStatus(),
                         book
                         )
                 );

@@ -105,6 +105,16 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `Library`.`loan_status`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Library`.`loan_status` (
+  `loan_status_id` INT NOT NULL,
+  `loan_status_value` VARCHAR(45) NULL,
+  PRIMARY KEY (`loan_status_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `Library`.`loans`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Library`.`loans` (
@@ -115,9 +125,11 @@ CREATE TABLE IF NOT EXISTS `Library`.`loans` (
   `fine_amount` DECIMAL(10,2) NULL,
   `user_id` INT NOT NULL,
   `inventory_id` INT NOT NULL,
+  `loan_status_id` INT NOT NULL,
   PRIMARY KEY (`loan_id`),
   INDEX `fk_loan_user1_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_loans_copies_of_books1_idx` (`inventory_id` ASC) VISIBLE,
+  INDEX `fk_loans_loan_status1_idx` (`loan_status_id` ASC) VISIBLE,
   CONSTRAINT `fk_loan_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `Library`.`users` (`user_id`)
@@ -126,6 +138,11 @@ CREATE TABLE IF NOT EXISTS `Library`.`loans` (
   CONSTRAINT `fk_loans_copies_of_books1`
     FOREIGN KEY (`inventory_id`)
     REFERENCES `Library`.`copies_of_books` (`inventory_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_loans_loan_status1`
+    FOREIGN KEY (`loan_status_id`)
+    REFERENCES `Library`.`loan_status` (`loan_status_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -167,24 +184,6 @@ CREATE TABLE IF NOT EXISTS `Library`.`reservations` (
   CONSTRAINT `fk_reservation_reservation_status1`
     FOREIGN KEY (`reservation_status_id`)
     REFERENCES `Library`.`reservation_status` (`reservation_status_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `Library`.`fines_payments`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Library`.`fines_payments` (
-  `payment_id` INT NOT NULL AUTO_INCREMENT,
-  `user_id` INT NOT NULL,
-  `date` DATE NULL,
-  `amount` DECIMAL(10,2) NULL,
-  PRIMARY KEY (`payment_id`),
-  INDEX `fk_fines_payments_users1_idx` (`user_id` ASC) VISIBLE,
-  CONSTRAINT `fk_fines_payments_users1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `Library`.`users` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

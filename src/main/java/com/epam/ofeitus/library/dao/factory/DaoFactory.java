@@ -1,8 +1,6 @@
 package com.epam.ofeitus.library.dao.factory;
 
 import com.epam.ofeitus.library.dao.*;
-import com.epam.ofeitus.library.entity.book.CopyOfBook;
-import com.epam.ofeitus.library.entity.user.FinePayment;
 
 public interface DaoFactory {
     BookDao getBookDao();
@@ -18,6 +16,4 @@ public interface DaoFactory {
     LoanDao getLoanDao();
 
     ReservationDao getReservationDao();
-
-    FinePaymentDao getFineDao();
 }

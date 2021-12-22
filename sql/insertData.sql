@@ -72,13 +72,20 @@ INSERT INTO `library`.`copies_of_books` (inventory_id, book_isbn) VALUES
     ('0', '9785041034979'),
     ('0', '9785041078713');
 
+-- Loan statuses
+INSERT INTO `library`.`loan_status` (loan_status_id, loan_status_value) VALUES
+    ('1', 'ISSUED'),
+    ('2', 'RETURNED'),
+    ('3', 'FINED'),
+    ('4', 'PAID');
+
 -- Loans
-INSERT INTO `library`.`loans` (loan_id, issue_date, due_date, return_date, fine_amount, user_id, inventory_id) VALUES
-    ('0', '2021-12-20', '2022-01-20', null, null, '3', '2'),
-    ('0', '2021-12-20', '2022-01-20', null, null, '3', '6'),
-    ('0', '2021-12-20', '2022-01-20', null, null, '3', '9'),
-    ('0', '2021-12-14', '2022-01-14', null, null, '3', '1'),
-    ('0', '2021-12-14', '2022-01-14', null, null, '3', '3');
+INSERT INTO `library`.`loans` (loan_id, issue_date, due_date, return_date, fine_amount, user_id, inventory_id, loan_status_id) VALUES
+    ('0', '2021-12-20', '2022-01-20', null, null, '3', '2', '1'),
+    ('0', '2021-12-20', '2022-01-20', null, null, '3', '6', '1'),
+    ('0', '2021-12-20', '2022-01-20', null, null, '3', '9', '2'),
+    ('0', '2021-12-14', '2022-01-14', null, null, '3', '1', '3'),
+    ('0', '2021-12-14', '2022-01-14', null, null, '3', '3', '4');
 
 -- Reservation statuses
 INSERT INTO `library`.`reservation_status` (reservation_status_id, reservations_status_value) VALUES

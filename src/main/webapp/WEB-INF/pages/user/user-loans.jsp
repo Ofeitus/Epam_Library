@@ -25,7 +25,7 @@
                     <th scope="col" rowspan="2"><fmt:message key="user-loans.issue-date" /></th>
                     <th scope="col" rowspan="2"><fmt:message key="user-loans.due-date" /></th>
                     <th scope="col" rowspan="2"><fmt:message key="user-loans.return-date" /></th>
-                    <th scope="col" rowspan="2"><fmt:message key="user-loans.fine-amount" /></th>
+                    <th scope="col" rowspan="2"><fmt:message key="user-loans.loan-status" /></th>
                 </tr>
                 <tr>
                     <th scope="col" rowspan="1"><fmt:message key="user-loans.book-inventory-id" /></th>
@@ -43,7 +43,7 @@
                     <td>${loan.issueDate}</td>
                     <td>${loan.dueDate}</td>
                     <td>${loan.returnDate}</td>
-                    <td>${loan.fineAmount}</td>
+                    <td>${loan.loanStatus}</td>
                 </tr>
             </c:forEach>
             </tbody>

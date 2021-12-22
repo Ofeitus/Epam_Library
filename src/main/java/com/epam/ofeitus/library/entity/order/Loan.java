@@ -1,5 +1,7 @@
 package com.epam.ofeitus.library.entity.order;
 
+import com.epam.ofeitus.library.entity.order.constiuent.LoanStatus;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -13,11 +15,12 @@ public class Loan implements Serializable {
     private BigDecimal fineAmount;
     private int userId;
     private int inventoryId;
+    private LoanStatus loanStatus;
 
     public Loan() {
     }
 
-    public Loan(int loanId, Date issueDate, Date dueDate, Date returnDate, BigDecimal fineAmount, int userId, int inventoryId) {
+    public Loan(int loanId, Date issueDate, Date dueDate, Date returnDate, BigDecimal fineAmount, int userId, int inventoryId, LoanStatus loanStatus) {
         this.loanId = loanId;
         this.issueDate = issueDate;
         this.dueDate = dueDate;
@@ -25,6 +28,7 @@ public class Loan implements Serializable {
         this.fineAmount = fineAmount;
         this.userId = userId;
         this.inventoryId = inventoryId;
+        this.loanStatus = loanStatus;
     }
 
     public int getLoanId() {
@@ -83,17 +87,25 @@ public class Loan implements Serializable {
         this.inventoryId = inventoryId;
     }
 
+    public LoanStatus getLoanStatus() {
+        return loanStatus;
+    }
+
+    public void setLoanStatus(LoanStatus loanStatus) {
+        this.loanStatus = loanStatus;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Loan loan = (Loan) o;
-        return loanId == loan.loanId && userId == loan.userId && inventoryId == loan.inventoryId && Objects.equals(issueDate, loan.issueDate) && Objects.equals(dueDate, loan.dueDate) && Objects.equals(returnDate, loan.returnDate) && Objects.equals(fineAmount, loan.fineAmount);
+        return loanId == loan.loanId && userId == loan.userId && inventoryId == loan.inventoryId && Objects.equals(issueDate, loan.issueDate) && Objects.equals(dueDate, loan.dueDate) && Objects.equals(returnDate, loan.returnDate) && Objects.equals(fineAmount, loan.fineAmount) && loanStatus == loan.loanStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(loanId, issueDate, dueDate, returnDate, fineAmount, userId, inventoryId);
+        return Objects.hash(loanId, issueDate, dueDate, returnDate, fineAmount, userId, inventoryId, loanStatus);
     }
 
     @Override
@@ -106,6 +118,7 @@ public class Loan implements Serializable {
                 ", fineAmount=" + fineAmount +
                 ", userId=" + userId +
                 ", inventoryId=" + inventoryId +
+                ", loanStatus=" + loanStatus +
                 '}';
     }
 }

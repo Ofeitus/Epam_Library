@@ -11,7 +11,6 @@ public class MySqlDaoFactory implements DaoFactory {
     private static final BookCategoryDao mySqlBookCategoryDao = new MySqlBookCategoryDao();
     private static final BookDao mySqlBookDao = new MySqlBookDao();
     private static final CopyOfBookDao mySqlCopyOfBookDao = new MySqlCopyOfBookDao();
-    private static final FinePaymentDao mySqlFinePaymentDao = new MySqlFinePaymentDao();
     private static final LoanDao mySqlLoanDao = new MySqlLoanDao();
     private static final ReservationDao mySqlReservationDao = new MySqlReservationDao();
     private static final UserDao mySqlUserDao = new MySqlUserDao();
@@ -41,11 +40,6 @@ public class MySqlDaoFactory implements DaoFactory {
     @Override
     public CopyOfBookDao getCopyOfBookDao() {
         return mySqlCopyOfBookDao;
-    }
-
-    @Override
-    public FinePaymentDao getFineDao() {
-        return mySqlFinePaymentDao;
     }
 
     @Override

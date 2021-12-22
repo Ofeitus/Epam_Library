@@ -14,7 +14,7 @@ import java.util.List;
 
 public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
     public final static String SAVE_LOAN_QUERY = String.format(
-            "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s) VALUES (0, ?, ?, ?, ?, ?, ?)",
+            "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s, %s) VALUES (0, ?, ?, ?, ?, ?, ?, ?)",
             Table.LOAN_TABLE,
             Column.LOAN_ID,
             Column.LOAN_ISSUE_DATE,
@@ -22,9 +22,10 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Column.LOAN_RETURN_DATE,
             Column.LOAN_FINE_AMOUNT,
             Column.LOAN_USER_ID,
-            Column.LOAN_INVENTORY_ID);
+            Column.LOAN_INVENTORY_ID,
+            Column.LOAN_STATUS_ID);
     public final static String UPDATE_LOAN_QUERY = String.format(
-            "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?",
+            "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?",
             Table.LOAN_TABLE,
             Column.LOAN_ISSUE_DATE,
             Column.LOAN_DUE_DATE,
@@ -32,6 +33,7 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Column.LOAN_FINE_AMOUNT,
             Column.LOAN_USER_ID,
             Column.LOAN_INVENTORY_ID,
+            Column.LOAN_STATUS_ID,
             Column.LOAN_ID);
     private static final String FIND_BY_USER_ID_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=?",
@@ -51,7 +53,8 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
                 entity.getReturnDate(),
                 entity.getFineAmount(),
                 entity.getUserId(),
-                entity.getInventoryId()
+                entity.getInventoryId(),
+                entity.getLoanStatus()
         );
     }
 
@@ -59,13 +62,14 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
     public int update(Loan entity) throws DaoException {
         return queryOperator.executeUpdate(
                 UPDATE_LOAN_QUERY,
-                entity.getLoanId(),
                 entity.getIssueDate(),
                 entity.getDueDate(),
                 entity.getReturnDate(),
                 entity.getFineAmount(),
                 entity.getUserId(),
-                entity.getInventoryId()
+                entity.getInventoryId(),
+                entity.getLoanStatus(),
+                entity.getLoanId()
         );
     }
 

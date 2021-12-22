@@ -6,7 +6,6 @@ public class Table {
     public static final String BOOK_TABLE = "books";
     public static final String BOOK_HAS_AUTHOR_TABLE = "book_has_author";
     public static final String COPY_OF_BOOK_TABLE = "copies_of_books";
-    public static final String FINE_PAYMENT_TABLE = "fines_payments";
     public static final String LOAN_TABLE = "loans";
     public static final String RESERVATION_TABLE = "reservations";
     public static final String RESERVATION_STATUS_TABLE = "reservation_status";

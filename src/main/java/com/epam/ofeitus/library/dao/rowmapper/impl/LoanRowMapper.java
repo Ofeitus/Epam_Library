@@ -3,6 +3,7 @@ package com.epam.ofeitus.library.dao.rowmapper.impl;
 import com.epam.ofeitus.library.constant.Column;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapper;
 import com.epam.ofeitus.library.entity.order.Loan;
+import com.epam.ofeitus.library.entity.order.constiuent.LoanStatus;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,6 +19,7 @@ public class LoanRowMapper implements RowMapper<Loan> {
         loan.setFineAmount(resultSet.getBigDecimal(Column.LOAN_FINE_AMOUNT));
         loan.setUserId(resultSet.getInt(Column.LOAN_USER_ID));
         loan.setInventoryId(resultSet.getInt(Column.LOAN_INVENTORY_ID));
+        loan.setLoanStatus(LoanStatus.values()[resultSet.getInt(Column.LOAN_STATUS_ID) - 1]);
         return loan;
     }
 }

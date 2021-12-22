@@ -28,6 +28,9 @@ public final class Column {
     public static final String LOAN_FINE_AMOUNT = "fine_amount";
     public static final String LOAN_USER_ID = "user_id";
     public static final String LOAN_INVENTORY_ID = "inventory_id";
+    public static final String LOAN_STATUS_ID = "loan_status_id";
+
+    public static final String LOAN_STATUS_VALUE = "loan_status_value";
 
     public static final String RESERVATION_ID = "reservation_id";
     public static final String RESERVATION_USER_ID = "user_id";
@@ -47,11 +50,6 @@ public final class Column {
 
     public static final String ROLE_ID = "role_id";
     public static final String ROLE_NAME = "role_name";
-
-    public static final String FINE_PAYMENT_ID = "payment_id";
-    public static final String FINE_USER_ID = "user_id";
-    public static final String FINE_DATE = "date";
-    public static final String FINE_AMOUNT = "amount";
 
     private Column() {
     }
