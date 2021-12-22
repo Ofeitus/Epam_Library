@@ -24,6 +24,7 @@ public class GoToUserFinesPageCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
+        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-user-fines-page");
 
         LoansService loansService = ServiceFactory.getInstance().getLoansService();
         try {

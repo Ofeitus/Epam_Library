@@ -5,6 +5,7 @@ import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
 import com.epam.ofeitus.library.controller.constant.RequestAttribute;
+import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.entity.user.User;
 import com.epam.ofeitus.library.service.UserService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
@@ -14,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class GoToManageUsersPageCommand implements Command {
@@ -21,6 +23,9 @@ public class GoToManageUsersPageCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-manage-users-page");
+
         UserService userService = ServiceFactory.getInstance().getUserService();
         try {
             List<User> users = userService.getAll();

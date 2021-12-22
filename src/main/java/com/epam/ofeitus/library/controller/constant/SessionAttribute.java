@@ -6,4 +6,5 @@ public class SessionAttribute {
     public static final String USER_EMAIL = "user_email";
     public static final String ERROR = "error";
     public static final String LOCALE = "locale";
+    public static final String URL = "url";
 }

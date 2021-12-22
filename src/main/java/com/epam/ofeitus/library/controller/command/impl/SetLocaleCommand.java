@@ -17,6 +17,6 @@ public class SetLocaleCommand implements Command {
         String locale = request.getParameter(RequestParameter.LOCALE);
         HttpSession session = request.getSession();
         session.setAttribute(SessionAttribute.LOCALE, locale);
-        return new CommandResult(Page.HOME_PAGE, RoutingType.FORWARD);
+        return new CommandResult((String)session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
     }
 }

@@ -33,7 +33,7 @@ public class LogInCommand implements Command {
         try {
             user = userService.login(email, password);
         } catch (ServiceException e) {
-            logger.error("Unable to check user log in data.", e);
+            logger.error("Unable to check user log-in data.", e);
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
         if (user != null) {
@@ -46,9 +46,11 @@ public class LogInCommand implements Command {
             session.setAttribute(SessionAttribute.USER_ROLE, user.getUserRole());
         } else {
             session.setAttribute(SessionAttribute.ERROR, "Invalid login or password");
-            return new CommandResult(Page.SIGN_IN_PAGE, RoutingType.FORWARD);
+            session.setAttribute(SessionAttribute.URL, "/controller?command=goto-log-in-page");
+            return new CommandResult(Page.LOG_IN_PAGE, RoutingType.FORWARD);
         }
 
-        return new CommandResult(Page.HOME_PAGE_REDIRECT, RoutingType.REDIRECT);
+        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-home-page");
+        return new CommandResult(Page.HOME_PAGE, RoutingType.FORWARD);
     }
 }

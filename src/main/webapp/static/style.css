@@ -8,6 +8,7 @@
 body {
     display: flex;
     flex-direction: column;
+    background-color: #333333;
     background-image: url("../images/home1.png");
     background-size: cover;
     background-attachment: fixed;

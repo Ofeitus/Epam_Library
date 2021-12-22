@@ -36,12 +36,15 @@ public class Controller extends HttpServlet {
         Command command = CommandFactory.getInstance().getCommand(commandName);
 
         if (commandName == null || command == null) {
+            session.setAttribute(SessionAttribute.URL, Page.ERROR_404_PAGE);
             request.getRequestDispatcher(Page.ERROR_404_PAGE).forward(request, response);
             return;
         }
 
         CommandResult result = command.execute(request, response);
-
+        if (result.getResource().equals(Page.ERROR_500_PAGE)) {
+            session.setAttribute(SessionAttribute.URL, Page.ERROR_500_PAGE);
+        }
         String resource = result.getResource();
         switch (result.getRoutingType()) {
             case FORWARD:

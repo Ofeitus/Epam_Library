@@ -33,6 +33,7 @@ public class SignUpCommand implements Command {
         try {
             if (userService.getByEmail(email) != null) {
                 session.setAttribute(SessionAttribute.ERROR, "Email is already taken");
+                session.setAttribute(SessionAttribute.URL, "/controller?command=goto-sign-up-page");
                 return new CommandResult(Page.SIGN_UP_PAGE, RoutingType.FORWARD);
             }
             userService.register(firstName, lastName, email, password);
@@ -42,6 +43,7 @@ public class SignUpCommand implements Command {
             logger.error("Unable to register new user.", e);
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
-        return new CommandResult(Page.SIGN_IN_PAGE, RoutingType.FORWARD);
+        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-log-in-page");
+        return new CommandResult(Page.LOG_IN_PAGE, RoutingType.FORWARD);
     }
 }

@@ -30,7 +30,7 @@
         <div class="locale">
             <div class="locale-button">
                 <c:if test="${sessionScope.locale == 'ru'}">
-                    <a href="?command=set-locale&locale=ru">Рус</a>
+                    <a <c:set var="user" value="${param.name}" scope="session" /> href="?command=set-locale&locale=ru">Рус</a>
                 </c:if>
                 <c:if test="${sessionScope.locale == 'en'}">
                     <a href="?command=set-locale&locale=en">Eng</a>

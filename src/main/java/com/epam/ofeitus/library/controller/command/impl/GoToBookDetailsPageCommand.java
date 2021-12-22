@@ -6,6 +6,7 @@ import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
 import com.epam.ofeitus.library.controller.constant.RequestAttribute;
 import com.epam.ofeitus.library.controller.constant.RequestParameter;
+import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.entity.dto.BookDto;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
@@ -15,16 +16,19 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class GoToBookDetailsPageCommand implements Command {
     Logger logger = LogManager.getLogger(GoToBookDetailsPageCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
-        BookService bookService = ServiceFactory.getInstance().getBookService();
-
         String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
 
+        HttpSession session = request.getSession();
+        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-book-details-page&book-isbn=" + bookIsbn);
+
+        BookService bookService = ServiceFactory.getInstance().getBookService();
         try {
             BookDto book = bookService.getBookDtoByIsbn(bookIsbn);
             request.setAttribute(RequestAttribute.BOOK, book);

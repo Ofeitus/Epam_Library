@@ -8,7 +8,6 @@
         <servlet-name>Library</servlet-name>
         <servlet-class>com.epam.ofeitus.library.controller.Controller</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>Library</servlet-name>
         <url-pattern>/controller</url-pattern>
@@ -17,4 +16,26 @@
     <listener>
         <listener-class>com.epam.ofeitus.library.controller.ContextListener</listener-class>
     </listener>
+
+    <filter>
+        <filter-name>encoding</filter-name>
+        <filter-class>com.epam.ofeitus.library.controller.filter.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>request-encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>no-cache-filter</filter-name>
+        <filter-class>com.epam.ofeitus.library.controller.filter.NoCacheFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>no-cache-filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>

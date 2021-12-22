@@ -24,6 +24,7 @@ public class GoToUserReservationsPageCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
+        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-user-reservations-page");
 
         ReservationsService reservationsService = ServiceFactory.getInstance().getReservationsService();
         try {
