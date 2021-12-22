@@ -36,14 +36,14 @@ public class Controller extends HttpServlet {
         Command command = CommandFactory.getInstance().getCommand(commandName);
 
         if (commandName == null || command == null) {
-            session.setAttribute(SessionAttribute.URL, Page.ERROR_404_PAGE);
+            session.setAttribute(SessionAttribute.URL, "/controller?command=goto-404-page");
             request.getRequestDispatcher(Page.ERROR_404_PAGE).forward(request, response);
             return;
         }
 
         CommandResult result = command.execute(request, response);
         if (result.getResource().equals(Page.ERROR_500_PAGE)) {
-            session.setAttribute(SessionAttribute.URL, Page.ERROR_500_PAGE);
+            session.setAttribute(SessionAttribute.URL, "/controller?command=goto-500-page");
         }
         String resource = result.getResource();
         switch (result.getRoutingType()) {

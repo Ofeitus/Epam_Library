@@ -12,6 +12,8 @@ public class CommandFactory {
 
     private static final Map<String, Command> commands = new HashMap<>() {{
         put(CommandName.SET_LOCALE_COMMAND, new SetLocaleCommand());
+        put(CommandName.GOTO_404_PAGE_COMMAND, new GoTo404PageCommand());
+        put(CommandName.GOTO_500_PAGE_COMMAND, new GoTo500PageCommand());
         put(CommandName.GOTO_HOME_PAGE_COMMAND, new GoToHomePageCommand());
         put(CommandName.GOTO_CATALOG_PAGE_COMMAND, new GoToCatalogPageCommand());
         put(CommandName.GOTO_BOOK_DETAILS_COMMAND, new GoToBookDetailsPageCommand());

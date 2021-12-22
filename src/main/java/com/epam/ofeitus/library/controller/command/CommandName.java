@@ -2,6 +2,8 @@ package com.epam.ofeitus.library.controller.command;
 
 public class CommandName {
     public static final String SET_LOCALE_COMMAND = "set-locale";
+    public static final String GOTO_404_PAGE_COMMAND = "goto-404-page";
+    public static final String GOTO_500_PAGE_COMMAND = "goto-500-page";
     public static final String GOTO_HOME_PAGE_COMMAND = "goto-home-page";
     public static final String GOTO_CATALOG_PAGE_COMMAND = "goto-catalog-page";
     public static final String GOTO_BOOK_DETAILS_COMMAND = "goto-book-details-page";

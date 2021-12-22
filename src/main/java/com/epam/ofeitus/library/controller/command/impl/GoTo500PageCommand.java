@@ -4,18 +4,18 @@ import com.epam.ofeitus.library.controller.command.Command;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
-import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class SetLocaleCommand implements Command {
+public class GoTo500PageCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        session.setAttribute(SessionAttribute.LOCALE, request.getParameter(RequestParameter.LOCALE));
-        return new CommandResult((String)session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
+        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-500-page");
+
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }
