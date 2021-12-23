@@ -19,7 +19,8 @@ public class CommandFactory {
         put(CommandName.GOTO_BOOK_DETAILS_COMMAND, new GoToBookDetailsPageCommand());
         put(CommandName.GOTO_LOG_IN_PAGE_COMMAND, new GoToLogInPageCommand());
         put(CommandName.GOTO_SIGN_UP_PAGE_COMMAND, new GoToSignUpPageCommand());
-        put(CommandName.GOTO_USER_LOANS_PAGE_COMMAND, new GoToUserLoanPageCommand());
+        put(CommandName.GOTO_USER_PROFILE_PAGE_COMMAND, new GoToUserProfilePageCommand());
+        put(CommandName.GOTO_USER_LOANS_PAGE_COMMAND, new GoToUserLoansPageCommand());
         put(CommandName.GOTO_USER_RESERVATIONS_PAGE_COMMAND, new GoToUserReservationsPageCommand());
         put(CommandName.GOTO_USER_FINES_PAGE_COMMAND, new GoToUserFinesPageCommand());
         put(CommandName.GOTO_MANAGE_USERS_PAGE_COMMAND, new GoToManageUsersPageCommand());

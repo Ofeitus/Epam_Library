@@ -59,7 +59,7 @@
                 <div class="account-dropdown">
                     <hr>
                     <c:if test="${sessionScope.user_role.toString() == 'MEMBER'}">
-                        <a href="#"><fmt:message key="header.member-profile" /></a>
+                        <a href="?command=goto-user-profile-page"><fmt:message key="header.member-profile" /></a>
                         <hr>
                         <a href="?command=goto-user-loans-page"><fmt:message key="header.your-loan" /></a>
                         <a href="?command=goto-user-reservations-page"><fmt:message key="header.your-reservations" /></a>

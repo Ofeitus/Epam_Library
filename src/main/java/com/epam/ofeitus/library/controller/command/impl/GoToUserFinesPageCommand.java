@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class GoToUserFinesPageCommand implements Command {
-    Logger logger = LogManager.getLogger(GoToUserLoanPageCommand.class);
+    Logger logger = LogManager.getLogger(GoToUserFinesPageCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {

@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public class GoToUserLoanPageCommand implements Command {
-    Logger logger = LogManager.getLogger(GoToUserLoanPageCommand.class);
+public class GoToUserLoansPageCommand implements Command {
+    Logger logger = LogManager.getLogger(GoToUserLoansPageCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {

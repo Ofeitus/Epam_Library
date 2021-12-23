@@ -14,6 +14,7 @@ public class CommandName {
     public static final String LOG_OUT_COMMAND = "log-out";
     public static final String GOTO_MANAGE_USERS_PAGE_COMMAND = "goto-manage-users-page";
     public static final String SEARCH_BOOKS_COMMAND = "search-books";
+    public static final String GOTO_USER_PROFILE_PAGE_COMMAND = "goto-user-profile-page";
     public static final String GOTO_USER_LOANS_PAGE_COMMAND = "goto-user-loans-page";
     public static final String GOTO_USER_RESERVATIONS_PAGE_COMMAND = "goto-user-reservations-page";
     public static final String GOTO_USER_FINES_PAGE_COMMAND = "goto-user-fines-page";

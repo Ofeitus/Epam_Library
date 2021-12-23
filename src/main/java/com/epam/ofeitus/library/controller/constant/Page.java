@@ -12,6 +12,7 @@ public class Page {
     public static final String SIGN_UP_PAGE = "WEB-INF/pages/sign-up.jsp";
 
     // user
+    public static final String USER_PROFILE_PAGE = "WEB-INF/pages/user/user-profile.jsp";
     public static final String USER_LOANS_PAGE = "WEB-INF/pages/user/user-loans.jsp";
     public static final String USER_RESERVATIONS_PAGE = "WEB-INF/pages/user/user-reservations.jsp";
     public static final String USER_FINES_PAGE = "WEB-INF/pages/user/user-fines.jsp";

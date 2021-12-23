@@ -8,4 +8,7 @@ public class RequestAttribute {
     public static final String LOANS = "loans";
     public static final String RESERVATIONS = "reservations";
     public static final String FINES = "fines";
+    public static final String DEBTS_COUNT = "debts_count";
+    public static final String UNPAID_FINES_COUNT = "unpaid_fines_count";
+    public static final String READY_RESERVATIONS_COUNT = "ready_reservations_count";
 }

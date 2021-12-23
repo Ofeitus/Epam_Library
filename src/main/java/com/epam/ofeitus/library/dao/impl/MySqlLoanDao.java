@@ -4,12 +4,9 @@ import com.epam.ofeitus.library.constant.Column;
 import com.epam.ofeitus.library.constant.Table;
 import com.epam.ofeitus.library.dao.LoanDao;
 import com.epam.ofeitus.library.dao.exception.DaoException;
-import com.epam.ofeitus.library.dao.queryoperator.ParametrizedQuery;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
-import com.epam.ofeitus.library.entity.book.CopyOfBook;
 import com.epam.ofeitus.library.entity.order.Loan;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
@@ -39,12 +36,23 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             "SELECT * FROM %s WHERE %s=?",
             Table.LOAN_TABLE,
             Column.LOAN_USER_ID);
+    private static final String FIND_BY_STATUS_ID_QUERY = String.format(
+            "SELECT * FROM %s WHERE %s=? AND %s=?",
+            Table.LOAN_TABLE,
+            Column.LOAN_USER_ID,
+            Column.LOAN_STATUS_ID);
     private static final String FIND_BY_USER_ID_WITH_FINE_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=? AND (%s='3' OR %s='4')",
             Table.LOAN_TABLE,
             Column.LOAN_USER_ID,
             Column.LOAN_STATUS_ID,
             Column.LOAN_STATUS_ID);
+    private static final String FIND_DEBTS_BY_USER_ID = String.format(
+            "SELECT * FROM %s WHERE %s=? AND %s='1' AND %s < CURDATE()",
+            Table.LOAN_TABLE,
+            Column.LOAN_USER_ID,
+            Column.LOAN_STATUS_ID,
+            Column.LOAN_DUE_DATE);
 
     public MySqlLoanDao() {
         super(RowMapperFactory.getLoanRowMapper(), Table.LOAN_TABLE, Column.LOAN_ID);
@@ -87,5 +95,15 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
     @Override
     public List<Loan> findByUserIdWithFine(int userId) throws DaoException {
         return queryOperator.executeQuery(FIND_BY_USER_ID_WITH_FINE_QUERY, userId);
+    }
+
+    @Override
+    public List<Loan> findDebtsByUserId(int userId) throws DaoException {
+        return queryOperator.executeQuery(FIND_DEBTS_BY_USER_ID, userId);
+    }
+
+    @Override
+    public List<Loan> findByUserIdAndStatusId(int userId, int statusId) throws DaoException {
+        return queryOperator.executeQuery(FIND_BY_STATUS_ID_QUERY, userId, statusId);
     }
 }

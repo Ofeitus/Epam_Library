@@ -42,6 +42,8 @@ public class LogInCommand implements Command {
             }
             session.removeAttribute(SessionAttribute.ERROR);
             session.setAttribute(SessionAttribute.USER_ID, user.getUserId());
+            session.setAttribute(SessionAttribute.USER_NAME, user.getName());
+            session.setAttribute(SessionAttribute.USER_SURNAME, user.getSurname());
             session.setAttribute(SessionAttribute.USER_EMAIL, user.getEmail());
             session.setAttribute(SessionAttribute.USER_ROLE, user.getUserRole());
         } else {

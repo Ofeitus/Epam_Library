@@ -4,12 +4,11 @@ import com.epam.ofeitus.library.dao.*;
 import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.dao.factory.DaoFactory;
 import com.epam.ofeitus.library.dao.factory.impl.MySqlDaoFactory;
-import com.epam.ofeitus.library.entity.book.Author;
 import com.epam.ofeitus.library.entity.book.Book;
 import com.epam.ofeitus.library.entity.book.CopyOfBook;
-import com.epam.ofeitus.library.entity.dto.BookDto;
 import com.epam.ofeitus.library.entity.dto.LoanDto;
 import com.epam.ofeitus.library.entity.order.Loan;
+import com.epam.ofeitus.library.entity.order.constiuent.LoanStatus;
 import com.epam.ofeitus.library.service.LoansService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 
@@ -76,6 +75,26 @@ public class LoanServiceImpl implements LoansService {
                 );
             }
             return loansDto;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int getDebtsCountByUserId(int userId) throws ServiceException {
+        LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
+        try {
+            return loanDao.findDebtsByUserId(userId).size();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int getUnpaidFinesCountByUserId(int userId) throws ServiceException {
+        LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
+        try {
+            return loanDao.findByUserIdAndStatusId(userId, LoanStatus.FINED.ordinal() + 1).size();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
