@@ -9,6 +9,7 @@ public class User implements Serializable {
     private int userId;
     private String name;
     private String surname;
+    private String phoneNumber;
     private String email;
     private String passwordHash;
     private UserRole userRole;
@@ -16,10 +17,11 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(int userId, String name, String surname, String email, String passwordHash, UserRole userRole) {
+    public User(int userId, String name, String surname, String phoneNumber, String email, String passwordHash, UserRole userRole) {
         this.userId = userId;
         this.name = name;
         this.surname = surname;
+        this.phoneNumber = phoneNumber;
         this.email = email;
         this.passwordHash = passwordHash;
         this.userRole = userRole;
@@ -47,6 +49,14 @@ public class User implements Serializable {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {
@@ -78,23 +88,24 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userId == user.userId && userRole == user.userRole && Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(email, user.email) && Objects.equals(passwordHash, user.passwordHash);
+        return userId == user.userId && Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(phoneNumber, user.phoneNumber) && Objects.equals(email, user.email) && Objects.equals(passwordHash, user.passwordHash) && userRole == user.userRole;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, name, surname, email, passwordHash, userRole);
+        return Objects.hash(userId, name, surname, phoneNumber, email, passwordHash, userRole);
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "userId=" + userId +
-                ", firstName='" + name + '\'' +
-                ", secondName='" + surname + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
-                ", userRoleId=" + userRole +
+                ", userRole=" + userRole +
                 '}';
     }
 }

@@ -74,6 +74,7 @@ CREATE TABLE IF NOT EXISTS `Library`.`users` (
   `user_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   `surname` VARCHAR(45) NULL,
+  `phone_number` VARCHAR(15) NULL,
   `email` VARCHAR(45) NULL,
   `password_hash` VARCHAR(90) NULL,
   `role_id` INT NOT NULL,

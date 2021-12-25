@@ -19,6 +19,7 @@
             <th scope="col"><fmt:message key="manage-users.id" /></th>
             <th scope="col"><fmt:message key="manage-users.name" /></th>
             <th scope="col"><fmt:message key="manage-users.surname" /></th>
+            <th scope="col"><fmt:message key="manage-users.phone-number" /></th>
             <th scope="col"><fmt:message key="manage-users.email" /></th>
             <th scope="col"><fmt:message key="manage-users.role" /></th>
         </tr>
@@ -29,6 +30,7 @@
                 <td>${user.userId}</td>
                 <td>${user.name}</td>
                 <td>${user.surname}</td>
+                <td>${user.phoneNumber}</td>
                 <td>${user.email}</td>
                 <td>${user.userRole.toString()}</td>
             </tr>

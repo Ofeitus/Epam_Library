@@ -59,14 +59,14 @@
                 <div class="account-dropdown">
                     <hr>
                     <c:if test="${sessionScope.user_role.toString() == 'MEMBER'}">
-                        <a href="?command=goto-user-profile-page"><fmt:message key="header.member-profile" /></a>
+                        <a href="?command=goto-profile-page"><fmt:message key="header.member-profile" /></a>
                         <hr>
                         <a href="?command=goto-user-loans-page"><fmt:message key="header.your-loan" /></a>
                         <a href="?command=goto-user-reservations-page"><fmt:message key="header.your-reservations" /></a>
                         <a href="?command=goto-user-fines-page"><fmt:message key="header.your-fines" /></a>
                     </c:if>
                     <c:if test="${sessionScope.user_role.toString() == 'MANAGER'}">
-                        <a href="#"><fmt:message key="header.manager-profile" /></a>
+                        <a href="?command=goto-profile-page"><fmt:message key="header.manager-profile" /></a>
                         <hr>
                         <a href="#"><fmt:message key="header.manage-books" /></a>
                         <a href="#"><fmt:message key="header.manage-loans" /></a>
@@ -74,7 +74,7 @@
                         <a href="#"><fmt:message key="header.manage-fines" /></a>
                     </c:if>
                     <c:if test="${sessionScope.user_role.toString() == 'ADMIN'}">
-                        <a href="#"><fmt:message key="header.admin-profile" /></a>
+                        <a href="?command=goto-profile-page"><fmt:message key="header.admin-profile" /></a>
                         <hr>
                         <a href="?command=goto-manage-users-page"><fmt:message key="header.manage-users" /></a>
                         <a href="#"><fmt:message key="header.loans-report" /></a>

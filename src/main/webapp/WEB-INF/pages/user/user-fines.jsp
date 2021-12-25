@@ -40,7 +40,16 @@
                     <td>${fine.dueDate}</td>
                     <td>${fine.returnDate}</td>
                     <td>${fine.fineAmount}</td>
-                    <td>${fine.loanStatus}</td>
+                    <td><i class="bi bi-circle-fill"
+                        <c:choose>
+                            <c:when test="${fine.loanStatus.toString() == 'FINED'}">
+                                style="color:firebrick"
+                            </c:when>
+                            <c:when test="${fine.loanStatus.toString() == 'PAID'}">
+                                style="color:forestgreen"
+                            </c:when>
+                        </c:choose>
+                    ></i>${fine.loanStatus}</td>
                 </tr>
             </c:forEach>
             </tbody>

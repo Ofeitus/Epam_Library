@@ -11,20 +11,22 @@ import java.util.List;
 
 public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
     public final static String SAVE_USER_QUERY = String.format(
-            "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s) VALUES (0, ?, ?, ?, ?, ?, 0)",
+            "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s, %s) VALUES (0, ?, ?, ?, ?, ?, ?, 0)",
             Table.USER_TABLE,
             Column.USER_ID,
             Column.USER_NAME,
             Column.USER_SURNAME,
+            Column.USER_PHONE_NUMBER,
             Column.USER_EMAIL,
             Column.USER_PASSWORD_HASH,
             Column.USER_ROLE_ID,
             Column.USER_DELETED);
     public final static String UPDATE_USER_QUERY = String.format(
-            "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?",
+            "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?",
             Table.USER_TABLE,
             Column.USER_NAME,
             Column.USER_SURNAME,
+            Column.USER_PHONE_NUMBER,
             Column.USER_EMAIL,
             Column.USER_PASSWORD_HASH,
             Column.USER_ROLE_ID,
@@ -67,6 +69,7 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
                 entity.getName(),
                 entity.getSurname(),
                 entity.getEmail(),
+                entity.getPhoneNumber(),
                 entity.getPasswordHash(),
                 entity.getUserRole().ordinal() + 1
         );
@@ -78,9 +81,10 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
                 UPDATE_USER_QUERY,
                 entity.getName(),
                 entity.getSurname(),
+                entity.getPhoneNumber(),
                 entity.getEmail(),
                 entity.getPasswordHash(),
-                entity.getUserRole().ordinal(),
+                entity.getUserRole().ordinal() + 1,
                 entity.getUserId());
     }
 

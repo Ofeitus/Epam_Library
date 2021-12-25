@@ -9,4 +9,5 @@ public class SessionAttribute {
     public static final String URL = "url";
     public static final String USER_NAME = "user_name";
     public static final String USER_SURNAME = "user_surname";
+    public static final String USER_PHONE_NUMBER = "user_phone_number";
 }

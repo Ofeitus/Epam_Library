@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(String firstName, String lastName, String email, String password) throws ServiceException {
-        User user = new User(0, firstName, lastName, email, DigestUtils.sha256Hex(password), UserRole.MEMBER);
+        User user = new User(0, firstName, lastName, "", email, DigestUtils.sha256Hex(password), UserRole.MEMBER);
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
         try {
             userDao.save(user);
@@ -56,6 +56,20 @@ public class UserServiceImpl implements UserService {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
         try {
             return userDao.findByEmail(email);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int editPersonalData(int id, String name, String surname, String phoneNumber) throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+        try {
+            User user = userDao.findById(id);
+            user.setName(name);
+            user.setSurname(surname);
+            user.setPhoneNumber(phoneNumber);
+            return userDao.update(user);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

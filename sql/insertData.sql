@@ -5,12 +5,12 @@ INSERT INTO `library`.`users_roles` (`role_id`, `role_name`) VALUES
     ('3', 'MEMBER');
 
 -- Users
-INSERT INTO `library`.`users` (user_id, name, surname, email, password_hash, role_id, deleted) VALUES
-    ('0', 'Timothy', 'Tyushev', '2008655z@gmail.com', '9e1774b83c29e5886cfad800a09529700838f61203851bde75bf8bea4e3a0d81', '1', '0'),
-    ('0', 'Nikita', 'Strachinski', 'strachinski@email.com', '598e7086cebecbf663325f771c0bf44382ea367fa0702a0c26c6978a1971ccb4', '2', '0'),
-    ('0', 'Maxim', 'Melnikov', 'melnikov@email.com', '9e2939ae2775f6e406f052361b0cc679f6d83f742c9309a2dd781572c402f430', '3', '0'),
-    ('0', 'Alex', 'Nevstruev', 'nevstruev@email.com', '1a95730e6577eab1f04dcbdc04d0154e01956458869a93b3d6e658b9648ff47e', '3', '0'),
-    ('0', 'Kliment', 'Severin', 'severin@email.com', '6bd9ce43d5c204a559a81d33d4739199e0339de5cb3448470f6698f4ebf3716f', '3', '0');
+INSERT INTO `library`.`users` (user_id, name, surname, phone_number, email, password_hash, role_id, deleted) VALUES
+    ('0', 'Timothy', 'Tyushev', '375291234567', '2008655z@gmail.com', '9e1774b83c29e5886cfad800a09529700838f61203851bde75bf8bea4e3a0d81', '1', '0'),
+    ('0', 'Nikita', 'Strachinski', '375292345671', 'strachinski@email.com', '598e7086cebecbf663325f771c0bf44382ea367fa0702a0c26c6978a1971ccb4', '2', '0'),
+    ('0', 'Maxim', 'Melnikov', '', 'melnikov@email.com', '9e2939ae2775f6e406f052361b0cc679f6d83f742c9309a2dd781572c402f430', '3', '0'),
+    ('0', 'Alex', 'Nevstruev', '375294567123', 'nevstruev@email.com', '1a95730e6577eab1f04dcbdc04d0154e01956458869a93b3d6e658b9648ff47e', '3', '0'),
+    ('0', 'Kliment', 'Severin', '375295671234', 'severin@email.com', '6bd9ce43d5c204a559a81d33d4739199e0339de5cb3448470f6698f4ebf3716f', '3', '0');
 
 -- Book Categories
 INSERT INTO `library`.`book_categories` (`category_id`, `category_name`) VALUES
@@ -90,8 +90,9 @@ INSERT INTO `library`.`loan_status` (loan_status_id, loan_status_value) VALUES
 INSERT INTO `library`.`loans` (loan_id, issue_date, due_date, return_date, fine_amount, user_id, inventory_id, loan_status_id) VALUES
     ('0', '2021-12-20', '2022-01-20', null, null, '3', '2', '1'),
     ('0', '2021-12-20', '2022-01-20', null, null, '3', '6', '1'),
-    ('0', '2021-12-10', '2022-01-09', '2021-12-20', null, '3', '9', '2'),
+    ('0', '2021-11-29', '2021-12-29', null, null, '3', '9', '1'),
     ('0', '2021-11-01', '2021-12-01', null, null, '3', '1', '1'),
+    ('0', '2021-11-01', '2021-12-01', '2021-12-11', '1.5', '3', '4', '3'),
     ('0', '2021-11-01', '2021-12-01', '2021-12-11', '1.5', '3', '3', '4'),
     ('0', '2021-10-05', '2021-11-04', '2021-10-21', null, '3', '10', '2');
 

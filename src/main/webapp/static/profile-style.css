@@ -29,12 +29,39 @@
     margin-left: 20px;
 }
 
+.profile-container .personal-data a {
+    color: #5f5148;
+    text-decoration: none;
+}
+
+.profile-container .personal-data a:hover {
+    text-decoration: underline;
+}
+
 .profile-container .personal-data .name-surname {
     font-size: 64px;
 }
 
 .profile-container .personal-data .email {
     font-size: 20px;
+}
+
+.profile-container .personal-data .phone-number {
+    font-size: 20px;
+}
+
+#edit-personal-data-link {
+    color: #333333;
+    padding: 20px;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+    font-size: 30px;
+    transition: all 0.3s ease 0s;
+}
+
+#edit-personal-data-link:hover {
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 .profile-container .user-profile-info {

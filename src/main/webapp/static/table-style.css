@@ -17,3 +17,8 @@
     vertical-align: middle;
     text-align: center;
 }
+
+.table-container td i {
+    font-size: 12px;
+    margin-right: 5px;
+}

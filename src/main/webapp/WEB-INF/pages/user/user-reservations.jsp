@@ -34,7 +34,19 @@
                             ${reservation.book.title}
                     </a></td>
                     <td>${reservation.date}</td>
-                    <td>${reservation.reservationStatus}</td>
+                    <td><i class="bi bi-circle-fill"
+                        <c:choose>
+                            <c:when test="${reservation.reservationStatus.toString() == 'RESERVED'}">
+                                style="color:gray"
+                            </c:when>
+                            <c:when test="${reservation.reservationStatus.toString() == 'READY_TO_ISSUE'}">
+                                style="color:royalblue"
+                            </c:when>
+                            <c:when test="${reservation.reservationStatus.toString() == 'ISSUED'}">
+                                style="color:forestgreen"
+                            </c:when>
+                        </c:choose>
+                    ></i>${reservation.reservationStatus}</td>
                 </tr>
             </c:forEach>
             </tbody>
