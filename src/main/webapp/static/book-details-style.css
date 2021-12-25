@@ -15,15 +15,39 @@
 .details-container .img-container {
     display: flex;
     justify-content: center;
-    width: 40%;
+    width: 66%;
 }
 
 .details-container .img-container img {
-    width: 60%;
+    max-width: 60%;
+    object-fit: contain;
 }
 
 .details-container .book-data {
     font-size: 18px;
+    width: 100%;
+}
+
+.details-container .book-data .form-container {
+    margin-top: 20px;
+}
+
+.details-container .book-data .reservation-info {
+    display: flex;
+    justify-content: left;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.details-container .book-data .reservation-info i {
+    margin: 6px;
+}
+
+.details-container .book-data .reservation-info a {
+    color: #5f5148;
+    text-decoration: underline;
+    font-weight: 600;
+    transition: all 0.3s ease 0s;
 }
 
 .details-container .book-data td {

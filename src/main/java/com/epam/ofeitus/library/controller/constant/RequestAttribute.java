@@ -11,4 +11,7 @@ public class RequestAttribute {
     public static final String DEBTS_COUNT = "debts_count";
     public static final String UNPAID_FINES_COUNT = "unpaid_fines_count";
     public static final String READY_RESERVATIONS_COUNT = "ready_reservations_count";
+    public static final String AVAILABLE_COPIES_COUNT = "available_copies_count";
+    public static final String RESERVED_BOOKS_COUNT = "reserved_books_count";
+    public static final String ISSUED_BOOKS_COUNT = "issued_books_count";
 }

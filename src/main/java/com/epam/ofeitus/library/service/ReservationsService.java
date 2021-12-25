@@ -8,5 +8,5 @@ import java.util.List;
 public interface ReservationsService {
     List<ReservationDto> getReservationsDtoByUserId(int userId) throws ServiceException;
 
-    int getReadyReservationsCount(int userId) throws ServiceException;
+    int getReservationsCountByUserIdAndStatusId(int userId, int statusId) throws ServiceException;
 }

@@ -3,12 +3,14 @@ package com.epam.ofeitus.library.service.impl;
 import com.epam.ofeitus.library.dao.AuthorDao;
 import com.epam.ofeitus.library.dao.BookCategoryDao;
 import com.epam.ofeitus.library.dao.BookDao;
+import com.epam.ofeitus.library.dao.CopyOfBookDao;
 import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.dao.factory.DaoFactory;
 import com.epam.ofeitus.library.dao.factory.impl.MySqlDaoFactory;
 import com.epam.ofeitus.library.entity.book.Author;
 import com.epam.ofeitus.library.entity.book.Book;
 import com.epam.ofeitus.library.entity.book.constituent.BookCategory;
+import com.epam.ofeitus.library.entity.book.constituent.CopyOfBookStatus;
 import com.epam.ofeitus.library.entity.dto.BookDto;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
@@ -102,6 +104,17 @@ public class BookServiceImpl implements BookService {
                     book.getLanguage(),
                     book.getKeyWords()
             );
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int getAvailableCopiesCount(String bookIsbn) throws ServiceException {
+        CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
+
+        try {
+            return copyOfBookDao.findByIsbnAndStatusId(bookIsbn, CopyOfBookStatus.AVAILABLE.ordinal() + 1).size();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

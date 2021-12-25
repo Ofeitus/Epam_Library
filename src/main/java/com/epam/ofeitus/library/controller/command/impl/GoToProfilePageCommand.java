@@ -6,6 +6,8 @@ import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
 import com.epam.ofeitus.library.controller.constant.RequestAttribute;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
+import com.epam.ofeitus.library.entity.order.constiuent.LoanStatus;
+import com.epam.ofeitus.library.entity.order.constiuent.ReservationStatus;
 import com.epam.ofeitus.library.entity.user.constituent.UserRole;
 import com.epam.ofeitus.library.service.LoansService;
 import com.epam.ofeitus.library.service.ReservationsService;
@@ -40,7 +42,10 @@ public class GoToProfilePageCommand implements Command {
             }
 
             try {
-                int unpaidFinesCount = loansService.getUnpaidFinesCountByUserId((int) session.getAttribute(SessionAttribute.USER_ID));
+                int unpaidFinesCount = loansService.getLoansCountByUserIdAndStatusId(
+                        (int) session.getAttribute(SessionAttribute.USER_ID),
+                        LoanStatus.FINED.ordinal() + 1
+                );
                 request.setAttribute(RequestAttribute.UNPAID_FINES_COUNT, unpaidFinesCount);
             } catch (ServiceException e) {
                 logger.error("Unable to get user unpaid fines count.", e);
@@ -48,7 +53,10 @@ public class GoToProfilePageCommand implements Command {
             }
 
             try {
-                int readyReservationsCount = reservationsService.getReadyReservationsCount((int) session.getAttribute(SessionAttribute.USER_ID));
+                int readyReservationsCount = reservationsService.getReservationsCountByUserIdAndStatusId(
+                        (int) session.getAttribute(SessionAttribute.USER_ID),
+                        ReservationStatus.READY_TO_ISSUE.ordinal() + 1
+                );
                 request.setAttribute(RequestAttribute.READY_RESERVATIONS_COUNT, readyReservationsCount);
             } catch (ServiceException e) {
                 logger.error("Unable to get user ready reservations count.", e);

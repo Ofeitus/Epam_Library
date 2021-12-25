@@ -91,10 +91,10 @@ public class LoanServiceImpl implements LoansService {
     }
 
     @Override
-    public int getUnpaidFinesCountByUserId(int userId) throws ServiceException {
+    public int getLoansCountByUserIdAndStatusId(int userId, int statusId) throws ServiceException {
         LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
         try {
-            return loanDao.findByUserIdAndStatusId(userId, LoanStatus.FINED.ordinal() + 1).size();
+            return loanDao.findByUserIdAndStatusId(userId, statusId).size();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

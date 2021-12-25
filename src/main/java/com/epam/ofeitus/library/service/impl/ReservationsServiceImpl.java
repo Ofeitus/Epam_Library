@@ -2,7 +2,6 @@ package com.epam.ofeitus.library.service.impl;
 
 import com.epam.ofeitus.library.dao.BookDao;
 import com.epam.ofeitus.library.dao.CopyOfBookDao;
-import com.epam.ofeitus.library.dao.LoanDao;
 import com.epam.ofeitus.library.dao.ReservationDao;
 import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.dao.factory.DaoFactory;
@@ -11,7 +10,6 @@ import com.epam.ofeitus.library.entity.book.Book;
 import com.epam.ofeitus.library.entity.book.CopyOfBook;
 import com.epam.ofeitus.library.entity.dto.ReservationDto;
 import com.epam.ofeitus.library.entity.order.Reservation;
-import com.epam.ofeitus.library.entity.order.constiuent.LoanStatus;
 import com.epam.ofeitus.library.service.ReservationsService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 
@@ -49,10 +47,10 @@ public class ReservationsServiceImpl implements ReservationsService {
     }
 
     @Override
-    public int getReadyReservationsCount(int userId) throws ServiceException {
+    public int getReservationsCountByUserIdAndStatusId(int userId, int statusId) throws ServiceException {
         ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
         try {
-            return reservationDao.findReadyByUserId(userId).size();
+            return reservationDao.findByUserIdAndStatusId(userId, statusId).size();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

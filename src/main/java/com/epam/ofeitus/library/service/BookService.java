@@ -11,4 +11,6 @@ public interface BookService {
     List<BookDto> getBooksDtoBySearchRequest(String searchRequest, String category, String authorName, String authorSurname, int yearFrom, int yearTo) throws ServiceException;
 
     BookDto getBookDtoByIsbn(String bookIsbn) throws ServiceException;
+
+    int getAvailableCopiesCount(String bookIsbn) throws ServiceException;
 }

@@ -83,13 +83,9 @@
 
 .form-container .sign-link a{
     color: #5f5148;
-    text-decoration: none;
+    text-decoration: underline;
     font-weight: 600;
     transition: all 0.3s ease 0s;
-}
-
-.form-container .sign-link a:hover {
-    text-decoration: underline;
 }
 
 .form-container .form-horizontal .btn{

@@ -34,8 +34,8 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
             "SELECT * FROM %s WHERE %s=?",
             Table.RESERVATION_TABLE,
             Column.RESERVATION_STATUS_ID);
-    private static final String FIND_READY_BY_USER_ID_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=? AND %s='2'",
+    private static final String FIND_BY_USER_ID_AND_STATUS_ID_QUERY = String.format(
+            "SELECT * FROM %s WHERE %s=? AND %s=?",
             Table.RESERVATION_TABLE,
             Column.RESERVATION_USER_ID,
             Column.RESERVATION_STATUS_ID);
@@ -77,7 +77,7 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
     }
 
     @Override
-    public List<Reservation> findReadyByUserId(int userId) throws DaoException {
-        return queryOperator.executeQuery(FIND_READY_BY_USER_ID_QUERY, userId);
+    public List<Reservation> findByUserIdAndStatusId(int userId, int statusId) throws DaoException {
+        return queryOperator.executeQuery(FIND_BY_USER_ID_AND_STATUS_ID_QUERY, userId, statusId);
     }
 }

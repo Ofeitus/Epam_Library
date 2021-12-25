@@ -8,7 +8,11 @@ import com.epam.ofeitus.library.controller.constant.RequestAttribute;
 import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.entity.dto.BookDto;
+import com.epam.ofeitus.library.entity.order.constiuent.LoanStatus;
+import com.epam.ofeitus.library.entity.order.constiuent.ReservationStatus;
 import com.epam.ofeitus.library.service.BookService;
+import com.epam.ofeitus.library.service.LoansService;
+import com.epam.ofeitus.library.service.ReservationsService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 import com.epam.ofeitus.library.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -23,15 +27,36 @@ public class GoToBookDetailsPageCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
-        String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
-
         HttpSession session = request.getSession();
+
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        BookService bookService = serviceFactory.getBookService();
+        LoansService loansService = serviceFactory.getLoansService();
+        ReservationsService reservationsService = serviceFactory.getReservationsService();
+
+        String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
+        Object userIdAtr = session.getAttribute(SessionAttribute.USER_ID);
+        int userId = userIdAtr != null ? (int)userIdAtr : -1;
+
         session.setAttribute(SessionAttribute.URL, "/controller?command=goto-book-details-page&book-isbn=" + bookIsbn);
 
-        BookService bookService = ServiceFactory.getInstance().getBookService();
         try {
+            int availableCopiesCount = bookService.getAvailableCopiesCount(bookIsbn);
+            int reservedBooksCount;
+            int issuedBooksCount;
+            if (userId != -1) {
+                reservedBooksCount = reservationsService.getReservationsCountByUserIdAndStatusId(userId, ReservationStatus.RESERVED.ordinal() + 1) +
+                        reservationsService.getReservationsCountByUserIdAndStatusId(userId, ReservationStatus.READY_TO_ISSUE.ordinal() + 1);
+                issuedBooksCount = loansService.getLoansCountByUserIdAndStatusId(userId, LoanStatus.ISSUED.ordinal() + 1);
+            } else {
+                reservedBooksCount = 0;
+                issuedBooksCount = 0;
+            }
             BookDto book = bookService.getBookDtoByIsbn(bookIsbn);
             request.setAttribute(RequestAttribute.BOOK, book);
+            request.setAttribute(RequestAttribute.AVAILABLE_COPIES_COUNT, availableCopiesCount);
+            request.setAttribute(RequestAttribute.RESERVED_BOOKS_COUNT, reservedBooksCount);
+            request.setAttribute(RequestAttribute.ISSUED_BOOKS_COUNT, issuedBooksCount);
             return new CommandResult(Page.BOOK_DETAILS_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Unable to get book DTO.", e);

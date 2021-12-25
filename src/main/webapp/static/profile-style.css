@@ -31,10 +31,6 @@
 
 .profile-container .personal-data a {
     color: #5f5148;
-    text-decoration: none;
-}
-
-.profile-container .personal-data a:hover {
     text-decoration: underline;
 }
 

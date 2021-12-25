@@ -1,6 +1,5 @@
 package com.epam.ofeitus.library.service;
 
-import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.entity.dto.LoanDto;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 
@@ -13,5 +12,5 @@ public interface LoansService {
 
     int getDebtsCountByUserId(int userId) throws ServiceException;
 
-    int getUnpaidFinesCountByUserId(int userId) throws ServiceException;
+    int getLoansCountByUserIdAndStatusId(int userId, int statusId) throws ServiceException;
 }
