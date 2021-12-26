@@ -24,6 +24,7 @@
                 <th scope="col"><fmt:message key="user-reservations.book-title" /></th>
                 <th scope="col"><fmt:message key="user-reservations.date" /></th>
                 <th scope="col"><fmt:message key="user-reservations.status" /></th>
+                <th scope="col"><fmt:message key="user-reservations.cancel" /></th>
             </tr>
             </thead>
             <tbody>
@@ -47,6 +48,12 @@
                             </c:when>
                         </c:choose>
                     ></i>${reservation.reservationStatus}</td>
+                    <td style="text-align: center">
+                        <c:if test="${reservation.reservationStatus.toString() != 'ISSUED'}">
+                            <a href="?command=cancel-reservation&reservation-id=${reservation.reservationId}">
+                                <i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i></a>
+                        </c:if>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>

@@ -30,6 +30,7 @@ public class CommandFactory {
         put(CommandName.SIGN_UP_COMMAND, new SignUpCommand());
         put(CommandName.EDIT_PERSONAL_DATA_COMMAND, new EditPersonalDataCommand());
         put(CommandName.SEARCH_BOOKS_COMMAND, new SearchBooksCommand());
+        put(CommandName.CANCEL_RESERVATION_COMMAND, new CancelReservationCommand());
     }};
 
     private CommandFactory() {

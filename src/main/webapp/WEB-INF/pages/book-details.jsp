@@ -51,7 +51,8 @@
         <div class="form-container">
             <h3 class="title"><fmt:message key="book-details.reservation" /></h3>
             <form class="form-horizontal" action="controller" method="get">
-                <input type="hidden" name="command" value="goto-user-loans-page">
+                <input type="hidden" name="command" value="reserve-book">
+                <input type="hidden" name="book-isbn" value="${requestScope.book.isbn}">
                 <c:if test="${requestScope.available_copies_count > 0}">
                     <div class="reservation-info">
                         <label><fmt:message key="book-details.available-copies" />&nbsp;${requestScope.available_copies_count}</label>

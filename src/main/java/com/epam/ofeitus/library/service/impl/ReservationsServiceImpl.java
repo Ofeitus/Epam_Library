@@ -8,8 +8,10 @@ import com.epam.ofeitus.library.dao.factory.DaoFactory;
 import com.epam.ofeitus.library.dao.factory.impl.MySqlDaoFactory;
 import com.epam.ofeitus.library.entity.book.Book;
 import com.epam.ofeitus.library.entity.book.CopyOfBook;
+import com.epam.ofeitus.library.entity.book.constituent.CopyOfBookStatus;
 import com.epam.ofeitus.library.entity.dto.ReservationDto;
 import com.epam.ofeitus.library.entity.order.Reservation;
+import com.epam.ofeitus.library.entity.order.constiuent.ReservationStatus;
 import com.epam.ofeitus.library.service.ReservationsService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 
@@ -51,6 +53,26 @@ public class ReservationsServiceImpl implements ReservationsService {
         ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
         try {
             return reservationDao.findByUserIdAndStatusId(userId, statusId).size();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void cancel(int reservationId) throws ServiceException {
+        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
+        ReservationDao reservationDao = daoFactory.getReservationDao();
+        CopyOfBookDao copyOfBookDao = daoFactory.getCopyOfBookDao();
+
+        try {
+            Reservation reservation = reservationDao.findById(reservationId);
+            if (reservation.getReservationStatus() == ReservationStatus.ISSUED) {
+                throw new ServiceException("Unable to cancel reservation with status 'ISSUED'");
+            }
+            CopyOfBook copyOfBook = copyOfBookDao.findById(reservation.getInventoryId());
+            copyOfBook.setCopyOfBookStatus(CopyOfBookStatus.AVAILABLE);
+            copyOfBookDao.update(copyOfBook);
+            reservationDao.deleteById(reservationId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

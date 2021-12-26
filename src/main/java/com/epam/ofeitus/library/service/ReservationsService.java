@@ -9,4 +9,6 @@ public interface ReservationsService {
     List<ReservationDto> getReservationsDtoByUserId(int userId) throws ServiceException;
 
     int getReservationsCountByUserIdAndStatusId(int userId, int statusId) throws ServiceException;
+
+    void cancel(int reservationId) throws ServiceException;
 }

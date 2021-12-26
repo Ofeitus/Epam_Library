@@ -41,7 +41,7 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
         return queryOperator.executeUpdate(
                 SAVE_COPY_OF_BOOK_QUERY,
                 entity.getBookIsbn(),
-                entity.getCopyOfBookStatus());
+                entity.getCopyOfBookStatus().ordinal() + 1);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
         return queryOperator.executeUpdate(
                 UPDATE_COPY_OF_BOOK_QUERY,
                 entity.getBookIsbn(),
-                entity.getCopyOfBookStatus(),
+                entity.getCopyOfBookStatus().ordinal() + 1,
                 entity.getInventoryId());
     }
 
