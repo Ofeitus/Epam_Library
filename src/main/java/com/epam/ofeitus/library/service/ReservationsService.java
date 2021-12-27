@@ -11,4 +11,6 @@ public interface ReservationsService {
     int getReservationsCountByUserIdAndStatusId(int userId, int statusId) throws ServiceException;
 
     int cancelReservation(int reservationId) throws ServiceException;
+
+    boolean makeReservation(int userId, String bookIsbn) throws ServiceException;
 }

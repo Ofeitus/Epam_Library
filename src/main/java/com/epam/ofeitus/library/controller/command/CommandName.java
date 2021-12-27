@@ -21,4 +21,5 @@ public class CommandName {
     public static final String GOTO_EDIT_PERSONAL_DATA_PAGE_COMMAND = "goto-edit-personal-data-page";
     public static final String EDIT_PERSONAL_DATA_COMMAND = "edit-personal-data";
     public static final String CANCEL_RESERVATION_COMMAND = "cancel-reservation";
+    public static final String RESERVE_BOOK_COMMAND = "reserve-book";
 }

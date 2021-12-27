@@ -33,20 +33,22 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Column.LOAN_STATUS_ID,
             Column.LOAN_ID);
     private static final String FIND_BY_USER_ID_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=?",
+            "SELECT * FROM %s WHERE %s=? ORDER BY %s DESC",
             Table.LOAN_TABLE,
-            Column.LOAN_USER_ID);
+            Column.LOAN_USER_ID,
+            Column.LOAN_ISSUE_DATE);
     private static final String FIND_BY_STATUS_ID_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=? AND %s=?",
             Table.LOAN_TABLE,
             Column.LOAN_USER_ID,
             Column.LOAN_STATUS_ID);
     private static final String FIND_BY_USER_ID_WITH_FINE_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=? AND (%s='3' OR %s='4')",
+            "SELECT * FROM %s WHERE %s=? AND (%s='3' OR %s='4') ORDER BY %s DESC",
             Table.LOAN_TABLE,
             Column.LOAN_USER_ID,
             Column.LOAN_STATUS_ID,
-            Column.LOAN_STATUS_ID);
+            Column.LOAN_STATUS_ID,
+            Column.LOAN_ISSUE_DATE);
     private static final String FIND_DEBTS_BY_USER_ID = String.format(
             "SELECT * FROM %s WHERE %s=? AND %s='1' AND %s < CURDATE()",
             Table.LOAN_TABLE,

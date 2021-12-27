@@ -8,7 +8,6 @@ import com.epam.ofeitus.library.dao.factory.DaoFactory;
 import com.epam.ofeitus.library.dao.factory.impl.MySqlDaoFactory;
 import com.epam.ofeitus.library.entity.book.Book;
 import com.epam.ofeitus.library.entity.book.CopyOfBook;
-import com.epam.ofeitus.library.entity.book.constituent.CopyOfBookStatus;
 import com.epam.ofeitus.library.entity.dto.ReservationDto;
 import com.epam.ofeitus.library.entity.order.Reservation;
 import com.epam.ofeitus.library.entity.order.constiuent.ReservationStatus;
@@ -70,6 +69,17 @@ public class ReservationsServiceImpl implements ReservationsService {
             }
             return reservationDao.cancel(reservation);
         } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean makeReservation(int userId, String bookIsbn) throws ServiceException {
+        ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
+
+        try {
+            return reservationDao.reserve(userId, bookIsbn) == 1;
+            } catch (DaoException e) {
             throw new ServiceException(e);
         }
     }

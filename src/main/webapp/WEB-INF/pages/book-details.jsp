@@ -68,8 +68,7 @@
                     <div class="reservation-info">
                         <i class="bi bi-exclamation-triangle-fill" style="color: gold;"></i>
                         <label><fmt:message key="book-details.reservation-limit" /></label>
-                    </div>
-                </c:if>
+                    </div>                </c:if>
                 <c:if test="${sessionScope.user_id == null}">
                     <div class="reservation-info">
                         <i class="bi bi-exclamation-circle-fill" style="color: royalblue;"></i>

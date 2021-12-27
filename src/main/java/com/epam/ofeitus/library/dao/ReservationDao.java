@@ -13,4 +13,6 @@ public interface ReservationDao extends AbstractDao<Reservation> {
     List<Reservation> findByUserIdAndStatusId(int userId, int statusId) throws DaoException;
 
     int cancel(Reservation reservation) throws DaoException;
+
+    int reserve(int userId, String bookIsbn) throws DaoException;
 }
