@@ -8,6 +8,7 @@ import com.epam.ofeitus.library.controller.constant.RequestAttribute;
 import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.entity.dto.ReservationDto;
+import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.ReservationsService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 import com.epam.ofeitus.library.service.factory.ServiceFactory;
@@ -30,7 +31,7 @@ public class CancelReservationCommand implements Command {
 
         int reservationId = Integer.parseInt(request.getParameter(RequestParameter.RESERVATION_ID));
         try {
-            reservationsService.cancel(reservationId);
+            reservationsService.cancelReservation(reservationId);
             return new CommandResult("/controller?command=goto-user-reservations-page", RoutingType.REDIRECT);
         } catch (ServiceException e) {
             logger.error("Unable to cancel reservation.", e);

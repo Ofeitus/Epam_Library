@@ -1,17 +1,17 @@
 package com.epam.ofeitus.library.service.impl;
 
-import com.epam.ofeitus.library.dao.AuthorDao;
-import com.epam.ofeitus.library.dao.BookCategoryDao;
-import com.epam.ofeitus.library.dao.BookDao;
-import com.epam.ofeitus.library.dao.CopyOfBookDao;
+import com.epam.ofeitus.library.dao.*;
 import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.dao.factory.DaoFactory;
 import com.epam.ofeitus.library.dao.factory.impl.MySqlDaoFactory;
 import com.epam.ofeitus.library.entity.book.Author;
 import com.epam.ofeitus.library.entity.book.Book;
+import com.epam.ofeitus.library.entity.book.CopyOfBook;
 import com.epam.ofeitus.library.entity.book.constituent.BookCategory;
 import com.epam.ofeitus.library.entity.book.constituent.CopyOfBookStatus;
 import com.epam.ofeitus.library.entity.dto.BookDto;
+import com.epam.ofeitus.library.entity.order.Reservation;
+import com.epam.ofeitus.library.entity.order.constiuent.ReservationStatus;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;

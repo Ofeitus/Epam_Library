@@ -59,20 +59,16 @@ public class ReservationsServiceImpl implements ReservationsService {
     }
 
     @Override
-    public void cancel(int reservationId) throws ServiceException {
+    public int cancelReservation(int reservationId) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         ReservationDao reservationDao = daoFactory.getReservationDao();
-        CopyOfBookDao copyOfBookDao = daoFactory.getCopyOfBookDao();
 
         try {
             Reservation reservation = reservationDao.findById(reservationId);
             if (reservation.getReservationStatus() == ReservationStatus.ISSUED) {
                 throw new ServiceException("Unable to cancel reservation with status 'ISSUED'");
             }
-            CopyOfBook copyOfBook = copyOfBookDao.findById(reservation.getInventoryId());
-            copyOfBook.setCopyOfBookStatus(CopyOfBookStatus.AVAILABLE);
-            copyOfBookDao.update(copyOfBook);
-            reservationDao.deleteById(reservationId);
+            return reservationDao.cancel(reservation);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

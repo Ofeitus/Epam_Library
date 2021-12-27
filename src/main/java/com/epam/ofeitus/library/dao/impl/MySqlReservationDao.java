@@ -4,9 +4,11 @@ import com.epam.ofeitus.library.constant.Column;
 import com.epam.ofeitus.library.constant.Table;
 import com.epam.ofeitus.library.dao.ReservationDao;
 import com.epam.ofeitus.library.dao.exception.DaoException;
+import com.epam.ofeitus.library.dao.queryoperator.ParametrizedQuery;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
 import com.epam.ofeitus.library.entity.order.Reservation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implements ReservationDao {
@@ -39,6 +41,11 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
             Table.RESERVATION_TABLE,
             Column.RESERVATION_USER_ID,
             Column.RESERVATION_STATUS_ID);
+    private static final String MAKE_COPY_OF_BOOK_AVAILABLE_QUERY = String.format(
+            "UPDATE %s SET %s='1' WHERE %s=?",
+            Table.COPY_OF_BOOK_TABLE,
+            Column.COPY_OF_BOOK_STATUS_ID,
+            Column.COPY_OF_BOOK_INVENTORY_ID);
 
     public MySqlReservationDao() {
         super(RowMapperFactory.getReservationRowMapper(), Table.RESERVATION_TABLE, Column.RESERVATION_ID);
@@ -79,5 +86,13 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
     @Override
     public List<Reservation> findByUserIdAndStatusId(int userId, int statusId) throws DaoException {
         return queryOperator.executeQuery(FIND_BY_USER_ID_AND_STATUS_ID_QUERY, userId, statusId);
+    }
+
+    @Override
+    public int cancel(Reservation reservation) throws DaoException {
+        List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
+        parametrizedQueries.add(new ParametrizedQuery(MAKE_COPY_OF_BOOK_AVAILABLE_QUERY, reservation.getInventoryId()));
+        parametrizedQueries.add(new ParametrizedQuery(DELETE_BY_ID_QUERY, reservation.getReservationId()));
+        return queryOperator.executeTransaction(parametrizedQueries);
     }
 }

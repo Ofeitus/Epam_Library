@@ -10,5 +10,5 @@ public interface ReservationsService {
 
     int getReservationsCountByUserIdAndStatusId(int userId, int statusId) throws ServiceException;
 
-    void cancel(int reservationId) throws ServiceException;
+    int cancelReservation(int reservationId) throws ServiceException;
 }
