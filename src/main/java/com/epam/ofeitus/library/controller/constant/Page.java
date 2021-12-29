@@ -18,7 +18,10 @@ public class Page {
     public static final String USER_RESERVATIONS_PAGE = "WEB-INF/pages/user/user-reservations.jsp";
     public static final String USER_FINES_PAGE = "WEB-INF/pages/user/user-fines.jsp";
 
-    //admin
+    // manager
+    public static final String EDIT_BOOK_DATA_PAGE = "WEB-INF/pages/manager/edit-book-data.jsp";
+
+    // admin
     public static final String MANAGE_USERS_PAGE = "WEB-INF/pages/admin/manage-users.jsp";
     public static final String BOOK_DETAILS_PAGE = "WEB-INF/pages/book-details.jsp";
 }

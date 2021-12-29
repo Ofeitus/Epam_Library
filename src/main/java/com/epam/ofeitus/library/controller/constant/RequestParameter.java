@@ -16,4 +16,8 @@ public class RequestParameter {
     public static final String LOCALE = "locale";
     public static final String PHONE_NUMBER = "phone-number";
     public static final String RESERVATION_ID = "reservation-id";
+    public static final String TITLE = "title";
+    public static final String PUBLICATION_YEAR = "publication-year";
+    public static final String LANGUAGE = "language";
+    public static final String KEY_WORDS = "key-words";
 }

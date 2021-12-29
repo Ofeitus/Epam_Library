@@ -7,6 +7,7 @@ import com.epam.ofeitus.library.controller.constant.Page;
 import com.epam.ofeitus.library.controller.constant.RequestAttribute;
 import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
+import com.epam.ofeitus.library.entity.book.constituent.BookCategory;
 import com.epam.ofeitus.library.entity.dto.BookDto;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
@@ -58,6 +59,8 @@ public class SearchBooksCommand implements Command {
                     yearTo
             );
             request.setAttribute(RequestAttribute.BOOKS, books);
+            List<BookCategory> bookCategories = bookService.getBookCategories();
+            request.setAttribute(RequestAttribute.BOOK_CATEGORIES, bookCategories);
             return new CommandResult(Page.CATALOG_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Unable to get books DTO by search request.", e);

@@ -49,6 +49,11 @@
     font-weight: 700;
 }
 
+.form-container .form-horizontal .form-group .author-data {
+    display: flex;
+    justify-content: space-between;
+}
+
 .form-container .form-group .input-group {
     display: flex;
 }
@@ -71,6 +76,10 @@
 
 .form-container .form-horizontal .form-control:focus{
     box-shadow: 0 0 5px #dcdcdc;
+}
+
+.form-container .form-horizontal .form-control:disabled{
+    color: #888;
 }
 
 .form-container .sign-link{

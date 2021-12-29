@@ -9,6 +9,8 @@ import java.util.List;
 public interface BookDao extends AbstractDao<Book> {
     int save(Book entity, List<Author> authors) throws DaoException;
 
+    int update(Book entity, List<Author> authors) throws DaoException;
+
     Book findByIsbn(String isbn) throws DaoException;
 
     List<Book> findByTitle(String title) throws DaoException;

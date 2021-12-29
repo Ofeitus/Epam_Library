@@ -14,7 +14,8 @@ INSERT INTO `library`.`users` (user_id, name, surname, phone_number, email, pass
 
 -- Book Categories
 INSERT INTO `library`.`book_categories` (`category_id`, `category_name`) VALUES
-    ('0', 'Художественная литература');
+    ('0', 'Художественная литература'),
+    ('0', 'Учебное пособие');
 
 -- Authors
 INSERT INTO `library`.`authors` (`author_id`, `name`, `surname`) VALUES

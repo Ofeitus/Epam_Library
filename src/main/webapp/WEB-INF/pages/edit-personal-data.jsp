@@ -30,11 +30,6 @@
                         <label><fmt:message key="edit-personal-data.phone-number" /></label>
                         <input type="tel" name="phone-number" value="${sessionScope.user_phone_number}" class="form-control" placeholder="<fmt:message key="edit-personal-data.phone-number-placeholder" />" required>
                     </div>
-                    <c:if test="${sessionScope.error != null}">
-                        <div class="w-100 row justify-content-left">
-                            <label id="login-error-message">${sessionScope.error}</label>
-                        </div>
-                    </c:if>
                     <div class="w-100 row justify-content-end">
                         <button class="h-50 col-4 btn submit"><fmt:message key="edit-personal-data.save-changes" /></button>
                     </div>

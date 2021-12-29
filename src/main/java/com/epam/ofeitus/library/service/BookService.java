@@ -1,5 +1,7 @@
 package com.epam.ofeitus.library.service;
 
+import com.epam.ofeitus.library.entity.book.Author;
+import com.epam.ofeitus.library.entity.book.constituent.BookCategory;
 import com.epam.ofeitus.library.entity.dto.BookDto;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 
@@ -13,4 +15,8 @@ public interface BookService {
     BookDto getBookDtoByIsbn(String bookIsbn) throws ServiceException;
 
     int getAvailableCopiesCount(String bookIsbn) throws ServiceException;
+
+    List<BookCategory> getBookCategories() throws ServiceException;
+
+    int updateBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<Author> authors) throws ServiceException;
 }

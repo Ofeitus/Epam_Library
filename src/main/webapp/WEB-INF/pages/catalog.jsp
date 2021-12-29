@@ -28,7 +28,11 @@
             </div>
             <div class="form-group">
                 <label><fmt:message key="catalog.category" /></label>
-                <input type="text" name="category" value="" class="form-control" placeholder="<fmt:message key="catalog.category-placeholder" />">
+                <select class="form-control" name="category">
+                    <c:forEach items="${requestScope.book_categories}" var="book_category">
+                        <option value="${book_category.name}">${book_category.name}</option>
+                    </c:forEach>
+                </select>
             </div>
             <div class="form-group">
                 <label><fmt:message key="catalog.author" /></label>

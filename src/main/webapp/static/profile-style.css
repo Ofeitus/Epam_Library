@@ -46,7 +46,7 @@
     font-size: 20px;
 }
 
-#edit-personal-data-link {
+.edit-data-link {
     color: #333333;
     padding: 20px;
     width: 30px;
@@ -56,8 +56,9 @@
     transition: all 0.3s ease 0s;
 }
 
-#edit-personal-data-link:hover {
+.edit-data-link:hover {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    color: #333333;
 }
 
 .profile-container .user-profile-info {

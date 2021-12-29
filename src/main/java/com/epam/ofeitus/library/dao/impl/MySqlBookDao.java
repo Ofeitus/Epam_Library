@@ -14,25 +14,31 @@ import java.util.List;
 
 public class MySqlBookDao extends AbstractMySqlDao<Book> implements BookDao {
     public final static String SAVE_BOOK_QUERY = String.format(
-            "INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?)",
+            "INSERT INTO %s (%s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?)",
             Table.BOOK_TABLE,
             Column.BOOK_ISBN,
             Column.BOOK_TITLE,
             Column.BOOK_PUBLICATION_YEAR,
             Column.BOOK_CATEGORY_ID,
-            Column.BOOK_LANGUAGE);
+            Column.BOOK_LANGUAGE,
+            Column.BOOK_KEY_WORDS);
     public final static String ADD_AUTHOR_TO_BOOK_QUERY = String.format(
             "INSERT INTO %s (%s, %s) VALUES (?, ?)",
             Table.BOOK_HAS_AUTHOR_TABLE,
             Column.BOOK_ISBN,
             Column.AUTHOR_ID);
+    private static final String DELETE_AUTHORS_TO_BOOK_QUERY = String.format(
+            "DELETE FROM %s WHERE %s=?",
+            Table.BOOK_HAS_AUTHOR_TABLE,
+            Column.BOOK_ISBN);
     public final static String UPDATE_BOOK_QUERY = String.format(
-            "UPDATE %s SET %s=?, %s=?, %s=?, %s=? WHERE %s=?",
+            "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?",
             Table.BOOK_TABLE,
             Column.BOOK_TITLE,
             Column.BOOK_PUBLICATION_YEAR,
             Column.BOOK_CATEGORY_ID,
             Column.BOOK_LANGUAGE,
+            Column.BOOK_KEY_WORDS,
             Column.BOOK_ISBN);
     private static final String FIND_BY_ISBN_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=?",
@@ -61,7 +67,15 @@ public class MySqlBookDao extends AbstractMySqlDao<Book> implements BookDao {
 
     @Override
     public int save(Book entity) throws DaoException {
-        throw new DaoException("Unsupported operation for Books table.");
+        return queryOperator.executeUpdate(
+                SAVE_BOOK_QUERY,
+                entity.getIsbn(),
+                entity.getTitle(),
+                entity.getPublicationYear(),
+                entity.getCategoryId(),
+                entity.getLanguage(),
+                entity.getKeyWords()
+        );
     }
 
     @Override
@@ -73,7 +87,8 @@ public class MySqlBookDao extends AbstractMySqlDao<Book> implements BookDao {
                 entity.getTitle(),
                 entity.getPublicationYear(),
                 entity.getCategoryId(),
-                entity.getLanguage()
+                entity.getLanguage(),
+                entity.getKeyWords()
         ));
         for (Author author : authors) {
             parametrizedQueries.add(new ParametrizedQuery(
@@ -93,8 +108,35 @@ public class MySqlBookDao extends AbstractMySqlDao<Book> implements BookDao {
                 entity.getPublicationYear(),
                 entity.getCategoryId(),
                 entity.getLanguage(),
+                entity.getKeyWords(),
                 entity.getIsbn()
         );
+    }
+
+    @Override
+    public int update(Book entity, List<Author> authors) throws DaoException {
+        List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
+        parametrizedQueries.add(new ParametrizedQuery(
+                UPDATE_BOOK_QUERY,
+                entity.getTitle(),
+                entity.getPublicationYear(),
+                entity.getCategoryId(),
+                entity.getLanguage(),
+                entity.getKeyWords(),
+                entity.getIsbn()
+        ));
+        parametrizedQueries.add(new ParametrizedQuery(
+                DELETE_AUTHORS_TO_BOOK_QUERY,
+                entity.getIsbn()
+        ));
+        for (Author author : authors) {
+            parametrizedQueries.add(new ParametrizedQuery(
+                    ADD_AUTHOR_TO_BOOK_QUERY,
+                    entity.getIsbn(),
+                    author.getAuthorId()
+            ));
+        }
+        return queryOperator.executeTransaction(parametrizedQueries);
     }
 
     @Override

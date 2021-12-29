@@ -26,7 +26,7 @@
                 </c:if>
             </label>
         </div>
-        <a id="edit-personal-data-link" href="?command=goto-edit-personal-data-page"><i class="bi bi-pencil-square"></i></a>
+        <a class="edit-data-link" href="?command=goto-edit-personal-data-page"><i class="bi bi-pencil-square"></i></a>
     </div>
     <c:if test="${sessionScope.user_role == 'MEMBER'}">
         <div class="w-100 row justify-content-md-center">
