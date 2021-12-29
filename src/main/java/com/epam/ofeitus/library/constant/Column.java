@@ -8,8 +8,9 @@ public final class Column {
     public static final String BOOK_LANGUAGE = "language";
     public static final String BOOK_KEY_WORDS = "key_words";
 
-    public static final String COPY_OF_BOOK_ISBN = "book_isbn";
     public static final String COPY_OF_BOOK_INVENTORY_ID = "inventory_id";
+    public static final String COPY_OF_BOOK_RECEIPT_DATE = "receipt_date";
+    public static final String COPY_OF_BOOK_ISBN = "book_isbn";
     public static final String COPY_OF_BOOK_STATUS_ID = "copy_of_book_status_id";
 
     public static final String AUTHOR_ID = "author_id";

@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `Library`.`users` (
   `email` VARCHAR(45) NULL,
   `password_hash` VARCHAR(90) NULL,
   `role_id` INT NOT NULL,
-  `deleted` TINYINT(1) NULL,
+  `deleted` TINYINT NOT NULL,
   INDEX `fk_user_user_role1_idx` (`role_id` ASC) VISIBLE,
   PRIMARY KEY (`user_id`),
   CONSTRAINT `fk_user_user_role1`
@@ -104,6 +104,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Library`.`copies_of_books` (
   `inventory_id` INT NOT NULL AUTO_INCREMENT,
+  `receipt_date` DATE NULL,
   `book_isbn` VARCHAR(45) NOT NULL,
   `copy_of_book_status_id` INT NOT NULL,
   PRIMARY KEY (`inventory_id`),

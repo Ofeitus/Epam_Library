@@ -6,6 +6,8 @@ import com.epam.ofeitus.library.entity.book.CopyOfBook;
 import java.util.List;
 
 public interface CopyOfBookDao extends AbstractDao<CopyOfBook> {
+    List<CopyOfBook> findAllWithBook() throws DaoException;
+
     List<CopyOfBook> findByIsbn(String bookIsbn) throws DaoException;
 
     List<CopyOfBook> findByIsbnAndStatusId(String bookIsbn, int statusId) throws DaoException;

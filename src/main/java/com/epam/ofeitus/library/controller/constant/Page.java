@@ -20,6 +20,7 @@ public class Page {
 
     // manager
     public static final String EDIT_BOOK_DATA_PAGE = "WEB-INF/pages/manager/edit-book-data.jsp";
+    public static final String INVENTORY_BOOK_PAGE = "WEB-INF/pages/manager/inventory-book.jsp";
 
     // admin
     public static final String MANAGE_USERS_PAGE = "WEB-INF/pages/admin/manage-users.jsp";

@@ -22,6 +22,14 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
             Column.BOOK_ISBN,
             Column.COPY_OF_BOOK_STATUS_ID,
             Column.COPY_OF_BOOK_INVENTORY_ID);
+    private static final String FIND_ALL_WITH_BOOK_QUERY = String.format(
+            "SELECT * FROM %s JOIN %s b on b.%s = %s.%s ORDER BY %s",
+            Table.COPY_OF_BOOK_TABLE,
+            Table.BOOK_TABLE,
+            Column.BOOK_ISBN,
+            Table.COPY_OF_BOOK_TABLE,
+            Column.COPY_OF_BOOK_ISBN,
+            Column.COPY_OF_BOOK_INVENTORY_ID);
     private static final String FIND_BY_ISBN_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=?",
             Table.COPY_OF_BOOK_TABLE,
@@ -51,6 +59,11 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
                 entity.getBookIsbn(),
                 entity.getCopyOfBookStatus().ordinal() + 1,
                 entity.getInventoryId());
+    }
+
+    @Override
+    public List<CopyOfBook> findAllWithBook() throws DaoException {
+        return queryOperator.executeQuery(FIND_ALL_WITH_BOOK_QUERY);
     }
 
     @Override

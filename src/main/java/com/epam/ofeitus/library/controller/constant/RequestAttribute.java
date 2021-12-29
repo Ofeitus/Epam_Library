@@ -15,4 +15,5 @@ public class RequestAttribute {
     public static final String RESERVED_BOOKS_COUNT = "reserved_books_count";
     public static final String ISSUED_BOOKS_COUNT = "issued_books_count";
     public static final String BOOK_CATEGORIES = "book_categories";
+    public static final String COPIES_OF_BOOKS = "copies_of_books";
 }

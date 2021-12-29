@@ -34,10 +34,10 @@
                         <label><fmt:message key="edit-book-data.category" /></label>
                         <select class="form-control" name="category">
                             <c:forEach items="${requestScope.book_categories}" var="book_category">
-                                <c:if test="${book_category == requestScope.book.category}">
+                                <c:if test="${book_category.name == requestScope.book.category}">
                                     <option value="${book_category.name}" selected>${book_category.name}</option>
                                 </c:if>
-                                <c:if test="${book_category != requestScope.book.category}">
+                                <c:if test="${book_category.name != requestScope.book.category}">
                                     <option value="${book_category.name}">${book_category.name}</option>
                                 </c:if>
                             </c:forEach>

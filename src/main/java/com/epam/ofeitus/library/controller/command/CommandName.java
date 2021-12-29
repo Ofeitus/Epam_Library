@@ -24,4 +24,5 @@ public class CommandName {
     public static final String RESERVE_BOOK_COMMAND = "reserve-book";
     public static final String GOTO_EDIT_BOOK_DATA_PAGE_COMMAND = "goto-edit-book-data-page";
     public static final String EDIT_BOOK_DATA_COMMAND = "edit-book-data";
+    public static final String GOTO_INVENTORY_BOOK_PAGE_COMMAND = "goto-inventory-book-page";
 }

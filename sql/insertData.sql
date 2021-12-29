@@ -66,20 +66,20 @@ INSERT INTO `library`.`copy_of_book_status` (copy_of_book_status_id, copy_of_boo
     ('4', 'LOANED');
 
 -- Copies of Books
-INSERT INTO `library`.`copies_of_books` (inventory_id, book_isbn, copy_of_book_status_id) VALUES
-    ('0', '9785389074354', '4'),
-    ('0', '9785389077812', '1'),
-    ('0', '9785389077881', '1'),
-    ('0', '9785389077881', '1'),
-    ('0', '9785389077898', '4'),
-    ('0', '9785389077904', '4'),
-    ('0', '9785389077911', '1'),
-    ('0', '9785389077928', '3'),
-    ('0', '5941170688', '4'),
-    ('0', '9785699923595', '1'),
-    ('0', '9785170801152', '1'),
-    ('0', '9785041034979', '3'),
-    ('0', '9785041078713', '1');
+INSERT INTO `library`.`copies_of_books` (inventory_id, receipt_date, book_isbn, copy_of_book_status_id) VALUES
+    ('0', CURDATE(), '9785389074354', '4'),
+    ('0', CURDATE(), '9785389077812', '1'),
+    ('0', CURDATE(), '9785389077881', '1'),
+    ('0', CURDATE(), '9785389077881', '1'),
+    ('0', CURDATE(), '9785389077898', '4'),
+    ('0', CURDATE(), '9785389077904', '4'),
+    ('0', CURDATE(), '9785389077911', '1'),
+    ('0', CURDATE(), '9785389077928', '3'),
+    ('0', CURDATE(), '5941170688', '4'),
+    ('0', CURDATE(), '9785699923595', '1'),
+    ('0', CURDATE(), '9785170801152', '1'),
+    ('0', CURDATE(), '9785041034979', '3'),
+    ('0', CURDATE(), '9785041078713', '1');
 
 -- Loan statuses
 INSERT INTO `library`.`loan_status` (loan_status_id, loan_status_value) VALUES

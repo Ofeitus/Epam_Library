@@ -20,13 +20,13 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th scope="col" rowspan="1"><fmt:message key="user-fines.id" /></th>
-                <th scope="col" rowspan="1"><fmt:message key="user-fines.book-title" /></th>
-                <th scope="col" rowspan="1"><fmt:message key="user-fines.issue-date" /></th>
-                <th scope="col" rowspan="1"><fmt:message key="user-fines.due-date" /></th>
-                <th scope="col" rowspan="1"><fmt:message key="user-fines.return-date" /></th>
-                <th scope="col" rowspan="1"><fmt:message key="user-fines.fine-amount" /></th>
-                <th scope="col" rowspan="1"><fmt:message key="user-fines.fine-status" /></th>
+                <th scope="col"><fmt:message key="user-fines.id" /></th>
+                <th scope="col"><fmt:message key="user-fines.book-title" /></th>
+                <th scope="col"><fmt:message key="user-fines.issue-date" /></th>
+                <th scope="col"><fmt:message key="user-fines.due-date" /></th>
+                <th scope="col"><fmt:message key="user-fines.return-date" /></th>
+                <th scope="col"><fmt:message key="user-fines.fine-amount" /></th>
+                <th scope="col"><fmt:message key="user-fines.fine-status" /></th>
             </tr>
             </thead>
             <tbody>

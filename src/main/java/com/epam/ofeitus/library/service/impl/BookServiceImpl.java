@@ -10,12 +10,8 @@ import com.epam.ofeitus.library.entity.book.CopyOfBook;
 import com.epam.ofeitus.library.entity.book.constituent.BookCategory;
 import com.epam.ofeitus.library.entity.book.constituent.CopyOfBookStatus;
 import com.epam.ofeitus.library.entity.dto.BookDto;
-import com.epam.ofeitus.library.entity.order.Reservation;
-import com.epam.ofeitus.library.entity.order.constiuent.ReservationStatus;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,6 +146,17 @@ public class BookServiceImpl implements BookService {
                 }
             }
             return bookDao.update(new Book(bookIsbn, title, publicationYear, categoryId, language, keyWords), authors);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<CopyOfBook> getAllCopiesOfBooksDto() throws ServiceException {
+        CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
+
+        try {
+            return copyOfBookDao.findAllWithBook();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

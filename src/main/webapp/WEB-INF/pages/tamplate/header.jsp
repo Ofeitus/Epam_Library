@@ -68,10 +68,8 @@
                     <c:if test="${sessionScope.user_role.toString() == 'MANAGER'}">
                         <a href="?command=goto-profile-page"><fmt:message key="header.manager-profile" /></a>
                         <hr>
-                        <a href="#"><fmt:message key="header.manage-books" /></a>
-                        <a href="#"><fmt:message key="header.manage-loans" /></a>
-                        <a href="#"><fmt:message key="header.manage-reservations" /></a>
-                        <a href="#"><fmt:message key="header.manage-fines" /></a>
+                        <a href="?command=goto-inventory-book-page"><fmt:message key="header.inventory-book" /></a>
+                        <a href="#"><fmt:message key="header.manage-members" /></a>
                     </c:if>
                     <c:if test="${sessionScope.user_role.toString() == 'ADMIN'}">
                         <a href="?command=goto-profile-page"><fmt:message key="header.admin-profile" /></a>
