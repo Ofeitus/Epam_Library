@@ -207,10 +207,6 @@ public class MySqlBookDao extends AbstractMySqlDao<Book> implements BookDao {
             parameters.add(categoryId);
         }
 
-        if (parameters.size() == 0) {
-            return new ArrayList<>();
-        }
-
         return queryOperator.executeQuery(
                 FIND_BY_SEARCH_REQUEST_QUERY,
                 parameters.toArray()

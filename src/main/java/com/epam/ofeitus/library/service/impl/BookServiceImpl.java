@@ -152,11 +152,22 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<CopyOfBook> getAllCopiesOfBooksDto() throws ServiceException {
+    public List<CopyOfBook> getAllCopiesOfBooks() throws ServiceException {
         CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
 
         try {
             return copyOfBookDao.findAllWithBook();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<CopyOfBook> getCopiesOfBooksBySearchRequest(String bookIsbn, int inventoryId) throws ServiceException {
+        CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
+
+        try {
+            return copyOfBookDao.findBySearchRequestWithBook(bookIsbn, inventoryId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

@@ -21,5 +21,7 @@ public interface BookService {
 
     int updateBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<Author> authors) throws ServiceException;
 
-    List<CopyOfBook> getAllCopiesOfBooksDto() throws ServiceException;
+    List<CopyOfBook> getAllCopiesOfBooks() throws ServiceException;
+
+    List<CopyOfBook> getCopiesOfBooksBySearchRequest(String bookIsbn, int inventoryId) throws ServiceException;
 }

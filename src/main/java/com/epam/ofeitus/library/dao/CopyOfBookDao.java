@@ -11,4 +11,6 @@ public interface CopyOfBookDao extends AbstractDao<CopyOfBook> {
     List<CopyOfBook> findByIsbn(String bookIsbn) throws DaoException;
 
     List<CopyOfBook> findByIsbnAndStatusId(String bookIsbn, int statusId) throws DaoException;
+
+    List<CopyOfBook> findBySearchRequestWithBook(String bookIsbn, int inventoryId) throws DaoException;
 }

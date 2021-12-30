@@ -7,6 +7,7 @@ import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
 import com.epam.ofeitus.library.entity.book.CopyOfBook;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements CopyOfBookDao {
@@ -74,5 +75,45 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
     @Override
     public List<CopyOfBook> findByIsbnAndStatusId(String bookIsbn, int statusId) throws DaoException {
         return queryOperator.executeQuery(FIND_BY_ISBN_AND_STATUS_ID_QUERY, bookIsbn, statusId);
+    }
+
+    @Override
+    public List<CopyOfBook> findBySearchRequestWithBook(String bookIsbn, int inventoryId) throws DaoException {
+        List<Object> parameters = new ArrayList<>();
+
+        String FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY = String.format(
+                "SELECT * FROM %s JOIN %s b on b.%s = %s.%s ",
+                Table.COPY_OF_BOOK_TABLE,
+                Table.BOOK_TABLE,
+                Column.BOOK_ISBN,
+                Table.COPY_OF_BOOK_TABLE,
+                Column.COPY_OF_BOOK_ISBN);
+
+        if (!bookIsbn.equals("")) {
+            FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY += String.format(
+                    "WHERE %s.%s=? ",
+                    Table.COPY_OF_BOOK_TABLE,
+                    Column.COPY_OF_BOOK_ISBN);
+            parameters.add(bookIsbn);
+        } else {
+            FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY += "WHERE 1=1 ";
+        }
+
+        if (inventoryId != 0) {
+            FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY += String.format(
+                    "AND %s=? ",
+                    Column.COPY_OF_BOOK_INVENTORY_ID);
+            parameters.add(inventoryId);
+        }
+
+        FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY += String.format(
+                "ORDER BY %s",
+                Column.COPY_OF_BOOK_INVENTORY_ID
+        );
+
+        return queryOperator.executeQuery(
+                FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY,
+                parameters.toArray()
+        );
     }
 }
