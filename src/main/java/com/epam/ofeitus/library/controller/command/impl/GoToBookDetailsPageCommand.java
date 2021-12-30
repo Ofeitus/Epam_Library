@@ -41,6 +41,7 @@ public class GoToBookDetailsPageCommand implements Command {
         session.setAttribute(SessionAttribute.URL, "/controller?command=goto-book-details-page&book-isbn=" + bookIsbn);
 
         try {
+            int copiesCount = bookService.getCopiesCount(bookIsbn);
             int availableCopiesCount = bookService.getAvailableCopiesCount(bookIsbn);
             int reservedBooksCount;
             int issuedBooksCount;
@@ -54,6 +55,7 @@ public class GoToBookDetailsPageCommand implements Command {
             }
             BookDto book = bookService.getBookDtoByIsbn(bookIsbn);
             request.setAttribute(RequestAttribute.BOOK, book);
+            request.setAttribute(RequestAttribute.COPIES_COUNT, copiesCount);
             request.setAttribute(RequestAttribute.AVAILABLE_COPIES_COUNT, availableCopiesCount);
             request.setAttribute(RequestAttribute.RESERVED_BOOKS_COUNT, reservedBooksCount);
             request.setAttribute(RequestAttribute.ISSUED_BOOKS_COUNT, issuedBooksCount);

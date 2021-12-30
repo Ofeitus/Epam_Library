@@ -106,6 +106,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public int getCopiesCount(String bookIsbn) throws ServiceException {
+        CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
+
+        try {
+            return copyOfBookDao.findByIsbn(bookIsbn).size();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public int getAvailableCopiesCount(String bookIsbn) throws ServiceException {
         CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
 

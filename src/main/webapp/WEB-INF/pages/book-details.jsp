@@ -57,7 +57,7 @@
                 <td class="book-field-value">${requestScope.book.keyWords}</td>
             </tr>
         </table>
-        <c:if test="${sessionScope.user_role == 'MEMBER'}">
+        <c:if test="${sessionScope.user_role == null || sessionScope.user_role == 'MEMBER'}">
             <div class="form-container">
                 <h3 class="title"><fmt:message key="book-details.reservation" /></h3>
                 <form class="form-horizontal" action="controller" method="get">
@@ -78,7 +78,8 @@
                         <div class="reservation-info">
                             <i class="bi bi-exclamation-triangle-fill" style="color: gold;"></i>
                             <label><fmt:message key="book-details.reservation-limit" /></label>
-                        </div>                </c:if>
+                        </div>
+                    </c:if>
                     <c:if test="${sessionScope.user_id == null}">
                         <div class="reservation-info">
                             <i class="bi bi-exclamation-circle-fill" style="color: royalblue;"></i>
@@ -95,6 +96,35 @@
                                 requestScope.reserved_books_count + requestScope.issued_books_count >= 5 or
                                 requestScope.available_copies_count == 0}">
                             <button class="h-50 col-4 btn submit" disabled><fmt:message key="book-details.reserve" /></button>
+                        </c:if>
+                    </div>
+                </form>
+            </div>
+        </c:if>
+        <c:if test="${sessionScope.user_role == 'MANAGER'}">
+            <div class="form-container">
+                <h3 class="title"><fmt:message key="book-details.copies" /></h3>
+                <form class="form-horizontal" action="controller" method="get">
+                    <input type="hidden" name="command" value="search-copies-of-books">
+                    <input type="hidden" name="book-isbn" value="${requestScope.book.isbn}">
+                    <input type="hidden" name="inventory-id" value="0">
+                    <c:if test="${requestScope.copies_count > 0}">
+                        <div class="reservation-info">
+                            <label><fmt:message key="book-details.number-of-copies" />&nbsp;${requestScope.copies_count}</label>
+                        </div>
+                    </c:if>
+                    <c:if test="${requestScope.copies_count == 0}">
+                        <div class="reservation-info">
+                            <i class="bi bi-exclamation-triangle-fill" style="color: gold;"></i>
+                            <label><fmt:message key="book-details.no-copies" /></label>
+                        </div>
+                    </c:if>
+                    <div class="w-100 row justify-content-end">
+                        <c:if test="${requestScope.copies_count > 0}">
+                            <button class="h-50 col-4 btn submit"><fmt:message key="book-details.view" /></button>
+                        </c:if>
+                        <c:if test="${requestScope.copies_count == 0}">
+                            <button class="h-50 col-4 btn submit" disabled><fmt:message key="book-details.view" /></button>
                         </c:if>
                     </div>
                 </form>

@@ -47,9 +47,7 @@ public class EditBookDataCommand implements Command {
                 authors.add(new Author(0, authorNames.get(i), authorSurnames.get(i)));
             }
             bookService.updateBook(bookIsbn, title, category, publicationYear, language, keyWords, authors);
-            BookDto updatedBook = bookService.getBookDtoByIsbn(bookIsbn);
-            request.setAttribute(RequestAttribute.BOOK, updatedBook);
-            return new CommandResult(Page.BOOK_DETAILS_PAGE, RoutingType.FORWARD);
+            return new CommandResult("/controller?command=goto-book-details-page&book-isbn=" + bookIsbn, RoutingType.REDIRECT);
         } catch (ServiceException e) {
             logger.error("Unable to get books DTO by search request.", e);
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
