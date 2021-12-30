@@ -32,6 +32,11 @@
     margin: 0 0 20px;
 }
 
+.inventory-book-forms {
+    display: flex;
+    justify-content: space-between;
+}
+
 .form-container .form-horizontal{
     font-size: 0;
 }
@@ -113,7 +118,7 @@
     outline: none;
 }
 
-#search-buttons {
+.search-buttons {
     margin: 0;
 }
 

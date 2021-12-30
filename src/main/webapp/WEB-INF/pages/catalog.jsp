@@ -53,7 +53,7 @@
                     <label id="search-error-message">${sessionScope.error}</label>
                 </div>
             </c:if>
-            <div id="search-buttons" class="w-100 row justify-content-between">
+            <div class="w-100 row justify-content-between search-buttons">
                 <button type="reset" class="h-50 col-2 btn reset"><fmt:message key="catalog.clear" /></button>
                 <button type="submit" class="h-50 col-2 btn submit"><fmt:message key="catalog.search" /></button>
             </div>

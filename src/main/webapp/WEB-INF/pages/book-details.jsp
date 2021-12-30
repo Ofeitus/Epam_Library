@@ -108,6 +108,7 @@
                     <input type="hidden" name="command" value="search-copies-of-books">
                     <input type="hidden" name="book-isbn" value="${requestScope.book.isbn}">
                     <input type="hidden" name="inventory-id" value="0">
+                    <input type="hidden" name="status" value="only-existing">
                     <c:if test="${requestScope.copies_count > 0}">
                         <div class="reservation-info">
                             <label><fmt:message key="book-details.number-of-copies" />&nbsp;${requestScope.copies_count}</label>

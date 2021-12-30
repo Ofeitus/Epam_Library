@@ -12,34 +12,43 @@ import java.util.List;
 
 public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements CopyOfBookDao {
     public final static String SAVE_COPY_OF_BOOK_QUERY = String.format(
-            "INSERT INTO %s (%s, %s, %s) VALUES (0, ?, ?)",
+            "INSERT INTO %s (%s, %s, %s, %s) VALUES (0, ?, ?, ?)",
             Table.COPY_OF_BOOK_TABLE,
             Column.COPY_OF_BOOK_INVENTORY_ID,
+            Column.COPY_OF_BOOK_RECEIPT_DATE,
             Column.BOOK_ISBN,
             Column.COPY_OF_BOOK_STATUS_ID);
     public final static String UPDATE_COPY_OF_BOOK_QUERY = String.format(
-            "UPDATE %s SET %s=?, %s=? WHERE %s=?",
+            "UPDATE %s SET %s=?, %s=?, %s=? WHERE %s=?",
             Table.COPY_OF_BOOK_TABLE,
+            Column.COPY_OF_BOOK_RECEIPT_DATE,
             Column.BOOK_ISBN,
             Column.COPY_OF_BOOK_STATUS_ID,
             Column.COPY_OF_BOOK_INVENTORY_ID);
     private static final String FIND_ALL_WITH_BOOK_QUERY = String.format(
-            "SELECT * FROM %s JOIN %s b on b.%s = %s.%s ORDER BY %s",
+            "SELECT * FROM %s JOIN %s b on b.%s = %s.%s WHERE %s!='5' ORDER BY %s",
             Table.COPY_OF_BOOK_TABLE,
             Table.BOOK_TABLE,
             Column.BOOK_ISBN,
             Table.COPY_OF_BOOK_TABLE,
             Column.COPY_OF_BOOK_ISBN,
+            Column.COPY_OF_BOOK_STATUS_ID,
             Column.COPY_OF_BOOK_INVENTORY_ID);
     private static final String FIND_BY_ISBN_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=?",
+            "SELECT * FROM %s WHERE %s=? AND %s!='5'",
             Table.COPY_OF_BOOK_TABLE,
-            Column.BOOK_ISBN);
+            Column.BOOK_ISBN,
+            Column.COPY_OF_BOOK_STATUS_ID);
     private static final String FIND_BY_ISBN_AND_STATUS_ID_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=? AND %s=?",
             Table.COPY_OF_BOOK_TABLE,
             Column.BOOK_ISBN,
             Column.COPY_OF_BOOK_STATUS_ID);
+    private static final String UPDATE_STATUS_BY_ID_QUERY = String.format(
+            "UPDATE %s SET %s=? WHERE %s=?",
+            Table.COPY_OF_BOOK_TABLE,
+            Column.COPY_OF_BOOK_STATUS_ID,
+            Column.COPY_OF_BOOK_INVENTORY_ID);
 
     public MySqlCopyOfBookDao() {
         super(RowMapperFactory.getCopyOfBookRowMapper(), Table.COPY_OF_BOOK_TABLE, Column.COPY_OF_BOOK_INVENTORY_ID);
@@ -49,6 +58,7 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
     public int save(CopyOfBook entity) throws DaoException {
         return queryOperator.executeUpdate(
                 SAVE_COPY_OF_BOOK_QUERY,
+                entity.getReceiptDate(),
                 entity.getBookIsbn(),
                 entity.getCopyOfBookStatus().ordinal() + 1);
     }
@@ -57,6 +67,7 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
     public int update(CopyOfBook entity) throws DaoException {
         return queryOperator.executeUpdate(
                 UPDATE_COPY_OF_BOOK_QUERY,
+                entity.getReceiptDate(),
                 entity.getBookIsbn(),
                 entity.getCopyOfBookStatus().ordinal() + 1,
                 entity.getInventoryId());
@@ -78,7 +89,7 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
     }
 
     @Override
-    public List<CopyOfBook> findBySearchRequestWithBook(String bookIsbn, int inventoryId) throws DaoException {
+    public List<CopyOfBook> findBySearchRequestWithBook(String bookIsbn, int inventoryId, int statusId) throws DaoException {
         List<Object> parameters = new ArrayList<>();
 
         String FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY = String.format(
@@ -106,6 +117,20 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
             parameters.add(inventoryId);
         }
 
+        if (statusId != 0) {
+            if (statusId == 5) {
+                FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY += String.format(
+                        "AND %s=? ",
+                        Column.COPY_OF_BOOK_STATUS_ID);
+                parameters.add(statusId);
+            } else {
+                FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY += String.format(
+                        "AND %s!=? ",
+                        Column.COPY_OF_BOOK_STATUS_ID);
+                parameters.add(-statusId);
+            }
+        }
+
         FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY += String.format(
                 "ORDER BY %s",
                 Column.COPY_OF_BOOK_INVENTORY_ID
@@ -115,5 +140,10 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
                 FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY,
                 parameters.toArray()
         );
+    }
+
+    @Override
+    public int updateStatus(int inventoryId, int statusId) throws DaoException {
+        return queryOperator.executeUpdate(UPDATE_STATUS_BY_ID_QUERY, statusId, inventoryId);
     }
 }

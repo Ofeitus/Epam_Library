@@ -25,5 +25,7 @@ public interface BookService {
 
     List<CopyOfBook> getAllCopiesOfBooks() throws ServiceException;
 
-    List<CopyOfBook> getCopiesOfBooksBySearchRequest(String bookIsbn, int inventoryId) throws ServiceException;
+    List<CopyOfBook> getCopiesOfBooksBySearchRequest(String bookIsbn, int inventoryId, int statusId) throws ServiceException;
+
+    void writeOffBook(int inventoryId) throws ServiceException;
 }

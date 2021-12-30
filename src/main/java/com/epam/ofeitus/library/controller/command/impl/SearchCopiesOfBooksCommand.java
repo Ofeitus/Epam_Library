@@ -19,8 +19,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 
 public class SearchCopiesOfBooksCommand implements Command {
@@ -32,13 +30,29 @@ public class SearchCopiesOfBooksCommand implements Command {
 
         String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
         int inventoryId = Integer.parseInt(request.getParameter(RequestParameter.INVENTORY_ID));
+        String status = request.getParameter(RequestParameter.STATUS);
+        int statusId;
+        switch (status) {
+            case "only-existing":
+                statusId = -5;
+                break;
+            case "only-written-off":
+                statusId = 5;
+                break;
+            default:
+                statusId = 0;
+        }
 
         HttpSession session = request.getSession();
 
-        session.setAttribute(SessionAttribute.URL, "/controller?command=search-copies-of-books&book-isbn=" + bookIsbn + "&inventory-id=" + inventoryId);
+        session.setAttribute(SessionAttribute.URL,
+                "/controller?command=search-copies-of-books" +
+                        "&book-isbn=" + bookIsbn +
+                        "&inventory-id=" + inventoryId +
+                        "&status=" + status);
 
         try {
-            List<CopyOfBook> copiesOfBooks = bookService.getCopiesOfBooksBySearchRequest(bookIsbn, inventoryId);
+            List<CopyOfBook> copiesOfBooks = bookService.getCopiesOfBooksBySearchRequest(bookIsbn, inventoryId, statusId);
             request.setAttribute(RequestAttribute.COPIES_OF_BOOKS, copiesOfBooks);
             return new CommandResult(Page.INVENTORY_BOOK_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {

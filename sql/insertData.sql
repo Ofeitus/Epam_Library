@@ -63,7 +63,8 @@ INSERT INTO `library`.`copy_of_book_status` (copy_of_book_status_id, copy_of_boo
     ('1', 'AVAILABLE'),
     ('2', 'READING_ROOM'),
     ('3', 'RESERVED'),
-    ('4', 'LOANED');
+    ('4', 'LOANED'),
+    ('5', 'WRITTEN_OFF');
 
 -- Copies of Books
 INSERT INTO `library`.`copies_of_books` (inventory_id, receipt_date, book_isbn, copy_of_book_status_id) VALUES

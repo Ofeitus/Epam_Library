@@ -4,5 +4,6 @@ public enum CopyOfBookStatus {
     AVAILABLE,
     READING_ROOM,
     RESERVED,
-    LOANED
+    LOANED,
+    WRITTEN_OFF;
 }

@@ -21,4 +21,5 @@ public class RequestParameter {
     public static final String LANGUAGE = "language";
     public static final String KEY_WORDS = "key-words";
     public static final String INVENTORY_ID = "inventory-id";
+    public static final String STATUS = "status";
 }

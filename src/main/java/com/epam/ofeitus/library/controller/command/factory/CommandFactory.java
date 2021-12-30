@@ -36,6 +36,7 @@ public class CommandFactory {
         put(CommandName.SEARCH_COPIES_OF_BOOKS_COMMAND, new SearchCopiesOfBooksCommand());
         put(CommandName.RESERVE_BOOK_COMMAND, new ReserveBookCommand());
         put(CommandName.CANCEL_RESERVATION_COMMAND, new CancelReservationCommand());
+        put(CommandName.WRITE_OFF_COPY_OF_BOOK_COMMAND, new WriteOffCopyOfBookCommand());
     }};
 
     private CommandFactory() {
