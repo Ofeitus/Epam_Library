@@ -6,7 +6,9 @@ import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
 import com.epam.ofeitus.library.controller.constant.RequestAttribute;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
+import com.epam.ofeitus.library.dao.CopyOfBookDao;
 import com.epam.ofeitus.library.entity.book.CopyOfBook;
+import com.epam.ofeitus.library.entity.dto.CopyOfBookDto;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 import com.epam.ofeitus.library.service.factory.ServiceFactory;
@@ -28,7 +30,7 @@ public class GoToInventoryBookPageCommand implements Command {
 
         BookService bookService = ServiceFactory.getInstance().getBookService();
         try {
-            List<CopyOfBook> copiesOfBooksDto = bookService.getAllCopiesOfBooks();
+            List<CopyOfBookDto> copiesOfBooksDto = bookService.getAllCopiesOfBooks();
             request.setAttribute(RequestAttribute.COPIES_OF_BOOKS, copiesOfBooksDto);
             return new CommandResult(Page.INVENTORY_BOOK_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {

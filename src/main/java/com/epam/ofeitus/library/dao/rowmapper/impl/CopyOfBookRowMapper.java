@@ -17,18 +17,6 @@ public class CopyOfBookRowMapper implements RowMapper<CopyOfBook> {
         copyOfBook.setReceiptDate(resultSet.getDate(Column.COPY_OF_BOOK_RECEIPT_DATE));
         copyOfBook.setBookIsbn(resultSet.getString(Column.COPY_OF_BOOK_ISBN));
         copyOfBook.setCopyOfBookStatus(CopyOfBookStatus.values()[resultSet.getInt(Column.COPY_OF_BOOK_STATUS_ID) - 1]);
-        for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
-            if (resultSet.getMetaData().getColumnName(i).equals(Column.BOOK_TITLE)) {
-                copyOfBook.setBook(new Book(
-                        resultSet.getString(Column.BOOK_ISBN),
-                        resultSet.getString(Column.BOOK_TITLE),
-                        resultSet.getInt(Column.BOOK_PUBLICATION_YEAR),
-                        resultSet.getInt(Column.BOOK_CATEGORY_ID),
-                        resultSet.getString(Column.BOOK_LANGUAGE),
-                        resultSet.getString(Column.BOOK_KEY_WORDS)
-                ));
-            }
-        }
         return copyOfBook;
     }
 }

@@ -9,7 +9,7 @@ public interface AbstractDao<T> {
 
     T findById(int id) throws DaoException;
 
-    List<T> findAll() throws DaoException;
+    List<T> findAllExisting() throws DaoException;
 
     int update(T entity) throws DaoException;
 

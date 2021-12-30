@@ -18,6 +18,18 @@
     text-align: center;
 }
 
+.table-container td {
+    word-break: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 150px;
+}
+
+.table-container td:hover {
+    overflow: visible;
+    white-space: normal;
+}
+
 .table-container td i {
     font-size: 12px;
     margin-right: 5px;

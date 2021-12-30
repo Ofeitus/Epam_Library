@@ -10,10 +10,12 @@ import com.epam.ofeitus.library.entity.book.CopyOfBook;
 import com.epam.ofeitus.library.entity.book.constituent.BookCategory;
 import com.epam.ofeitus.library.entity.book.constituent.CopyOfBookStatus;
 import com.epam.ofeitus.library.entity.dto.BookDto;
+import com.epam.ofeitus.library.entity.dto.CopyOfBookDto;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BookServiceImpl implements BookService {
@@ -25,7 +27,7 @@ public class BookServiceImpl implements BookService {
         BookCategoryDao bookCategoryDao = MySqlDaoFactory.getInstance().getBookCategoryDao();
 
         try {
-            List<Book> books = bookDao.findAll();
+            List<Book> books = bookDao.findAllExisting();
             List<BookDto> booksDto = new ArrayList<>();
             for (Book book : books) {
                 List<Author> authors = authorDao.findByBookIsbn(book.getIsbn());
@@ -132,7 +134,7 @@ public class BookServiceImpl implements BookService {
         BookCategoryDao bookCategoryDao = MySqlDaoFactory.getInstance().getBookCategoryDao();
 
         try {
-            return bookCategoryDao.findAll();
+            return bookCategoryDao.findAllExisting();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -163,33 +165,75 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<CopyOfBook> getAllCopiesOfBooks() throws ServiceException {
-        CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
+    public List<CopyOfBookDto> getAllCopiesOfBooks() throws ServiceException {
+        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
+        CopyOfBookDao copyOfBookDao = daoFactory.getCopyOfBookDao();
 
         try {
-            return copyOfBookDao.findAllWithBook();
+            List<CopyOfBook> copiesOfBooks = copyOfBookDao.findAllExisting();
+            List<CopyOfBookDto> copiesOfBooksDto = new ArrayList<>();
+            for (CopyOfBook copyOfBook : copiesOfBooks) {
+                BookDto bookDto = getBookDtoByIsbn(copyOfBook.getBookIsbn());
+                copiesOfBooksDto.add(new CopyOfBookDto(
+                                copyOfBook.getInventoryId(),
+                                copyOfBook.getReceiptDate(),
+                                copyOfBook.getBookIsbn(),
+                                copyOfBook.getCopyOfBookStatus(),
+                                bookDto
+                        )
+                );
+            }
+            return copiesOfBooksDto;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public List<CopyOfBook> getCopiesOfBooksBySearchRequest(String bookIsbn, int inventoryId, int statusId) throws ServiceException {
-        CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
+    public List<CopyOfBookDto> getCopiesOfBooksBySearchRequest(String bookIsbn, int inventoryId, int statusId) throws ServiceException {
+        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
+        CopyOfBookDao copyOfBookDao = daoFactory.getCopyOfBookDao();
 
         try {
-            return copyOfBookDao.findBySearchRequestWithBook(bookIsbn, inventoryId, statusId);
+            List<CopyOfBook> copiesOfBooks = copyOfBookDao.findBySearchRequest(bookIsbn, inventoryId, statusId);
+            List<CopyOfBookDto> copiesOfBooksDto = new ArrayList<>();
+            for (CopyOfBook copyOfBook : copiesOfBooks) {
+                BookDto bookDto = getBookDtoByIsbn(copyOfBook.getBookIsbn());
+                copiesOfBooksDto.add(new CopyOfBookDto(
+                        copyOfBook.getInventoryId(),
+                        copyOfBook.getReceiptDate(),
+                        copyOfBook.getBookIsbn(),
+                        copyOfBook.getCopyOfBookStatus(),
+                        bookDto
+                        )
+                );
+            }
+            return copiesOfBooksDto;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public void writeOffBook(int inventoryId) throws ServiceException {
+    public void writeOffCopyOfBook(int inventoryId) throws ServiceException {
         CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
 
         try {
             copyOfBookDao.updateStatus(inventoryId, CopyOfBookStatus.WRITTEN_OFF.ordinal() + 1);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void addCopiesOfBook(String bookIsbn, int copiesCount) throws ServiceException {
+        CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
+        List<CopyOfBook> copiesOfBook = new ArrayList<>();
+        for (int i = 0; i < copiesCount; i++) {
+            copiesOfBook.add(new CopyOfBook(0, new Date(), bookIsbn, CopyOfBookStatus.AVAILABLE));
+        }
+        try {
+            copyOfBookDao.saveAll(copiesOfBook);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

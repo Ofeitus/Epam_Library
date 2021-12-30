@@ -10,6 +10,7 @@ import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.entity.book.CopyOfBook;
 import com.epam.ofeitus.library.entity.book.constituent.BookCategory;
 import com.epam.ofeitus.library.entity.dto.BookDto;
+import com.epam.ofeitus.library.entity.dto.CopyOfBookDto;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 import com.epam.ofeitus.library.service.factory.ServiceFactory;
@@ -52,7 +53,7 @@ public class SearchCopiesOfBooksCommand implements Command {
                         "&status=" + status);
 
         try {
-            List<CopyOfBook> copiesOfBooks = bookService.getCopiesOfBooksBySearchRequest(bookIsbn, inventoryId, statusId);
+            List<CopyOfBookDto> copiesOfBooks = bookService.getCopiesOfBooksBySearchRequest(bookIsbn, inventoryId, statusId);
             request.setAttribute(RequestAttribute.COPIES_OF_BOOKS, copiesOfBooks);
             return new CommandResult(Page.INVENTORY_BOOK_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {

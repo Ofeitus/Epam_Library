@@ -4,7 +4,9 @@ import com.epam.ofeitus.library.constant.Column;
 import com.epam.ofeitus.library.constant.Table;
 import com.epam.ofeitus.library.dao.CopyOfBookDao;
 import com.epam.ofeitus.library.dao.exception.DaoException;
+import com.epam.ofeitus.library.dao.queryoperator.ParametrizedQuery;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
+import com.epam.ofeitus.library.entity.book.Author;
 import com.epam.ofeitus.library.entity.book.CopyOfBook;
 
 import java.util.ArrayList;
@@ -25,13 +27,9 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
             Column.BOOK_ISBN,
             Column.COPY_OF_BOOK_STATUS_ID,
             Column.COPY_OF_BOOK_INVENTORY_ID);
-    private static final String FIND_ALL_WITH_BOOK_QUERY = String.format(
-            "SELECT * FROM %s JOIN %s b on b.%s = %s.%s WHERE %s!='5' ORDER BY %s",
+    private static final String FIND_ALL_QUERY = String.format(
+            "SELECT * FROM %s WHERE %s!='5' ORDER BY %s",
             Table.COPY_OF_BOOK_TABLE,
-            Table.BOOK_TABLE,
-            Column.BOOK_ISBN,
-            Table.COPY_OF_BOOK_TABLE,
-            Column.COPY_OF_BOOK_ISBN,
             Column.COPY_OF_BOOK_STATUS_ID,
             Column.COPY_OF_BOOK_INVENTORY_ID);
     private static final String FIND_BY_ISBN_QUERY = String.format(
@@ -64,6 +62,21 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
     }
 
     @Override
+    public int saveAll(List<CopyOfBook> copiesOfBook) throws DaoException {
+        List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
+        for (CopyOfBook copyOfBook : copiesOfBook) {
+            parametrizedQueries.add(new ParametrizedQuery(
+                    SAVE_COPY_OF_BOOK_QUERY,
+                    copyOfBook.getReceiptDate(),
+                    copyOfBook.getBookIsbn(),
+                    copyOfBook.getCopyOfBookStatus().ordinal() + 1
+            ));
+        }
+
+        return queryOperator.executeTransaction(parametrizedQueries);
+    }
+
+    @Override
     public int update(CopyOfBook entity) throws DaoException {
         return queryOperator.executeUpdate(
                 UPDATE_COPY_OF_BOOK_QUERY,
@@ -74,8 +87,8 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
     }
 
     @Override
-    public List<CopyOfBook> findAllWithBook() throws DaoException {
-        return queryOperator.executeQuery(FIND_ALL_WITH_BOOK_QUERY);
+    public List<CopyOfBook> findAllExisting() throws DaoException {
+        return queryOperator.executeQuery(FIND_ALL_QUERY);
     }
 
     @Override
@@ -89,7 +102,7 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
     }
 
     @Override
-    public List<CopyOfBook> findBySearchRequestWithBook(String bookIsbn, int inventoryId, int statusId) throws DaoException {
+    public List<CopyOfBook> findBySearchRequest(String bookIsbn, int inventoryId, int statusId) throws DaoException {
         List<Object> parameters = new ArrayList<>();
 
         String FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY = String.format(

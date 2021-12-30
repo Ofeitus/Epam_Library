@@ -39,8 +39,11 @@
             <tr>
                 <td class="book-field-name"><fmt:message key="book-details.authors" /></td>
                 <td class="book-field-value">
-                    <c:forEach items="${requestScope.book.authors}" var="author">
-                        ${author.name}&nbsp;${author.surname},&nbsp;
+                    <c:forEach items="${requestScope.book.authors}" var="author" varStatus="i">
+                        ${author.name}&nbsp;${author.surname}
+                        <c:if test="${i.index < requestScope.book.authors.size() - 1}">
+                            ,&nbsp;
+                        </c:if>
                     </c:forEach>
                 </td>
             </tr>

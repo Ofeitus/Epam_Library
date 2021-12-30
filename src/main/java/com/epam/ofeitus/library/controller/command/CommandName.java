@@ -27,4 +27,5 @@ public class CommandName {
     public static final String GOTO_INVENTORY_BOOK_PAGE_COMMAND = "goto-inventory-book-page";
     public static final String SEARCH_COPIES_OF_BOOKS_COMMAND = "search-copies-of-books";
     public static final String WRITE_OFF_COPY_OF_BOOK_COMMAND = "write-off-copy-of-book";
+    public static final String WRITE_IN_COPIES_OF_BOOK_COMMAND = "write-in-copies-of-book";
 }

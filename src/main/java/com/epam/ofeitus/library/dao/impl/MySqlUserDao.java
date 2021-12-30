@@ -58,7 +58,7 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
     }
 
     @Override
-    public List<User> findAll() throws DaoException {
+    public List<User> findAllExisting() throws DaoException {
         return queryOperator.executeQuery(FIND_ALL_QUERY);
     }
 

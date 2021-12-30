@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     public List<User> getAll() throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
         try {
-            return userDao.findAll();
+            return userDao.findAllExisting();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

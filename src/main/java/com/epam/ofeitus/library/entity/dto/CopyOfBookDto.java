@@ -1,25 +1,26 @@
-package com.epam.ofeitus.library.entity.book;
+package com.epam.ofeitus.library.entity.dto;
 
 import com.epam.ofeitus.library.entity.book.constituent.CopyOfBookStatus;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class CopyOfBook implements Serializable {
+public class CopyOfBookDto {
     private int inventoryId;
     private Date receiptDate;
     private String bookIsbn;
     private CopyOfBookStatus copyOfBookStatus;
+    private BookDto book;
 
-    public CopyOfBook() {
+    public CopyOfBookDto() {
     }
 
-    public CopyOfBook(int inventoryId, Date receiptDate, String bookIsbn, CopyOfBookStatus copyOfBookStatus) {
+    public CopyOfBookDto(int inventoryId, Date receiptDate, String bookIsbn, CopyOfBookStatus copyOfBookStatus, BookDto book) {
         this.inventoryId = inventoryId;
         this.receiptDate = receiptDate;
         this.bookIsbn = bookIsbn;
         this.copyOfBookStatus = copyOfBookStatus;
+        this.book = book;
     }
 
     public int getInventoryId() {
@@ -54,26 +55,35 @@ public class CopyOfBook implements Serializable {
         this.copyOfBookStatus = copyOfBookStatus;
     }
 
+    public BookDto getBook() {
+        return book;
+    }
+
+    public void setBook(BookDto book) {
+        this.book = book;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CopyOfBook that = (CopyOfBook) o;
-        return inventoryId == that.inventoryId && Objects.equals(receiptDate, that.receiptDate) && Objects.equals(bookIsbn, that.bookIsbn) && copyOfBookStatus == that.copyOfBookStatus;
+        CopyOfBookDto that = (CopyOfBookDto) o;
+        return inventoryId == that.inventoryId && Objects.equals(receiptDate, that.receiptDate) && Objects.equals(bookIsbn, that.bookIsbn) && copyOfBookStatus == that.copyOfBookStatus && Objects.equals(book, that.book);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(inventoryId, receiptDate, bookIsbn, copyOfBookStatus);
+        return Objects.hash(inventoryId, receiptDate, bookIsbn, copyOfBookStatus, book);
     }
 
     @Override
     public String toString() {
-        return "CopyOfBook{" +
+        return "CopyOfBookDto{" +
                 "inventoryId=" + inventoryId +
                 ", receiptDate=" + receiptDate +
                 ", bookIsbn='" + bookIsbn + '\'' +
                 ", copyOfBookStatus=" + copyOfBookStatus +
+                ", book=" + book +
                 '}';
     }
 }

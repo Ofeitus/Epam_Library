@@ -82,6 +82,7 @@
             <tr>
                 <th scope="col"><fmt:message key="inventory-book.receipt-date" /></th>
                 <th scope="col"><fmt:message key="inventory-book.inventory-id" /></th>
+                <th scope="col"><fmt:message key="inventory-book.author" /></th>
                 <th scope="col"><fmt:message key="inventory-book.book-title" /></th>
                 <th scope="col"><fmt:message key="inventory-book.book-isbn" /></th>
                 <th scope="col"><fmt:message key="inventory-book.publication-year" /></th>
@@ -94,6 +95,14 @@
                 <tr>
                     <td>${copy_of_book.receiptDate}</td>
                     <td>${copy_of_book.inventoryId}</td>
+                    <td>
+                        <c:forEach items="${copy_of_book.book.authors}" var="author" varStatus="i">
+                            ${author.name}&nbsp;${author.surname}
+                            <c:if test="${i.index < copy_of_book.book.authors.size() - 1}">
+                                ,&nbsp;
+                            </c:if>
+                        </c:forEach>
+                    </td>
                     <td>${copy_of_book.book.title}</td>
                     <td>${copy_of_book.book.isbn}</td>
                     <td>${copy_of_book.book.publicationYear}</td>
@@ -131,13 +140,17 @@
 </body>
 
 <script>
+    let select = document.getElementById('method-select');
+    let subForms = document.getElementsByClassName('existing-book');
+    let arrivalCommand = document.getElementById('arrival-command');
+    let submitArrival = document.getElementById('submit-arrival');
+    subForms[0].setAttribute('style', 'display:none');
+    subForms[1].setAttribute('style', 'display:none');
+    arrivalCommand.setAttribute('value', 'write-in-copies-of-new-book');
+    submitArrival.innerHTML = "<fmt:message key="inventory-book.add-new-book" />";
+
     function changeMethod() {
-        let select = document.getElementById('method-select');
-        let selectedValue = select.options[select.selectedIndex].value;
-        let subForms = document.getElementsByClassName('existing-book');
-        let arrivalCommand = document.getElementById('arrival-command');
-        let submitArrival = document.getElementById('submit-arrival');
-        if (selectedValue === "existing-book") {
+        if (select.value === "existing-book") {
             subForms[0].setAttribute('style', 'display:inline-block');
             subForms[1].setAttribute('style', 'display:inline-block');
             arrivalCommand.setAttribute('value', 'write-in-copies-of-book');
