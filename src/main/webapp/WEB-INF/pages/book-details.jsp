@@ -22,10 +22,18 @@
         <img onerror="$(this).attr('src', '${pageContext.request.contextPath}/images/book-placeholder.png');" src="${pageContext.request.contextPath}/images/books/${requestScope.book.isbn}.jpg" alt="">
     </div>
     <div class="book-data">
-        <div style="display: flex">
+        <div style="display: flex;justify-content: space-between">
             <h3 class="book-title">${requestScope.book.title}</h3>
             <c:if test="${sessionScope.user_role == 'MANAGER'}">
-                <a class="edit-data-link" style="padding-top: 5px" href="?command=goto-edit-book-data-page&book-isbn=${requestScope.book.isbn}"><i class="bi bi-pencil-square"></i></a>
+                <div class="edit-book-data-links">
+                    <a class="edit-data-link" style="padding-top: 5px" href="?command=goto-edit-book-data-page&book-isbn=${requestScope.book.isbn}"><i class="bi bi-pencil-square"></i></a>
+                    <c:if test="${requestScope.copies_count > 0}">
+                        <a class="edit-data-link" title="<fmt:message key="book-details.cant-delete" />" style="padding-top: 5px;"><i class="bi bi-trash-fill"></i></a>
+                    </c:if>
+                    <c:if test="${requestScope.copies_count == 0}">
+                        <a class="edit-data-link" style="padding-top: 5px; color: firebrick" href="?command=delete-book&book-isbn=${requestScope.book.isbn}"><i class="bi bi-trash-fill"></i></a>
+                    </c:if>
+                </div>
             </c:if>
         </div>
         <table>

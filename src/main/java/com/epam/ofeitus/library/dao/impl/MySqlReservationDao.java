@@ -35,6 +35,11 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
             Table.RESERVATION_TABLE,
             Column.RESERVATION_USER_ID,
             Column.RESERVATION_DATE);
+    private static final String FIND_BY_INVENTORY_ID_QUERY = String.format(
+            "SELECT * FROM %s WHERE %s=? ORDER BY %s DESC",
+            Table.RESERVATION_TABLE,
+            Column.RESERVATION_INVENTORY_ID,
+            Column.RESERVATION_DATE);
     private static final String FIND_BY_STATUS_ID_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=?",
             Table.RESERVATION_TABLE,
@@ -87,6 +92,11 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
     @Override
     public List<Reservation> findByUserId(int userId) throws DaoException {
         return queryOperator.executeQuery(FIND_BY_USER_ID_QUERY, userId);
+    }
+
+    @Override
+    public List<Reservation> findByInventoryId(int inventoryId) throws DaoException {
+        return queryOperator.executeQuery(FIND_BY_INVENTORY_ID_QUERY, inventoryId);
     }
 
     @Override

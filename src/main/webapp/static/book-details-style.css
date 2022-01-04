@@ -28,6 +28,14 @@
     width: 100%;
 }
 
+.edit-book-data-links {
+    display: flex;
+    height: 75px;
+    width: 55px;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .details-container .book-data .form-container {
     margin-top: 20px;
 }

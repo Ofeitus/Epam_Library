@@ -192,6 +192,8 @@ public class BookServiceImpl implements BookService {
     public List<CopyOfBookDto> getAllCopiesOfBooks() throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         CopyOfBookDao copyOfBookDao = daoFactory.getCopyOfBookDao();
+        ReservationDao reservationDao = daoFactory.getReservationDao();
+        LoanDao loanDao = daoFactory.getLoanDao();
 
         try {
             List<CopyOfBook> copiesOfBooks = copyOfBookDao.findAllExisting();
@@ -203,7 +205,9 @@ public class BookServiceImpl implements BookService {
                                 copyOfBook.getReceiptDate(),
                                 copyOfBook.getBookIsbn(),
                                 copyOfBook.getCopyOfBookStatus(),
-                                bookDto
+                                bookDto,
+                                reservationDao.findByInventoryId(copyOfBook.getInventoryId()).size() == 0 &&
+                                        loanDao.findByInventoryId(copyOfBook.getInventoryId()).size() == 0
                         )
                 );
             }
@@ -217,6 +221,8 @@ public class BookServiceImpl implements BookService {
     public List<CopyOfBookDto> getCopiesOfBooksBySearchRequest(String bookIsbn, int inventoryId, int statusId) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         CopyOfBookDao copyOfBookDao = daoFactory.getCopyOfBookDao();
+        ReservationDao reservationDao = daoFactory.getReservationDao();
+        LoanDao loanDao = daoFactory.getLoanDao();
 
         try {
             List<CopyOfBook> copiesOfBooks = copyOfBookDao.findBySearchRequest(bookIsbn, inventoryId, statusId);
@@ -228,8 +234,9 @@ public class BookServiceImpl implements BookService {
                         copyOfBook.getReceiptDate(),
                         copyOfBook.getBookIsbn(),
                         copyOfBook.getCopyOfBookStatus(),
-                        bookDto
-                        )
+                        bookDto,
+                        reservationDao.findByInventoryId(copyOfBook.getInventoryId()).size() == 0 &&
+                                loanDao.findByInventoryId(copyOfBook.getInventoryId()).size() == 0)
                 );
             }
             return copiesOfBooksDto;
@@ -258,6 +265,16 @@ public class BookServiceImpl implements BookService {
         }
         try {
             copyOfBookDao.saveAll(copiesOfBook);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void deleteCopyOfBook(int inventoryId) throws ServiceException {
+        CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
+        try {
+            copyOfBookDao.deleteById(inventoryId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

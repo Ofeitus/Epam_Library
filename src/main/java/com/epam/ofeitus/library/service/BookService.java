@@ -33,4 +33,6 @@ public interface BookService {
     void writeOffCopyOfBook(int inventoryId) throws ServiceException;
 
     void addCopiesOfBook(String bookIsbn, int copiesCount) throws ServiceException;
+
+    void deleteCopyOfBook(int inventoryId) throws ServiceException;
 }

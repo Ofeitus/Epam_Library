@@ -11,16 +11,18 @@ public class CopyOfBookDto {
     private String bookIsbn;
     private CopyOfBookStatus copyOfBookStatus;
     private BookDto book;
+    private boolean canBeDeleted;
 
     public CopyOfBookDto() {
     }
 
-    public CopyOfBookDto(int inventoryId, Date receiptDate, String bookIsbn, CopyOfBookStatus copyOfBookStatus, BookDto book) {
+    public CopyOfBookDto(int inventoryId, Date receiptDate, String bookIsbn, CopyOfBookStatus copyOfBookStatus, BookDto book, boolean canBeDeleted) {
         this.inventoryId = inventoryId;
         this.receiptDate = receiptDate;
         this.bookIsbn = bookIsbn;
         this.copyOfBookStatus = copyOfBookStatus;
         this.book = book;
+        this.canBeDeleted = canBeDeleted;
     }
 
     public int getInventoryId() {
@@ -63,17 +65,25 @@ public class CopyOfBookDto {
         this.book = book;
     }
 
+    public boolean isCanBeDeleted() {
+        return canBeDeleted;
+    }
+
+    public void setCanBeDeleted(boolean canBeDeleted) {
+        this.canBeDeleted = canBeDeleted;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CopyOfBookDto that = (CopyOfBookDto) o;
-        return inventoryId == that.inventoryId && Objects.equals(receiptDate, that.receiptDate) && Objects.equals(bookIsbn, that.bookIsbn) && copyOfBookStatus == that.copyOfBookStatus && Objects.equals(book, that.book);
+        return inventoryId == that.inventoryId && canBeDeleted == that.canBeDeleted && Objects.equals(receiptDate, that.receiptDate) && Objects.equals(bookIsbn, that.bookIsbn) && copyOfBookStatus == that.copyOfBookStatus && Objects.equals(book, that.book);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(inventoryId, receiptDate, bookIsbn, copyOfBookStatus, book);
+        return Objects.hash(inventoryId, receiptDate, bookIsbn, copyOfBookStatus, book, canBeDeleted);
     }
 
     @Override
@@ -84,6 +94,7 @@ public class CopyOfBookDto {
                 ", bookIsbn='" + bookIsbn + '\'' +
                 ", copyOfBookStatus=" + copyOfBookStatus +
                 ", book=" + book +
+                ", canBeDeleted=" + canBeDeleted +
                 '}';
     }
 }

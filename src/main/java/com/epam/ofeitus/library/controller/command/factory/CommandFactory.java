@@ -40,6 +40,7 @@ public class CommandFactory {
         put(CommandName.WRITE_OFF_COPY_OF_BOOK_COMMAND, new WriteOffCopyOfBookCommand());
         put(CommandName.WRITE_IN_COPIES_OF_BOOK_COMMAND, new WriteInCopiesOfBookCommand());
         put(CommandName.WRITE_IN_COPIES_OF_NEW_BOOK_COMMAND, new WriteInCopiesOfNewBookCommand());
+        put(CommandName.DELETE_COPY_OF_BOOK_COMMAND, new DeleteCopyOfBookCommand());
     }};
 
     private CommandFactory() {

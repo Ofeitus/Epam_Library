@@ -4,9 +4,12 @@ import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.entity.order.Reservation;
 
 import java.util.List;
+import java.util.stream.DoubleStream;
 
 public interface ReservationDao extends AbstractDao<Reservation> {
     List<Reservation> findByUserId(int userId) throws DaoException;
+
+    List<Reservation> findByInventoryId(int inventoryId) throws DaoException;
 
     List<Reservation> findByStatusId(int statusId) throws DaoException;
 

@@ -87,7 +87,7 @@
                 <th scope="col"><fmt:message key="inventory-book.book-isbn" /></th>
                 <th scope="col"><fmt:message key="inventory-book.publication-year" /></th>
                 <th scope="col"><fmt:message key="inventory-book.status" /></th>
-                <th scope="col"><fmt:message key="inventory-book.write-off" /></th>
+                <th scope="col"><fmt:message key="inventory-book.delete" /></th>
             </tr>
             </thead>
             <tbody>
@@ -126,9 +126,12 @@
                         </c:choose>
                     ></i>${copy_of_book.copyOfBookStatus}</td>
                     <td style="text-align: center">
-                        <c:if test="${copy_of_book.copyOfBookStatus == 'AVAILABLE'}">
-                            <a href="?command=write-off-copy-of-book&inventory-id=${copy_of_book.inventoryId}">
-                                <i class="bi bi-pencil-fill" style="font-size: 20px;color: firebrick"></i></a>
+                        <c:if test="${copy_of_book.canBeDeleted}">
+                            <a href="?command=delete-copy-of-book&inventory-id=${copy_of_book.inventoryId}">
+                                <i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i></a>
+                        </c:if>
+                        <c:if test="${!copy_of_book.canBeDeleted}">
+                            <a title="<fmt:message key="inventory-book.cant-delete" />"><i class="bi bi-trash-fill" style="font-size: 20px;color: gray"></i></a>
                         </c:if>
                     </td>
                 </tr>

@@ -37,6 +37,11 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Table.LOAN_TABLE,
             Column.LOAN_USER_ID,
             Column.LOAN_ISSUE_DATE);
+    private static final String FIND_BY_INVENTORY_ID_QUERY = String.format(
+            "SELECT * FROM %s WHERE %s=? ORDER BY %s DESC",
+            Table.LOAN_TABLE,
+            Column.LOAN_INVENTORY_ID,
+            Column.LOAN_ISSUE_DATE);
     private static final String FIND_BY_STATUS_ID_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=? AND %s=?",
             Table.LOAN_TABLE,
@@ -92,6 +97,11 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
     @Override
     public List<Loan> findByUserId(int userId) throws DaoException {
         return queryOperator.executeQuery(FIND_BY_USER_ID_QUERY, userId);
+    }
+
+    @Override
+    public List<Loan> findByInventoryId(int inventoryId) throws DaoException {
+        return queryOperator.executeQuery(FIND_BY_INVENTORY_ID_QUERY, inventoryId);
     }
 
     @Override
