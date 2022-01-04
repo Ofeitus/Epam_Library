@@ -140,6 +140,20 @@ public class MySqlBookDao extends AbstractMySqlDao<Book> implements BookDao {
     }
 
     @Override
+    public int deleteByIsbn(String bookIsbn) throws DaoException {
+        List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
+        parametrizedQueries.add(new ParametrizedQuery(
+                DELETE_AUTHORS_TO_BOOK_QUERY,
+                bookIsbn
+        ));
+        parametrizedQueries.add(new ParametrizedQuery(
+                DELETE_BY_ID_QUERY,
+                bookIsbn
+        ));
+        return queryOperator.executeTransaction(parametrizedQueries);
+    }
+
+    @Override
     public Book findByIsbn(String isbn) throws DaoException {
         return queryOperator.executeSingleEntityQuery(FIND_BY_ISBN_QUERY, isbn);
     }

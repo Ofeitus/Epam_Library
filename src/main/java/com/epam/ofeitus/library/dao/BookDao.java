@@ -11,6 +11,8 @@ public interface BookDao extends AbstractDao<Book> {
 
     int update(Book entity, List<Author> authors) throws DaoException;
 
+    int deleteByIsbn(String bookIsbn) throws DaoException;
+
     Book findByIsbn(String isbn) throws DaoException;
 
     List<Book> findByTitle(String title) throws DaoException;

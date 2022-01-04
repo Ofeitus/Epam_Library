@@ -31,4 +31,5 @@ public class CommandName {
     public static final String GOTO_ADD_NEW_BOOK_PAGE_COMMAND = "goto-add-new-book-page";
     public static final String WRITE_IN_COPIES_OF_NEW_BOOK_COMMAND = "write-in-copies-of-new-book";
     public static final String DELETE_COPY_OF_BOOK_COMMAND = "delete-copy-of-book";
+    public static final String DELETE_BOOK_COMMAND = "delete-book";
 }

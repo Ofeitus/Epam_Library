@@ -189,6 +189,16 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public void deleteBook(String bookIsbn) throws ServiceException {
+        BookDao bookDao = MySqlDaoFactory.getInstance().getBookDao();
+        try {
+            bookDao.deleteByIsbn(bookIsbn);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public List<CopyOfBookDto> getAllCopiesOfBooks() throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         CopyOfBookDao copyOfBookDao = daoFactory.getCopyOfBookDao();
