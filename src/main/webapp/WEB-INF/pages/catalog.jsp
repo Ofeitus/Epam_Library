@@ -67,7 +67,7 @@
             <c:forEach items="${requestScope.books}" var="book">
                 <div class="book-item">
                     <a class="book-link" href="?command=goto-book-details-page&book-isbn=${book.isbn}"></a>
-                    <img src="${pageContext.request.contextPath}/images/books/${book.isbn}.jpg" alt="">
+                    <img onerror="$(this).attr('src', '${pageContext.request.contextPath}/images/book-placeholder.png');" src="${pageContext.request.contextPath}/images/books/${book.isbn}.jpg" alt="">
                     <a class="book-title">${book.title}</a>
                     <p class="book-authors">
                         <c:forEach items="${book.authors}" var="author">

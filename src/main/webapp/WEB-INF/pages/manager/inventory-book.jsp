@@ -44,7 +44,7 @@
         <div class="form-container" style="width: 49%">
             <h3 class="title"><fmt:message key="inventory-book.arrival" /></h3>
             <form class="form-horizontal" action="controller" method="get">
-                <input id="arrival-command" type="hidden" name="command" value="write-in-copies-of-new-book">
+                <input id="arrival-command" type="hidden" name="command" value="goto-add-new-book-page">
                 <div class="form-group" style="width: 100%">
                     <label><fmt:message key="inventory-book.write-in-method" /></label>
                     <select id="method-select" class="form-control" name="write-in-method" onchange="changeMethod()">
@@ -146,7 +146,7 @@
     let submitArrival = document.getElementById('submit-arrival');
     subForms[0].setAttribute('style', 'display:none');
     subForms[1].setAttribute('style', 'display:none');
-    arrivalCommand.setAttribute('value', 'write-in-copies-of-new-book');
+    arrivalCommand.setAttribute('value', 'goto-add-new-book-page');
     submitArrival.innerHTML = "<fmt:message key="inventory-book.add-new-book" />";
 
     function changeMethod() {
@@ -158,7 +158,7 @@
         } else {
             subForms[0].setAttribute('style', 'display:none');
             subForms[1].setAttribute('style', 'display:none');
-            arrivalCommand.setAttribute('value', 'write-in-copies-of-new-book');
+            arrivalCommand.setAttribute('value', 'goto-add-new-book-page');
             submitArrival.innerHTML = "<fmt:message key="inventory-book.add-new-book" />";
         }
     }

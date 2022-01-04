@@ -165,6 +165,30 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public int saveBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<Author> authors) throws ServiceException {
+        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
+        BookDao bookDao = daoFactory.getBookDao();
+        BookCategoryDao bookCategoryDao = daoFactory.getBookCategoryDao();
+        AuthorDao authorDao = daoFactory.getAuthorDao();
+
+        try {
+            int categoryId = bookCategoryDao.findByName(category).getCategoryId();
+            for (Author author : authors) {
+                Author authorInDb = authorDao.findByName(author.getName(), author.getSurname());
+                if (authorInDb == null) {
+                    authorDao.save(author);
+                    author.setAuthorId(authorDao.findByName(author.getName(), author.getSurname()).getAuthorId());
+                } else {
+                    author.setAuthorId(authorInDb.getAuthorId());
+                }
+            }
+            return bookDao.save(new Book(bookIsbn, title, publicationYear, categoryId, language, keyWords), authors);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public List<CopyOfBookDto> getAllCopiesOfBooks() throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         CopyOfBookDao copyOfBookDao = daoFactory.getCopyOfBookDao();

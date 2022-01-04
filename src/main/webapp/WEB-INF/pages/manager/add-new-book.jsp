@@ -7,7 +7,6 @@
 <html>
 <head>
     <jsp:include page="../tamplate/links.jsp" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title><fmt:message key="edit-book-data.edit-book-data" /></title>
 </head>
 <body>
@@ -18,7 +17,7 @@
             <div class="form-container">
                 <h3 class="title"><fmt:message key="add-new-book.add-new-book" /></h3>
                 <form class="form-horizontal" action="controller" method="get">
-                    <input type="hidden" name="command" value="add-new-book">
+                    <input type="hidden" name="command" value="write-in-copies-of-new-book">
                     <div class="form-group" style="width: 100%;">
                         <label><fmt:message key="edit-book-data.title" /></label>
                         <input type="text" name="title" value="" class="form-control"

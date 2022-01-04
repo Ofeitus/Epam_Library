@@ -9,6 +9,7 @@
     <jsp:include page="tamplate/links.jsp" />
     <title><fmt:message key="book-details.book-details" /></title>
 </head>
+
 <body>
 <jsp:include page="tamplate/header.jsp" />
 <style>
@@ -18,7 +19,7 @@
 </style>
 <div class="details-container">
     <div class="img-container">
-        <img src="${pageContext.request.contextPath}/images/books/${requestScope.book.isbn}.jpg" alt="">
+        <img onerror="$(this).attr('src', '${pageContext.request.contextPath}/images/book-placeholder.png');" src="${pageContext.request.contextPath}/images/books/${requestScope.book.isbn}.jpg" alt="">
     </div>
     <div class="book-data">
         <div style="display: flex">

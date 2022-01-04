@@ -7,7 +7,6 @@
 <html>
 <head>
     <jsp:include page="../tamplate/links.jsp" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title><fmt:message key="edit-book-data.edit-book-data" /></title>
 </head>
 <body>
