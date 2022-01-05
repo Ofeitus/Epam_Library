@@ -26,7 +26,7 @@ public class CommandName {
     public static final String EDIT_BOOK_DATA_COMMAND = "edit-book-data";
     public static final String GOTO_INVENTORY_BOOK_PAGE_COMMAND = "goto-inventory-book-page";
     public static final String SEARCH_COPIES_OF_BOOKS_COMMAND = "search-copies-of-books";
-    public static final String WRITE_OFF_COPY_OF_BOOK_COMMAND = "write-off-copy-of-book";
+    public static final String WRITE_OFF_COPIES_OF_BOOKS_COMMAND = "write-off-copies-of-books";
     public static final String WRITE_IN_COPIES_OF_BOOK_COMMAND = "write-in-copies-of-book";
     public static final String GOTO_ADD_NEW_BOOK_PAGE_COMMAND = "goto-add-new-book-page";
     public static final String WRITE_IN_COPIES_OF_NEW_BOOK_COMMAND = "write-in-copies-of-new-book";

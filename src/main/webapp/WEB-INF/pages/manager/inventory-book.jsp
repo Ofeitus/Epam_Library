@@ -12,10 +12,10 @@
 </head>
 <body>
 <jsp:include page="../tamplate/header.jsp" />
-<div class="catalog-container">
+<div class="inventory-book-container">
     <h2><fmt:message key="inventory-book.inventory-book" /></h2>
     <div class="inventory-book-forms">
-        <div class="form-container" style="width: 49%">
+        <div class="form-container" style="width: 35%">
             <h3 class="title"><fmt:message key="inventory-book.search-page" /></h3>
             <form class="form-horizontal" action="controller" method="get">
                 <input type="hidden" name="command" value="search-copies-of-books">
@@ -41,38 +41,55 @@
                 </div>
             </form>
         </div>
-        <div class="form-container" style="width: 49%">
-            <h3 class="title"><fmt:message key="inventory-book.arrival" /></h3>
-            <form class="form-horizontal" action="controller" method="get">
-                <input id="arrival-command" type="hidden" name="command" value="goto-add-new-book-page">
-                <div class="form-group" style="width: 100%">
-                    <label><fmt:message key="inventory-book.write-in-method" /></label>
-                    <select id="method-select" class="form-control" name="write-in-method" onchange="changeMethod()">
-                        <option value="existing-book"><fmt:message key="inventory-book.existing-book" /></option>
-                        <option value="new-book" selected><fmt:message key="inventory-book.new-book" /></option>
-                    </select>
-                </div>
-                <div class="form-group existing-book" style="display:none">
-                    <label><fmt:message key="inventory-book.book-isbn" /></label>
-                    <input id="existing-book-isbn" type="text" name="book-isbn" value="" class="form-control" placeholder="<fmt:message key="inventory-book.book-isbn-placeholder" />">
-                </div>
-                <div class="form-group existing-book" style="display:none">
-                    <label><fmt:message key="inventory-book.number-of-copies" /></label>
-                    <input id="number-of-copies" type="number" name="copies-count" value="0" class="form-control" placeholder="<fmt:message key="inventory-book.number-of-copies-placeholder" />">
-                </div>
-                <c:if test="${sessionScope.error != null}">
-                    <div class="w-100 row justify-content-left">
-                        <label id="write-in-error-message">${sessionScope.error}</label>
+        <div class="form-container" style="width: 63%">
+            <div style="display: flex">
+                <form style="width: 50%" class="form-horizontal" action="controller" method="get">
+                    <h3 class="title"><fmt:message key="inventory-book.arrival" /></h3>
+                    <input id="arrival-command" type="hidden" name="command" value="write-in-copies-of-book">
+                    <div class="form-group" style="width: 100%">
+                        <label><fmt:message key="inventory-book.write-in-method" /></label>
+                        <select id="method-select" class="form-control" name="write-in-method" onchange="changeMethod()">
+                            <option value="existing-book" selected><fmt:message key="inventory-book.existing-book" /></option>
+                            <option value="new-book"><fmt:message key="inventory-book.new-book" /></option>
+                        </select>
                     </div>
-                </c:if>
-                <div class="w-100 row justify-content-end search-buttons">
-                    <button type="submit" id="submit-arrival" class="h-50 col-3 btn submit"><fmt:message key="inventory-book.add-new-book" /></button>
-                </div>
-            </form>
+                    <div class="form-group existing-book">
+                        <label><fmt:message key="inventory-book.book-isbn" /></label>
+                        <input id="existing-book-isbn" type="text" name="book-isbn" value="" class="form-control" placeholder="<fmt:message key="inventory-book.book-isbn-placeholder" />">
+                    </div>
+                    <div class="form-group existing-book">
+                        <label><fmt:message key="inventory-book.number-of-copies" /></label>
+                        <input id="number-of-copies" type="number" name="copies-count" value="0" class="form-control" placeholder="<fmt:message key="inventory-book.number-of-copies-placeholder" />">
+                    </div>
+                    <c:if test="${sessionScope.error != null}">
+                        <div class="w-100 row justify-content-left">
+                            <label id="write-in-error-message">${sessionScope.error}</label>
+                        </div>
+                    </c:if>
+                    <div class="w-100 row justify-content-end search-buttons">
+                        <button type="submit" id="submit-arrival" class="h-50 col-4 btn submit"><fmt:message key="inventory-book.write-in" /></button>
+                    </div>
+                </form>
+                <form style="width: 50%" class="form-horizontal" action="controller" method="get">
+                    <h3 class="title"><fmt:message key="inventory-book.writing-off" /></h3>
+                    <input type="hidden" name="command" value="write-off-copies-of-books">
+                    <div class="form-group">
+                        <label><fmt:message key="inventory-book.from-inv-id" /></label>
+                        <input type="number" name="from-inventory-id" value="0" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label><fmt:message key="inventory-book.to-inv-id" /></label>
+                        <input type="number" name="to-inventory-id" value="0" class="form-control" required>
+                    </div>
+                    <div class="w-100 row justify-content-end search-buttons">
+                        <button type="submit" id="submit-writing-off" class="h-50 col-4 btn submit"><fmt:message key="inventory-book.write-off" /></button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
-<div class="table-container" style="margin-top: 0">
+<div class="table-container" style="margin: 0 10%;">
     <c:if test="${requestScope.copies_of_books.size() == 0}">
         <h3><fmt:message key="inventory-book.no-search-results" /></h3>
     </c:if>
@@ -147,10 +164,8 @@
     let subForms = document.getElementsByClassName('existing-book');
     let arrivalCommand = document.getElementById('arrival-command');
     let submitArrival = document.getElementById('submit-arrival');
-    subForms[0].setAttribute('style', 'display:none');
-    subForms[1].setAttribute('style', 'display:none');
-    arrivalCommand.setAttribute('value', 'goto-add-new-book-page');
-    submitArrival.innerHTML = "<fmt:message key="inventory-book.add-new-book" />";
+    arrivalCommand.setAttribute('value', 'write-in-copies-of-book');
+    submitArrival.innerHTML = "<fmt:message key="inventory-book.write-in" />";
 
     function changeMethod() {
         if (select.value === "existing-book") {

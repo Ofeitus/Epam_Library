@@ -18,3 +18,4 @@
 <link rel="stylesheet" href="static/navbar-style.css">
 <link rel="stylesheet" href="static/table-style.css">
 <link rel="stylesheet" href="static/profile-style.css">
+<link rel="stylesheet" href="static/inventory-book-style.css">

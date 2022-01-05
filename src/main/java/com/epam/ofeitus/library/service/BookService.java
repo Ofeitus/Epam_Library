@@ -1,7 +1,6 @@
 package com.epam.ofeitus.library.service;
 
 import com.epam.ofeitus.library.entity.book.Author;
-import com.epam.ofeitus.library.entity.book.CopyOfBook;
 import com.epam.ofeitus.library.entity.book.constituent.BookCategory;
 import com.epam.ofeitus.library.entity.dto.BookDto;
 import com.epam.ofeitus.library.entity.dto.CopyOfBookDto;
@@ -32,7 +31,7 @@ public interface BookService {
 
     List<CopyOfBookDto> getCopiesOfBooksBySearchRequest(String bookIsbn, int inventoryId, int statusId) throws ServiceException;
 
-    void writeOffCopyOfBook(int inventoryId) throws ServiceException;
+    void writeOffCopiesOfBooks(int fromInventoryId, int toInventoryId) throws ServiceException;
 
     void addCopiesOfBook(String bookIsbn, int copiesCount) throws ServiceException;
 

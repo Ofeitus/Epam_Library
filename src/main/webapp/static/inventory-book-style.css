@@ -1,0 +1,14 @@
+.inventory-book-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 10%;
+}
+
+.inventory-book-container h2 {
+    margin: 25px 0;
+}
+
+.inventory-book-container .form-container {
+    margin: 20px 0;
+}

@@ -256,11 +256,19 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void writeOffCopyOfBook(int inventoryId) throws ServiceException {
+    public void writeOffCopiesOfBooks(int fromInventoryId, int toInventoryId) throws ServiceException {
         CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
 
         try {
-            copyOfBookDao.updateStatus(inventoryId, CopyOfBookStatus.WRITTEN_OFF.ordinal() + 1);
+            if (fromInventoryId != 0 && toInventoryId == 0) {
+                copyOfBookDao.updateStatus(fromInventoryId, CopyOfBookStatus.WRITTEN_OFF.ordinal() + 1);
+            } else if (fromInventoryId == 0 && toInventoryId != 0) {
+                copyOfBookDao.updateStatus(toInventoryId, CopyOfBookStatus.WRITTEN_OFF.ordinal() + 1);
+            } else if (fromInventoryId != 0 && toInventoryId != 0 && fromInventoryId <= toInventoryId) {
+                for (int i = fromInventoryId; i <= toInventoryId; i++) {
+                    copyOfBookDao.updateStatus(i, CopyOfBookStatus.WRITTEN_OFF.ordinal() + 1);
+                }
+            }
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

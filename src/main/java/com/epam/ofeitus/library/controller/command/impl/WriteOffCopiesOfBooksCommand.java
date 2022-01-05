@@ -14,20 +14,21 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class WriteOffCopyOfBookCommand implements Command {
-    Logger logger = LogManager.getLogger(WriteOffCopyOfBookCommand.class);
+public class WriteOffCopiesOfBooksCommand implements Command {
+    Logger logger = LogManager.getLogger(WriteOffCopiesOfBooksCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         BookService bookService = ServiceFactory.getInstance().getBookService();
 
-        int inventoryId = Integer.parseInt(request.getParameter(RequestParameter.INVENTORY_ID));
+        int fromInventoryId = Integer.parseInt(request.getParameter(RequestParameter.FROM_INVENTORY_ID));
+        int toInventoryId = Integer.parseInt(request.getParameter(RequestParameter.TO_INVENTORY_ID));
 
         try {
-            bookService.writeOffCopyOfBook(inventoryId);
+            bookService.writeOffCopiesOfBooks(fromInventoryId, toInventoryId);
             return new CommandResult("/controller?command=goto-inventory-book-page", RoutingType.REDIRECT);
         } catch (ServiceException e) {
-            logger.error("Unable to write off copy of book.", e);
+            logger.error("Unable to write off copies of books.", e);
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
     }
