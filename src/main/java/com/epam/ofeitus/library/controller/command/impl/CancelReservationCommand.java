@@ -8,6 +8,7 @@ import com.epam.ofeitus.library.controller.constant.RequestAttribute;
 import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.entity.dto.ReservationDto;
+import com.epam.ofeitus.library.entity.order.Reservation;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.ReservationsService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
@@ -25,14 +26,15 @@ public class CancelReservationCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-user-reservations-page");
 
         ReservationsService reservationsService = ServiceFactory.getInstance().getReservationsService();
 
         int reservationId = Integer.parseInt(request.getParameter(RequestParameter.RESERVATION_ID));
         try {
+            Reservation reservation = reservationsService.getByReservationId(reservationId);
+            session.setAttribute(SessionAttribute.URL, "/controller?command=goto-user-reservations-page&user-id=" + reservation.getUserId());
             reservationsService.cancelReservation(reservationId);
-            return new CommandResult("/controller?command=goto-user-reservations-page", RoutingType.REDIRECT);
+            return new CommandResult("/controller?command=goto-user-reservations-page&user-id=" + reservation.getUserId(), RoutingType.REDIRECT);
         } catch (ServiceException e) {
             logger.error("Unable to cancel reservation.", e);
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);

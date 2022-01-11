@@ -41,6 +41,7 @@ public class GoToUserFinesPageCommand implements Command {
         try {
             List<LoanDto> fines = loansService.getLoansDtoByUserIdWithFine(userId);
             request.setAttribute(RequestAttribute.FINES, fines);
+            request.setAttribute(RequestAttribute.USER_ID, userId);
             return new CommandResult(Page.USER_FINES_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Unable to get user loans (fines) DTO", e);

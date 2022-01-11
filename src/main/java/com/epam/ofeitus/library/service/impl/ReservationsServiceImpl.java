@@ -83,4 +83,15 @@ public class ReservationsServiceImpl implements ReservationsService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public Reservation getByReservationId(int reservationId) throws ServiceException {
+        ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
+
+        try {
+            return reservationDao.findById(reservationId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

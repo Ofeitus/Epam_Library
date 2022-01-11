@@ -70,6 +70,7 @@
                         <button type="submit" id="submit-arrival" class="h-50 col-4 btn submit"><fmt:message key="inventory-book.write-in" /></button>
                     </div>
                 </form>
+                <div style="margin: 10px"></div>
                 <form style="width: 50%" class="form-horizontal" action="controller" method="get">
                     <h3 class="title"><fmt:message key="inventory-book.writing-off" /></h3>
                     <input type="hidden" name="command" value="write-off-copies-of-books">

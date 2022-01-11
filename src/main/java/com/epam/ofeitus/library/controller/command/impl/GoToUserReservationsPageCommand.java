@@ -41,6 +41,7 @@ public class GoToUserReservationsPageCommand implements Command {
         try {
             List<ReservationDto> reservations = reservationsService.getReservationsDtoByUserId(userId);
             request.setAttribute(RequestAttribute.RESERVATIONS, reservations);
+            request.setAttribute(RequestAttribute.USER_ID, userId);
             return new CommandResult(Page.USER_RESERVATIONS_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Unable to get user reservations DTO", e);

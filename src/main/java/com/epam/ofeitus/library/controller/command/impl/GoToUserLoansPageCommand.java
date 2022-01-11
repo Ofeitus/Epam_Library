@@ -41,6 +41,7 @@ public class GoToUserLoansPageCommand implements Command {
         try {
             List<LoanDto> loans = loansService.getLoansDtoByUserId(userId);
             request.setAttribute(RequestAttribute.LOANS, loans);
+            request.setAttribute(RequestAttribute.USER_ID, userId);
             return new CommandResult(Page.USER_LOANS_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Unable to get user loans DTO", e);

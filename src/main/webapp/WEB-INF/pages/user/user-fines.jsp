@@ -13,10 +13,22 @@
 <jsp:include page="../tamplate/header.jsp" />
 <div class="table-container">
     <c:if test="${requestScope.fines.size() == 0}">
-        <h3><fmt:message key="user-fines.empty-user-fines" /></h3>
+        <h3>
+            <c:if test="${sessionScope.user_role == 'MANAGER'}">
+                <a href="?command=goto-profile-page&user-id=${requestScope.user_id}">
+                    <fmt:message key="user-reservations.member" />&nbsp;(id: ${requestScope.user_id})</a>&nbsp;-&nbsp;
+            </c:if>
+            <fmt:message key="user-fines.empty-user-fines" />
+        </h3>
     </c:if>
     <c:if test="${requestScope.fines.size() > 0}">
-        <h3><fmt:message key="user-fines.fines" /></h3>
+        <h3>
+            <c:if test="${sessionScope.user_role == 'MANAGER'}">
+                <a href="?command=goto-profile-page&user-id=${requestScope.user_id}">
+                    <fmt:message key="user-reservations.member" />&nbsp;(id: ${requestScope.user_id})</a>&nbsp;-&nbsp;
+            </c:if>
+            <fmt:message key="user-fines.fines" />
+        </h3>
         <table class="table table-bordered table-striped">
             <thead>
             <tr>
