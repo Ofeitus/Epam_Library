@@ -28,12 +28,12 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label><fmt:message key="inventory-book.book-isbn" /></label>
-                    <input type="text" name="book-isbn" value="" class="form-control" placeholder="<fmt:message key="inventory-book.book-isbn-placeholder" />">
-                </div>
-                <div class="form-group">
                     <label><fmt:message key="inventory-book.inventory-id" /></label>
                     <input type="number" name="inventory-id" value="0" class="form-control" placeholder="<fmt:message key="inventory-book.inventory-id-placeholder" />">
+                </div>
+                <div class="form-group">
+                    <label><fmt:message key="inventory-book.book-isbn" /></label>
+                    <input type="text" name="book-isbn" value="" class="form-control" placeholder="<fmt:message key="inventory-book.book-isbn-placeholder" />">
                 </div>
                 <div class="w-100 row justify-content-between search-buttons">
                     <button type="reset" class="h-50 col-3 btn reset"><fmt:message key="inventory-book.clear" /></button>
@@ -90,7 +90,7 @@
         </div>
     </div>
 </div>
-<div class="table-container" style="margin: 0 10%;">
+<div class="table-container" style="margin: 0 10% 50px 10%">
     <c:if test="${requestScope.copies_of_books.size() == 0}">
         <h3><fmt:message key="inventory-book.no-search-results" /></h3>
     </c:if>

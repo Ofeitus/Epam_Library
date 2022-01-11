@@ -1,0 +1,14 @@
+.manage-members-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 15%;
+}
+
+.manage-members-container h2 {
+    margin: 25px 0;
+}
+
+.manage-members-container .form-container {
+    margin: 20px 0;
+}

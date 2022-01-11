@@ -11,7 +11,28 @@
 </head>
 <body>
 <jsp:include page="../tamplate/header.jsp" />
-<div class="table-container">
+<div class="manage-members-container">
+    <h2><fmt:message key="manage-members.manage-members" /></h2>
+    <div class="form-container">
+        <h3 class="title"><fmt:message key="inventory-book.search-page" /></h3>
+        <form class="form-horizontal" action="controller" method="get">
+            <input type="hidden" name="command" value="search-members">
+            <div class="form-group">
+                <label><fmt:message key="manage-users.id" /></label>
+                <input type="number" name="user-id" value="0" class="form-control" placeholder="<fmt:message key="manage-users.id" />">
+            </div>
+            <div class="form-group">
+                <label><fmt:message key="manage-users.email" /></label>
+                <input type="text" name="email" value="" class="form-control" placeholder="<fmt:message key="manage-users.email-placeholder" />">
+            </div>
+            <div class="w-100 row justify-content-between search-buttons">
+                <button type="reset" class="h-50 col-3 btn reset"><fmt:message key="inventory-book.clear" /></button>
+                <button type="submit" class="h-50 col-3 btn submit"><fmt:message key="inventory-book.search" /></button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="table-container" style="margin-top: 0">
     <h3><fmt:message key="manage-members.members" /></h3>
     <table class="table table-bordered table-striped">
         <thead>
