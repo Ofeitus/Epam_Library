@@ -94,7 +94,7 @@
         <h3><fmt:message key="inventory-book.no-search-results" /></h3>
     </c:if>
     <c:if test="${requestScope.copies_of_books.size() > 0}">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-striped">
             <thead>
             <tr>
                 <th scope="col"><fmt:message key="inventory-book.receipt-date" /></th>

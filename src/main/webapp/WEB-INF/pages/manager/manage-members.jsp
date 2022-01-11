@@ -7,12 +7,12 @@
 <html>
 <head>
     <jsp:include page="../tamplate/links.jsp" />
-    <title><fmt:message key="manage-users.manage-users" /></title>
+    <title><fmt:message key="manage-members.manage-members" /></title>
 </head>
 <body>
 <jsp:include page="../tamplate/header.jsp" />
 <div class="table-container">
-    <h3><fmt:message key="manage-users.registered-users" /></h3>
+    <h3><fmt:message key="manage-members.members" /></h3>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -21,7 +21,7 @@
             <th scope="col"><fmt:message key="manage-users.surname" /></th>
             <th scope="col"><fmt:message key="manage-users.phone-number" /></th>
             <th scope="col"><fmt:message key="manage-users.email" /></th>
-            <th scope="col"><fmt:message key="manage-users.role" /></th>
+            <th scope="col"><fmt:message key="manage-members.profile" /></th>
         </tr>
         </thead>
         <tbody>
@@ -32,7 +32,8 @@
                 <td>${user.surname}</td>
                 <td>${user.phoneNumber}</td>
                 <td>${user.email}</td>
-                <td>${user.userRole.toString()}</td>
+                <td><a href="?command=goto-profile-page&user-id=${user.userId}">
+                    <i class="bi bi-person-circle" style="font-size: 18px"></i><fmt:message key="header.member-profile" /></a></td>
             </tr>
         </c:forEach>
         </tbody>

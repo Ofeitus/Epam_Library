@@ -17,7 +17,7 @@
     </c:if>
     <c:if test="${requestScope.reservations.size() > 0}">
         <h3><fmt:message key="user-reservations.reservations" /></h3>
-        <table class="table table-bordered">
+        <table class="table table-bordered table-striped">
             <thead>
             <tr>
                 <th scope="col"><fmt:message key="user-reservations.id" /></th>

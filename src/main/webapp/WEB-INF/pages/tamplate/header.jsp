@@ -69,7 +69,7 @@
                         <a href="?command=goto-profile-page"><fmt:message key="header.manager-profile" /></a>
                         <hr>
                         <a href="?command=goto-inventory-book-page"><fmt:message key="header.inventory-book" /></a>
-                        <a href="#"><fmt:message key="header.manage-members" /></a>
+                        <a href="?command=goto-manage-members-page"><fmt:message key="header.manage-members" /></a>
                     </c:if>
                     <c:if test="${sessionScope.user_role.toString() == 'ADMIN'}">
                         <a href="?command=goto-profile-page"><fmt:message key="header.admin-profile" /></a>

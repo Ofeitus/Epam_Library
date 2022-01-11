@@ -74,4 +74,14 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public List<User> getAllMembers() throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+        try {
+            return userDao.findByRoleId(UserRole.MEMBER.ordinal() + 1);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

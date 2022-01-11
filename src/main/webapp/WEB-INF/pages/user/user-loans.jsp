@@ -18,7 +18,7 @@
     </c:if>
     <c:if test="${requestScope.loans.size() > 0}">
         <h3><fmt:message key="user-loans.loan" /></h3>
-        <table class="table table-bordered">
+        <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th scope="col" rowspan="2"><fmt:message key="user-loans.id" /></th>

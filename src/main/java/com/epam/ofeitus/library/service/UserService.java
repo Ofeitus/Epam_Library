@@ -15,4 +15,6 @@ public interface UserService {
     User getByEmail(String email) throws ServiceException;
 
     int editPersonalData(int id, String name, String surname, String phoneNumber) throws ServiceException;
+
+    List<User> getAllMembers() throws ServiceException;
 }
