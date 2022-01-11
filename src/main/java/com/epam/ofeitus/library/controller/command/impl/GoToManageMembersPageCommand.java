@@ -32,7 +32,7 @@ public class GoToManageMembersPageCommand implements Command {
             request.setAttribute(RequestAttribute.USERS, users);
             return new CommandResult(Page.MANAGE_MEMBERS_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
-            logger.error("Unable to get all members DTO", e);
+            logger.error("Unable to get all members", e);
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
     }

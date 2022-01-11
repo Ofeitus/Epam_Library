@@ -84,4 +84,14 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public User getByUserId(int userId) throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+        try {
+            return userDao.findById(userId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

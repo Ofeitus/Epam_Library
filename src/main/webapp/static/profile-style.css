@@ -38,11 +38,14 @@
     font-size: 64px;
 }
 
-.profile-container .personal-data .email {
+.profile-container .personal-data .personal-data-name {
+    height: 30px;
+    color: #888888;
     font-size: 20px;
 }
 
-.profile-container .personal-data .phone-number {
+.profile-container .personal-data .personal-data-value {
+    height: 30px;
     font-size: 20px;
 }
 

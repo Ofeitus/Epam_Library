@@ -25,4 +25,5 @@ public class RequestParameter {
     public static final String TO_INVENTORY_ID = "to-inventory-id";
     public static final String STATUS = "status";
     public static final String COPIES_COUNT = "copies-count";
+    public static final String USER_ID = "user-id";
 }

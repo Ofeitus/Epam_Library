@@ -5,8 +5,10 @@ import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
 import com.epam.ofeitus.library.controller.constant.RequestAttribute;
+import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.entity.dto.ReservationDto;
+import com.epam.ofeitus.library.entity.user.constituent.UserRole;
 import com.epam.ofeitus.library.service.ReservationsService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 import com.epam.ofeitus.library.service.factory.ServiceFactory;
@@ -24,11 +26,20 @@ public class GoToUserReservationsPageCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-user-reservations-page");
+
+        int userId = (int) session.getAttribute(SessionAttribute.USER_ID);
+
+        String requestUserId = request.getParameter(RequestParameter.USER_ID);
+
+        if (session.getAttribute(SessionAttribute.USER_ROLE) == UserRole.MANAGER && requestUserId != null) {
+            userId = Integer.parseInt(requestUserId);
+        }
+
+        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-user-reservations-page&user-id=" + userId);
 
         ReservationsService reservationsService = ServiceFactory.getInstance().getReservationsService();
         try {
-            List<ReservationDto> reservations = reservationsService.getReservationsDtoByUserId((int)session.getAttribute(SessionAttribute.USER_ID));
+            List<ReservationDto> reservations = reservationsService.getReservationsDtoByUserId(userId);
             request.setAttribute(RequestAttribute.RESERVATIONS, reservations);
             return new CommandResult(Page.USER_RESERVATIONS_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
