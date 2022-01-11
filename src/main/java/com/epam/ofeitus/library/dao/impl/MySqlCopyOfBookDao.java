@@ -105,26 +105,21 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
     public List<CopyOfBook> findBySearchRequest(String bookIsbn, int inventoryId, int statusId) throws DaoException {
         List<Object> parameters = new ArrayList<>();
 
-        String FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY = String.format(
-                "SELECT * FROM %s JOIN %s b on b.%s = %s.%s ",
-                Table.COPY_OF_BOOK_TABLE,
-                Table.BOOK_TABLE,
-                Column.BOOK_ISBN,
-                Table.COPY_OF_BOOK_TABLE,
-                Column.COPY_OF_BOOK_ISBN);
+        String FIND_BY_SEARCH_REQUEST_QUERY = String.format(
+                "SELECT * FROM %s ",
+                Table.COPY_OF_BOOK_TABLE);
 
         if (!bookIsbn.equals("")) {
-            FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY += String.format(
-                    "WHERE %s.%s=? ",
-                    Table.COPY_OF_BOOK_TABLE,
+            FIND_BY_SEARCH_REQUEST_QUERY += String.format(
+                    "WHERE %s=? ",
                     Column.COPY_OF_BOOK_ISBN);
             parameters.add(bookIsbn);
         } else {
-            FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY += "WHERE 1=1 ";
+            FIND_BY_SEARCH_REQUEST_QUERY += "WHERE 1=1 ";
         }
 
         if (inventoryId != 0) {
-            FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY += String.format(
+            FIND_BY_SEARCH_REQUEST_QUERY += String.format(
                     "AND %s=? ",
                     Column.COPY_OF_BOOK_INVENTORY_ID);
             parameters.add(inventoryId);
@@ -132,25 +127,25 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
 
         if (statusId != 0) {
             if (statusId == 5) {
-                FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY += String.format(
+                FIND_BY_SEARCH_REQUEST_QUERY += String.format(
                         "AND %s=? ",
                         Column.COPY_OF_BOOK_STATUS_ID);
                 parameters.add(statusId);
             } else {
-                FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY += String.format(
+                FIND_BY_SEARCH_REQUEST_QUERY += String.format(
                         "AND %s!=? ",
                         Column.COPY_OF_BOOK_STATUS_ID);
                 parameters.add(-statusId);
             }
         }
 
-        FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY += String.format(
+        FIND_BY_SEARCH_REQUEST_QUERY += String.format(
                 "ORDER BY %s",
                 Column.COPY_OF_BOOK_INVENTORY_ID
         );
 
         return queryOperator.executeQuery(
-                FIND_BY_SEARCH_REQUEST_WITH_BOOK_QUERY,
+                FIND_BY_SEARCH_REQUEST_QUERY,
                 parameters.toArray()
         );
     }

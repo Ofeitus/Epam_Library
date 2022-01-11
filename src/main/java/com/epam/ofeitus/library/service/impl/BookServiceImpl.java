@@ -11,12 +11,17 @@ import com.epam.ofeitus.library.entity.book.constituent.BookCategory;
 import com.epam.ofeitus.library.entity.book.constituent.CopyOfBookStatus;
 import com.epam.ofeitus.library.entity.dto.BookDto;
 import com.epam.ofeitus.library.entity.dto.CopyOfBookDto;
+import com.epam.ofeitus.library.entity.order.Loan;
+import com.epam.ofeitus.library.entity.order.Reservation;
+import com.epam.ofeitus.library.entity.order.constiuent.LoanStatus;
+import com.epam.ofeitus.library.entity.order.constiuent.ReservationStatus;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class BookServiceImpl implements BookService {
 
@@ -209,15 +214,26 @@ public class BookServiceImpl implements BookService {
             List<CopyOfBook> copiesOfBooks = copyOfBookDao.findAllExisting();
             List<CopyOfBookDto> copiesOfBooksDto = new ArrayList<>();
             for (CopyOfBook copyOfBook : copiesOfBooks) {
+                int userId = 0;
                 BookDto bookDto = getBookDtoByIsbn(copyOfBook.getBookIsbn());
+                List<Reservation> reservations = reservationDao.findByInventoryId(copyOfBook.getInventoryId());
+                Optional<Reservation> activeReservation = reservations.stream().filter(x -> x.getReservationStatus() != ReservationStatus.ISSUED).findFirst();
+                if (activeReservation.isPresent()) {
+                    userId = activeReservation.get().getUserId();
+                }
+                List<Loan> loans = loanDao.findByInventoryId(copyOfBook.getInventoryId());
+                Optional<Loan> activeLoan = loans.stream().filter(x -> x.getLoanStatus() == LoanStatus.ISSUED).findFirst();
+                if (activeLoan.isPresent()) {
+                    userId = activeLoan.get().getUserId();
+                }
                 copiesOfBooksDto.add(new CopyOfBookDto(
                                 copyOfBook.getInventoryId(),
                                 copyOfBook.getReceiptDate(),
                                 copyOfBook.getBookIsbn(),
                                 copyOfBook.getCopyOfBookStatus(),
                                 bookDto,
-                                reservationDao.findByInventoryId(copyOfBook.getInventoryId()).size() == 0 &&
-                                        loanDao.findByInventoryId(copyOfBook.getInventoryId()).size() == 0
+                                userId,
+                        reservations.size() == 0 && loans.size() == 0
                         )
                 );
             }
@@ -238,13 +254,25 @@ public class BookServiceImpl implements BookService {
             List<CopyOfBook> copiesOfBooks = copyOfBookDao.findBySearchRequest(bookIsbn, inventoryId, statusId);
             List<CopyOfBookDto> copiesOfBooksDto = new ArrayList<>();
             for (CopyOfBook copyOfBook : copiesOfBooks) {
+                int userId = 0;
                 BookDto bookDto = getBookDtoByIsbn(copyOfBook.getBookIsbn());
+                List<Reservation> reservations = reservationDao.findByInventoryId(copyOfBook.getInventoryId());
+                Optional<Reservation> activeReservation = reservations.stream().filter(x -> x.getReservationStatus() != ReservationStatus.ISSUED).findFirst();
+                if (activeReservation.isPresent()) {
+                    userId = activeReservation.get().getUserId();
+                }
+                List<Loan> loans = loanDao.findByInventoryId(copyOfBook.getInventoryId());
+                Optional<Loan> activeLoan = loans.stream().filter(x -> x.getLoanStatus() != LoanStatus.ISSUED).findFirst();
+                if (activeLoan.isPresent()) {
+                    userId = activeLoan.get().getUserId();
+                }
                 copiesOfBooksDto.add(new CopyOfBookDto(
                         copyOfBook.getInventoryId(),
                         copyOfBook.getReceiptDate(),
                         copyOfBook.getBookIsbn(),
                         copyOfBook.getCopyOfBookStatus(),
                         bookDto,
+                        userId,
                         reservationDao.findByInventoryId(copyOfBook.getInventoryId()).size() == 0 &&
                                 loanDao.findByInventoryId(copyOfBook.getInventoryId()).size() == 0)
                 );

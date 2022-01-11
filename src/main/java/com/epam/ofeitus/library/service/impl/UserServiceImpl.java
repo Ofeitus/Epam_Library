@@ -94,4 +94,14 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public List<User> getMemberBySearchRequest(int userId, String email) throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+        try {
+            return userDao.findBySearchRequest(userId, email);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

@@ -10,4 +10,6 @@ public interface UserDao extends AbstractDao<User> {
     User findByEmail(String email) throws DaoException;
 
     List<User> findByRoleId(int roleId) throws DaoException;
+
+    List<User> findBySearchRequest(int userId, String email) throws DaoException;
 }

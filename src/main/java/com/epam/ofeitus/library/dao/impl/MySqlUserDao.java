@@ -7,6 +7,7 @@ import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
 import com.epam.ofeitus.library.entity.user.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
@@ -96,6 +97,40 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
     @Override
     public List<User> findByRoleId(int roleId) throws DaoException {
         return queryOperator.executeQuery(FIND_BY_ROLE_ID_QUERY, roleId);
+    }
+
+    @Override
+    public List<User> findBySearchRequest(int userId, String email) throws DaoException {
+        List<Object> parameters = new ArrayList<>();
+
+        String FIND_BY_SEARCH_REQUEST_QUERY = String.format(
+                "SELECT * FROM %s WHERE %s='3' ",
+                Table.USER_TABLE,
+                Column.USER_ROLE_ID);
+
+        if (!email.equals("")) {
+            FIND_BY_SEARCH_REQUEST_QUERY += String.format(
+                    "AND %s=? ",
+                    Column.USER_EMAIL);
+            parameters.add(email);
+        }
+
+        if (userId != 0) {
+            FIND_BY_SEARCH_REQUEST_QUERY += String.format(
+                    "AND %s=? ",
+                    Column.USER_ID);
+            parameters.add(userId);
+        }
+
+        FIND_BY_SEARCH_REQUEST_QUERY += String.format(
+                "ORDER BY %s",
+                Column.USER_ID
+        );
+
+        return queryOperator.executeQuery(
+                FIND_BY_SEARCH_REQUEST_QUERY,
+                parameters.toArray()
+        );
     }
 
     @Override

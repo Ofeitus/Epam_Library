@@ -19,4 +19,6 @@ public interface UserService {
     List<User> getAllMembers() throws ServiceException;
 
     User getByUserId(int userId) throws ServiceException;
+
+    List<User> getMemberBySearchRequest(int userId, String email) throws ServiceException;
 }

@@ -19,15 +19,15 @@
             <input type="hidden" name="command" value="search-members">
             <div class="form-group">
                 <label><fmt:message key="manage-users.id" /></label>
-                <input type="number" name="user-id" value="0" class="form-control" placeholder="<fmt:message key="manage-users.id" />">
+                <input type="number" name="user-id" value="0" class="form-control" required placeholder="<fmt:message key="manage-users.id" />">
             </div>
             <div class="form-group">
                 <label><fmt:message key="manage-users.email" /></label>
                 <input type="text" name="email" value="" class="form-control" placeholder="<fmt:message key="manage-users.email-placeholder" />">
             </div>
             <div class="w-100 row justify-content-between search-buttons">
-                <button type="reset" class="h-50 col-3 btn reset"><fmt:message key="inventory-book.clear" /></button>
-                <button type="submit" class="h-50 col-3 btn submit"><fmt:message key="inventory-book.search" /></button>
+                <button type="reset" class="h-50 col-2 btn reset"><fmt:message key="inventory-book.clear" /></button>
+                <button type="submit" class="h-50 col-2 btn submit"><fmt:message key="inventory-book.search" /></button>
             </div>
         </form>
     </div>

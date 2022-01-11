@@ -27,7 +27,7 @@ public class SearchCopiesOfBooksCommand implements Command {
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
-        BookService bookService = ServiceFactory.getInstance().getBookService();
+        HttpSession session = request.getSession();
 
         String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
         int inventoryId = Integer.parseInt(request.getParameter(RequestParameter.INVENTORY_ID));
@@ -44,14 +44,13 @@ public class SearchCopiesOfBooksCommand implements Command {
                 statusId = 0;
         }
 
-        HttpSession session = request.getSession();
-
         session.setAttribute(SessionAttribute.URL,
                 "/controller?command=search-copies-of-books" +
                         "&book-isbn=" + bookIsbn +
                         "&inventory-id=" + inventoryId +
                         "&status=" + status);
 
+        BookService bookService = ServiceFactory.getInstance().getBookService();
         try {
             List<CopyOfBookDto> copiesOfBooks = bookService.getCopiesOfBooksBySearchRequest(bookIsbn, inventoryId, statusId);
             request.setAttribute(RequestAttribute.COPIES_OF_BOOKS, copiesOfBooks);

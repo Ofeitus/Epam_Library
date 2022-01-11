@@ -11,17 +11,19 @@ public class CopyOfBookDto {
     private String bookIsbn;
     private CopyOfBookStatus copyOfBookStatus;
     private BookDto book;
+    private int userId;
     private boolean canBeDeleted;
 
     public CopyOfBookDto() {
     }
 
-    public CopyOfBookDto(int inventoryId, Date receiptDate, String bookIsbn, CopyOfBookStatus copyOfBookStatus, BookDto book, boolean canBeDeleted) {
+    public CopyOfBookDto(int inventoryId, Date receiptDate, String bookIsbn, CopyOfBookStatus copyOfBookStatus, BookDto book, int userId, boolean canBeDeleted) {
         this.inventoryId = inventoryId;
         this.receiptDate = receiptDate;
         this.bookIsbn = bookIsbn;
         this.copyOfBookStatus = copyOfBookStatus;
         this.book = book;
+        this.userId = userId;
         this.canBeDeleted = canBeDeleted;
     }
 
@@ -73,17 +75,25 @@ public class CopyOfBookDto {
         this.canBeDeleted = canBeDeleted;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CopyOfBookDto that = (CopyOfBookDto) o;
-        return inventoryId == that.inventoryId && canBeDeleted == that.canBeDeleted && Objects.equals(receiptDate, that.receiptDate) && Objects.equals(bookIsbn, that.bookIsbn) && copyOfBookStatus == that.copyOfBookStatus && Objects.equals(book, that.book);
+        return inventoryId == that.inventoryId && userId == that.userId && canBeDeleted == that.canBeDeleted && Objects.equals(receiptDate, that.receiptDate) && Objects.equals(bookIsbn, that.bookIsbn) && copyOfBookStatus == that.copyOfBookStatus && Objects.equals(book, that.book);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(inventoryId, receiptDate, bookIsbn, copyOfBookStatus, book, canBeDeleted);
+        return Objects.hash(inventoryId, receiptDate, bookIsbn, copyOfBookStatus, book, userId, canBeDeleted);
     }
 
     @Override
@@ -94,6 +104,7 @@ public class CopyOfBookDto {
                 ", bookIsbn='" + bookIsbn + '\'' +
                 ", copyOfBookStatus=" + copyOfBookStatus +
                 ", book=" + book +
+                ", userId=" + userId +
                 ", canBeDeleted=" + canBeDeleted +
                 '}';
     }

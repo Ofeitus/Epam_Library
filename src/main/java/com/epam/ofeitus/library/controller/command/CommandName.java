@@ -33,4 +33,5 @@ public class CommandName {
     public static final String DELETE_COPY_OF_BOOK_COMMAND = "delete-copy-of-book";
     public static final String DELETE_BOOK_COMMAND = "delete-book";
     public static final String GOTO_MANAGE_MEMBERS_PAGE_COMMAND = "goto-manage-members-page";
+    public static final String SEARCH_MEMBERS_COMMAND = "search-members";
 }

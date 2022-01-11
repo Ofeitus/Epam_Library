@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group">
                     <label><fmt:message key="inventory-book.inventory-id" /></label>
-                    <input type="number" name="inventory-id" value="0" class="form-control" placeholder="<fmt:message key="inventory-book.inventory-id-placeholder" />">
+                    <input type="number" name="inventory-id" value="0" class="form-control" required placeholder="<fmt:message key="inventory-book.inventory-id-placeholder" />">
                 </div>
                 <div class="form-group">
                     <label><fmt:message key="inventory-book.book-isbn" /></label>
@@ -55,11 +55,11 @@
                     </div>
                     <div class="form-group existing-book">
                         <label><fmt:message key="inventory-book.book-isbn" /></label>
-                        <input id="existing-book-isbn" type="text" name="book-isbn" value="" class="form-control" placeholder="<fmt:message key="inventory-book.book-isbn-placeholder" />">
+                        <input id="existing-book-isbn" type="text" name="book-isbn" value="" class="form-control" required placeholder="<fmt:message key="inventory-book.book-isbn-placeholder" />">
                     </div>
                     <div class="form-group existing-book">
                         <label><fmt:message key="inventory-book.number-of-copies" /></label>
-                        <input id="number-of-copies" type="number" name="copies-count" value="0" class="form-control" placeholder="<fmt:message key="inventory-book.number-of-copies-placeholder" />">
+                        <input id="number-of-copies" type="number" name="copies-count" value="0" class="form-control" required placeholder="<fmt:message key="inventory-book.number-of-copies-placeholder" />">
                     </div>
                     <c:if test="${sessionScope.error != null}">
                         <div class="w-100 row justify-content-left">
@@ -124,25 +124,40 @@
                     <td>${copy_of_book.book.title}</td>
                     <td>${copy_of_book.book.isbn}</td>
                     <td>${copy_of_book.book.publicationYear}</td>
-                    <td><i class="bi bi-circle-fill"
+                    <td>
                         <c:choose>
                             <c:when test="${copy_of_book.copyOfBookStatus == 'AVAILABLE'}">
-                                style="color:gray"
+                                <i class="bi bi-circle-fill" style="color:gray"></i>
+                                ${copy_of_book.copyOfBookStatus}
                             </c:when>
                             <c:when test="${copy_of_book.copyOfBookStatus == 'READING_ROOM'}">
-                                style="color:lawngreen"
+                                <i class="bi bi-circle-fill" style="color:lawngreen"></i>
+                                ${copy_of_book.copyOfBookStatus}
                             </c:when>
                             <c:when test="${copy_of_book.copyOfBookStatus == 'RESERVED'}">
-                                style="color:royalblue"
+                                <i class="bi bi-circle-fill" style="color:royalblue"></i>
+                                <c:if test="${copy_of_book.userId != 0}">
+                                    <a href="?command=goto-user-reservations-page&user-id=${copy_of_book.userId}"> ${copy_of_book.copyOfBookStatus}</a>
+                                </c:if>
+                                <c:if test="${copy_of_book.userId == 0}">
+                                    ${copy_of_book.copyOfBookStatus}
+                                </c:if>
                             </c:when>
                             <c:when test="${copy_of_book.copyOfBookStatus == 'LOANED'}">
-                                style="color:forestgreen"
+                                <i class="bi bi-circle-fill" style="color:forestgreen"></i>
+                                <c:if test="${copy_of_book.userId != 0}">
+                                    <a href="?command=goto-user-loans-page&user-id=${copy_of_book.userId}"> ${copy_of_book.copyOfBookStatus}</a>
+                                </c:if>
+                                <c:if test="${copy_of_book.userId == 0}">
+                                    ${copy_of_book.copyOfBookStatus}
+                                </c:if>
                             </c:when>
                             <c:when test="${copy_of_book.copyOfBookStatus == 'WRITTEN_OFF'}">
-                                style="color:firebrick"
+                                <i class="bi bi-circle-fill" style="color:firebrick"></i>
+                                ${copy_of_book.copyOfBookStatus}
                             </c:when>
                         </c:choose>
-                    ></i>${copy_of_book.copyOfBookStatus}</td>
+                    </td>
                     <td style="text-align: center">
                         <c:if test="${copy_of_book.canBeDeleted}">
                             <a href="?command=delete-copy-of-book&inventory-id=${copy_of_book.inventoryId}">

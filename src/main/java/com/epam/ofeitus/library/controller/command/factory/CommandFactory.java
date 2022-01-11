@@ -36,6 +36,7 @@ public class CommandFactory {
         put(CommandName.EDIT_BOOK_DATA_COMMAND, new EditBookDataCommand());
         put(CommandName.SEARCH_BOOKS_COMMAND, new SearchBooksCommand());
         put(CommandName.SEARCH_COPIES_OF_BOOKS_COMMAND, new SearchCopiesOfBooksCommand());
+        put(CommandName.SEARCH_MEMBERS_COMMAND, new SearchMembersCommand());
         put(CommandName.RESERVE_BOOK_COMMAND, new ReserveBookCommand());
         put(CommandName.CANCEL_RESERVATION_COMMAND, new CancelReservationCommand());
         put(CommandName.WRITE_OFF_COPIES_OF_BOOKS_COMMAND, new WriteOffCopiesOfBooksCommand());
