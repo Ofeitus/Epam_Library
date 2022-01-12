@@ -39,6 +39,9 @@
                     <th scope="col" rowspan="2"><fmt:message key="user-loans.due-date" /></th>
                     <th scope="col" rowspan="2"><fmt:message key="user-loans.return-date" /></th>
                     <th scope="col" rowspan="2"><fmt:message key="user-loans.loan-status" /></th>
+                    <c:if test="${sessionScope.user_role == 'MANAGER'}">
+                        <th scope="col" rowspan="2"><fmt:message key="user-loans.return" /></th>
+                    </c:if>
                 </tr>
                 <tr>
                     <th scope="col" rowspan="1"><fmt:message key="user-loans.book-inventory-id" /></th>
@@ -57,15 +60,15 @@
                     <td>${loan.dueDate}</td>
                     <td>
                         <fmt:formatNumber var="diff"
-                                          value="${(now.time - loan.dueDate.time) / (1000*60*60*24) - 1}"
+                                          value="${(now.time - loan.dueDate.time) / (1000*60*60*24)}"
                                           maxFractionDigits="0" />
-                        <c:if test="${diff <= 0 and loan.loanStatus.toString() == 'ISSUED'}">
-                            <c:if test="${diff > -5 and loan.loanStatus.toString() == 'ISSUED'}">
+                        <c:if test="${diff <= 0 and loan.loanStatus == 'ISSUED'}">
+                            <c:if test="${diff > -5 and loan.loanStatus == 'ISSUED'}">
                                 <i class="bi bi-exclamation-triangle-fill" style="font-size:16px; color: gold;"></i>
                             </c:if>
                             <fmt:message key="user-loans.days-to-return" />&nbsp;${-diff}
                         </c:if>
-                        <c:if test="${diff > 0 and loan.loanStatus.toString() == 'ISSUED'}">
+                        <c:if test="${diff > 0 and loan.loanStatus == 'ISSUED'}">
                             <i class="bi bi-exclamation-triangle-fill" style="font-size:16px; color: firebrick;"></i>
                             <fmt:message key="user-loans.days-overdue" />&nbsp;${diff}
                         </c:if>
@@ -73,24 +76,34 @@
                     </td>
                     <td>
                         <c:choose>
-                            <c:when test="${loan.loanStatus.toString() == 'ISSUED'}">
+                            <c:when test="${loan.loanStatus == 'ISSUED'}">
                                 <i class="bi bi-circle-fill" style="color:royalblue"></i>
                                 <fmt:message key="loan-status.issued" />
                             </c:when>
-                            <c:when test="${loan.loanStatus.toString() == 'RETURNED'}">
+                            <c:when test="${loan.loanStatus == 'RETURNED'}">
                                 <i class="bi bi-circle-fill" style="color:forestgreen"></i>
                                 <fmt:message key="loan-status.returned" />
                             </c:when>
-                            <c:when test="${loan.loanStatus.toString() == 'FINED'}">
+                            <c:when test="${loan.loanStatus == 'FINED'}">
                                 <i class="bi bi-circle-fill" style="color:firebrick"></i>
                                 <fmt:message key="loan-status.fined" />
                             </c:when>
-                            <c:when test="${loan.loanStatus.toString() == 'PAID'}">
+                            <c:when test="${loan.loanStatus == 'PAID'}">
                                 <i class="bi bi-circle-fill" style="color:forestgreen"></i>
                                 <fmt:message key="loan-status.paid" />
                             </c:when>
                         </c:choose>
                     </td>
+                    <c:if test="${sessionScope.user_role == 'MANAGER'}">
+                        <td>
+                            <c:if test="${loan.loanStatus == 'ISSUED'}">
+                                <a href="?command=return-loaned-book&user-id=${loan.userId}&loan-id=${loan.loanId}">
+                                    <i class="bi bi-journal-arrow-down" style="font-size: 18px"></i>
+                                    <fmt:message key="user-loans.return" />
+                                </a>
+                            </c:if>
+                        </td>
+                    </c:if>
                 </tr>
             </c:forEach>
             </tbody>

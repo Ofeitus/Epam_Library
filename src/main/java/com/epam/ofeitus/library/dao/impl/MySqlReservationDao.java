@@ -112,8 +112,12 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
     @Override
     public int cancel(Reservation reservation) throws DaoException {
         List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
-        parametrizedQueries.add(new ParametrizedQuery(MAKE_COPY_OF_BOOK_AVAILABLE_QUERY, reservation.getInventoryId()));
-        parametrizedQueries.add(new ParametrizedQuery(DELETE_BY_ID_QUERY, reservation.getReservationId()));
+        parametrizedQueries.add(new ParametrizedQuery(
+                MAKE_COPY_OF_BOOK_AVAILABLE_QUERY,
+                reservation.getInventoryId()));
+        parametrizedQueries.add(new ParametrizedQuery(
+                DELETE_BY_ID_QUERY,
+                reservation.getReservationId()));
         return queryOperator.executeTransaction(parametrizedQueries);
     }
 

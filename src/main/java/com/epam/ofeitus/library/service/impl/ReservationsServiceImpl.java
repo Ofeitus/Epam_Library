@@ -58,6 +58,17 @@ public class ReservationsServiceImpl implements ReservationsService {
     }
 
     @Override
+    public boolean makeReservation(int userId, String bookIsbn) throws ServiceException {
+        ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
+
+        try {
+            return reservationDao.reserve(userId, bookIsbn) == 1;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public int cancelReservation(int reservationId) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         ReservationDao reservationDao = daoFactory.getReservationDao();
@@ -69,17 +80,6 @@ public class ReservationsServiceImpl implements ReservationsService {
             }
             return reservationDao.cancel(reservation);
         } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public boolean makeReservation(int userId, String bookIsbn) throws ServiceException {
-        ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
-
-        try {
-            return reservationDao.reserve(userId, bookIsbn) == 1;
-            } catch (DaoException e) {
             throw new ServiceException(e);
         }
     }

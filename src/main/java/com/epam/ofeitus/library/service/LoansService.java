@@ -13,4 +13,6 @@ public interface LoansService {
     int getDebtsCountByUserId(int userId) throws ServiceException;
 
     int getLoansCountByUserIdAndStatusId(int userId, int statusId) throws ServiceException;
+
+    boolean loanFromReservation(int reservationId) throws ServiceException;
 }

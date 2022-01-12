@@ -8,6 +8,7 @@ import com.epam.ofeitus.library.entity.book.Book;
 import com.epam.ofeitus.library.entity.book.CopyOfBook;
 import com.epam.ofeitus.library.entity.dto.LoanDto;
 import com.epam.ofeitus.library.entity.order.Loan;
+import com.epam.ofeitus.library.entity.order.Reservation;
 import com.epam.ofeitus.library.entity.order.constiuent.LoanStatus;
 import com.epam.ofeitus.library.service.LoansService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
@@ -95,6 +96,19 @@ public class LoanServiceImpl implements LoansService {
         LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
         try {
             return loanDao.findByUserIdAndStatusId(userId, statusId).size();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean loanFromReservation(int reservationId) throws ServiceException {
+        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
+        ReservationDao reservationDao = daoFactory.getReservationDao();
+        LoanDao loanDao = daoFactory.getLoanDao();
+        try {
+            Reservation reservation = reservationDao.findById(reservationId);
+            return loanDao.loanFromReservation(reservation) == 1;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

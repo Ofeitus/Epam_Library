@@ -4,9 +4,17 @@ import com.epam.ofeitus.library.constant.Column;
 import com.epam.ofeitus.library.constant.Table;
 import com.epam.ofeitus.library.dao.LoanDao;
 import com.epam.ofeitus.library.dao.exception.DaoException;
+import com.epam.ofeitus.library.dao.queryoperator.ParametrizedQuery;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
 import com.epam.ofeitus.library.entity.order.Loan;
+import com.epam.ofeitus.library.entity.order.Reservation;
+import com.epam.ofeitus.library.entity.order.constiuent.LoanStatus;
+import com.epam.ofeitus.library.entity.order.constiuent.ReservationStatus;
+import org.apache.commons.lang.time.DateUtils;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
@@ -60,6 +68,16 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Column.LOAN_USER_ID,
             Column.LOAN_STATUS_ID,
             Column.LOAN_DUE_DATE);
+    private static final String MAKE_RESERVATION_ISSUED_QUERY = String.format(
+            "UPDATE %s SET %s='3' WHERE %s=?",
+            Table.RESERVATION_TABLE,
+            Column.RESERVATION_STATUS_ID,
+            Column.RESERVATION_ID);
+    private static final String MAKE_COPY_OF_BOOK_LOANED_QUERY = String.format(
+            "UPDATE %s SET %s='4' WHERE %s=?",
+            Table.COPY_OF_BOOK_TABLE,
+            Column.COPY_OF_BOOK_STATUS_ID,
+            Column.COPY_OF_BOOK_INVENTORY_ID);
 
     public MySqlLoanDao() {
         super(RowMapperFactory.getLoanRowMapper(), Table.LOAN_TABLE, Column.LOAN_ID);
@@ -117,5 +135,26 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
     @Override
     public List<Loan> findByUserIdAndStatusId(int userId, int statusId) throws DaoException {
         return queryOperator.executeQuery(FIND_BY_STATUS_ID_QUERY, userId, statusId);
+    }
+
+    @Override
+    public int loanFromReservation(Reservation reservation) throws DaoException {
+        List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
+        parametrizedQueries.add(new ParametrizedQuery(
+                MAKE_RESERVATION_ISSUED_QUERY,
+                reservation.getReservationId()));
+        parametrizedQueries.add(new ParametrizedQuery(
+                MAKE_COPY_OF_BOOK_LOANED_QUERY,
+                reservation.getInventoryId()));
+        parametrizedQueries.add(new ParametrizedQuery(
+                SAVE_LOAN_QUERY,
+                new Date(),
+                DateUtils.addMonths(new Date(), 1),
+                null,
+                null,
+                reservation.getUserId(),
+                reservation.getInventoryId(),
+                LoanStatus.ISSUED.ordinal() + 1));
+        return queryOperator.executeTransaction(parametrizedQueries);
     }
 }
