@@ -33,8 +33,14 @@ public class SearchBooksCommand implements Command {
         String category = request.getParameter(RequestParameter.CATEGORY);
         String authorName = request.getParameter(RequestParameter.AUTHOR_NAME);
         String authorSurname = request.getParameter(RequestParameter.AUTHOR_SURNAME);
-        int yearFrom = Integer.parseInt(request.getParameter(RequestParameter.YEAR_FROM));
-        int yearTo = Integer.parseInt(request.getParameter(RequestParameter.YEAR_TO));
+        int yearFrom = 0;
+        int yearTo = 0;
+        try {
+            yearFrom = Integer.parseInt(request.getParameter(RequestParameter.YEAR_FROM));
+            yearTo = Integer.parseInt(request.getParameter(RequestParameter.YEAR_TO));
+        } catch (NumberFormatException e) {
+            logger.warn("Wrong search parameters.", e);
+        }
 
         HttpSession session = request.getSession();
 
@@ -48,6 +54,7 @@ public class SearchBooksCommand implements Command {
                 "&year-from="+yearFrom+
                 "&year-to="+yearTo));
 
+            // TODO Pagination
             List<BookDto> books = bookService.getBooksDtoBySearchRequest(
                     searchRequest,
                     category,

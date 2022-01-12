@@ -39,6 +39,7 @@ public class GoToUserReservationsPageCommand implements Command {
 
         ReservationsService reservationsService = ServiceFactory.getInstance().getReservationsService();
         try {
+            // TODO Pagination
             List<ReservationDto> reservations = reservationsService.getReservationsDtoByUserId(userId);
             request.setAttribute(RequestAttribute.RESERVATIONS, reservations);
             request.setAttribute(RequestAttribute.USER_ID, userId);

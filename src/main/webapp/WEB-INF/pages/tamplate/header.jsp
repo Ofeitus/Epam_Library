@@ -5,9 +5,6 @@
 
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
 <fmt:setBundle basename="locale"/>
-<header>
-    <jsp:include page="links.jsp" />
-</header>
 <header class="header">
     <a id="home-link" href="?command=goto-home-page">WebLib</a>
     <div class="navbar-container">

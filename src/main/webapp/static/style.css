@@ -8,10 +8,13 @@
 body {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     background-color: #333333;
     background-image: url("../images/home1.png");
     background-size: cover;
     background-attachment: fixed;
+    padding-top: 60px;
+    height: 100%;
 }
 
 h2 {

@@ -16,5 +16,6 @@
     <h3><fmt:message key="500.error" /></h3>
     <h4><fmt:message key="500.message" /></h4>
 </div>
+<jsp:include page="../tamplate/footer.jsp" />
 </body>
 </html>

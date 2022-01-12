@@ -55,7 +55,7 @@
                     </div>
                     <div class="form-group existing-book">
                         <label><fmt:message key="inventory-book.book-isbn" /></label>
-                        <input id="existing-book-isbn" type="text" name="book-isbn" value="" class="form-control" required placeholder="<fmt:message key="inventory-book.book-isbn-placeholder" />">
+                        <input id="existing-book-isbn" type="text" name="book-isbn" value="" class="form-control" placeholder="<fmt:message key="inventory-book.book-isbn-placeholder" />">
                     </div>
                     <div class="form-group existing-book">
                         <label><fmt:message key="inventory-book.number-of-copies" /></label>
@@ -176,6 +176,7 @@
         </table>
     </c:if>
 </div>
+<jsp:include page="../tamplate/footer.jsp" />
 </body>
 
 <script>

@@ -83,5 +83,6 @@
         </table>
     </c:if>
 </div>
+<jsp:include page="../tamplate/footer.jsp" />
 </body>
 </html>

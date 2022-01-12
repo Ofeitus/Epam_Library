@@ -28,6 +28,7 @@ public class GoToManageMembersPageCommand implements Command {
 
         UserService userService = ServiceFactory.getInstance().getUserService();
         try {
+            // TODO Pagination
             List<User> users = userService.getAllMembers();
             request.setAttribute(RequestAttribute.USERS, users);
             return new CommandResult(Page.MANAGE_MEMBERS_PAGE, RoutingType.FORWARD);

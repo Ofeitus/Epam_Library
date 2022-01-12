@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(String firstName, String lastName, String email, String password) throws ServiceException {
+        // TODO Validation
         User user = new User(0, firstName, lastName, "", email, DigestUtils.sha256Hex(password), UserRole.MEMBER);
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
         try {

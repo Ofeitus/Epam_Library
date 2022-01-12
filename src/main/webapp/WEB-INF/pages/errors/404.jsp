@@ -16,5 +16,6 @@
     <h3><fmt:message key="404.not-found" /></h3>
     <h4><fmt:message key="404.message" /></h4>
 </div>
+<jsp:include page="../tamplate/footer.jsp" />
 </body>
 </html>

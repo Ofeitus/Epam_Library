@@ -39,6 +39,7 @@ public class GoToUserLoansPageCommand implements Command {
 
         LoansService loansService = ServiceFactory.getInstance().getLoansService();
         try {
+            // TODO Pagination
             List<LoanDto> loans = loansService.getLoansDtoByUserId(userId);
             request.setAttribute(RequestAttribute.LOANS, loans);
             request.setAttribute(RequestAttribute.USER_ID, userId);

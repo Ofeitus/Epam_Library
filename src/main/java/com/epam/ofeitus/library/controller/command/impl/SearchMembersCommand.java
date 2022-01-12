@@ -27,7 +27,12 @@ public class SearchMembersCommand implements Command {
         HttpSession session = request.getSession();
 
         String email = request.getParameter(RequestParameter.EMAIL);
-        int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
+        int userId = 0;
+        try {
+            userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
+        } catch (NumberFormatException e) {
+            logger.warn("Wrong search parameters.", e);
+        }
 
         session.setAttribute(SessionAttribute.URL,
                 "/controller?command=goto-manage-members-page" +
@@ -36,6 +41,7 @@ public class SearchMembersCommand implements Command {
 
         UserService userService = ServiceFactory.getInstance().getUserService();
         try {
+            // TODO Pagination
             List<User> users = userService.getMemberBySearchRequest(userId, email);
             request.setAttribute(RequestAttribute.USERS, users);
             return new CommandResult(Page.MANAGE_MEMBERS_PAGE, RoutingType.FORWARD);

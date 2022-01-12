@@ -150,5 +150,6 @@
         </c:if>
     </div>
 </div>
+<jsp:include page="tamplate/footer.jsp" />
 </body>
 </html>

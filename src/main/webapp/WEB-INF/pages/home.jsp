@@ -21,5 +21,6 @@
         <h3><fmt:message key="home.sign" /></h3>
         <img src="${pageContext.request.contextPath}/images/book-pusheen.png" alt="">
     </div>
+<jsp:include page="tamplate/footer.jsp" />
 </body>
 </html>

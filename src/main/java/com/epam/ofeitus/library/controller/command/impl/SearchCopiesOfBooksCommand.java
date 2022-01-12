@@ -27,7 +27,12 @@ public class SearchCopiesOfBooksCommand implements Command {
         HttpSession session = request.getSession();
 
         String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
-        int inventoryId = Integer.parseInt(request.getParameter(RequestParameter.INVENTORY_ID));
+        int inventoryId = 0;
+        try {
+            inventoryId = Integer.parseInt(request.getParameter(RequestParameter.INVENTORY_ID));
+        } catch (NumberFormatException e) {
+            logger.warn("Wrong search parameters.", e);
+        }
         String status = request.getParameter(RequestParameter.STATUS);
         int statusId;
         switch (status) {
