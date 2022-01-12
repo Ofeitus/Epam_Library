@@ -3,6 +3,7 @@ package com.epam.ofeitus.library.service;
 import com.epam.ofeitus.library.entity.dto.LoanDto;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface LoansService {
@@ -14,5 +15,7 @@ public interface LoansService {
 
     int getLoansCountByUserIdAndStatusId(int userId, int statusId) throws ServiceException;
 
-    boolean loanFromReservation(int reservationId) throws ServiceException;
+    boolean loanFromReservation(int reservationId, int loanPeriod) throws ServiceException;
+
+    void returnBook(int loanId, BigDecimal fineRate) throws ServiceException;
 }

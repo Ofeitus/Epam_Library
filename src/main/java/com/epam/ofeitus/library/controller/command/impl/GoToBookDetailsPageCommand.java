@@ -1,5 +1,7 @@
 package com.epam.ofeitus.library.controller.command.impl;
 
+import com.epam.ofeitus.library.constant.ConfigParameter;
+import com.epam.ofeitus.library.constant.ConfigResourceManager;
 import com.epam.ofeitus.library.controller.command.Command;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
@@ -21,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.MissingResourceException;
 
 public class GoToBookDetailsPageCommand implements Command {
     Logger logger = LogManager.getLogger(GoToBookDetailsPageCommand.class);
@@ -40,6 +43,7 @@ public class GoToBookDetailsPageCommand implements Command {
 
         session.setAttribute(SessionAttribute.URL, "/controller?command=goto-book-details-page&book-isbn=" + bookIsbn);
 
+        ConfigResourceManager configResourceManager = ConfigResourceManager.getInstance();
         try {
             int copiesCount = bookService.getCopiesCount(bookIsbn);
             int availableCopiesCount = bookService.getAvailableCopiesCount(bookIsbn);
@@ -59,6 +63,14 @@ public class GoToBookDetailsPageCommand implements Command {
             request.setAttribute(RequestAttribute.AVAILABLE_COPIES_COUNT, availableCopiesCount);
             request.setAttribute(RequestAttribute.RESERVED_BOOKS_COUNT, reservedBooksCount);
             request.setAttribute(RequestAttribute.ISSUED_BOOKS_COUNT, issuedBooksCount);
+            try {
+                request.setAttribute(RequestAttribute.MAX_MEMBER_BOOKS,
+                        Integer.parseInt(configResourceManager.getValue(ConfigParameter.MAX_MEMBER_BOOKS)));
+            } catch (NumberFormatException | MissingResourceException e) {
+                logger.error("Unable to get max member books.", e);
+                request.setAttribute(RequestAttribute.MAX_MEMBER_BOOKS, 5);
+            }
+
             return new CommandResult(Page.BOOK_DETAILS_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Unable to get book DTO.", e);

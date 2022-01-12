@@ -9,11 +9,12 @@ import com.epam.ofeitus.library.entity.book.CopyOfBook;
 import com.epam.ofeitus.library.entity.dto.LoanDto;
 import com.epam.ofeitus.library.entity.order.Loan;
 import com.epam.ofeitus.library.entity.order.Reservation;
-import com.epam.ofeitus.library.entity.order.constiuent.LoanStatus;
 import com.epam.ofeitus.library.service.LoansService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class LoanServiceImpl implements LoansService {
@@ -102,13 +103,29 @@ public class LoanServiceImpl implements LoansService {
     }
 
     @Override
-    public boolean loanFromReservation(int reservationId) throws ServiceException {
+    public boolean loanFromReservation(int reservationId, int loanPeriod) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         ReservationDao reservationDao = daoFactory.getReservationDao();
         LoanDao loanDao = daoFactory.getLoanDao();
         try {
             Reservation reservation = reservationDao.findById(reservationId);
-            return loanDao.loanFromReservation(reservation) == 1;
+            return loanDao.loanFromReservation(reservation, loanPeriod) == 1;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void returnBook(int loanId, BigDecimal fineRate) throws ServiceException {
+        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
+        LoanDao loanDao = daoFactory.getLoanDao();
+        try {
+            Loan loan = loanDao.findById(loanId);
+            if (loan.getDueDate().before(new Date())) {
+                loanDao.returnWithFine(loan, fineRate);
+            } else {
+                loanDao.returnNoFine(loan);
+            }
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

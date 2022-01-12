@@ -86,7 +86,7 @@
                             <label><fmt:message key="book-details.no-available-copies" /></label>
                         </div>
                     </c:if>
-                    <c:if test="${requestScope.reserved_books_count + requestScope.issued_books_count >= 5}">
+                    <c:if test="${requestScope.reserved_books_count + requestScope.issued_books_count >= requestScope.max_member_books}">
                         <div class="reservation-info">
                             <i class="bi bi-exclamation-triangle-fill" style="color: gold;"></i>
                             <label><fmt:message key="book-details.reservation-limit" /></label>
@@ -100,12 +100,12 @@
                     </c:if>
                     <div class="w-100 row justify-content-end">
                         <c:if test="${sessionScope.user_id != null and
-                                requestScope.reserved_books_count + requestScope.issued_books_count < 5 and
+                                requestScope.reserved_books_count + requestScope.issued_books_count < requestScope.max_member_books and
                                 requestScope.available_copies_count > 0}">
                             <button class="h-50 col-4 btn submit"><fmt:message key="book-details.reserve" /></button>
                         </c:if>
                         <c:if test="${sessionScope.user_id == null or
-                                requestScope.reserved_books_count + requestScope.issued_books_count >= 5 or
+                                requestScope.reserved_books_count + requestScope.issued_books_count >= requestScope.max_member_books or
                                 requestScope.available_copies_count == 0}">
                             <button class="h-50 col-4 btn submit" disabled><fmt:message key="book-details.reserve" /></button>
                         </c:if>

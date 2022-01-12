@@ -9,13 +9,13 @@ import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
 import com.epam.ofeitus.library.entity.order.Loan;
 import com.epam.ofeitus.library.entity.order.Reservation;
 import com.epam.ofeitus.library.entity.order.constiuent.LoanStatus;
-import com.epam.ofeitus.library.entity.order.constiuent.ReservationStatus;
 import org.apache.commons.lang.time.DateUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
     public final static String SAVE_LOAN_QUERY = String.format(
@@ -75,6 +75,11 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Column.RESERVATION_ID);
     private static final String MAKE_COPY_OF_BOOK_LOANED_QUERY = String.format(
             "UPDATE %s SET %s='4' WHERE %s=?",
+            Table.COPY_OF_BOOK_TABLE,
+            Column.COPY_OF_BOOK_STATUS_ID,
+            Column.COPY_OF_BOOK_INVENTORY_ID);
+    private static final String MAKE_COPY_OF_BOOK_AVAILABLE_QUERY = String.format(
+            "UPDATE %s SET %s='1' WHERE %s=?",
             Table.COPY_OF_BOOK_TABLE,
             Column.COPY_OF_BOOK_STATUS_ID,
             Column.COPY_OF_BOOK_INVENTORY_ID);
@@ -138,7 +143,7 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
     }
 
     @Override
-    public int loanFromReservation(Reservation reservation) throws DaoException {
+    public int loanFromReservation(Reservation reservation, int loanPeriod) throws DaoException {
         List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
         parametrizedQueries.add(new ParametrizedQuery(
                 MAKE_RESERVATION_ISSUED_QUERY,
@@ -149,12 +154,53 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
         parametrizedQueries.add(new ParametrizedQuery(
                 SAVE_LOAN_QUERY,
                 new Date(),
-                DateUtils.addMonths(new Date(), 1),
+                DateUtils.addDays(new Date(), 30),
                 null,
                 null,
                 reservation.getUserId(),
                 reservation.getInventoryId(),
                 LoanStatus.ISSUED.ordinal() + 1));
+        return queryOperator.executeTransaction(parametrizedQueries);
+    }
+
+    @Override
+    public int returnNoFine(Loan loan) throws DaoException {
+        List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
+        parametrizedQueries.add(new ParametrizedQuery(
+                MAKE_COPY_OF_BOOK_AVAILABLE_QUERY,
+                loan.getInventoryId()));
+        parametrizedQueries.add(new ParametrizedQuery(
+                UPDATE_LOAN_QUERY,
+                loan.getIssueDate(),
+                loan.getDueDate(),
+                new Date(),
+                null,
+                loan.getUserId(),
+                loan.getInventoryId(),
+                LoanStatus.RETURNED.ordinal() + 1,
+                loan.getLoanId()));
+        return queryOperator.executeTransaction(parametrizedQueries);
+    }
+
+    @Override
+    public int returnWithFine(Loan loan, BigDecimal fineRate) throws DaoException {
+        List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
+        parametrizedQueries.add(new ParametrizedQuery(
+                MAKE_COPY_OF_BOOK_AVAILABLE_QUERY,
+                loan.getInventoryId()));
+        parametrizedQueries.add(new ParametrizedQuery(
+                UPDATE_LOAN_QUERY,
+                loan.getIssueDate(),
+                loan.getDueDate(),
+                new Date(),
+                new BigDecimal(TimeUnit.DAYS.convert(
+                        new Date().getTime() - loan.getDueDate().getTime(),
+                        TimeUnit.MILLISECONDS
+                )).multiply(fineRate),
+                loan.getUserId(),
+                loan.getInventoryId(),
+                LoanStatus.FINED.ordinal() + 1,
+                loan.getLoanId()));
         return queryOperator.executeTransaction(parametrizedQueries);
     }
 }

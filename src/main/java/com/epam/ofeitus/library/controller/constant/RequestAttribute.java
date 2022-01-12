@@ -19,4 +19,5 @@ public class RequestAttribute {
     public static final String COPIES_COUNT = "copies_count";
     public static final String USER = "user";
     public static final String USER_ID = "user_id";
+    public static final String MAX_MEMBER_BOOKS = "max_member_books";
 }

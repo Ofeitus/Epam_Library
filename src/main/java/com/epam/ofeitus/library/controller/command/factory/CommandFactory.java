@@ -40,6 +40,7 @@ public class CommandFactory {
         put(CommandName.RESERVE_BOOK_COMMAND, new ReserveBookCommand());
         put(CommandName.CANCEL_RESERVATION_COMMAND, new CancelReservationCommand());
         put(CommandName.ISSUE_RESERVED_BOOK_COMMAND, new IssueReservedBookCommand());
+        put(CommandName.RETURN_LOANED_BOOK_COMMAND, new ReturnLoanedBookCommand());
         put(CommandName.WRITE_OFF_COPIES_OF_BOOKS_COMMAND, new WriteOffCopiesOfBooksCommand());
         put(CommandName.WRITE_IN_COPIES_OF_BOOK_COMMAND, new WriteInCopiesOfBookCommand());
         put(CommandName.WRITE_IN_COPIES_OF_NEW_BOOK_COMMAND, new WriteInCopiesOfNewBookCommand());

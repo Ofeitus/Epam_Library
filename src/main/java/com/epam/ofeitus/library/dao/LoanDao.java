@@ -4,7 +4,7 @@ import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.entity.order.Loan;
 import com.epam.ofeitus.library.entity.order.Reservation;
 
-import java.util.Collection;
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface LoanDao extends AbstractDao<Loan> {
@@ -18,5 +18,9 @@ public interface LoanDao extends AbstractDao<Loan> {
 
     List<Loan> findByUserIdAndStatusId(int userId, int statusId) throws DaoException;
 
-    int loanFromReservation(Reservation reservation) throws DaoException;
+    int loanFromReservation(Reservation reservation, int loanPeriod) throws DaoException;
+
+    int returnNoFine(Loan loan) throws DaoException;
+
+    int returnWithFine(Loan loan, BigDecimal fineRate) throws DaoException;
 }
