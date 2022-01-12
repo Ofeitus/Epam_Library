@@ -47,19 +47,22 @@
                             ${reservation.book.title}
                     </a></td>
                     <td>${reservation.date}</td>
-                    <td><i class="bi bi-circle-fill"
+                    <td>
                         <c:choose>
                             <c:when test="${reservation.reservationStatus.toString() == 'RESERVED'}">
-                                style="color:gray"
+                                <i class="bi bi-circle-fill" style="color:gray"></i>
+                                <fmt:message key="reservation-status.reserved" />
                             </c:when>
-                            <c:when test="${reservation.reservationStatus.toString() == 'READY_TO_ISSUE'}">
-                                style="color:royalblue"
-                            </c:when>
+                                <c:when test="${reservation.reservationStatus.toString() == 'READY_TO_ISSUE'}">
+                            <i class="bi bi-circle-fill" style="color:royalblue"></i>
+                                    <fmt:message key="reservation-status.ready-to-issue" />
+                                </c:when>
                             <c:when test="${reservation.reservationStatus.toString() == 'ISSUED'}">
-                                style="color:forestgreen"
+                                <i class="bi bi-circle-fill" style="color:forestgreen"></i>
+                                <fmt:message key="reservation-status.issued" />
                             </c:when>
                         </c:choose>
-                    ></i>${reservation.reservationStatus}</td>
+                    </td>
                     <td style="text-align: center">
                         <c:if test="${reservation.reservationStatus.toString() != 'ISSUED'}">
                             <a href="?command=cancel-reservation&reservation-id=${reservation.reservationId}">

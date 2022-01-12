@@ -52,16 +52,18 @@
                     <td>${fine.dueDate}</td>
                     <td>${fine.returnDate}</td>
                     <td>${fine.fineAmount}</td>
-                    <td><i class="bi bi-circle-fill"
+                    <td>
                         <c:choose>
                             <c:when test="${fine.loanStatus.toString() == 'FINED'}">
-                                style="color:firebrick"
+                                <i class="bi bi-circle-fill" style="color:firebrick"></i>
+                                <fmt:message key="loan-status.fined" />
                             </c:when>
                             <c:when test="${fine.loanStatus.toString() == 'PAID'}">
-                                style="color:forestgreen"
+                                <i class="bi bi-circle-fill" style="color:forestgreen"></i>
+                                <fmt:message key="loan-status.paid" />
                             </c:when>
                         </c:choose>
-                    ></i>${fine.loanStatus}</td>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>

@@ -128,33 +128,36 @@
                         <c:choose>
                             <c:when test="${copy_of_book.copyOfBookStatus == 'AVAILABLE'}">
                                 <i class="bi bi-circle-fill" style="color:gray"></i>
-                                ${copy_of_book.copyOfBookStatus}
+                                <fmt:message key="copy-of-book-status.available" />
                             </c:when>
                             <c:when test="${copy_of_book.copyOfBookStatus == 'READING_ROOM'}">
                                 <i class="bi bi-circle-fill" style="color:lawngreen"></i>
-                                ${copy_of_book.copyOfBookStatus}
+                                <fmt:message key="copy-of-book-status.reading-room" />
                             </c:when>
                             <c:when test="${copy_of_book.copyOfBookStatus == 'RESERVED'}">
                                 <i class="bi bi-circle-fill" style="color:royalblue"></i>
                                 <c:if test="${copy_of_book.userId != 0}">
-                                    <a href="?command=goto-user-reservations-page&user-id=${copy_of_book.userId}"> ${copy_of_book.copyOfBookStatus}</a>
+                                    <a href="?command=goto-user-reservations-page&user-id=${copy_of_book.userId}">
+                                        <fmt:message key="copy-of-book-status.reserved" /></a>
                                 </c:if>
                                 <c:if test="${copy_of_book.userId == 0}">
-                                    ${copy_of_book.copyOfBookStatus}
+                                    <fmt:message key="copy-of-book-status.reserved" />
                                 </c:if>
                             </c:when>
                             <c:when test="${copy_of_book.copyOfBookStatus == 'LOANED'}">
                                 <i class="bi bi-circle-fill" style="color:forestgreen"></i>
                                 <c:if test="${copy_of_book.userId != 0}">
-                                    <a href="?command=goto-user-loans-page&user-id=${copy_of_book.userId}"> ${copy_of_book.copyOfBookStatus}</a>
+                                    <a href="?command=goto-user-loans-page&user-id=${copy_of_book.userId}">
+                                        <fmt:message key="copy-of-book-status.loaned" />
+                                    </a>
                                 </c:if>
                                 <c:if test="${copy_of_book.userId == 0}">
-                                    ${copy_of_book.copyOfBookStatus}
+                                    <fmt:message key="copy-of-book-status.loaned" />
                                 </c:if>
                             </c:when>
                             <c:when test="${copy_of_book.copyOfBookStatus == 'WRITTEN_OFF'}">
                                 <i class="bi bi-circle-fill" style="color:firebrick"></i>
-                                ${copy_of_book.copyOfBookStatus}
+                                <fmt:message key="copy-of-book-status.written-off" />
                             </c:when>
                         </c:choose>
                     </td>

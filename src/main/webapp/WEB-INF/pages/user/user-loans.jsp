@@ -71,22 +71,26 @@
                         </c:if>
                         ${loan.returnDate}
                     </td>
-                    <td><i class="bi bi-circle-fill"
-                    <c:choose>
-                    <c:when test="${loan.loanStatus.toString() == 'ISSUED'}">
-                        style="color:royalblue"
-                    </c:when>
-                    <c:when test="${loan.loanStatus.toString() == 'RETURNED'}">
-                        style="color:forestgreen"
-                    </c:when>
-                    <c:when test="${loan.loanStatus.toString() == 'FINED'}">
-                        style="color:firebrick"
-                    </c:when>
-                    <c:when test="${loan.loanStatus.toString() == 'PAID'}">
-                        style="color:forestgreen"
-                    </c:when>
-                    </c:choose>
-                    ></i>${loan.loanStatus}</td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${loan.loanStatus.toString() == 'ISSUED'}">
+                                <i class="bi bi-circle-fill" style="color:royalblue"></i>
+                                <fmt:message key="loan-status.issued" />
+                            </c:when>
+                            <c:when test="${loan.loanStatus.toString() == 'RETURNED'}">
+                                <i class="bi bi-circle-fill" style="color:forestgreen"></i>
+                                <fmt:message key="loan-status.returned" />
+                            </c:when>
+                            <c:when test="${loan.loanStatus.toString() == 'FINED'}">
+                                <i class="bi bi-circle-fill" style="color:firebrick"></i>
+                                <fmt:message key="loan-status.fined" />
+                            </c:when>
+                            <c:when test="${loan.loanStatus.toString() == 'PAID'}">
+                                <i class="bi bi-circle-fill" style="color:forestgreen"></i>
+                                <fmt:message key="loan-status.paid" />
+                            </c:when>
+                        </c:choose>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
