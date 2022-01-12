@@ -39,6 +39,9 @@
                 <th scope="col"><fmt:message key="user-fines.return-date" /></th>
                 <th scope="col"><fmt:message key="user-fines.fine-amount" /></th>
                 <th scope="col"><fmt:message key="user-fines.fine-status" /></th>
+                <c:if test="${sessionScope.user_role == 'MANAGER'}">
+                    <th scope="col"><fmt:message key="user-fines.payment" /></th>
+                </c:if>
             </tr>
             </thead>
             <tbody>
@@ -64,6 +67,16 @@
                             </c:when>
                         </c:choose>
                     </td>
+                    <c:if test="${sessionScope.user_role == 'MANAGER'}">
+                        <td>
+                            <c:if test="${fine.loanStatus == 'FINED'}">
+                                <a href="?command=pay-fine&user-id=${fine.userId}&loan-id=${fine.loanId}">
+                                    <i class="bi bi-cash-stack" style="font-size: 18px"></i>
+                                    <fmt:message key="user-fines.pay-fine" />
+                                </a>
+                            </c:if>
+                        </td>
+                    </c:if>
                 </tr>
             </c:forEach>
             </tbody>

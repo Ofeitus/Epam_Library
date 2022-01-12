@@ -40,7 +40,7 @@
                     <th scope="col" rowspan="2"><fmt:message key="user-loans.return-date" /></th>
                     <th scope="col" rowspan="2"><fmt:message key="user-loans.loan-status" /></th>
                     <c:if test="${sessionScope.user_role == 'MANAGER'}">
-                        <th scope="col" rowspan="2"><fmt:message key="user-loans.return" /></th>
+                        <th scope="col" rowspan="2"><fmt:message key="user-loans.returning" /></th>
                     </c:if>
                 </tr>
                 <tr>

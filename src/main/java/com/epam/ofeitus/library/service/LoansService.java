@@ -18,4 +18,6 @@ public interface LoansService {
     boolean loanFromReservation(int reservationId, int loanPeriod) throws ServiceException;
 
     void returnBook(int loanId, BigDecimal fineRate) throws ServiceException;
+
+    void payFine(int loanId) throws ServiceException;
 }

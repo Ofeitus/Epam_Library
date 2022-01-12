@@ -9,7 +9,6 @@ import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.service.ReservationsService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 import com.epam.ofeitus.library.service.factory.ServiceFactory;
-import com.mysql.cj.Session;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,6 +31,9 @@ public class ReserveBookCommand implements Command {
 
         try {
             boolean reserved = reservationsService.makeReservation(userId, bookIsbn);
+            if (!reserved) {
+                session.setAttribute(SessionAttribute.ERROR, "No copies available");
+            }
             return new CommandResult("/controller?command=goto-book-details-page&book-isbn=" + bookIsbn, RoutingType.REDIRECT);
         } catch (ServiceException e) {
             logger.error("Unable to cancel reservation.", e);

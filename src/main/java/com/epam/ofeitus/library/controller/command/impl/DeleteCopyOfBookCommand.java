@@ -7,7 +7,6 @@ import com.epam.ofeitus.library.controller.constant.Page;
 import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.service.BookService;
-import com.epam.ofeitus.library.service.ReservationsService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 import com.epam.ofeitus.library.service.factory.ServiceFactory;
 import org.apache.logging.log4j.LogManager;

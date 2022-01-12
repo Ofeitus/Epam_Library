@@ -112,7 +112,7 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
                 entity.getFineAmount(),
                 entity.getUserId(),
                 entity.getInventoryId(),
-                entity.getLoanStatus(),
+                entity.getLoanStatus().ordinal() + 1,
                 entity.getLoanId()
         );
     }

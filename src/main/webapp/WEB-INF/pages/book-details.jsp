@@ -98,6 +98,11 @@
                             <label><a href="?command=goto-log-in-page"><fmt:message key="book-details.log-in-" /></a><fmt:message key="book-details.-to-reserve" /></label>
                         </div>
                     </c:if>
+                    <c:if test="${sessionScope.error != null}">
+                        <div class="w-100 row justify-content-left">
+                            <label id="search-error-message">${sessionScope.error}</label>
+                        </div>
+                    </c:if>
                     <div class="w-100 row justify-content-end">
                         <c:if test="${sessionScope.user_id != null and
                                 requestScope.reserved_books_count + requestScope.issued_books_count < requestScope.max_member_books and

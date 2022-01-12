@@ -45,7 +45,7 @@ public class ReturnLoanedBookCommand implements Command {
             loansService.returnBook(loanId, fineRate);
             return new CommandResult("/controller?command=goto-user-loans-page&user-id=" + userId, RoutingType.REDIRECT);
         } catch (ServiceException e) {
-            logger.error("Unable to loan from reservation.", e);
+            logger.error("Unable to return book.", e);
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
     }

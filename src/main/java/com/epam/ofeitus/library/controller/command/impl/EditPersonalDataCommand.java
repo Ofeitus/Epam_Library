@@ -4,7 +4,6 @@ import com.epam.ofeitus.library.controller.command.Command;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
-import com.epam.ofeitus.library.controller.constant.RequestAttribute;
 import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.service.UserService;
@@ -16,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 
 public class EditPersonalDataCommand implements Command {
     Logger logger = LogManager.getLogger(SignUpCommand.class);

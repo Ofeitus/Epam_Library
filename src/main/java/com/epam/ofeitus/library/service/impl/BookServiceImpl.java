@@ -262,7 +262,7 @@ public class BookServiceImpl implements BookService {
                     userId = activeReservation.get().getUserId();
                 }
                 List<Loan> loans = loanDao.findByInventoryId(copyOfBook.getInventoryId());
-                Optional<Loan> activeLoan = loans.stream().filter(x -> x.getLoanStatus() != LoanStatus.ISSUED).findFirst();
+                Optional<Loan> activeLoan = loans.stream().filter(x -> x.getLoanStatus() == LoanStatus.ISSUED).findFirst();
                 if (activeLoan.isPresent()) {
                     userId = activeLoan.get().getUserId();
                 }
@@ -273,8 +273,7 @@ public class BookServiceImpl implements BookService {
                         copyOfBook.getCopyOfBookStatus(),
                         bookDto,
                         userId,
-                        reservationDao.findByInventoryId(copyOfBook.getInventoryId()).size() == 0 &&
-                                loanDao.findByInventoryId(copyOfBook.getInventoryId()).size() == 0)
+                        reservations.size() == 0 && loans.size() == 0)
                 );
             }
             return copiesOfBooksDto;
