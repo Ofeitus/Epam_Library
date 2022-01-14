@@ -127,3 +127,14 @@
     color: firebrick;
     margin-bottom: 20px;
 }
+
+.loan-forms {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15%;
+    margin-top: 50px;
+}
+
+.loan-forms .form-container {
+    margin-top: 0;
+}

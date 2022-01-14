@@ -95,10 +95,13 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Column.COPY_OF_BOOK_STATUS_ID,
             Column.COPY_OF_BOOK_INVENTORY_ID);
     private static final String MAKE_COPY_OF_BOOK_LOANED_BY_ID_QUERY = String.format(
-            "UPDATE %s SET %s='4' WHERE %s=?",
+            "UPDATE %s SET %s='4', %s=LAST_INSERT_ID(%s) WHERE %s=? AND %s='1'",
             Table.COPY_OF_BOOK_TABLE,
             Column.COPY_OF_BOOK_STATUS_ID,
-            Column.COPY_OF_BOOK_INVENTORY_ID);
+            Column.COPY_OF_BOOK_INVENTORY_ID,
+            Column.COPY_OF_BOOK_INVENTORY_ID,
+            Column.COPY_OF_BOOK_INVENTORY_ID,
+            Column.COPY_OF_BOOK_STATUS_ID);
     private static final String MAKE_COPY_OF_BOOK_AVAILABLE_QUERY = String.format(
             "UPDATE %s SET %s='1' WHERE %s=?",
             Table.COPY_OF_BOOK_TABLE,
@@ -169,6 +172,23 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
         parametrizedQueries.add(new ParametrizedQuery(
                 MAKE_COPY_OF_BOOK_LOANED_QUERY,
                 bookIsbn));
+        parametrizedQueries.add(new ParametrizedQuery(
+                SAVE_LOAN_WITH_LAST_LOANED_COPY_QUERY,
+                new Date(),
+                DateUtils.addDays(new Date(), loanPeriod),
+                null,
+                null,
+                userId,
+                LoanStatus.ISSUED.ordinal() + 1));
+        return queryOperator.executeTransaction(parametrizedQueries);
+    }
+
+    @Override
+    public int loanByInventoryId(int userId, int inventoryId, int loanPeriod) throws DaoException {
+        List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
+        parametrizedQueries.add(new ParametrizedQuery(
+                MAKE_COPY_OF_BOOK_LOANED_BY_ID_QUERY,
+                inventoryId));
         parametrizedQueries.add(new ParametrizedQuery(
                 SAVE_LOAN_WITH_LAST_LOANED_COPY_QUERY,
                 new Date(),

@@ -17,6 +17,8 @@ public interface LoansService {
 
     boolean loanBook(int userId, String bookIsbn, int loanPeriod) throws ServiceException;
 
+    boolean loanByInventoryId(int userId, int inventoryId, int loanPeriod) throws ServiceException;
+
     boolean loanFromReservation(int reservationId, int loanPeriod) throws ServiceException;
 
     void returnBook(int loanId, BigDecimal fineRate) throws ServiceException;

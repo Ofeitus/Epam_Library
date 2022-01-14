@@ -20,6 +20,8 @@ public interface LoanDao extends AbstractDao<Loan> {
 
     int loan(int userId, String bookIsbn, int loanPeriod) throws DaoException;
 
+    int loanByInventoryId(int userId, int inventoryId, int loanPeriod) throws DaoException;
+
     int loanFromReservation(Reservation reservation, int loanPeriod) throws DaoException;
 
     int returnNoFine(Loan loan) throws DaoException;

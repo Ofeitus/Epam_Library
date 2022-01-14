@@ -41,6 +41,7 @@ public class CommandFactory {
         put(CommandName.RESERVE_BOOK_COMMAND, new ReserveBookCommand());
         put(CommandName.CANCEL_RESERVATION_COMMAND, new CancelReservationCommand());
         put(CommandName.ISSUE_BOOK_COMMAND, new IssueBookCommand());
+        put(CommandName.ISSUE_BY_INVENTORY_ID_COMMAND, new IssueByInventoryIdCommand());
         put(CommandName.ISSUE_RESERVED_BOOK_COMMAND, new IssueReservedBookCommand());
         put(CommandName.RETURN_LOANED_BOOK_COMMAND, new ReturnLoanedBookCommand());
         put(CommandName.PAY_FINE_COMMAND, new PayFineCommand());

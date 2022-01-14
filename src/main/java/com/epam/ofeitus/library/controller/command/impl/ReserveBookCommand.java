@@ -37,6 +37,10 @@ public class ReserveBookCommand implements Command {
             return new CommandResult("/controller?command=goto-book-details-page&book-isbn=" + bookIsbn, RoutingType.REDIRECT);
         } catch (ServiceException e) {
             logger.error("Unable to cancel reservation.", e);
+            session.setAttribute(SessionAttribute.ERROR, "No copies available");
+            if (e.getCause().getCause().getMessage().contains("foreign key constraint fails")) {
+                return new CommandResult("/controller?command=goto-book-details-page&book-isbn=" + bookIsbn, RoutingType.REDIRECT);
+            }
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
     }

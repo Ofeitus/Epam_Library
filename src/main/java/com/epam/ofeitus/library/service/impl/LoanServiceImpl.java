@@ -115,6 +115,16 @@ public class LoanServiceImpl implements LoansService {
     }
 
     @Override
+    public boolean loanByInventoryId(int userId, int inventoryId, int loanPeriod) throws ServiceException {
+        LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
+        try {
+            return loanDao.loanByInventoryId(userId, inventoryId, loanPeriod) != -1;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public boolean loanFromReservation(int reservationId, int loanPeriod) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         ReservationDao reservationDao = daoFactory.getReservationDao();

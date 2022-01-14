@@ -9,6 +9,11 @@
     margin: 25px 0;
 }
 
+.manage-members-forms {
+    display: flex;
+    justify-content: space-between;
+}
+
 .manage-members-container .form-container {
     margin: 20px 0;
 }

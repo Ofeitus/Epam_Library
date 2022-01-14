@@ -12,7 +12,32 @@
 </head>
 <body>
 <jsp:include page="../tamplate/header.jsp" />
-<div class="table-container">
+<c:if test="${sessionScope.user_role == 'MANAGER'}">
+    <div class="loan-forms">
+        <div class="form-container" style="width: 60%">
+            <h3 class="title"><fmt:message key="user-loans.issue-by-inventory-id" /></h3>
+            <form class="form-horizontal" action="controller" method="get">
+                <input type="hidden" name="command" value="issue-by-inventory-id">
+                <input type="hidden" name="user-id" value="${requestScope.user_id}">
+                <div class="form-group" style="width: 100%">
+                    <label><fmt:message key="inventory-book.inventory-id" /></label>
+                    <input type="number" name="inventory-id" value="0" class="form-control" required placeholder="<fmt:message key="inventory-book.inventory-id-placeholder" />">
+                </div>
+                <c:if test="${sessionScope.error != null}">
+                    <div class="w-100 row justify-content-left">
+                        <label class="error-message">${sessionScope.error}</label>
+                            ${sessionScope.remove("error")}
+                    </div>
+                </c:if>
+                <div class="w-100 row justify-content-end search-buttons">
+                    <button type="submit" class="h-50 col-3 btn submit"><fmt:message key="book-details.issue-book" /></button>
+                </div>
+            </form>
+        </div>
+        <img style="align-self: center; height: 245px" src="${pageContext.request.contextPath}/images/book-pusheen2.png" alt="">
+    </div>
+</c:if>
+<div class="table-container" style="margin-top: 20px">
     <c:if test="${requestScope.loans.size() == 0}">
         <h3>
             <c:if test="${sessionScope.user_role == 'MANAGER'}">
