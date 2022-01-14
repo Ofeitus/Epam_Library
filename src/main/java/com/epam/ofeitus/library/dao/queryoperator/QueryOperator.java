@@ -12,6 +12,8 @@ public interface QueryOperator<T> {
 
     List<T> executeQuery(String query, Object... params) throws DaoException;
 
+    int executeCountQuery(String query, Object... params) throws DaoException;
+
     T executeSingleEntityQuery(String query, Object... params) throws DaoException;
 
     int executeUpdate(String query, Object... params) throws DaoException;

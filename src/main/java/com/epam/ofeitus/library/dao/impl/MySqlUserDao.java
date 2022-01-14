@@ -37,7 +37,11 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
             Table.USER_TABLE,
             Column.USER_EMAIL);
     private static final String FIND_BY_ROLE_ID_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=?",
+            "SELECT * FROM %s WHERE %s=? LIMIT ?, ?",
+            Table.USER_TABLE,
+            Column.USER_ROLE_ID);
+    private static final String COUNT_BY_ROLE_ID_QUERY = String.format(
+            "SELECT COUNT(*) FROM %s WHERE %s=?",
             Table.USER_TABLE,
             Column.USER_ROLE_ID);
     private static final String FIND_ALL_QUERY = String.format(
@@ -59,7 +63,7 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
     }
 
     @Override
-    public List<User> findAllExisting() throws DaoException {
+    public List<User> findAll() throws DaoException {
         return queryOperator.executeQuery(FIND_ALL_QUERY);
     }
 
@@ -95,12 +99,17 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
     }
 
     @Override
-    public List<User> findByRoleId(int roleId) throws DaoException {
-        return queryOperator.executeQuery(FIND_BY_ROLE_ID_QUERY, roleId);
+    public List<User> findByRoleId(int roleId, int offset, int itemsOnPage) throws DaoException {
+        return queryOperator.executeQuery(FIND_BY_ROLE_ID_QUERY, roleId, offset, itemsOnPage);
     }
 
     @Override
-    public List<User> findBySearchRequest(int userId, String email) throws DaoException {
+    public int countByRoleId(int roleId) throws DaoException {
+        return queryOperator.executeCountQuery(COUNT_BY_ROLE_ID_QUERY, roleId);
+    }
+
+    @Override
+    public List<User> findBySearchRequest(int userId, String email, int offset, int itemsOnPage) throws DaoException {
         List<Object> parameters = new ArrayList<>();
 
         String FIND_BY_SEARCH_REQUEST_QUERY = String.format(
@@ -127,7 +136,45 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
                 Column.USER_ID
         );
 
+        FIND_BY_SEARCH_REQUEST_QUERY += "LIMIT ?, ?";
+        parameters.add(offset);
+        parameters.add(itemsOnPage);
+
         return queryOperator.executeQuery(
+                FIND_BY_SEARCH_REQUEST_QUERY,
+                parameters.toArray()
+        );
+    }
+
+    @Override
+    public int countBySearchRequest(int userId, String email) throws DaoException {
+        List<Object> parameters = new ArrayList<>();
+
+        String FIND_BY_SEARCH_REQUEST_QUERY = String.format(
+                "SELECT COUNT(*) FROM %s WHERE %s='3' ",
+                Table.USER_TABLE,
+                Column.USER_ROLE_ID);
+
+        if (!email.equals("")) {
+            FIND_BY_SEARCH_REQUEST_QUERY += String.format(
+                    "AND %s=? ",
+                    Column.USER_EMAIL);
+            parameters.add(email);
+        }
+
+        if (userId != 0) {
+            FIND_BY_SEARCH_REQUEST_QUERY += String.format(
+                    "AND %s=? ",
+                    Column.USER_ID);
+            parameters.add(userId);
+        }
+
+        FIND_BY_SEARCH_REQUEST_QUERY += String.format(
+                "ORDER BY %s",
+                Column.USER_ID
+        );
+
+        return queryOperator.executeCountQuery(
                 FIND_BY_SEARCH_REQUEST_QUERY,
                 parameters.toArray()
         );

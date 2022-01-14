@@ -16,9 +16,13 @@ public interface UserService {
 
     int editPersonalData(int id, String name, String surname, String phoneNumber) throws ServiceException;
 
-    List<User> getAllMembers() throws ServiceException;
+    List<User> getAllMembers(int page, int itemsOnPage) throws ServiceException;
+
+    int countAllMembers() throws ServiceException;
 
     User getByUserId(int userId) throws ServiceException;
 
-    List<User> getMemberBySearchRequest(int userId, String email) throws ServiceException;
+    List<User> getMemberBySearchRequest(int userId, String email, int page, int itemsOnPage) throws ServiceException;
+
+    int countMembersBySearchRequest(int userId, String email) throws ServiceException;
 }

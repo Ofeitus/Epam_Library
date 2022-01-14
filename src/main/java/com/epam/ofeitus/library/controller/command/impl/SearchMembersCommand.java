@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 
 public class SearchMembersCommand implements Command {
     Logger logger = LogManager.getLogger(SearchMembersCommand.class);
@@ -34,15 +35,26 @@ public class SearchMembersCommand implements Command {
             logger.warn("Wrong search parameters.", e);
         }
 
-        session.setAttribute(SessionAttribute.URL,
-                "/controller?command=goto-manage-members-page" +
-                        "&email=" + email +
-                        "&user-id=" + userId);
-
         UserService userService = ServiceFactory.getInstance().getUserService();
+
+        int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
+        int itemsOnPage = 10;
+
+        String command = "?command=goto-manage-members-page" +
+                "&email=" + email +
+                "&user-id=" + userId;
+        session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
+        session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
+
         try {
-            // TODO Pagination
-            List<User> users = userService.getMemberBySearchRequest(userId, email);
+            List<User> users = userService.getMemberBySearchRequest(userId, email, page, itemsOnPage);
+            int itemsCount = userService.countMembersBySearchRequest(userId, email);
+            int pagesCount = itemsCount / itemsOnPage;
+            if (itemsCount % itemsOnPage != 0) {
+                pagesCount++;
+            }
+            request.setAttribute(RequestAttribute.CURRENT_PAGE, page);
+            request.setAttribute(RequestAttribute.PAGES_COUNT, pagesCount);
             request.setAttribute(RequestAttribute.USERS, users);
             return new CommandResult(Page.MANAGE_MEMBERS_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {

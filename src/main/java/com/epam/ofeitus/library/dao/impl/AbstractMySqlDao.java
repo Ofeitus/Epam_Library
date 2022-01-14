@@ -30,7 +30,7 @@ public abstract class AbstractMySqlDao<T> implements AbstractDao<T> {
     }
 
     @Override
-    public List<T> findAllExisting() throws DaoException {
+    public List<T> findAll() throws DaoException {
         return queryOperator.executeQuery(FIND_ALL_QUERY);
     }
 

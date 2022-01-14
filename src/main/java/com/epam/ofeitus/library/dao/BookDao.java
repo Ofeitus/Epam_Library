@@ -21,5 +21,7 @@ public interface BookDao extends AbstractDao<Book> {
 
     List<Book> findByCategoryId(int categoryId) throws DaoException;
 
-    List<Book> findBySearchRequest(String searchRequest, int categoryId, int authorId, int yearFrom, int yearTo) throws DaoException;
+    List<Book> findBySearchRequest(String searchRequest, int categoryId, int authorId, int yearFrom, int yearTo, int offset, int itemsOnPage) throws DaoException;
+
+    int countBySearchRequest(String searchRequest, int categoryId, int authorId, int yearFrom, int yearTo) throws DaoException;
 }

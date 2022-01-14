@@ -7,9 +7,13 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface LoansService {
-    List<LoanDto> getLoansDtoByUserId(int userId) throws ServiceException;
+    List<LoanDto> getLoansDtoByUserId(int userId, int page, int itemsOnPage) throws ServiceException;
 
-    List<LoanDto> getLoansDtoByUserIdWithFine(int userId) throws ServiceException;
+    int countLoansDtoByUserId(int userId) throws ServiceException;
+
+    List<LoanDto> getLoansDtoByUserIdWithFine(int userId, int page, int itemsOnPage) throws ServiceException;
+
+    int countLoansDtoByUserIdWithFine(int userId) throws ServiceException;
 
     int getDebtsCountByUserId(int userId) throws ServiceException;
 

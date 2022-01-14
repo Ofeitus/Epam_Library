@@ -62,6 +62,15 @@
         </c:forEach>
         </tbody>
     </table>
+    <div class="pages-navigation">
+        <c:if test="${requestScope.current_page != 1}">
+            <a href="${sessionScope.url_without_page}${"&page="}${requestScope.current_page - 1}"><i class="bi bi-arrow-left-circle-fill"></i></a>
+        </c:if>
+        &nbsp;<span><fmt:message key="catalog.page" /> ${requestScope.current_page} <fmt:message key="catalog.of" /> ${requestScope.pages_count}</span>&nbsp;
+        <c:if test="${requestScope.current_page < requestScope.pages_count}">
+            <a href="${sessionScope.url_without_page}${"&page="}${requestScope.current_page + 1}"><i class="bi bi-arrow-right-circle-fill"></i></a>
+        </c:if>
+    </div>
 </div>
 <jsp:include page="../tamplate/footer.jsp" />
 </body>

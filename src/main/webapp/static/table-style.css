@@ -34,3 +34,22 @@
     font-size: 12px;
     margin-right: 5px;
 }
+
+.pages-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.pages-navigation a {
+    font-size: 30px;
+    color: #5f5148;
+    transition: all 0.3s ease;
+}
+
+.pages-navigation a:hover {
+    font-size: 30px;
+    color: #8c7d6a;
+}

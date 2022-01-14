@@ -65,19 +65,31 @@
             <c:if test="${requestScope.books.size() == 0}">
                 <h3><fmt:message key="catalog.no-search-results" /></h3>
             </c:if>
-            <c:forEach items="${requestScope.books}" var="book">
-                <div class="book-item">
-                    <a class="book-link" href="?command=goto-book-details-page&book-isbn=${book.isbn}"></a>
-                    <img onerror="$(this).attr('src', '${pageContext.request.contextPath}/images/book-placeholder.png');" src="${pageContext.request.contextPath}/images/books/${book.isbn}.jpg" alt="">
-                    <a class="book-title">${book.title}</a>
-                    <p class="book-authors">
-                        <c:forEach items="${book.authors}" var="author">
-                            ${author.name}&nbsp;${author.surname},&nbsp;
-                        </c:forEach>
-                        ${book.publicationYear}
-                    </p>
-                </div>
-            </c:forEach>
+            <div class="items-container">
+                <c:forEach items="${requestScope.books}" var="book">
+                    <div class="book-item">
+                        <a class="book-link" href="?command=goto-book-details-page&book-isbn=${book.isbn}"></a>
+                        <img onerror="$(this).attr('src', '${pageContext.request.contextPath}/images/book-placeholder.png');"
+                             src="${pageContext.request.contextPath}/images/books/${book.isbn}.jpg" alt="">
+                        <a class="book-title">${book.title}</a>
+                        <p class="book-authors">
+                            <c:forEach items="${book.authors}" var="author">
+                                ${author.name}&nbsp;${author.surname},&nbsp;
+                            </c:forEach>
+                                ${book.publicationYear}
+                        </p>
+                    </div>
+                </c:forEach>
+            </div>
+            <div class="pages-navigation">
+                <c:if test="${requestScope.current_page != 1}">
+                    <a href="${sessionScope.url_without_page}${"&page="}${requestScope.current_page - 1}"><i class="bi bi-arrow-left-circle-fill"></i></a>
+                </c:if>
+                &nbsp;<span><fmt:message key="catalog.page" /> ${requestScope.current_page} <fmt:message key="catalog.of" /> ${requestScope.pages_count}</span>&nbsp;
+                <c:if test="${requestScope.current_page < requestScope.pages_count}">
+                    <a href="${sessionScope.url_without_page}${"&page="}${requestScope.current_page + 1}"><i class="bi bi-arrow-right-circle-fill"></i></a>
+                </c:if>
+            </div>
         </div>
     </c:if>
 </div>

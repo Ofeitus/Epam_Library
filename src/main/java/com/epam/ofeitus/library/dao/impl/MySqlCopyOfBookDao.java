@@ -27,7 +27,12 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
             Column.COPY_OF_BOOK_STATUS_ID,
             Column.COPY_OF_BOOK_INVENTORY_ID);
     private static final String FIND_ALL_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s!='5' ORDER BY %s",
+            "SELECT * FROM %s WHERE %s!='5' ORDER BY %s LIMIT ?, ?",
+            Table.COPY_OF_BOOK_TABLE,
+            Column.COPY_OF_BOOK_STATUS_ID,
+            Column.COPY_OF_BOOK_INVENTORY_ID);
+    private static final String COUNT_ALL_QUERY = String.format(
+            "SELECT COUNT(*) FROM %s WHERE %s!='5' ORDER BY %s",
             Table.COPY_OF_BOOK_TABLE,
             Column.COPY_OF_BOOK_STATUS_ID,
             Column.COPY_OF_BOOK_INVENTORY_ID);
@@ -86,8 +91,13 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
     }
 
     @Override
-    public List<CopyOfBook> findAllExisting() throws DaoException {
-        return queryOperator.executeQuery(FIND_ALL_QUERY);
+    public List<CopyOfBook> findAllExisting(int offset, int itemsOnPage) throws DaoException {
+        return queryOperator.executeQuery(FIND_ALL_QUERY, offset, itemsOnPage);
+    }
+
+    @Override
+    public int countAllExisting() throws DaoException {
+        return queryOperator.executeCountQuery(COUNT_ALL_QUERY);
     }
 
     @Override
@@ -101,7 +111,7 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
     }
 
     @Override
-    public List<CopyOfBook> findBySearchRequest(String bookIsbn, int inventoryId, int statusId) throws DaoException {
+    public List<CopyOfBook> findBySearchRequest(String bookIsbn, int inventoryId, int statusId, int offset, int itemsOnPage) throws DaoException {
         List<Object> parameters = new ArrayList<>();
 
         String FIND_BY_SEARCH_REQUEST_QUERY = String.format(
@@ -139,11 +149,64 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
         }
 
         FIND_BY_SEARCH_REQUEST_QUERY += String.format(
+                "ORDER BY %s ",
+                Column.COPY_OF_BOOK_INVENTORY_ID
+        );
+
+        FIND_BY_SEARCH_REQUEST_QUERY += "LIMIT ?, ?";
+        parameters.add(offset);
+        parameters.add(itemsOnPage);
+
+        return queryOperator.executeQuery(
+                FIND_BY_SEARCH_REQUEST_QUERY,
+                parameters.toArray()
+        );
+    }
+
+    @Override
+    public int countBySearchRequest(String bookIsbn, int inventoryId, int statusId) throws DaoException {
+        List<Object> parameters = new ArrayList<>();
+
+        String FIND_BY_SEARCH_REQUEST_QUERY = String.format(
+                "SELECT COUNT(*) FROM %s ",
+                Table.COPY_OF_BOOK_TABLE);
+
+        if (!bookIsbn.equals("")) {
+            FIND_BY_SEARCH_REQUEST_QUERY += String.format(
+                    "WHERE %s=? ",
+                    Column.COPY_OF_BOOK_ISBN);
+            parameters.add(bookIsbn);
+        } else {
+            FIND_BY_SEARCH_REQUEST_QUERY += "WHERE 1=1 ";
+        }
+
+        if (inventoryId != 0) {
+            FIND_BY_SEARCH_REQUEST_QUERY += String.format(
+                    "AND %s=? ",
+                    Column.COPY_OF_BOOK_INVENTORY_ID);
+            parameters.add(inventoryId);
+        }
+
+        if (statusId != 0) {
+            if (statusId == 5) {
+                FIND_BY_SEARCH_REQUEST_QUERY += String.format(
+                        "AND %s=? ",
+                        Column.COPY_OF_BOOK_STATUS_ID);
+                parameters.add(statusId);
+            } else {
+                FIND_BY_SEARCH_REQUEST_QUERY += String.format(
+                        "AND %s!=? ",
+                        Column.COPY_OF_BOOK_STATUS_ID);
+                parameters.add(-statusId);
+            }
+        }
+
+        FIND_BY_SEARCH_REQUEST_QUERY += String.format(
                 "ORDER BY %s",
                 Column.COPY_OF_BOOK_INVENTORY_ID
         );
 
-        return queryOperator.executeQuery(
+        return queryOperator.executeCountQuery(
                 FIND_BY_SEARCH_REQUEST_QUERY,
                 parameters.toArray()
         );

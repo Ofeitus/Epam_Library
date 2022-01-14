@@ -12,7 +12,9 @@ import java.util.List;
 public interface BookService {
     List<BookDto> getAllBooksDto() throws ServiceException;
 
-    List<BookDto> getBooksDtoBySearchRequest(String searchRequest, String category, String authorName, String authorSurname, int yearFrom, int yearTo) throws ServiceException;
+    List<BookDto> getBooksDtoBySearchRequest(String searchRequest, String category, String authorName, String authorSurname, int yearFrom, int yearTo, int page, int itemsOnPage) throws ServiceException;
+
+    int countBooksBySearchRequest(String searchRequest, String category, String authorName, String authorSurname, int yearFrom, int yearTo) throws ServiceException;
 
     BookDto getBookDtoByIsbn(String bookIsbn) throws ServiceException;
 
@@ -28,9 +30,13 @@ public interface BookService {
 
     void deleteBook(String bookIsbn) throws ServiceException;
 
-    List<CopyOfBookDto> getAllCopiesOfBooks() throws ServiceException;
+    List<CopyOfBookDto> getAllCopiesOfBooks(int page, int itemsOnPage) throws ServiceException;
 
-    List<CopyOfBookDto> getCopiesOfBooksBySearchRequest(String bookIsbn, int inventoryId, int statusId) throws ServiceException;
+    int countAllCopiesOfBooks() throws ServiceException;
+
+    List<CopyOfBookDto> getCopiesOfBooksBySearchRequest(String bookIsbn, int inventoryId, int statusId, int page, int itemsOnPage) throws ServiceException;
+
+    int countCopiesOfBooksBySearchRequest(String bookIsbn, int inventoryId, int statusId) throws ServiceException;
 
     void writeOffCopiesOfBooks(int fromInventoryId, int toInventoryId) throws ServiceException;
 

@@ -32,7 +32,7 @@ public class BookServiceImpl implements BookService {
         BookCategoryDao bookCategoryDao = MySqlDaoFactory.getInstance().getBookCategoryDao();
 
         try {
-            List<Book> books = bookDao.findAllExisting();
+            List<Book> books = bookDao.findAll();
             List<BookDto> booksDto = new ArrayList<>();
             for (Book book : books) {
                 List<Author> authors = authorDao.findByBookIsbn(book.getIsbn());
@@ -53,7 +53,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> getBooksDtoBySearchRequest(String searchRequest, String category, String authorName, String authorSurname, int yearFrom, int yearTo) throws ServiceException {
+    public List<BookDto> getBooksDtoBySearchRequest(String searchRequest, String category, String authorName, String authorSurname, int yearFrom, int yearTo, int page, int itemsOnPage) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         BookDao bookDao = daoFactory.getBookDao();
         AuthorDao authorDao = daoFactory.getAuthorDao();
@@ -66,7 +66,9 @@ public class BookServiceImpl implements BookService {
             BookCategory bookCategory = bookCategoryDao.findByName(category);
             int categoryId = bookCategory != null ? bookCategory.getCategoryId() : 0;
 
-            List<Book> books = bookDao.findBySearchRequest(searchRequest, categoryId, authorId, yearFrom, yearTo);
+            int offset = (page - 1) * itemsOnPage;
+
+            List<Book> books = bookDao.findBySearchRequest(searchRequest, categoryId, authorId, yearFrom, yearTo, offset, itemsOnPage);
             List<BookDto> booksDto = new ArrayList<>();
             for (Book book : books) {
                 List<Author> authors = authorDao.findByBookIsbn(book.getIsbn());
@@ -82,6 +84,26 @@ public class BookServiceImpl implements BookService {
                 );
             }
             return booksDto;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int countBooksBySearchRequest(String searchRequest, String category, String authorName, String authorSurname, int yearFrom, int yearTo) throws ServiceException {
+        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
+        BookDao bookDao = daoFactory.getBookDao();
+        AuthorDao authorDao = daoFactory.getAuthorDao();
+        BookCategoryDao bookCategoryDao = daoFactory.getBookCategoryDao();
+
+        try {
+            Author author = authorDao.findByName(authorName, authorSurname);
+            int authorId = author != null ? author.getAuthorId() : 0;
+
+            BookCategory bookCategory = bookCategoryDao.findByName(category);
+            int categoryId = bookCategory != null ? bookCategory.getCategoryId() : 0;
+
+            return bookDao.countBySearchRequest(searchRequest, categoryId, authorId, yearFrom, yearTo);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -139,7 +161,7 @@ public class BookServiceImpl implements BookService {
         BookCategoryDao bookCategoryDao = MySqlDaoFactory.getInstance().getBookCategoryDao();
 
         try {
-            return bookCategoryDao.findAllExisting();
+            return bookCategoryDao.findAll();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -204,14 +226,16 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<CopyOfBookDto> getAllCopiesOfBooks() throws ServiceException {
+    public List<CopyOfBookDto> getAllCopiesOfBooks(int page, int itemsOnPage) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         CopyOfBookDao copyOfBookDao = daoFactory.getCopyOfBookDao();
         ReservationDao reservationDao = daoFactory.getReservationDao();
         LoanDao loanDao = daoFactory.getLoanDao();
 
         try {
-            List<CopyOfBook> copiesOfBooks = copyOfBookDao.findAllExisting();
+            int offset = (page - 1) * itemsOnPage;
+
+            List<CopyOfBook> copiesOfBooks = copyOfBookDao.findAllExisting(offset, itemsOnPage);
             List<CopyOfBookDto> copiesOfBooksDto = new ArrayList<>();
             for (CopyOfBook copyOfBook : copiesOfBooks) {
                 int userId = 0;
@@ -244,14 +268,27 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<CopyOfBookDto> getCopiesOfBooksBySearchRequest(String bookIsbn, int inventoryId, int statusId) throws ServiceException {
+    public int countAllCopiesOfBooks() throws ServiceException {
+        CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
+
+        try {
+            return copyOfBookDao.countAllExisting();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<CopyOfBookDto> getCopiesOfBooksBySearchRequest(String bookIsbn, int inventoryId, int statusId, int page, int itemsOnPage) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         CopyOfBookDao copyOfBookDao = daoFactory.getCopyOfBookDao();
         ReservationDao reservationDao = daoFactory.getReservationDao();
         LoanDao loanDao = daoFactory.getLoanDao();
 
         try {
-            List<CopyOfBook> copiesOfBooks = copyOfBookDao.findBySearchRequest(bookIsbn, inventoryId, statusId);
+            int offset = (page - 1) * itemsOnPage;
+
+            List<CopyOfBook> copiesOfBooks = copyOfBookDao.findBySearchRequest(bookIsbn, inventoryId, statusId, offset, itemsOnPage);
             List<CopyOfBookDto> copiesOfBooksDto = new ArrayList<>();
             for (CopyOfBook copyOfBook : copiesOfBooks) {
                 int userId = 0;
@@ -277,6 +314,17 @@ public class BookServiceImpl implements BookService {
                 );
             }
             return copiesOfBooksDto;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int countCopiesOfBooksBySearchRequest(String bookIsbn, int inventoryId, int statusId) throws ServiceException {
+        CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
+
+        try {
+            return copyOfBookDao.countBySearchRequest(bookIsbn, inventoryId, statusId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

@@ -19,14 +19,16 @@ import java.util.List;
 
 public class ReservationsServiceImpl implements ReservationsService {
     @Override
-    public List<ReservationDto> getReservationsDtoByUserId(int userId) throws ServiceException {
+    public List<ReservationDto> getReservationsDtoByUserId(int userId, int page, int itemsOnPage) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         ReservationDao reservationDao = daoFactory.getReservationDao();
         CopyOfBookDao copyOfBookDao = daoFactory.getCopyOfBookDao();
         BookDao bookDao = daoFactory.getBookDao();
 
         try {
-            List<Reservation> reservations = reservationDao.findByUserId(userId);
+            int offset = (page - 1) * itemsOnPage;
+
+            List<Reservation> reservations = reservationDao.findByUserId(userId, offset, itemsOnPage);
             List<ReservationDto> reservationsDto = new ArrayList<>();
             for (Reservation reservation : reservations) {
                 CopyOfBook copyOfBook = copyOfBookDao.findById(reservation.getInventoryId());
@@ -42,6 +44,17 @@ public class ReservationsServiceImpl implements ReservationsService {
                 );
             }
             return reservationsDto;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int countReservationsDtoByUserId(int userId) throws ServiceException {
+        ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
+
+        try {
+            return reservationDao.countByUserId(userId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

@@ -50,6 +50,23 @@ public class MySqlQueryOperator<T> implements QueryOperator<T> {
     }
 
     @Override
+    public int executeCountQuery(String query, Object... params) throws DaoException {
+        try (Connection connection = ConnectionPool.getInstance().takeConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            setStatementParams(statement, params);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt("COUNT(*)");
+        } catch (SQLException e) {
+            logger.error("Unable to execute select query.", e);
+            throw new DaoException("Unable to execute select query.", e);
+        } catch (ConnectionPoolException e) {
+            logger.error("Unable to get connection.", e);
+            throw new DaoException("Unable to get connection.", e);
+        }
+    }
+
+    @Override
     public T executeSingleEntityQuery(String query, Object... params) throws DaoException {
         List<T> result = executeQuery(query, params);
         if (result.size() > 0) {

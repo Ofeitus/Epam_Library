@@ -31,7 +31,12 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
             Column.RESERVATION_STATUS_ID,
             Column.RESERVATION_ID);
     private static final String FIND_BY_USER_ID_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=? ORDER BY %s DESC",
+            "SELECT * FROM %s WHERE %s=? ORDER BY %s DESC LIMIT ?, ?",
+            Table.RESERVATION_TABLE,
+            Column.RESERVATION_USER_ID,
+            Column.RESERVATION_DATE);
+    private static final String COUNT_BY_USER_ID_QUERY = String.format(
+            "SELECT COUNT(*) FROM %s WHERE %s=? ORDER BY %s DESC",
             Table.RESERVATION_TABLE,
             Column.RESERVATION_USER_ID,
             Column.RESERVATION_DATE);
@@ -90,8 +95,13 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
     }
 
     @Override
-    public List<Reservation> findByUserId(int userId) throws DaoException {
-        return queryOperator.executeQuery(FIND_BY_USER_ID_QUERY, userId);
+    public List<Reservation> findByUserId(int userId, int offset, int itemsOnPage) throws DaoException {
+        return queryOperator.executeQuery(FIND_BY_USER_ID_QUERY, userId, offset, itemsOnPage);
+    }
+
+    @Override
+    public int countByUserId(int userId) throws DaoException {
+        return queryOperator.executeCountQuery(COUNT_BY_USER_ID_QUERY, userId);
     }
 
     @Override

@@ -52,7 +52,13 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Column.LOAN_STATUS_ID,
             Column.LOAN_ID);
     private static final String FIND_BY_USER_ID_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=? ORDER BY %s DESC, %s",
+            "SELECT * FROM %s WHERE %s=? ORDER BY %s DESC, %s LIMIT ?, ?",
+            Table.LOAN_TABLE,
+            Column.LOAN_USER_ID,
+            Column.LOAN_ISSUE_DATE,
+            Column.LOAN_STATUS_ID);
+    private static final String COUNT_BY_USER_ID_QUERY = String.format(
+            "SELECT COUNT(*) FROM %s WHERE %s=? ORDER BY %s DESC, %s",
             Table.LOAN_TABLE,
             Column.LOAN_USER_ID,
             Column.LOAN_ISSUE_DATE,
@@ -68,7 +74,14 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Column.LOAN_USER_ID,
             Column.LOAN_STATUS_ID);
     private static final String FIND_BY_USER_ID_WITH_FINE_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=? AND (%s='3' OR %s='4') ORDER BY %s DESC",
+            "SELECT * FROM %s WHERE %s=? AND (%s='3' OR %s='4') ORDER BY %s DESC LIMIT ?, ?",
+            Table.LOAN_TABLE,
+            Column.LOAN_USER_ID,
+            Column.LOAN_STATUS_ID,
+            Column.LOAN_STATUS_ID,
+            Column.LOAN_ISSUE_DATE);
+    private static final String COUNT_BY_USER_ID_WITH_FINE_QUERY = String.format(
+            "SELECT COUNT(*) FROM %s WHERE %s=? AND (%s='3' OR %s='4') ORDER BY %s DESC",
             Table.LOAN_TABLE,
             Column.LOAN_USER_ID,
             Column.LOAN_STATUS_ID,
@@ -142,8 +155,13 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
     }
 
     @Override
-    public List<Loan> findByUserId(int userId) throws DaoException {
-        return queryOperator.executeQuery(FIND_BY_USER_ID_QUERY, userId);
+    public List<Loan> findByUserId(int userId, int offset, int itemsOnPage) throws DaoException {
+        return queryOperator.executeQuery(FIND_BY_USER_ID_QUERY, userId, offset, itemsOnPage);
+    }
+
+    @Override
+    public int countByUserId(int userId) throws DaoException {
+        return queryOperator.executeCountQuery(COUNT_BY_USER_ID_QUERY, userId);
     }
 
     @Override
@@ -152,8 +170,13 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
     }
 
     @Override
-    public List<Loan> findByUserIdWithFine(int userId) throws DaoException {
-        return queryOperator.executeQuery(FIND_BY_USER_ID_WITH_FINE_QUERY, userId);
+    public List<Loan> findByUserIdWithFine(int userId, int offset, int itemsOnPage) throws DaoException {
+        return queryOperator.executeQuery(FIND_BY_USER_ID_WITH_FINE_QUERY, userId, offset, itemsOnPage);
+    }
+
+    @Override
+    public int countByUserIdWithFine(int userId) throws DaoException {
+        return queryOperator.executeCountQuery(COUNT_BY_USER_ID_WITH_FINE_QUERY, userId);
     }
 
     @Override

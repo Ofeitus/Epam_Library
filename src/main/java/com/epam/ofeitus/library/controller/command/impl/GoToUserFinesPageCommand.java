@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 
 public class GoToUserFinesPageCommand implements Command {
     Logger logger = LogManager.getLogger(GoToUserFinesPageCommand.class);
@@ -35,12 +36,24 @@ public class GoToUserFinesPageCommand implements Command {
             userId = Integer.parseInt(requestUserId);
         }
 
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-user-fines-page&user-id=" + userId);
-
         LoansService loansService = ServiceFactory.getInstance().getLoansService();
+
+        int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
+        int itemsOnPage = 10;
+
+        String command = "?command=goto-user-fines-page&user-id=" + userId;
+        session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
+        session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
+
         try {
-            // TODO Pagination
-            List<LoanDto> fines = loansService.getLoansDtoByUserIdWithFine(userId);
+            List<LoanDto> fines = loansService.getLoansDtoByUserIdWithFine(userId, page, itemsOnPage);
+            int itemsCount = loansService.countLoansDtoByUserIdWithFine(userId);
+            int pagesCount = itemsCount / itemsOnPage;
+            if (itemsCount % itemsOnPage != 0) {
+                pagesCount++;
+            }
+            request.setAttribute(RequestAttribute.CURRENT_PAGE, page);
+            request.setAttribute(RequestAttribute.PAGES_COUNT, pagesCount);
             request.setAttribute(RequestAttribute.FINES, fines);
             request.setAttribute(RequestAttribute.USER_ID, userId);
             return new CommandResult(Page.USER_FINES_PAGE, RoutingType.FORWARD);

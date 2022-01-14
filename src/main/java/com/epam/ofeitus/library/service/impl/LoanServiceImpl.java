@@ -20,14 +20,16 @@ import java.util.List;
 
 public class LoanServiceImpl implements LoansService {
     @Override
-    public List<LoanDto> getLoansDtoByUserId(int userId) throws ServiceException {
+    public List<LoanDto> getLoansDtoByUserId(int userId, int page, int itemsOnPage) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         LoanDao loanDao = daoFactory.getLoanDao();
         CopyOfBookDao copyOfBookDao = daoFactory.getCopyOfBookDao();
         BookDao bookDao = daoFactory.getBookDao();
 
         try {
-            List<Loan> loans = loanDao.findByUserId(userId);
+            int offset = (page - 1) * itemsOnPage;
+
+            List<Loan> loans = loanDao.findByUserId(userId, offset, itemsOnPage);
             List<LoanDto> loansDto = new ArrayList<>();
             for (Loan loan : loans) {
                 CopyOfBook copyOfBook = copyOfBookDao.findById(loan.getInventoryId());
@@ -52,14 +54,27 @@ public class LoanServiceImpl implements LoansService {
     }
 
     @Override
-    public List<LoanDto> getLoansDtoByUserIdWithFine(int userId) throws ServiceException {
+    public int countLoansDtoByUserId(int userId) throws ServiceException {
+        LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
+
+        try {
+            return loanDao.countByUserId(userId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<LoanDto> getLoansDtoByUserIdWithFine(int userId, int page, int itemsOnPage) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         LoanDao loanDao = daoFactory.getLoanDao();
         CopyOfBookDao copyOfBookDao = daoFactory.getCopyOfBookDao();
         BookDao bookDao = daoFactory.getBookDao();
 
         try {
-            List<Loan> loans = loanDao.findByUserIdWithFine(userId);
+            int offset = (page - 1) * itemsOnPage;
+
+            List<Loan> loans = loanDao.findByUserIdWithFine(userId, offset, itemsOnPage);
             List<LoanDto> loansDto = new ArrayList<>();
             for (Loan loan : loans) {
                 CopyOfBook copyOfBook = copyOfBookDao.findById(loan.getInventoryId());
@@ -78,6 +93,16 @@ public class LoanServiceImpl implements LoansService {
                 );
             }
             return loansDto;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int countLoansDtoByUserIdWithFine(int userId) throws ServiceException {
+        LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
+        try {
+            return loanDao.countByUserIdWithFine(userId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

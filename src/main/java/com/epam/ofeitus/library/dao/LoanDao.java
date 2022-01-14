@@ -8,11 +8,15 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface LoanDao extends AbstractDao<Loan> {
-    List<Loan> findByUserId(int userId) throws DaoException;
+    List<Loan> findByUserId(int userId, int offset, int itemsOnPage) throws DaoException;
+
+    int countByUserId(int userId) throws DaoException;
 
     List<Loan> findByInventoryId(int inventoryId) throws DaoException;
 
-    List<Loan> findByUserIdWithFine(int userId) throws DaoException;
+    List<Loan> findByUserIdWithFine(int userId, int offset, int itemsOnPage) throws DaoException;
+
+    int countByUserIdWithFine(int userId) throws DaoException;
 
     List<Loan> findDebtsByUserId(int userId) throws DaoException;
 

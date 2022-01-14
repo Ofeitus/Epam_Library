@@ -7,7 +7,9 @@ import com.epam.ofeitus.library.service.exception.ServiceException;
 import java.util.List;
 
 public interface ReservationsService {
-    List<ReservationDto> getReservationsDtoByUserId(int userId) throws ServiceException;
+    List<ReservationDto> getReservationsDtoByUserId(int userId, int page, int itemsOnPage) throws ServiceException;
+
+    int countReservationsDtoByUserId(int userId) throws ServiceException;
 
     int getReservationsCountByUserIdAndStatusId(int userId, int statusId) throws ServiceException;
 

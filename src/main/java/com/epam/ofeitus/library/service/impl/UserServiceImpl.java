@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
     public List<User> getAll() throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
         try {
-            return userDao.findAllExisting();
+            return userDao.findAll();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -77,10 +77,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllMembers() throws ServiceException {
+    public List<User> getAllMembers(int page, int itemsOnPage) throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
         try {
-            return userDao.findByRoleId(UserRole.MEMBER.ordinal() + 1);
+            int offset = (page - 1) * itemsOnPage;
+
+            return userDao.findByRoleId(UserRole.MEMBER.ordinal() + 1, offset, itemsOnPage);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int countAllMembers() throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+        try {
+            return userDao.countByRoleId(UserRole.MEMBER.ordinal() + 1);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -97,10 +109,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getMemberBySearchRequest(int userId, String email) throws ServiceException {
+    public List<User> getMemberBySearchRequest(int userId, String email, int page, int itemsOnPage) throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
         try {
-            return userDao.findBySearchRequest(userId, email);
+            int offset = (page - 1) * itemsOnPage;
+
+            return userDao.findBySearchRequest(userId, email, offset, itemsOnPage);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int countMembersBySearchRequest(int userId, String email) throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+        try {
+            return userDao.countBySearchRequest(userId, email);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

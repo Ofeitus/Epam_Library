@@ -27,4 +27,5 @@ public class RequestParameter {
     public static final String COPIES_COUNT = "copies-count";
     public static final String USER_ID = "user-id";
     public static final String LOAN_ID = "loan-id";
+    public static final String PAGE = "page";
 }
