@@ -28,7 +28,8 @@
                     </div>
                     <c:if test="${sessionScope.error != null}">
                         <div class="w-100 row justify-content-left">
-                            <label id="login-error-message">${sessionScope.error}</label>
+                            <label class="error-message">${sessionScope.error}</label>
+                            ${sessionScope.remove("error")}
                         </div>
                     </c:if>
                     <div class="w-100 row justify-content-between">
@@ -36,7 +37,7 @@
                             <fmt:message key="log-in.sign-up-offer" />
                             <a href="?command=goto-sign-up-page"><fmt:message key="log-in.sign-up" /></a>
                         </div>
-                        <button class="h-50 col-4 btn submit"><fmt:message key="log-in.log-in" /></button>
+                        <button class="h-50 col-3 btn submit"><fmt:message key="log-in.log-in" /></button>
                     </div>
                 </form>
             </div>

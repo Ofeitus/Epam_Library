@@ -36,7 +36,8 @@
                         </div>
                         <c:if test="${sessionScope.error != null}">
                             <div class="w-100 row justify-content-left">
-                                <label id="login-error-message">${sessionScope.error}</label>
+                                <label class="error-message">${sessionScope.error}</label>
+                                    ${sessionScope.remove("error")}
                             </div>
                         </c:if>
                         <div class="w-100 row justify-content-between">

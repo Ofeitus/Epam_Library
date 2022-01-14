@@ -8,6 +8,7 @@ public class Page {
     // common
     public static final String HOME_PAGE = "WEB-INF/pages/home.jsp";
     public static final String CATALOG_PAGE = "WEB-INF/pages/catalog.jsp";
+    public static final String CONTACTS_PAGE = "WEB-INF/pages/contacts.jsp";
     public static final String LOG_IN_PAGE = "WEB-INF/pages/log-in.jsp";
     public static final String SIGN_UP_PAGE = "WEB-INF/pages/sign-up.jsp";
     public static final String EDIT_PERSONAL_DATA_PAGE = "WEB-INF/pages/edit-personal-data.jsp";

@@ -100,7 +100,8 @@
                     </c:if>
                     <c:if test="${sessionScope.error != null}">
                         <div class="w-100 row justify-content-left">
-                            <label id="search-error-message">${sessionScope.error}</label>
+                            <label class="error-message">${sessionScope.error}</label>
+                                ${sessionScope.remove("error")}
                         </div>
                     </c:if>
                     <div class="w-100 row justify-content-end">
@@ -139,10 +140,46 @@
                     </c:if>
                     <div class="w-100 row justify-content-end">
                         <c:if test="${requestScope.copies_count > 0}">
-                            <button class="h-50 col-4 btn submit"><fmt:message key="book-details.view" /></button>
+                            <button class="h-50 col-3 btn submit"><fmt:message key="book-details.view" /></button>
                         </c:if>
                         <c:if test="${requestScope.copies_count == 0}">
-                            <button class="h-50 col-4 btn submit" disabled><fmt:message key="book-details.view" /></button>
+                            <button class="h-50 col-3 btn submit" disabled><fmt:message key="book-details.view" /></button>
+                        </c:if>
+                    </div>
+                </form>
+            </div>
+            <div class="form-container">
+                <h3 class="title"><fmt:message key="book-details.issue" /></h3>
+                <form class="form-horizontal" action="controller" method="get">
+                    <input type="hidden" name="command" value="issue-book">
+                    <input type="hidden" name="book-isbn" value="${requestScope.book.isbn}">
+                    <c:if test="${requestScope.available_copies_count > 0}">
+                        <div class="reservation-info">
+                            <label><fmt:message key="book-details.available-copies" />&nbsp;${requestScope.available_copies_count}</label>
+                        </div>
+                    </c:if>
+                    <c:if test="${requestScope.available_copies_count == 0}">
+                        <div class="reservation-info">
+                            <i class="bi bi-exclamation-triangle-fill" style="color: gold;"></i>
+                            <label><fmt:message key="book-details.no-available-copies" /></label>
+                        </div>
+                    </c:if>
+                    <div class="form-group" style="width: 100%">
+                        <label><fmt:message key="book-details.member-id" /></label>
+                        <input type="number" name="user-id" value="0" class="form-control" required placeholder="<fmt:message key="manage-users.id" />">
+                    </div>
+                    <c:if test="${sessionScope.error != null}">
+                        <div class="w-100 row justify-content-left">
+                            <label class="error-message">${sessionScope.error}</label>
+                                ${sessionScope.remove("error")}
+                        </div>
+                    </c:if>
+                    <div class="w-100 row justify-content-end">
+                        <c:if test="${requestScope.available_copies_count > 0}">
+                            <button class="h-50 col-3 btn submit"><fmt:message key="book-details.issue-book" /></button>
+                        </c:if>
+                        <c:if test="${requestScope.available_copies_count == 0}">
+                            <button class="h-50 col-3 btn submit" disabled><fmt:message key="book-details.issue-book" /></button>
                         </c:if>
                     </div>
                 </form>

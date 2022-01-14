@@ -29,6 +29,17 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Column.LOAN_USER_ID,
             Column.LOAN_INVENTORY_ID,
             Column.LOAN_STATUS_ID);
+    private static final String SAVE_LOAN_WITH_LAST_LOANED_COPY_QUERY = String.format(
+            "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s, %s) VALUES (0, ?, ?, ?, ?, ?, LAST_INSERT_ID(), ?)",
+            Table.LOAN_TABLE,
+            Column.LOAN_ID,
+            Column.LOAN_ISSUE_DATE,
+            Column.LOAN_DUE_DATE,
+            Column.LOAN_RETURN_DATE,
+            Column.LOAN_FINE_AMOUNT,
+            Column.LOAN_USER_ID,
+            Column.LOAN_INVENTORY_ID,
+            Column.LOAN_STATUS_ID);
     public final static String UPDATE_LOAN_QUERY = String.format(
             "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?",
             Table.LOAN_TABLE,
@@ -41,10 +52,11 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Column.LOAN_STATUS_ID,
             Column.LOAN_ID);
     private static final String FIND_BY_USER_ID_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=? ORDER BY %s DESC",
+            "SELECT * FROM %s WHERE %s=? ORDER BY %s DESC, %s",
             Table.LOAN_TABLE,
             Column.LOAN_USER_ID,
-            Column.LOAN_ISSUE_DATE);
+            Column.LOAN_ISSUE_DATE,
+            Column.LOAN_STATUS_ID);
     private static final String FIND_BY_INVENTORY_ID_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=? ORDER BY %s DESC",
             Table.LOAN_TABLE,
@@ -74,6 +86,15 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Column.RESERVATION_STATUS_ID,
             Column.RESERVATION_ID);
     private static final String MAKE_COPY_OF_BOOK_LOANED_QUERY = String.format(
+            "UPDATE %s SET %s='4', %s=LAST_INSERT_ID(%s) WHERE %s=? AND %s='1' ORDER BY %s LIMIT 1",
+            Table.COPY_OF_BOOK_TABLE,
+            Column.COPY_OF_BOOK_STATUS_ID,
+            Column.COPY_OF_BOOK_INVENTORY_ID,
+            Column.COPY_OF_BOOK_INVENTORY_ID,
+            Column.COPY_OF_BOOK_ISBN,
+            Column.COPY_OF_BOOK_STATUS_ID,
+            Column.COPY_OF_BOOK_INVENTORY_ID);
+    private static final String MAKE_COPY_OF_BOOK_LOANED_BY_ID_QUERY = String.format(
             "UPDATE %s SET %s='4' WHERE %s=?",
             Table.COPY_OF_BOOK_TABLE,
             Column.COPY_OF_BOOK_STATUS_ID,
@@ -143,18 +164,35 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
     }
 
     @Override
+    public int loan(int userId, String bookIsbn, int loanPeriod) throws DaoException {
+        List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
+        parametrizedQueries.add(new ParametrizedQuery(
+                MAKE_COPY_OF_BOOK_LOANED_QUERY,
+                bookIsbn));
+        parametrizedQueries.add(new ParametrizedQuery(
+                SAVE_LOAN_WITH_LAST_LOANED_COPY_QUERY,
+                new Date(),
+                DateUtils.addDays(new Date(), loanPeriod),
+                null,
+                null,
+                userId,
+                LoanStatus.ISSUED.ordinal() + 1));
+        return queryOperator.executeTransaction(parametrizedQueries);
+    }
+
+    @Override
     public int loanFromReservation(Reservation reservation, int loanPeriod) throws DaoException {
         List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
         parametrizedQueries.add(new ParametrizedQuery(
                 MAKE_RESERVATION_ISSUED_QUERY,
                 reservation.getReservationId()));
         parametrizedQueries.add(new ParametrizedQuery(
-                MAKE_COPY_OF_BOOK_LOANED_QUERY,
+                MAKE_COPY_OF_BOOK_LOANED_BY_ID_QUERY,
                 reservation.getInventoryId()));
         parametrizedQueries.add(new ParametrizedQuery(
                 SAVE_LOAN_QUERY,
                 new Date(),
-                DateUtils.addDays(new Date(), 30),
+                DateUtils.addDays(new Date(), loanPeriod),
                 null,
                 null,
                 reservation.getUserId(),

@@ -6,7 +6,6 @@ import com.epam.ofeitus.library.dao.CopyOfBookDao;
 import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.dao.queryoperator.ParametrizedQuery;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
-import com.epam.ofeitus.library.entity.book.Author;
 import com.epam.ofeitus.library.entity.book.CopyOfBook;
 
 import java.util.ArrayList;

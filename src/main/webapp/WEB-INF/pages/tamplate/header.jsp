@@ -19,7 +19,7 @@
                 <a href="?command=goto-catalog-page" class="navbar-link"><fmt:message key="header.catalog" /></a>
             </li>
             <li class="navbar-item" id="contacts-page">
-                <a href="#" class="navbar-link"><fmt:message key="header.contacts" /></a>
+                <a href="?command=goto-contacts-page" class="navbar-link"><fmt:message key="header.contacts" /></a>
             </li>
         </ul>
     </div>

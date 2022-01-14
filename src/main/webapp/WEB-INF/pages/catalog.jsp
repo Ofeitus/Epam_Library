@@ -51,6 +51,7 @@
             <c:if test="${sessionScope.error != null}">
                 <div class="w-100 row justify-content-left">
                     <label id="search-error-message">${sessionScope.error}</label>
+                        ${sessionScope.remove("error")}
                 </div>
             </c:if>
             <div class="w-100 row justify-content-between search-buttons">

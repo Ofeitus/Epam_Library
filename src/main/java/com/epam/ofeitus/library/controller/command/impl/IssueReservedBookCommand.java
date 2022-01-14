@@ -34,14 +34,13 @@ public class IssueReservedBookCommand implements Command {
 
         ConfigResourceManager configResourceManager = ConfigResourceManager.getInstance();
         try {
-            int loanPeriod;
+            int loanPeriod = 30;
             try {
                 loanPeriod = Integer.parseInt(configResourceManager.getValue(ConfigParameter.LOAN_PERIOD));
             } catch (NumberFormatException | MissingResourceException e) {
                 logger.error("Unable to get loan period.", e);
-                loanPeriod = 30;
             }
-            boolean loaned = loansService.loanFromReservation(reservationId, loanPeriod);
+            loansService.loanFromReservation(reservationId, loanPeriod);
             return new CommandResult("/controller?command=goto-user-reservations-page&user-id=" + userId, RoutingType.REDIRECT);
         } catch (ServiceException e) {
             logger.error("Unable to loan from reservation.", e);

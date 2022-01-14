@@ -15,7 +15,7 @@
 <div class="inventory-book-container">
     <h2><fmt:message key="inventory-book.inventory-book" /></h2>
     <div class="inventory-book-forms">
-        <div class="form-container" style="width: 35%">
+        <div class="form-container" style="width: 33%">
             <h3 class="title"><fmt:message key="inventory-book.search-page" /></h3>
             <form class="form-horizontal" action="controller" method="get">
                 <input type="hidden" name="command" value="search-copies-of-books">
@@ -41,7 +41,7 @@
                 </div>
             </form>
         </div>
-        <div class="form-container" style="width: 63%">
+        <div class="form-container" style="width: 65%">
             <div style="display: flex">
                 <form style="width: 50%" class="form-horizontal" action="controller" method="get">
                     <h3 class="title"><fmt:message key="inventory-book.arrival" /></h3>
@@ -63,7 +63,8 @@
                     </div>
                     <c:if test="${sessionScope.error != null}">
                         <div class="w-100 row justify-content-left">
-                            <label id="write-in-error-message">${sessionScope.error}</label>
+                            <label class="error-message">${sessionScope.error}</label>
+                                ${sessionScope.remove("error")}
                         </div>
                     </c:if>
                     <div class="w-100 row justify-content-end search-buttons">

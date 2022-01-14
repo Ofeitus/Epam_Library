@@ -16,6 +16,7 @@ public class CommandFactory {
         put(CommandName.GOTO_500_PAGE_COMMAND, new GoTo500PageCommand());
         put(CommandName.GOTO_HOME_PAGE_COMMAND, new GoToHomePageCommand());
         put(CommandName.GOTO_CATALOG_PAGE_COMMAND, new GoToCatalogPageCommand());
+        put(CommandName.GOTO_CONTACTS_PAGE_COMMAND, new GoToContactsPageCommand());
         put(CommandName.GOTO_BOOK_DETAILS_COMMAND, new GoToBookDetailsPageCommand());
         put(CommandName.GOTO_LOG_IN_PAGE_COMMAND, new GoToLogInPageCommand());
         put(CommandName.GOTO_SIGN_UP_PAGE_COMMAND, new GoToSignUpPageCommand());
@@ -39,6 +40,7 @@ public class CommandFactory {
         put(CommandName.SEARCH_MEMBERS_COMMAND, new SearchMembersCommand());
         put(CommandName.RESERVE_BOOK_COMMAND, new ReserveBookCommand());
         put(CommandName.CANCEL_RESERVATION_COMMAND, new CancelReservationCommand());
+        put(CommandName.ISSUE_BOOK_COMMAND, new IssueBookCommand());
         put(CommandName.ISSUE_RESERVED_BOOK_COMMAND, new IssueReservedBookCommand());
         put(CommandName.RETURN_LOANED_BOOK_COMMAND, new ReturnLoanedBookCommand());
         put(CommandName.PAY_FINE_COMMAND, new PayFineCommand());

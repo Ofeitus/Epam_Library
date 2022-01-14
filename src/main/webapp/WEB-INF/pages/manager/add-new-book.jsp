@@ -61,7 +61,7 @@
                                placeholder="<fmt:message key="add-new-book.copies-count-placeholder" />" required>
                     </div>
                     <div class="w-100 row justify-content-end">
-                        <button class="h-50 col-4 btn submit"><fmt:message key="add-new-book.write-in" /></button>
+                        <button class="h-50 col-3 btn submit"><fmt:message key="add-new-book.write-in" /></button>
                     </div>
                 </form>
             </div>

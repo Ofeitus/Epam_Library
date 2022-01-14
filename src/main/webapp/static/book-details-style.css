@@ -15,10 +15,12 @@
 .details-container .img-container {
     display: flex;
     justify-content: center;
+    padding-top: 50px;
     width: 66%;
 }
 
 .details-container .img-container img {
+    height: fit-content;
     max-width: 60%;
     object-fit: contain;
 }

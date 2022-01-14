@@ -10,6 +10,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 <link rel="stylesheet" href="static/style.css">
+<link rel="stylesheet" href="static/contacts-style.css">
 <link rel="stylesheet" href="static/forms-style.css">
 <link rel="stylesheet" href="static/header-style.css">
 <link rel="stylesheet" href="static/footer-style.css">

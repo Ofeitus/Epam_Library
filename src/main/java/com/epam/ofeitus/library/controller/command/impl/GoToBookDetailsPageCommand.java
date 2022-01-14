@@ -63,13 +63,13 @@ public class GoToBookDetailsPageCommand implements Command {
             request.setAttribute(RequestAttribute.AVAILABLE_COPIES_COUNT, availableCopiesCount);
             request.setAttribute(RequestAttribute.RESERVED_BOOKS_COUNT, reservedBooksCount);
             request.setAttribute(RequestAttribute.ISSUED_BOOKS_COUNT, issuedBooksCount);
+            int maxMemberBooks = 5;
             try {
-                request.setAttribute(RequestAttribute.MAX_MEMBER_BOOKS,
-                        Integer.parseInt(configResourceManager.getValue(ConfigParameter.MAX_MEMBER_BOOKS)));
+                maxMemberBooks = Integer.parseInt(configResourceManager.getValue(ConfigParameter.MAX_MEMBER_BOOKS));
             } catch (NumberFormatException | MissingResourceException e) {
                 logger.error("Unable to get max member books.", e);
-                request.setAttribute(RequestAttribute.MAX_MEMBER_BOOKS, 5);
             }
+            request.setAttribute(RequestAttribute.MAX_MEMBER_BOOKS, maxMemberBooks);
 
             return new CommandResult(Page.BOOK_DETAILS_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
