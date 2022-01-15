@@ -70,7 +70,7 @@
                     <c:if test="${sessionScope.user_role == 'MANAGER'}">
                         <td>
                             <c:if test="${fine.loanStatus == 'FINED'}">
-                                <a href="?command=pay-fine&user-id=${fine.userId}&loan-id=${fine.loanId}">
+                                <a href="?command=pay-fine&user-id=${fine.userId}&loan-id=${fine.loanId}&page=${requestScope.current_page}">
                                     <i class="bi bi-cash-stack" style="font-size: 18px"></i>
                                     <fmt:message key="user-fines.pay-fine" />
                                 </a>

@@ -28,4 +28,5 @@ public class RequestParameter {
     public static final String USER_ID = "user-id";
     public static final String LOAN_ID = "loan-id";
     public static final String PAGE = "page";
+    public static final String REDIRECT_COMMAND = "redirect-command";
 }

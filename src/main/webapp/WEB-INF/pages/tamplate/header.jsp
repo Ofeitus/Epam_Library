@@ -66,14 +66,13 @@
                         <a href="?command=goto-profile-page"><fmt:message key="header.manager-profile" /></a>
                         <hr>
                         <a href="?command=goto-inventory-book-page"><fmt:message key="header.inventory-book" /></a>
+                        <a href="?command=goto-manage-reservations-page"><fmt:message key="header.manage-reservations" /></a>
                         <a href="?command=goto-manage-members-page"><fmt:message key="header.manage-members" /></a>
                     </c:if>
                     <c:if test="${sessionScope.user_role.toString() == 'ADMIN'}">
                         <a href="?command=goto-profile-page"><fmt:message key="header.admin-profile" /></a>
                         <hr>
                         <a href="?command=goto-manage-users-page"><fmt:message key="header.manage-users" /></a>
-                        <a href="#"><fmt:message key="header.loans-report" /></a>
-                        <a href="#"><fmt:message key="header.fines-report" /></a>
                     </c:if>
                     <hr>
                     <a href="?command=log-out"><fmt:message key="header.log-out" /></a>

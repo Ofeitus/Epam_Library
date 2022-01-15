@@ -70,14 +70,14 @@
                     </td>
                     <td style="text-align: center">
                         <c:if test="${reservation.reservationStatus != 'ISSUED'}">
-                            <a href="?command=cancel-reservation&reservation-id=${reservation.reservationId}">
+                            <a href="?command=cancel-reservation&redirect-command=goto-user-reservations-page&reservation-id=${reservation.reservationId}&page=${requestScope.current_page}">
                                 <i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i></a>
                         </c:if>
                     </td>
                     <c:if test="${sessionScope.user_role == 'MANAGER'}">
                         <td>
                             <c:if test="${reservation.reservationStatus != 'ISSUED'}">
-                                <a href="?command=issue-reserved-book&user-id=${reservation.userId}&reservation-id=${reservation.reservationId}">
+                                <a href="?command=issue-reserved-book&user-id=${reservation.userId}&reservation-id=${reservation.reservationId}&page=${requestScope.current_page}">
                                     <i class="bi bi-journal-arrow-up" style="font-size: 18px"></i>
                                     <fmt:message key="user-reservations.issue-for-loan" />
                                 </a>

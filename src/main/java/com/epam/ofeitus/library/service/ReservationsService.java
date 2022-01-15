@@ -18,4 +18,10 @@ public interface ReservationsService {
     int cancelReservation(int reservationId) throws ServiceException;
 
     Reservation getByReservationId(int reservationId) throws ServiceException;
+
+    List<ReservationDto> getUnconfirmedReservationsDto(int page, int itemsOnPage) throws ServiceException;
+
+    int countUnconfirmedReservationsDto() throws ServiceException;
+
+    void confirmReservation(int reservationId) throws ServiceException;
 }

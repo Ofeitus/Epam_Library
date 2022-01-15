@@ -164,7 +164,7 @@
                     </td>
                     <td style="text-align: center">
                         <c:if test="${copy_of_book.canBeDeleted}">
-                            <a href="?command=delete-copy-of-book&inventory-id=${copy_of_book.inventoryId}">
+                            <a href="?command=delete-copy-of-book&inventory-id=${copy_of_book.inventoryId}&page=${requestScope.current_page}">
                                 <i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i></a>
                         </c:if>
                         <c:if test="${!copy_of_book.canBeDeleted}">

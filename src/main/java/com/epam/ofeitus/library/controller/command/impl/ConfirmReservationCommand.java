@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
-public class CancelReservationCommand implements Command {
-    Logger logger = LogManager.getLogger(CancelReservationCommand.class);
+public class ConfirmReservationCommand implements Command {
+    Logger logger = LogManager.getLogger(ConfirmReservationCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
@@ -28,19 +28,17 @@ public class CancelReservationCommand implements Command {
         ReservationsService reservationsService = ServiceFactory.getInstance().getReservationsService();
 
         int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
-        String redirectCommand = request.getParameter(RequestParameter.REDIRECT_COMMAND);
+
+        String command = "?command=goto-manage-reservations-page";
+        session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
+        session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
 
         int reservationId = Integer.parseInt(request.getParameter(RequestParameter.RESERVATION_ID));
         try {
-            Reservation reservation = reservationsService.getByReservationId(reservationId);
-            String command = "?command=" + redirectCommand +
-                             "&user-id=" + reservation.getUserId();
-            session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
-            session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
-            reservationsService.cancelReservation(reservationId);
+            reservationsService.confirmReservation(reservationId);
             return new CommandResult("/controller" + command + "&page=" + page, RoutingType.REDIRECT);
         } catch (ServiceException e) {
-            logger.error("Unable to cancel reservation.", e);
+            logger.error("Unable to confirm reservation.", e);
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
     }

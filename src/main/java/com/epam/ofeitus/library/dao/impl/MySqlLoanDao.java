@@ -58,11 +58,9 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Column.LOAN_ISSUE_DATE,
             Column.LOAN_STATUS_ID);
     private static final String COUNT_BY_USER_ID_QUERY = String.format(
-            "SELECT COUNT(*) FROM %s WHERE %s=? ORDER BY %s DESC, %s",
+            "SELECT COUNT(*) FROM %s WHERE %s=?",
             Table.LOAN_TABLE,
-            Column.LOAN_USER_ID,
-            Column.LOAN_ISSUE_DATE,
-            Column.LOAN_STATUS_ID);
+            Column.LOAN_USER_ID);
     private static final String FIND_BY_INVENTORY_ID_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=? ORDER BY %s DESC",
             Table.LOAN_TABLE,
@@ -74,19 +72,19 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Column.LOAN_USER_ID,
             Column.LOAN_STATUS_ID);
     private static final String FIND_BY_USER_ID_WITH_FINE_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=? AND (%s='3' OR %s='4') ORDER BY %s DESC LIMIT ?, ?",
+            "SELECT * FROM %s WHERE %s=? AND (%s='3' OR %s='4') ORDER BY %s DESC, %s LIMIT ?, ?",
             Table.LOAN_TABLE,
             Column.LOAN_USER_ID,
             Column.LOAN_STATUS_ID,
             Column.LOAN_STATUS_ID,
-            Column.LOAN_ISSUE_DATE);
+            Column.LOAN_ISSUE_DATE,
+            Column.LOAN_STATUS_ID);
     private static final String COUNT_BY_USER_ID_WITH_FINE_QUERY = String.format(
-            "SELECT COUNT(*) FROM %s WHERE %s=? AND (%s='3' OR %s='4') ORDER BY %s DESC",
+            "SELECT COUNT(*) FROM %s WHERE %s=? AND (%s='3' OR %s='4')",
             Table.LOAN_TABLE,
             Column.LOAN_USER_ID,
             Column.LOAN_STATUS_ID,
-            Column.LOAN_STATUS_ID,
-            Column.LOAN_ISSUE_DATE);
+            Column.LOAN_STATUS_ID);
     private static final String FIND_DEBTS_BY_USER_ID = String.format(
             "SELECT * FROM %s WHERE %s=? AND %s='1' AND %s < CURDATE()",
             Table.LOAN_TABLE,
@@ -109,6 +107,14 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Column.COPY_OF_BOOK_INVENTORY_ID);
     private static final String MAKE_COPY_OF_BOOK_LOANED_BY_ID_QUERY = String.format(
             "UPDATE %s SET %s='4', %s=LAST_INSERT_ID(%s) WHERE %s=? AND %s='1'",
+            Table.COPY_OF_BOOK_TABLE,
+            Column.COPY_OF_BOOK_STATUS_ID,
+            Column.COPY_OF_BOOK_INVENTORY_ID,
+            Column.COPY_OF_BOOK_INVENTORY_ID,
+            Column.COPY_OF_BOOK_INVENTORY_ID,
+            Column.COPY_OF_BOOK_STATUS_ID);
+    private static final String MAKE_RESERVED_COPY_OF_BOOK_LOANED_BY_ID_QUERY = String.format(
+            "UPDATE %s SET %s='4', %s=LAST_INSERT_ID(%s) WHERE %s=? AND %s='3'",
             Table.COPY_OF_BOOK_TABLE,
             Column.COPY_OF_BOOK_STATUS_ID,
             Column.COPY_OF_BOOK_INVENTORY_ID,
@@ -230,7 +236,7 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
                 MAKE_RESERVATION_ISSUED_QUERY,
                 reservation.getReservationId()));
         parametrizedQueries.add(new ParametrizedQuery(
-                MAKE_COPY_OF_BOOK_LOANED_BY_ID_QUERY,
+                MAKE_RESERVED_COPY_OF_BOOK_LOANED_BY_ID_QUERY,
                 reservation.getInventoryId()));
         parametrizedQueries.add(new ParametrizedQuery(
                 SAVE_LOAN_QUERY,

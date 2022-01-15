@@ -40,4 +40,6 @@ public class CommandName {
     public static final String ISSUE_BOOK_COMMAND = "issue-book";
     public static final String GOTO_CONTACTS_PAGE_COMMAND = "goto-contacts-page";
     public static final String ISSUE_BY_INVENTORY_ID_COMMAND = "issue-by-inventory-id";
+    public static final String GOTO_MANAGE_RESERVATIONS_PAGE_COMMAND = "goto-manage-reservations-page";
+    public static final String CONFIRM_RESERVATION_COMMAND = "confirm-reservation";
 }

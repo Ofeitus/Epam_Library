@@ -27,6 +27,7 @@ public class CommandFactory {
         put(CommandName.GOTO_USER_RESERVATIONS_PAGE_COMMAND, new GoToUserReservationsPageCommand());
         put(CommandName.GOTO_USER_FINES_PAGE_COMMAND, new GoToUserFinesPageCommand());
         put(CommandName.GOTO_MANAGE_USERS_PAGE_COMMAND, new GoToManageUsersPageCommand());
+        put(CommandName.GOTO_MANAGE_RESERVATIONS_PAGE_COMMAND, new GoToManageReservationsPageCommand());
         put(CommandName.GOTO_MANAGE_MEMBERS_PAGE_COMMAND, new GoToManageMembersPageCommand());
         put(CommandName.GOTO_INVENTORY_BOOK_PAGE_COMMAND, new GoToInventoryBookPageCommand());
         put(CommandName.GOTO_ADD_NEW_BOOK_PAGE_COMMAND, new GoToAddNewBookPageCommand());
@@ -40,6 +41,7 @@ public class CommandFactory {
         put(CommandName.SEARCH_MEMBERS_COMMAND, new SearchMembersCommand());
         put(CommandName.RESERVE_BOOK_COMMAND, new ReserveBookCommand());
         put(CommandName.CANCEL_RESERVATION_COMMAND, new CancelReservationCommand());
+        put(CommandName.CONFIRM_RESERVATION_COMMAND, new ConfirmReservationCommand());
         put(CommandName.ISSUE_BOOK_COMMAND, new IssueBookCommand());
         put(CommandName.ISSUE_BY_INVENTORY_ID_COMMAND, new IssueByInventoryIdCommand());
         put(CommandName.ISSUE_RESERVED_BOOK_COMMAND, new IssueReservedBookCommand());

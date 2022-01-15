@@ -233,3 +233,14 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- Events --
+
+SET GLOBAL event_scheduler=ON;
+
+DROP EVENT IF EXISTS delete_outdated_reservations;
+
+-- TODO Schedule at specific time
+-- CREATE EVENT IF NOT EXISTS delete_outdated_reservations ON SCHEDULE AT CURRENT_TIMESTAMP() + INTERVAL 1 HOUR DO
+--     DELETE FROM reservations WHERE date < DATE_SUB(CURRENT_DATE(), INTERVAL 5 DAY)
+

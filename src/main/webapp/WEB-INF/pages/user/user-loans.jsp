@@ -37,7 +37,7 @@
         <img style="align-self: center; height: 245px" src="${pageContext.request.contextPath}/images/book-pusheen2.png" alt="">
     </div>
 </c:if>
-<div class="table-container" style="margin-top: 20px">
+<div class="table-container" <c:if test="${sessionScope.user_role == 'MANAGER'}">style="margin-top: 20px"</c:if>>
     <c:if test="${requestScope.loans.size() == 0}">
         <h3>
             <c:if test="${sessionScope.user_role == 'MANAGER'}">
@@ -122,7 +122,7 @@
                     <c:if test="${sessionScope.user_role == 'MANAGER'}">
                         <td>
                             <c:if test="${loan.loanStatus == 'ISSUED'}">
-                                <a href="?command=return-loaned-book&user-id=${loan.userId}&loan-id=${loan.loanId}">
+                                <a href="?command=return-loaned-book&user-id=${loan.userId}&loan-id=${loan.loanId}&page=${requestScope.current_page}">
                                     <i class="bi bi-journal-arrow-down" style="font-size: 18px"></i>
                                     <fmt:message key="user-loans.return" />
                                 </a>

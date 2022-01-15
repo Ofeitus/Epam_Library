@@ -30,23 +30,32 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
             Column.RESERVATION_INVENTORY_ID,
             Column.RESERVATION_STATUS_ID,
             Column.RESERVATION_ID);
+    public final static String SET_STATUS_QUERY = String.format(
+            "UPDATE %s SET %s=? WHERE %s=?",
+            Table.RESERVATION_TABLE,
+            Column.RESERVATION_STATUS_ID,
+            Column.RESERVATION_ID);
     private static final String FIND_BY_USER_ID_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=? ORDER BY %s DESC LIMIT ?, ?",
+            "SELECT * FROM %s WHERE %s=? ORDER BY %s DESC, %s LIMIT ?, ?",
             Table.RESERVATION_TABLE,
             Column.RESERVATION_USER_ID,
-            Column.RESERVATION_DATE);
+            Column.RESERVATION_DATE,
+            Column.RESERVATION_STATUS_ID);
     private static final String COUNT_BY_USER_ID_QUERY = String.format(
-            "SELECT COUNT(*) FROM %s WHERE %s=? ORDER BY %s DESC",
+            "SELECT COUNT(*) FROM %s WHERE %s=?",
             Table.RESERVATION_TABLE,
-            Column.RESERVATION_USER_ID,
-            Column.RESERVATION_DATE);
+            Column.RESERVATION_USER_ID);
     private static final String FIND_BY_INVENTORY_ID_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=? ORDER BY %s DESC",
             Table.RESERVATION_TABLE,
             Column.RESERVATION_INVENTORY_ID,
             Column.RESERVATION_DATE);
     private static final String FIND_BY_STATUS_ID_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=?",
+            "SELECT * FROM %s WHERE %s=? LIMIT ?, ?",
+            Table.RESERVATION_TABLE,
+            Column.RESERVATION_STATUS_ID);
+    private static final String COUNT_BY_STATUS_ID_QUERY = String.format(
+            "SELECT COUNT(*) FROM %s WHERE %s=?",
             Table.RESERVATION_TABLE,
             Column.RESERVATION_STATUS_ID);
     private static final String FIND_BY_USER_ID_AND_STATUS_ID_QUERY = String.format(
@@ -110,8 +119,13 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
     }
 
     @Override
-    public List<Reservation> findByStatusId(int statusId) throws DaoException {
-        return queryOperator.executeQuery(FIND_BY_STATUS_ID_QUERY, statusId);
+    public List<Reservation> findByStatusId(int statusId, int offset, int itemsOnPage) throws DaoException {
+        return queryOperator.executeQuery(FIND_BY_STATUS_ID_QUERY, statusId, offset, itemsOnPage);
+    }
+
+    @Override
+    public int countByStatusId(int statusId) throws DaoException {
+        return queryOperator.executeCountQuery(COUNT_BY_STATUS_ID_QUERY, statusId);
     }
 
     @Override
@@ -143,5 +157,10 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
                 userId,
                 ReservationStatus.RESERVED.ordinal() + 1));
         return queryOperator.executeTransaction(parametrizedQueries);
+    }
+
+    @Override
+    public int setStatus(int reservationId, int statusId) throws DaoException {
+        return queryOperator.executeUpdate(SET_STATUS_QUERY, statusId, reservationId);
     }
 }

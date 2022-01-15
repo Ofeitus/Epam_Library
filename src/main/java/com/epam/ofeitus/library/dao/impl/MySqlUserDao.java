@@ -132,7 +132,7 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
         }
 
         FIND_BY_SEARCH_REQUEST_QUERY += String.format(
-                "ORDER BY %s",
+                "ORDER BY %s ",
                 Column.USER_ID
         );
 

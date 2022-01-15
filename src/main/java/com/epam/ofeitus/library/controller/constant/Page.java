@@ -22,6 +22,7 @@ public class Page {
     // manager
     public static final String EDIT_BOOK_DATA_PAGE = "WEB-INF/pages/manager/edit-book-data.jsp";
     public static final String INVENTORY_BOOK_PAGE = "WEB-INF/pages/manager/inventory-book.jsp";
+    public static final String MANAGE_RESERVATIONS_PAGE = "WEB-INF/pages/manager/manage-reservations.jsp";
     public static final String MANAGE_MEMBERS_PAGE = "WEB-INF/pages/manager/manage-members.jsp";
     public static final String ADD_NEW_BOOK_DATA_PAGE = "WEB-INF/pages/manager/add-new-book.jsp";
 

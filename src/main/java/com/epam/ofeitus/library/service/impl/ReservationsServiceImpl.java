@@ -75,7 +75,7 @@ public class ReservationsServiceImpl implements ReservationsService {
         ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
 
         try {
-            return reservationDao.reserve(userId, bookIsbn) == 1;
+            return reservationDao.reserve(userId, bookIsbn) != -1;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -83,8 +83,7 @@ public class ReservationsServiceImpl implements ReservationsService {
 
     @Override
     public int cancelReservation(int reservationId) throws ServiceException {
-        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
-        ReservationDao reservationDao = daoFactory.getReservationDao();
+        ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
 
         try {
             Reservation reservation = reservationDao.findById(reservationId);
@@ -103,6 +102,58 @@ public class ReservationsServiceImpl implements ReservationsService {
 
         try {
             return reservationDao.findById(reservationId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<ReservationDto> getUnconfirmedReservationsDto(int page, int itemsOnPage) throws ServiceException {
+        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
+        ReservationDao reservationDao = daoFactory.getReservationDao();
+        CopyOfBookDao copyOfBookDao = daoFactory.getCopyOfBookDao();
+        BookDao bookDao = daoFactory.getBookDao();
+
+        try {
+            int offset = (page - 1) * itemsOnPage;
+
+            List<Reservation> reservations = reservationDao.findByStatusId(ReservationStatus.RESERVED.ordinal() + 1, offset, itemsOnPage);
+            List<ReservationDto> reservationsDto = new ArrayList<>();
+            for (Reservation reservation : reservations) {
+                CopyOfBook copyOfBook = copyOfBookDao.findById(reservation.getInventoryId());
+                Book book = bookDao.findByIsbn(copyOfBook.getBookIsbn());
+                reservationsDto.add(new ReservationDto(
+                                reservation.getReservationId(),
+                                reservation.getDate(),
+                                reservation.getUserId(),
+                                reservation.getInventoryId(),
+                                book,
+                                reservation.getReservationStatus()
+                        )
+                );
+            }
+            return reservationsDto;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int countUnconfirmedReservationsDto() throws ServiceException {
+        ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
+        try {
+            return reservationDao.countByStatusId(ReservationStatus.RESERVED.ordinal() + 1);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void confirmReservation(int reservationId) throws ServiceException {
+        ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
+
+        try {
+            reservationDao.setStatus(reservationId, ReservationStatus.READY_TO_ISSUE.ordinal() + 1);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.MissingResourceException;
+import java.util.Optional;
 
 public class IssueReservedBookCommand implements Command {
     Logger logger = LogManager.getLogger(IssueReservedBookCommand.class);
@@ -28,7 +29,12 @@ public class IssueReservedBookCommand implements Command {
         int reservationId = Integer.parseInt(request.getParameter(RequestParameter.RESERVATION_ID));
 
         HttpSession session = request.getSession();
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-user-reservations-page&user-id=" + userId);
+
+        int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
+
+        String command = "?command=goto-user-reservations-page&user-id=" + userId;
+        session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
+        session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
 
         LoansService loansService = ServiceFactory.getInstance().getLoansService();
 
@@ -41,7 +47,7 @@ public class IssueReservedBookCommand implements Command {
                 logger.error("Unable to get loan period.", e);
             }
             loansService.loanFromReservation(reservationId, loanPeriod);
-            return new CommandResult("/controller?command=goto-user-reservations-page&user-id=" + userId, RoutingType.REDIRECT);
+            return new CommandResult("/controller" + command + "&page=" + page, RoutingType.REDIRECT);
         } catch (ServiceException e) {
             logger.error("Unable to loan from reservation.", e);
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
