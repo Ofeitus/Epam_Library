@@ -5,6 +5,7 @@ import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
 import com.epam.ofeitus.library.controller.constant.RequestAttribute;
+import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.entity.user.User;
 import com.epam.ofeitus.library.service.UserService;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 
 public class GoToManageUsersPageCommand implements Command {
     Logger logger = LogManager.getLogger(GoToManageUsersPageCommand.class);
@@ -24,12 +26,25 @@ public class GoToManageUsersPageCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-manage-users-page");
 
         UserService userService = ServiceFactory.getInstance().getUserService();
+
+        int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
+        int itemsOnPage = 10;
+
+        String command = "?command=goto-manage-users-page";
+        session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
+        session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
+
         try {
-            // TODO Pagination
-            List<User> users = userService.getAll();
+            List<User> users = userService.getAll(page, itemsOnPage);
+            int itemsCount = userService.countAll();
+            int pagesCount = itemsCount / itemsOnPage;
+            if (itemsCount % itemsOnPage != 0) {
+                pagesCount++;
+            }
+            request.setAttribute(RequestAttribute.CURRENT_PAGE, page);
+            request.setAttribute(RequestAttribute.PAGES_COUNT, pagesCount);
             request.setAttribute(RequestAttribute.USERS, users);
             return new CommandResult(Page.MANAGE_USERS_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {

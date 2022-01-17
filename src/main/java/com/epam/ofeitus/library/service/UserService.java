@@ -10,7 +10,9 @@ public interface UserService {
 
     void register(String firstName, String lastName, String email, String password) throws ServiceException;
 
-    List<User> getAll() throws ServiceException;
+    List<User> getAll(int page, int itemsOnPage) throws ServiceException;
+
+    int countAll() throws ServiceException;
 
     User getByEmail(String email) throws ServiceException;
 
@@ -22,7 +24,7 @@ public interface UserService {
 
     User getByUserId(int userId) throws ServiceException;
 
-    List<User> getMemberBySearchRequest(int userId, String email, int page, int itemsOnPage) throws ServiceException;
+    List<User> getUsersBySearchRequest(int userRoleId, int userId, String email, int page, int itemsOnPage) throws ServiceException;
 
-    int countMembersBySearchRequest(int userId, String email) throws ServiceException;
+    int countUsersBySearchRequest(int userRoleId, int userId, String email) throws ServiceException;
 }

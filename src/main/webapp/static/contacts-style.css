@@ -31,7 +31,7 @@
     grid-template-columns: 1fr 1fr;
     background-image: url("../images/contacts-back.png");
     background-size: cover;
-    padding: 5% 8%;
+    padding: 3% 8%;
 }
 
 .contacts-container .wrapper .location {

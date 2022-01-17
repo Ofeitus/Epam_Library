@@ -19,6 +19,7 @@ public class UserRowMapper implements RowMapper<User> {
         user.setEmail(resultSet.getString(Column.USER_EMAIL));
         user.setPasswordHash(resultSet.getString(Column.USER_PASSWORD_HASH));
         user.setUserRole(UserRole.values()[resultSet.getInt(Column.USER_ROLE_ID) - 1]);
+        user.setDeleted(resultSet.getBoolean(Column.USER_DELETED));
         return user;
     }
 }

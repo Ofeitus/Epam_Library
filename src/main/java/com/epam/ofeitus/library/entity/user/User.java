@@ -13,11 +13,12 @@ public class User implements Serializable {
     private String email;
     private String passwordHash;
     private UserRole userRole;
+    private boolean deleted;
 
     public User() {
     }
 
-    public User(int userId, String name, String surname, String phoneNumber, String email, String passwordHash, UserRole userRole) {
+    public User(int userId, String name, String surname, String phoneNumber, String email, String passwordHash, UserRole userRole, boolean deleted) {
         this.userId = userId;
         this.name = name;
         this.surname = surname;
@@ -25,6 +26,7 @@ public class User implements Serializable {
         this.email = email;
         this.passwordHash = passwordHash;
         this.userRole = userRole;
+        this.deleted = deleted;
     }
 
     public int getUserId() {
@@ -83,17 +85,25 @@ public class User implements Serializable {
         this.userRole = userRole;
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userId == user.userId && Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(phoneNumber, user.phoneNumber) && Objects.equals(email, user.email) && Objects.equals(passwordHash, user.passwordHash) && userRole == user.userRole;
+        return userId == user.userId && deleted == user.deleted && Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(phoneNumber, user.phoneNumber) && Objects.equals(email, user.email) && Objects.equals(passwordHash, user.passwordHash) && userRole == user.userRole;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, name, surname, phoneNumber, email, passwordHash, userRole);
+        return Objects.hash(userId, name, surname, phoneNumber, email, passwordHash, userRole, deleted);
     }
 
     @Override
@@ -106,6 +116,7 @@ public class User implements Serializable {
                 ", email='" + email + '\'' +
                 ", passwordHash='" + passwordHash + '\'' +
                 ", userRole=" + userRole +
+                ", deleted=" + deleted +
                 '}';
     }
 }

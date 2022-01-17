@@ -26,33 +26,6 @@ import java.util.Optional;
 public class BookServiceImpl implements BookService {
 
     @Override
-    public List<BookDto> getAllBooksDto() throws ServiceException {
-        BookDao bookDao = MySqlDaoFactory.getInstance().getBookDao();
-        AuthorDao authorDao = MySqlDaoFactory.getInstance().getAuthorDao();
-        BookCategoryDao bookCategoryDao = MySqlDaoFactory.getInstance().getBookCategoryDao();
-
-        try {
-            List<Book> books = bookDao.findAll();
-            List<BookDto> booksDto = new ArrayList<>();
-            for (Book book : books) {
-                List<Author> authors = authorDao.findByBookIsbn(book.getIsbn());
-                BookCategory category = bookCategoryDao.findById(book.getCategoryId());
-                booksDto.add(new BookDto(
-                        book.getIsbn(),
-                        book.getTitle(),
-                        authors,
-                        book.getPublicationYear(),
-                        category.getName(),
-                        book.getLanguage(),
-                        book.getKeyWords()));
-            }
-            return booksDto;
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
     public List<BookDto> getBooksDtoBySearchRequest(String searchRequest, String category, String authorName, String authorSurname, int yearFrom, int yearTo, int page, int itemsOnPage) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         BookDao bookDao = daoFactory.getBookDao();

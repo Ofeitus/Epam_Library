@@ -42,4 +42,6 @@ public class CommandName {
     public static final String ISSUE_BY_INVENTORY_ID_COMMAND = "issue-by-inventory-id";
     public static final String GOTO_MANAGE_RESERVATIONS_PAGE_COMMAND = "goto-manage-reservations-page";
     public static final String CONFIRM_RESERVATION_COMMAND = "confirm-reservation";
+    public static final String SEARCH_USERS_COMMAND = "search-users";
+    public static final String SET_ROLE_COMMAND = "set-role";
 }

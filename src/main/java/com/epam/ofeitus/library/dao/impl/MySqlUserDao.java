@@ -45,13 +45,15 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
             Table.USER_TABLE,
             Column.USER_ROLE_ID);
     private static final String FIND_ALL_QUERY = String.format(
-            "SELECT * FROM %s JOIN %s UserRole ON %s.%s = UserRole.%s WHERE %s=false",
+            "SELECT * FROM %s JOIN %s UserRole ON %s.%s = UserRole.%s LIMIT ?, ?",
             Table.USER_TABLE,
             Table.USER_ROLE_TABLE,
             Table.USER_TABLE,
             Column.USER_ROLE_ID,
-            Column.ROLE_ID,
-            Column.USER_DELETED);
+            Column.USER_ROLE_ID);
+    private static final String COUNT_ALL_QUERY = String.format(
+            "SELECT COUNT(*) FROM %s",
+            Table.USER_TABLE);
     private static final String DELETE_USER_QUERY = String.format(
             "UPDATE %s SET %s=true WHERE %s=?",
             Table.USER_TABLE,
@@ -63,8 +65,13 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
     }
 
     @Override
-    public List<User> findAll() throws DaoException {
-        return queryOperator.executeQuery(FIND_ALL_QUERY);
+    public List<User> findAll(int offset, int itemsOnPage) throws DaoException {
+        return queryOperator.executeQuery(FIND_ALL_QUERY, offset, itemsOnPage);
+    }
+
+    @Override
+    public int countAll() throws DaoException {
+        return queryOperator.executeCountQuery(COUNT_ALL_QUERY);
     }
 
     @Override
@@ -109,19 +116,20 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
     }
 
     @Override
-    public List<User> findBySearchRequest(int userId, String email, int offset, int itemsOnPage) throws DaoException {
+    public List<User> findBySearchRequest(int userRoleId, int userId, String email, int offset, int itemsOnPage) throws DaoException {
         List<Object> parameters = new ArrayList<>();
 
         String FIND_BY_SEARCH_REQUEST_QUERY = String.format(
-                "SELECT * FROM %s WHERE %s='3' ",
-                Table.USER_TABLE,
-                Column.USER_ROLE_ID);
+                "SELECT * FROM %s ",
+                Table.USER_TABLE);
 
         if (!email.equals("")) {
             FIND_BY_SEARCH_REQUEST_QUERY += String.format(
-                    "AND %s=? ",
+                    "WHERE %s=? ",
                     Column.USER_EMAIL);
             parameters.add(email);
+        } else {
+            FIND_BY_SEARCH_REQUEST_QUERY += "WHERE 1=1 ";
         }
 
         if (userId != 0) {
@@ -129,6 +137,13 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
                     "AND %s=? ",
                     Column.USER_ID);
             parameters.add(userId);
+        }
+
+        if (userRoleId != 0) {
+            FIND_BY_SEARCH_REQUEST_QUERY += String.format(
+                    "AND %s=? ",
+                    Column.USER_ROLE_ID);
+            parameters.add(userRoleId);
         }
 
         FIND_BY_SEARCH_REQUEST_QUERY += String.format(
@@ -147,19 +162,20 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
     }
 
     @Override
-    public int countBySearchRequest(int userId, String email) throws DaoException {
+    public int countBySearchRequest(int userRoleId, int userId, String email) throws DaoException {
         List<Object> parameters = new ArrayList<>();
 
         String FIND_BY_SEARCH_REQUEST_QUERY = String.format(
-                "SELECT COUNT(*) FROM %s WHERE %s='3' ",
-                Table.USER_TABLE,
-                Column.USER_ROLE_ID);
+                "SELECT COUNT(*) FROM %s ",
+                Table.USER_TABLE);
 
         if (!email.equals("")) {
             FIND_BY_SEARCH_REQUEST_QUERY += String.format(
                     "AND %s=? ",
                     Column.USER_EMAIL);
             parameters.add(email);
+        } else {
+            FIND_BY_SEARCH_REQUEST_QUERY += "WHERE 1=1 ";
         }
 
         if (userId != 0) {
@@ -167,6 +183,13 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
                     "AND %s=? ",
                     Column.USER_ID);
             parameters.add(userId);
+        }
+
+        if (userRoleId != 0) {
+            FIND_BY_SEARCH_REQUEST_QUERY += String.format(
+                    "AND %s=? ",
+                    Column.USER_ROLE_ID);
+            parameters.add(userRoleId);
         }
 
         FIND_BY_SEARCH_REQUEST_QUERY += String.format(

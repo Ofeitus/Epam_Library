@@ -58,10 +58,10 @@
                                 <i class="bi bi-circle-fill" style="color:gray"></i>
                                 <fmt:message key="reservation-status.reserved" />
                             </c:when>
-                                <c:when test="${reservation.reservationStatus == 'READY_TO_ISSUE'}">
-                            <i class="bi bi-circle-fill" style="color:royalblue"></i>
-                                    <fmt:message key="reservation-status.ready-to-issue" />
-                                </c:when>
+                            <c:when test="${reservation.reservationStatus == 'READY_TO_ISSUE'}">
+                                <i class="bi bi-circle-fill" style="color:royalblue"></i>
+                                <fmt:message key="reservation-status.ready-to-issue" />
+                            </c:when>
                             <c:when test="${reservation.reservationStatus == 'ISSUED'}">
                                 <i class="bi bi-circle-fill" style="color:forestgreen"></i>
                                 <fmt:message key="reservation-status.issued" />

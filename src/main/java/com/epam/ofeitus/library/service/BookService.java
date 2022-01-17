@@ -10,8 +10,6 @@ import com.epam.ofeitus.library.service.exception.ServiceException;
 import java.util.List;
 
 public interface BookService {
-    List<BookDto> getAllBooksDto() throws ServiceException;
-
     List<BookDto> getBooksDtoBySearchRequest(String searchRequest, String category, String authorName, String authorSurname, int yearFrom, int yearTo, int page, int itemsOnPage) throws ServiceException;
 
     int countBooksBySearchRequest(String searchRequest, String category, String authorName, String authorSurname, int yearFrom, int yearTo) throws ServiceException;

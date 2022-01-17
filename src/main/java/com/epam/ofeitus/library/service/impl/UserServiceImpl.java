@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(String firstName, String lastName, String email, String password) throws ServiceException {
         // TODO Validation
-        User user = new User(0, firstName, lastName, "", email, DigestUtils.sha256Hex(password), UserRole.MEMBER);
+        User user = new User(0, firstName, lastName, "", email, DigestUtils.sha256Hex(password), UserRole.MEMBER, false);
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
         try {
             userDao.save(user);
@@ -43,10 +43,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAll() throws ServiceException {
+    public List<User> getAll(int page, int itemsOnPage) throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
         try {
-            return userDao.findAll();
+            int offset = (page - 1) * itemsOnPage;
+
+            return userDao.findAll(offset, itemsOnPage);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int countAll() throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+        try {
+            return userDao.countAll();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -109,22 +121,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getMemberBySearchRequest(int userId, String email, int page, int itemsOnPage) throws ServiceException {
+    public List<User> getUsersBySearchRequest(int userRoleId, int userId, String email, int page, int itemsOnPage) throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
         try {
             int offset = (page - 1) * itemsOnPage;
 
-            return userDao.findBySearchRequest(userId, email, offset, itemsOnPage);
+            return userDao.findBySearchRequest(userRoleId, userId, email, offset, itemsOnPage);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public int countMembersBySearchRequest(int userId, String email) throws ServiceException {
+    public int countUsersBySearchRequest(int userRoleId, int userId, String email) throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
         try {
-            return userDao.countBySearchRequest(userId, email);
+            return userDao.countBySearchRequest(userRoleId, userId, email);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
