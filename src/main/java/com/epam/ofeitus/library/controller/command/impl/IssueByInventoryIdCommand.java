@@ -30,18 +30,19 @@ public class IssueByInventoryIdCommand implements Command {
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
 
+        // TODO Bad logic
         int inventoryId = 0;
         try {
             inventoryId = Integer.parseInt(request.getParameter(RequestParameter.INVENTORY_ID));
         } catch (NumberFormatException e) {
-            logger.warn("Wrong user id number format.");
+            logger.warn("Wrong user id number format.", e);
         }
 
         int userId = 0;
         try {
             userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
         } catch (NumberFormatException e) {
-            logger.warn("Wrong user id number format.");
+            logger.warn("Wrong user id number format.", e);
         }
 
         session.setAttribute(SessionAttribute.URL, "/controller?command=goto-user-loans-page&user-id=" + userId);

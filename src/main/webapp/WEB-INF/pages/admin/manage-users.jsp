@@ -81,15 +81,15 @@
                     <c:if test="${user.userId != sessionScope.user_id}">
                         <select onchange="window.location.href=this.value;">
                             <option data-content="<i class='fa fa-circle red'></i>" <c:if test="${user.userRole == 'ADMIN'}">selected</c:if>
-                                    value="?command=set-role&user-id=${user.userId}&role-id=1">
+                                    value="?command=set-role&user-id=${user.userId}&user-role=1">
                                 <fmt:message key="user-role.admin" />
                             </option>
                             <option data-content="<i class='fa fa-circle red'></i>" <c:if test="${user.userRole == 'MANAGER'}">selected</c:if>
-                                    value="?command=set-role&user-id=${user.userId}&role-id=2">
+                                    value="?command=set-role&user-id=${user.userId}&user-role=2">
                                 <fmt:message key="user-role.manager" />
                             </option>
                             <option data-content="<i class='fa fa-circle red'></i>" <c:if test="${user.userRole == 'MEMBER'}">selected</c:if>
-                                    value="?command=set-role&user-id=${user.userId}&role-id=3">
+                                    value="?command=set-role&user-id=${user.userId}&user-role=3">
                                 <fmt:message key="user-role.member" />
                             </option>
                         </select>

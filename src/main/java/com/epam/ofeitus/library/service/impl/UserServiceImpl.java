@@ -141,4 +141,16 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public int setRole(int userId, int roleId) throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+        try {
+            User user = userDao.findById(userId);
+            user.setUserRole(UserRole.values()[roleId - 1]);
+            return userDao.update(user);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

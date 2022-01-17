@@ -27,4 +27,6 @@ public interface UserService {
     List<User> getUsersBySearchRequest(int userRoleId, int userId, String email, int page, int itemsOnPage) throws ServiceException;
 
     int countUsersBySearchRequest(int userRoleId, int userId, String email) throws ServiceException;
+
+    int setRole(int userId, int roleId) throws ServiceException;
 }
