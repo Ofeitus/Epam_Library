@@ -54,6 +54,8 @@ public class CommandFactory {
         put(CommandName.DELETE_COPY_OF_BOOK_COMMAND, new DeleteCopyOfBookCommand());
         put(CommandName.DELETE_BOOK_COMMAND, new DeleteBookCommand());
         put(CommandName.SET_ROLE_COMMAND, new SetRoleCommand());
+        put(CommandName.DELETE_USER_COMMAND, new DeleteUserCommand());
+        put(CommandName.RESTORE_USER_COMMAND, new RestoreUserCommand());
     }};
 
     private CommandFactory() {

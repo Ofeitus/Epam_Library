@@ -29,4 +29,8 @@ public interface UserService {
     int countUsersBySearchRequest(int userRoleId, int userId, String email) throws ServiceException;
 
     int setRole(int userId, int roleId) throws ServiceException;
+
+    int deleteUser(int userId) throws ServiceException;
+
+    int restoreUser(int userId) throws ServiceException;
 }

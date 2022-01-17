@@ -44,4 +44,6 @@ public class CommandName {
     public static final String CONFIRM_RESERVATION_COMMAND = "confirm-reservation";
     public static final String SEARCH_USERS_COMMAND = "search-users";
     public static final String SET_ROLE_COMMAND = "set-role";
+    public static final String DELETE_USER_COMMAND = "delete-user";
+    public static final String RESTORE_USER_COMMAND = "restore-user";
 }

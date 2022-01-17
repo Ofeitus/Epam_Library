@@ -19,4 +19,6 @@ public interface UserDao extends AbstractDao<User> {
     List<User> findBySearchRequest(int userRoleId, int userId, String email, int offset, int itemsOnPage) throws DaoException;
 
     int countBySearchRequest(int userRoleId, int userId, String email) throws DaoException;
+
+    int restoreById(int userId) throws DaoException;
 }

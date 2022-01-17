@@ -59,6 +59,11 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
             Table.USER_TABLE,
             Column.USER_DELETED,
             Column.USER_ID);
+    private static final String RESTORE_USER_QUERY = String.format(
+            "UPDATE %s SET %s=false WHERE %s=?",
+            Table.USER_TABLE,
+            Column.USER_DELETED,
+            Column.USER_ID);
 
     public MySqlUserDao() {
         super(RowMapperFactory.getUserRowMapper(), Table.USER_TABLE, Column.USER_ID);
@@ -201,6 +206,11 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
                 FIND_BY_SEARCH_REQUEST_QUERY,
                 parameters.toArray()
         );
+    }
+
+    @Override
+    public int restoreById(int userId) throws DaoException {
+        return queryOperator.executeUpdate(RESTORE_USER_QUERY, userId);
     }
 
     @Override

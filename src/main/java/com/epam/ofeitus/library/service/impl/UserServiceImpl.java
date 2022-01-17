@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
         User user = null;
         try {
             User userFromDB = userDao.findByEmail(email);
-            if (userFromDB != null && userFromDB.getPasswordHash().equals(DigestUtils.sha256Hex(password))) {
+            if (userFromDB != null && !userFromDB.isDeleted() && userFromDB.getPasswordHash().equals(DigestUtils.sha256Hex(password))) {
                 user = userFromDB;
             }
         } catch (DaoException e) {
@@ -149,6 +149,26 @@ public class UserServiceImpl implements UserService {
             User user = userDao.findById(userId);
             user.setUserRole(UserRole.values()[roleId - 1]);
             return userDao.update(user);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int deleteUser(int userId) throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+        try {
+            return userDao.deleteById(userId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int restoreUser(int userId) throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+        try {
+            return userDao.restoreById(userId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
