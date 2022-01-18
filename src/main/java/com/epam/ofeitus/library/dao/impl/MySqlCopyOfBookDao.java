@@ -7,8 +7,10 @@ import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.dao.queryoperator.ParametrizedQuery;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
 import com.epam.ofeitus.library.entity.book.CopyOfBook;
+import com.epam.ofeitus.library.entity.book.constituent.BookCategory;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements CopyOfBookDao {
@@ -32,10 +34,10 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
             Column.COPY_OF_BOOK_STATUS_ID,
             Column.COPY_OF_BOOK_INVENTORY_ID);
     private static final String COUNT_ALL_QUERY = String.format(
-            "SELECT COUNT(*) FROM %s WHERE %s!='5' ORDER BY %s",
+            "SELECT COUNT(*) FROM %s WHERE %s!='5' AND %s <= ?",
             Table.COPY_OF_BOOK_TABLE,
             Column.COPY_OF_BOOK_STATUS_ID,
-            Column.COPY_OF_BOOK_INVENTORY_ID);
+            Column.COPY_OF_BOOK_RECEIPT_DATE);
     private static final String FIND_BY_ISBN_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=? AND %s!='5'",
             Table.COPY_OF_BOOK_TABLE,
@@ -51,6 +53,19 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
             Table.COPY_OF_BOOK_TABLE,
             Column.COPY_OF_BOOK_STATUS_ID,
             Column.COPY_OF_BOOK_INVENTORY_ID);
+    private static final String COUNT_BY_CATEGORY_QUERY = String.format(
+            "SELECT COUNT(*) FROM %s JOIN %s b on %s.%s = b.%s JOIN %s bc on bc.%s = b.%s WHERE %s != '5' AND %s=? AND %s <= ?",
+            Table.COPY_OF_BOOK_TABLE,
+            Table.BOOK_TABLE,
+            Table.COPY_OF_BOOK_TABLE,
+            Column.COPY_OF_BOOK_ISBN,
+            Column.BOOK_ISBN,
+            Table.BOOK_CATEGORY_TABLE,
+            Column.CATEGORY_ID,
+            Column.CATEGORY_ID,
+            Column.COPY_OF_BOOK_STATUS_ID,
+            Column.CATEGORY_NAME,
+            Column.COPY_OF_BOOK_RECEIPT_DATE);
 
     public MySqlCopyOfBookDao() {
         super(RowMapperFactory.getCopyOfBookRowMapper(), Table.COPY_OF_BOOK_TABLE, Column.COPY_OF_BOOK_INVENTORY_ID);
@@ -96,8 +111,8 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
     }
 
     @Override
-    public int countAllExisting() throws DaoException {
-        return queryOperator.executeCountQuery(COUNT_ALL_QUERY);
+    public int countAllExisting(Date date) throws DaoException {
+        return queryOperator.executeCountQuery(COUNT_ALL_QUERY, date);
     }
 
     @Override
@@ -215,5 +230,10 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
     @Override
     public int updateStatus(int inventoryId, int statusId) throws DaoException {
         return queryOperator.executeUpdate(UPDATE_STATUS_BY_ID_QUERY, statusId, inventoryId);
+    }
+
+    @Override
+    public int countByCategory(BookCategory bookCategory, Date date) throws DaoException {
+        return queryOperator.executeCountQuery(COUNT_BY_CATEGORY_QUERY, bookCategory.getName(), date);
     }
 }

@@ -15,6 +15,7 @@ import com.epam.ofeitus.library.entity.order.Loan;
 import com.epam.ofeitus.library.entity.order.Reservation;
 import com.epam.ofeitus.library.entity.order.constiuent.LoanStatus;
 import com.epam.ofeitus.library.entity.order.constiuent.ReservationStatus;
+import com.epam.ofeitus.library.entity.report.BooksStockReport;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 
@@ -245,7 +246,7 @@ public class BookServiceImpl implements BookService {
         CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
 
         try {
-            return copyOfBookDao.countAllExisting();
+            return copyOfBookDao.countAllExisting(new Date());
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -351,6 +352,37 @@ public class BookServiceImpl implements BookService {
         CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
         try {
             return copyOfBookDao.findById(inventoryId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public BooksStockReport getBooksReport(Date fromDate, Date toDate) throws ServiceException {
+        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
+        CopyOfBookDao copyOfBookDao = daoFactory.getCopyOfBookDao();
+        BookCategoryDao bookCategoryDao = daoFactory.getBookCategoryDao();
+
+        try {
+            BooksStockReport booksStockReport = new BooksStockReport(
+                    copyOfBookDao.countAllExisting(fromDate),
+                    copyOfBookDao.countAllExisting(toDate),
+                    null,
+                    null
+            );
+
+            List<Integer> countByCategoryFrom = new ArrayList<>();
+            List<Integer> countByCategoryTo = new ArrayList<>();
+
+            for (BookCategory bookCategory : bookCategoryDao.findAll()) {
+                countByCategoryFrom.add(copyOfBookDao.countByCategory(bookCategory, fromDate));
+                countByCategoryTo.add(copyOfBookDao.countByCategory(bookCategory, toDate));
+            }
+
+            booksStockReport.setCountByCategoryFrom(countByCategoryFrom);
+            booksStockReport.setCountByCategoryTo(countByCategoryTo);
+
+            return booksStockReport;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

@@ -36,6 +36,7 @@
     </div>
     <div class="reports-forms">
         <c:set value="${requestScope.user_composition_report}" var="users_report" />
+        <c:set value="${requestScope.books_stock_report}" var="books_report" />
         <div class="form-container" style="width: 49%">
             <h3 class="title"><fmt:message key="reports.user-composition" /></h3>
             <table class="report-data">
@@ -43,10 +44,10 @@
                     <td class="data-name"><b><fmt:message key="reports.total-users" /></b></td>
                     <td class="data-value">${users_report.totalCountTo}
                         <c:if test="${users_report.totalCountTo >= users_report.totalCountFrom}">
-                            <span style="color: forestgreen">   +${users_report.totalCountTo - users_report.totalCountFrom}</span>
+                            <span style="color: forestgreen">&nbsp;&nbsp;+${users_report.totalCountTo - users_report.totalCountFrom}</span>
                         </c:if>
                         <c:if test="${users_report.totalCountTo < users_report.totalCountFrom}">
-                            <span style="color: firebrick">   -${users_report.totalCountFrom - users_report.totalCountTo}</span>
+                            <span style="color: firebrick">&nbsp;&nbsp;-${users_report.totalCountFrom - users_report.totalCountTo}</span>
                         </c:if>
                     </td>
                 </tr>
@@ -54,10 +55,10 @@
                     <td class="data-name"><b><fmt:message key="user-role.admin" /></b></td>
                     <td class="data-value">${users_report.adminCountTo}
                         <c:if test="${users_report.adminCountTo >= users_report.adminCountFrom}">
-                            <span style="color: forestgreen">   +${users_report.adminCountTo - users_report.adminCountFrom}</span>
+                            <span style="color: forestgreen">&nbsp;&nbsp;+${users_report.adminCountTo - users_report.adminCountFrom}</span>
                         </c:if>
                         <c:if test="${users_report.adminCountTo < users_report.adminCountFrom}">
-                            <span style="color: firebrick">   -${users_report.adminCountFrom - users_report.adminCountTo}</span>
+                            <span style="color: firebrick">&nbsp;&nbsp;-${users_report.adminCountFrom - users_report.adminCountTo}</span>
                         </c:if>
                     </td>
                 </tr>
@@ -65,10 +66,10 @@
                     <td class="data-name"><b><fmt:message key="user-role.manager" /></b></td>
                     <td class="data-value">${users_report.managerCountTo}
                         <c:if test="${users_report.managerCountTo >= users_report.managerCountFrom}">
-                            <span style="color: forestgreen">   +${users_report.managerCountTo - users_report.managerCountFrom}</span>
+                            <span style="color: forestgreen">&nbsp;&nbsp;+${users_report.managerCountTo - users_report.managerCountFrom}</span>
                         </c:if>
                         <c:if test="${users_report.managerCountTo < users_report.managerCountFrom}">
-                            <span style="color: firebrick">   -${users_report.managerCountFrom - users_report.managerCountTo}</span>
+                            <span style="color: firebrick">&nbsp;&nbsp;-${users_report.managerCountFrom - users_report.managerCountTo}</span>
                         </c:if>
                     </td>
                 </tr>
@@ -76,16 +77,48 @@
                     <td class="data-name"><b><fmt:message key="user-role.member" /></b></td>
                     <td class="data-value">${users_report.memberCountTo}
                         <c:if test="${users_report.memberCountTo >= users_report.memberCountFrom}">
-                            <span style="color: forestgreen">   +${users_report.memberCountTo - users_report.memberCountFrom}</span>
+                            <span style="color: forestgreen">&nbsp;&nbsp;+${users_report.memberCountTo - users_report.memberCountFrom}</span>
                         </c:if>
                         <c:if test="${users_report.memberCountTo < users_report.memberCountFrom}">
-                            <span style="color: firebrick">   -${users_report.memberCountFrom - users_report.memberCountTo}</span>
+                            <span style="color: firebrick">&nbsp;&nbsp;-${users_report.memberCountFrom - users_report.memberCountTo}</span>
                         </c:if>
                     </td>
                 </tr>
             </table>
             <h3 class="title"><fmt:message key="reports.members-count-dynamics" /></h3>
-            <canvas id="uses-composition-chart"></canvas>
+            <canvas id="users-composition-chart"></canvas>
+        </div>
+        <div class="form-container" style="width: 49%">
+            <h3 class="title"><fmt:message key="reports.books-stock" /></h3>
+            <table class="report-data">
+                <tr>
+                    <td class="data-name"><b><fmt:message key="reports.total-copies" /></b></td>
+                    <td class="data-value">${books_report.totalCountTo}
+                        <c:if test="${books_report.totalCountTo >= books_report.totalCountFrom}">
+                            <span style="color: forestgreen">&nbsp;&nbsp;+${books_report.totalCountTo - books_report.totalCountFrom}</span>
+                        </c:if>
+                        <c:if test="${books_report.totalCountTo < books_report.totalCountFrom}">
+                            <span style="color: firebrick">&nbsp;&nbsp;-${books_report.totalCountFrom - books_report.totalCountTo}</span>
+                        </c:if>
+                    </td>
+                </tr>
+            </table>
+            <h3 class="title"><fmt:message key="reports.categories" /></h3>
+            <table class="report-data">
+                <c:forEach items="${requestScope.book_categories}" var="book_category" varStatus="i">
+                    <tr>
+                        <td class="data-name"><b>${book_category.name}</b></td>
+                        <td class="data-value">${books_report.countByCategoryTo[i.index]}
+                            <c:if test="${books_report.countByCategoryTo[i.index] >= books_report.countByCategoryFrom[i.index]}">
+                                <span style="color: forestgreen">&nbsp;&nbsp;+${books_report.countByCategoryTo[i.index] - books_report.countByCategoryFrom[i.index]}</span>
+                            </c:if>
+                            <c:if test="${books_report.countByCategoryTo[i.index] < books_report.countByCategoryFrom[i.index]}">
+                                <span style="color: firebrick">&nbsp;&nbsp;-${books_report.countByCategoryFrom[i.index] - books_report.countByCategoryTo[i.index]}</span>
+                            </c:if>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </table>
         </div>
     </div>
 </div>
@@ -102,7 +135,7 @@
         yValues.push(${value});
     </c:forEach>
 
-    new Chart("uses-composition-chart", {
+    new Chart("users-composition-chart", {
         type: "line",
         data: {
             labels: xValues,

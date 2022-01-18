@@ -5,8 +5,10 @@ import com.epam.ofeitus.library.entity.book.CopyOfBook;
 import com.epam.ofeitus.library.entity.book.constituent.BookCategory;
 import com.epam.ofeitus.library.entity.dto.BookDto;
 import com.epam.ofeitus.library.entity.dto.CopyOfBookDto;
+import com.epam.ofeitus.library.entity.report.BooksStockReport;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 
+import java.util.Date;
 import java.util.List;
 
 public interface BookService {
@@ -43,4 +45,6 @@ public interface BookService {
     void deleteCopyOfBook(int inventoryId) throws ServiceException;
 
     CopyOfBook getCopyByInventoryId(int inventoryId) throws ServiceException;
+
+    BooksStockReport getBooksReport(Date fromDate, Date toDate) throws ServiceException;
 }

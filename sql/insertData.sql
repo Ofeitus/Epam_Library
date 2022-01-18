@@ -26,7 +26,8 @@ INSERT INTO `library`.`authors` (`author_id`, `name`, `surname`) VALUES
     ('0', 'Рэй', 'Брэдбери'),
     ('0', 'George', 'Orwell'),
     ('0', 'Агата', 'Кристи'),
-    ('0', 'Марио', 'Пьюзо');
+    ('0', 'Марио', 'Пьюзо'),
+    ('0', 'Джошуа', 'Блох');
 
 -- Books
 INSERT INTO `library`.`books` (`book_isbn`, `title`, `publication_year`, `category_id`, `language`, `key_words`) VALUES
@@ -41,7 +42,8 @@ INSERT INTO `library`.`books` (`book_isbn`, `title`, `publication_year`, `catego
     ('9785699923595', '451 градус по Фаренгейту', '2017', '1', 'Русский', ''),
     ('9785170801152', '1984', '2017', '1', 'English', ''),
     ('9785041034979', 'Десять негритят', '2021', '1', 'Русский', ''),
-    ('9785041078713', 'Крестный отец', '2020', '1', 'Русский', '');
+    ('9785041078713', 'Крестный отец', '2020', '1', 'Русский', ''),
+    ('9785855823479', 'Java. Эффективное программирование', '2013', '2', 'Русский', 'Программирование');
 
 -- Book has Author
 INSERT INTO `library`.`book_has_author` (book_isbn, author_id) VALUES
@@ -57,7 +59,8 @@ INSERT INTO `library`.`book_has_author` (book_isbn, author_id) VALUES
     ('9785699923595', '4'),
     ('9785170801152', '5'),
     ('9785041034979', '6'),
-    ('9785041078713', '7');
+    ('9785041078713', '7'),
+    ('9785855823479', '8');
 
 -- Copy of book statuses
 INSERT INTO `library`.`copy_of_book_status` (copy_of_book_status_id, copy_of_book_status_value) VALUES
@@ -81,7 +84,9 @@ INSERT INTO `library`.`copies_of_books` (inventory_id, receipt_date, price, book
     ('0', CURDATE(), '10.5', '9785699923595', '1'),
     ('0', CURDATE(), '30.5', '9785170801152', '1'),
     ('0', CURDATE(), '10.1', '9785041034979', '3'),
-    ('0', CURDATE(), '8.5', '9785041078713', '1');
+    ('0', CURDATE(), '8.5', '9785041078713', '1'),
+    ('0', CURDATE(), '28.5', '9785855823479', '1'),
+    ('0', CURDATE(), '28.5', '9785855823479', '1');
 
 -- Loan statuses
 INSERT INTO `library`.`loan_status` (loan_status_id, loan_status_value) VALUES
