@@ -41,8 +41,8 @@
             <h3 class="title"><fmt:message key="reports.user-composition" /></h3>
             <table class="report-data">
                 <tr>
-                    <th><b><fmt:message key="reports.role" /></b></th>
-                    <th><b><fmt:message key="reports.count" /></b></th>
+                    <th><fmt:message key="reports.role" /></th>
+                    <th><fmt:message key="reports.count" /></th>
                 </tr>
                 <tr>
                     <td class="data-name"><b><fmt:message key="reports.total-users" /></b></td>
@@ -96,9 +96,9 @@
             <h3 class="title"><fmt:message key="reports.books-stock" /></h3>
             <table class="report-data">
                 <tr>
-                    <th><b><fmt:message key="reports.category" /></b></th>
-                    <th><b><fmt:message key="reports.count" /></b></th>
-                    <th><b><fmt:message key="reports.price" /></b></th>
+                    <th><fmt:message key="reports.category" /></th>
+                    <th><fmt:message key="reports.count" /></th>
+                    <th><fmt:message key="reports.price" /></th>
                 </tr>
                 <tr>
                     <td class="data-name" style="width: 50%"><b><fmt:message key="reports.total-copies" /></b></td>
@@ -116,9 +116,9 @@
             <h3 class="title"><fmt:message key="reports.categories" /></h3>
             <table class="report-data">
                 <tr>
-                    <th><b><fmt:message key="reports.category" /></b></th>
-                    <th><b><fmt:message key="reports.count" /></b></th>
-                    <th><b><fmt:message key="reports.price" /></b></th>
+                    <th><fmt:message key="reports.category" /></th>
+                    <th><fmt:message key="reports.count" /></th>
+                    <th><fmt:message key="reports.price" /></th>
                 </tr>
                 <c:forEach items="${requestScope.book_categories}" var="book_category" varStatus="i">
                     <tr>
