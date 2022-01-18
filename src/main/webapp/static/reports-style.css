@@ -23,6 +23,12 @@
     margin-bottom: 20px;
 }
 
+.report-data th {
+    font-size: 20px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #aaa;
+}
+
 .report-data td {
     width: 50%;
     border-bottom: 1px solid #aaa;

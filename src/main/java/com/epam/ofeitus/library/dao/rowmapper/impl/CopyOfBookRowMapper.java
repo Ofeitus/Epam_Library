@@ -15,6 +15,7 @@ public class CopyOfBookRowMapper implements RowMapper<CopyOfBook> {
         CopyOfBook copyOfBook = new CopyOfBook();
         copyOfBook.setInventoryId(resultSet.getInt(Column.COPY_OF_BOOK_INVENTORY_ID));
         copyOfBook.setReceiptDate(resultSet.getDate(Column.COPY_OF_BOOK_RECEIPT_DATE));
+        copyOfBook.setPrice(resultSet.getBigDecimal(Column.COPY_OF_BOOK_PRICE));
         copyOfBook.setBookIsbn(resultSet.getString(Column.COPY_OF_BOOK_ISBN));
         copyOfBook.setCopyOfBookStatus(CopyOfBookStatus.values()[resultSet.getInt(Column.COPY_OF_BOOK_STATUS_ID) - 1]);
         return copyOfBook;

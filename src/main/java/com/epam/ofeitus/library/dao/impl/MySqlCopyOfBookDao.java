@@ -66,6 +66,19 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
             Column.COPY_OF_BOOK_STATUS_ID,
             Column.CATEGORY_NAME,
             Column.COPY_OF_BOOK_RECEIPT_DATE);
+    private static final String FIND_BY_CATEGORY_QUERY = String.format(
+            "SELECT * FROM %s JOIN %s b on %s.%s = b.%s JOIN %s bc on bc.%s = b.%s WHERE %s != '5' AND %s=? AND %s <= ?",
+            Table.COPY_OF_BOOK_TABLE,
+            Table.BOOK_TABLE,
+            Table.COPY_OF_BOOK_TABLE,
+            Column.COPY_OF_BOOK_ISBN,
+            Column.BOOK_ISBN,
+            Table.BOOK_CATEGORY_TABLE,
+            Column.CATEGORY_ID,
+            Column.CATEGORY_ID,
+            Column.COPY_OF_BOOK_STATUS_ID,
+            Column.CATEGORY_NAME,
+            Column.COPY_OF_BOOK_RECEIPT_DATE);
 
     public MySqlCopyOfBookDao() {
         super(RowMapperFactory.getCopyOfBookRowMapper(), Table.COPY_OF_BOOK_TABLE, Column.COPY_OF_BOOK_INVENTORY_ID);
@@ -235,5 +248,10 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
     @Override
     public int countByCategory(BookCategory bookCategory, Date date) throws DaoException {
         return queryOperator.executeCountQuery(COUNT_BY_CATEGORY_QUERY, bookCategory.getName(), date);
+    }
+
+    @Override
+    public List<CopyOfBook> findByCategory(BookCategory bookCategory, Date date) throws DaoException {
+        return queryOperator.executeQuery(FIND_BY_CATEGORY_QUERY, bookCategory.getName(), date);
     }
 }

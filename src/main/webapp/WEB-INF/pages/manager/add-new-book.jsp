@@ -54,8 +54,12 @@
                     <div id="authors" class="form-group" style="width: 100%">
                         <label><fmt:message key="edit-book-data.authors" /></label>
                     </div>
-                    <i id="addAuthor" class="bi bi-plus" style="font-size: 32px;color: forestgreen"></i>
-                    <div class="form-group" style="width: 100%">
+                    <p id="addAuthor" class="bi bi-plus" style="font-size: 32px;color: forestgreen"></p>
+                    <div class="form-group">
+                        <label><fmt:message key="inventory-book.price" /></label>
+                        <input id="price" type="number" name="price" value="0.00" step="0.01" class="form-control" required placeholder="<fmt:message key="inventory-book.price-placeholder" />">
+                    </div>
+                    <div class="form-group">
                         <label><fmt:message key="add-new-book.copies-count" /></label>
                         <input type="number" name="copies-count" value="" class="form-control"
                                placeholder="<fmt:message key="add-new-book.copies-count-placeholder" />" required>

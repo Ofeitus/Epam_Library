@@ -41,6 +41,10 @@
             <h3 class="title"><fmt:message key="reports.user-composition" /></h3>
             <table class="report-data">
                 <tr>
+                    <th><b><fmt:message key="reports.role" /></b></th>
+                    <th><b><fmt:message key="reports.count" /></b></th>
+                </tr>
+                <tr>
                     <td class="data-name"><b><fmt:message key="reports.total-users" /></b></td>
                     <td class="data-value">${users_report.totalCountTo}
                         <c:if test="${users_report.totalCountTo >= users_report.totalCountFrom}">
@@ -92,8 +96,13 @@
             <h3 class="title"><fmt:message key="reports.books-stock" /></h3>
             <table class="report-data">
                 <tr>
-                    <td class="data-name"><b><fmt:message key="reports.total-copies" /></b></td>
-                    <td class="data-value">${books_report.totalCountTo}
+                    <th><b><fmt:message key="reports.category" /></b></th>
+                    <th><b><fmt:message key="reports.count" /></b></th>
+                    <th><b><fmt:message key="reports.price" /></b></th>
+                </tr>
+                <tr>
+                    <td class="data-name" style="width: 50%"><b><fmt:message key="reports.total-copies" /></b></td>
+                    <td class="data-value" style="width: 25%">${books_report.totalCountTo}
                         <c:if test="${books_report.totalCountTo >= books_report.totalCountFrom}">
                             <span style="color: forestgreen">&nbsp;&nbsp;+${books_report.totalCountTo - books_report.totalCountFrom}</span>
                         </c:if>
@@ -101,14 +110,20 @@
                             <span style="color: firebrick">&nbsp;&nbsp;-${books_report.totalCountFrom - books_report.totalCountTo}</span>
                         </c:if>
                     </td>
+                    <td class="data-value" style="width: 25%">${books_report.totalPrice}</td>
                 </tr>
             </table>
             <h3 class="title"><fmt:message key="reports.categories" /></h3>
             <table class="report-data">
+                <tr>
+                    <th><b><fmt:message key="reports.category" /></b></th>
+                    <th><b><fmt:message key="reports.count" /></b></th>
+                    <th><b><fmt:message key="reports.price" /></b></th>
+                </tr>
                 <c:forEach items="${requestScope.book_categories}" var="book_category" varStatus="i">
                     <tr>
-                        <td class="data-name"><b>${book_category.name}</b></td>
-                        <td class="data-value">${books_report.countByCategoryTo[i.index]}
+                        <td class="data-name" style="width: 50%"><b>${book_category.name}</b></td>
+                        <td class="data-value" style="width: 25%">${books_report.countByCategoryTo[i.index]}
                             <c:if test="${books_report.countByCategoryTo[i.index] >= books_report.countByCategoryFrom[i.index]}">
                                 <span style="color: forestgreen">&nbsp;&nbsp;+${books_report.countByCategoryTo[i.index] - books_report.countByCategoryFrom[i.index]}</span>
                             </c:if>
@@ -116,6 +131,7 @@
                                 <span style="color: firebrick">&nbsp;&nbsp;-${books_report.countByCategoryFrom[i.index] - books_report.countByCategoryTo[i.index]}</span>
                             </c:if>
                         </td>
+                        <td class="data-value" style="width: 25%">${books_report.priceByCategory[i.index]}</td>
                     </tr>
                 </c:forEach>
             </table>

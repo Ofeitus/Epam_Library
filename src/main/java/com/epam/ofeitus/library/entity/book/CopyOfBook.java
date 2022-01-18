@@ -3,21 +3,24 @@ package com.epam.ofeitus.library.entity.book;
 import com.epam.ofeitus.library.entity.book.constituent.CopyOfBookStatus;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
 public class CopyOfBook implements Serializable {
     private int inventoryId;
     private Date receiptDate;
+    private BigDecimal price;
     private String bookIsbn;
     private CopyOfBookStatus copyOfBookStatus;
 
     public CopyOfBook() {
     }
 
-    public CopyOfBook(int inventoryId, Date receiptDate, String bookIsbn, CopyOfBookStatus copyOfBookStatus) {
+    public CopyOfBook(int inventoryId, Date receiptDate, BigDecimal price, String bookIsbn, CopyOfBookStatus copyOfBookStatus) {
         this.inventoryId = inventoryId;
         this.receiptDate = receiptDate;
+        this.price = price;
         this.bookIsbn = bookIsbn;
         this.copyOfBookStatus = copyOfBookStatus;
     }
@@ -36,6 +39,14 @@ public class CopyOfBook implements Serializable {
 
     public void setReceiptDate(Date receiptDate) {
         this.receiptDate = receiptDate;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public String getBookIsbn() {
@@ -59,12 +70,12 @@ public class CopyOfBook implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CopyOfBook that = (CopyOfBook) o;
-        return inventoryId == that.inventoryId && Objects.equals(receiptDate, that.receiptDate) && Objects.equals(bookIsbn, that.bookIsbn) && copyOfBookStatus == that.copyOfBookStatus;
+        return inventoryId == that.inventoryId && Objects.equals(receiptDate, that.receiptDate) && Objects.equals(price, that.price) && Objects.equals(bookIsbn, that.bookIsbn) && copyOfBookStatus == that.copyOfBookStatus;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(inventoryId, receiptDate, bookIsbn, copyOfBookStatus);
+        return Objects.hash(inventoryId, receiptDate, price, bookIsbn, copyOfBookStatus);
     }
 
     @Override
@@ -72,6 +83,7 @@ public class CopyOfBook implements Serializable {
         return "CopyOfBook{" +
                 "inventoryId=" + inventoryId +
                 ", receiptDate=" + receiptDate +
+                ", price=" + price +
                 ", bookIsbn='" + bookIsbn + '\'' +
                 ", copyOfBookStatus=" + copyOfBookStatus +
                 '}';

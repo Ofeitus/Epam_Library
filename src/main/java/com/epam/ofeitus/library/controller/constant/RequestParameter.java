@@ -32,4 +32,5 @@ public class RequestParameter {
     public static final String USER_ROLE = "user-role";
     public static final String FROM_DATE = "from-date";
     public static final String TO_DATE = "to-date";
+    public static final String PRICE = "price";
 }

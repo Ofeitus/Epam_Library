@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 
 public class WriteInCopiesOfBookCommand implements Command {
     Logger logger = LogManager.getLogger(WriteInCopiesOfBookCommand.class);
@@ -25,13 +26,14 @@ public class WriteInCopiesOfBookCommand implements Command {
         session.setAttribute(SessionAttribute.URL, "/controller?command=goto-inventory-book-page");
 
         String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
-        int copiesCount = Integer.parseInt(request.getParameter(RequestParameter.COPIES_COUNT));
 
         BookService bookService = ServiceFactory.getInstance().getBookService();
         try {
-            bookService.addCopiesOfBook(bookIsbn, copiesCount);
+            int copiesCount = Integer.parseInt(request.getParameter(RequestParameter.COPIES_COUNT));
+            BigDecimal price = new BigDecimal(request.getParameter(RequestParameter.PRICE));
+            bookService.addCopiesOfBook(bookIsbn, price, copiesCount);
             return new CommandResult("/controller?command=goto-inventory-book-page", RoutingType.REDIRECT);
-        } catch (ServiceException e) {
+        } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to add copies of book.", e);
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }

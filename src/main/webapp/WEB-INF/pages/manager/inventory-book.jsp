@@ -46,7 +46,7 @@
                 <form style="width: 50%" class="form-horizontal" action="controller" method="get">
                     <h3 class="title"><fmt:message key="inventory-book.arrival" /></h3>
                     <input id="arrival-command" type="hidden" name="command" value="write-in-copies-of-book">
-                    <div class="form-group" style="width: 100%">
+                    <div class="form-group">
                         <label><fmt:message key="inventory-book.write-in-method" /></label>
                         <select id="method-select" class="form-control" name="write-in-method" onchange="changeMethod()">
                             <option value="existing-book" selected><fmt:message key="inventory-book.existing-book" /></option>
@@ -56,6 +56,10 @@
                     <div class="form-group existing-book">
                         <label><fmt:message key="inventory-book.book-isbn" /></label>
                         <input id="existing-book-isbn" type="text" name="book-isbn" value="" class="form-control" placeholder="<fmt:message key="inventory-book.book-isbn-placeholder" />">
+                    </div>
+                    <div class="form-group existing-book">
+                        <label><fmt:message key="inventory-book.price" /></label>
+                        <input id="price" type="number" name="price" value="0.00" step="0.01" class="form-control" required placeholder="<fmt:message key="inventory-book.price-placeholder" />">
                     </div>
                     <div class="form-group existing-book">
                         <label><fmt:message key="inventory-book.number-of-copies" /></label>
@@ -105,6 +109,7 @@
                 <th scope="col"><fmt:message key="inventory-book.book-title" /></th>
                 <th scope="col"><fmt:message key="inventory-book.book-isbn" /></th>
                 <th scope="col"><fmt:message key="inventory-book.publication-year" /></th>
+                <th scope="col"><fmt:message key="inventory-book.price" /></th>
                 <th scope="col"><fmt:message key="inventory-book.status" /></th>
                 <th scope="col"><fmt:message key="inventory-book.delete" /></th>
             </tr>
@@ -125,6 +130,7 @@
                     <td>${copy_of_book.book.title}</td>
                     <td>${copy_of_book.book.isbn}</td>
                     <td>${copy_of_book.book.publicationYear}</td>
+                    <td>${copy_of_book.price}</td>
                     <td>
                         <c:choose>
                             <c:when test="${copy_of_book.copyOfBookStatus == 'AVAILABLE'}">

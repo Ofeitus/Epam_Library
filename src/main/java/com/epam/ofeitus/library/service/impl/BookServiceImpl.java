@@ -19,6 +19,7 @@ import com.epam.ofeitus.library.entity.report.BooksStockReport;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -227,6 +228,7 @@ public class BookServiceImpl implements BookService {
                 copiesOfBooksDto.add(new CopyOfBookDto(
                                 copyOfBook.getInventoryId(),
                                 copyOfBook.getReceiptDate(),
+                                copyOfBook.getPrice(),
                                 copyOfBook.getBookIsbn(),
                                 copyOfBook.getCopyOfBookStatus(),
                                 bookDto,
@@ -280,6 +282,7 @@ public class BookServiceImpl implements BookService {
                 copiesOfBooksDto.add(new CopyOfBookDto(
                         copyOfBook.getInventoryId(),
                         copyOfBook.getReceiptDate(),
+                        copyOfBook.getPrice(),
                         copyOfBook.getBookIsbn(),
                         copyOfBook.getCopyOfBookStatus(),
                         bookDto,
@@ -324,11 +327,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void addCopiesOfBook(String bookIsbn, int copiesCount) throws ServiceException {
+    public void addCopiesOfBook(String bookIsbn, BigDecimal price, int copiesCount) throws ServiceException {
         CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
         List<CopyOfBook> copiesOfBook = new ArrayList<>();
         for (int i = 0; i < copiesCount; i++) {
-            copiesOfBook.add(new CopyOfBook(0, new Date(), bookIsbn, CopyOfBookStatus.AVAILABLE));
+            copiesOfBook.add(new CopyOfBook(0, new Date(), price, bookIsbn, CopyOfBookStatus.AVAILABLE));
         }
         try {
             copyOfBookDao.saveAll(copiesOfBook);
@@ -364,23 +367,34 @@ public class BookServiceImpl implements BookService {
         BookCategoryDao bookCategoryDao = daoFactory.getBookCategoryDao();
 
         try {
-            BooksStockReport booksStockReport = new BooksStockReport(
-                    copyOfBookDao.countAllExisting(fromDate),
-                    copyOfBookDao.countAllExisting(toDate),
-                    null,
-                    null
-            );
+            BooksStockReport booksStockReport = new BooksStockReport();
 
             List<Integer> countByCategoryFrom = new ArrayList<>();
             List<Integer> countByCategoryTo = new ArrayList<>();
+            List<BigDecimal> priceByCategory = new ArrayList<>();
 
             for (BookCategory bookCategory : bookCategoryDao.findAll()) {
                 countByCategoryFrom.add(copyOfBookDao.countByCategory(bookCategory, fromDate));
                 countByCategoryTo.add(copyOfBookDao.countByCategory(bookCategory, toDate));
+                List<CopyOfBook> copiesOfBooks = copyOfBookDao.findByCategory(bookCategory, new Date());
+                BigDecimal price = new BigDecimal("0.00");
+                for (CopyOfBook copyOfBook : copiesOfBooks) {
+                    price = price.add(copyOfBook.getPrice());
+                }
+                priceByCategory.add(price);
             }
 
+            BigDecimal totalPrice = new BigDecimal("0.00");
+            for (BigDecimal price : priceByCategory) {
+                totalPrice = totalPrice.add(price);
+            }
+
+            booksStockReport.setTotalCountFrom(copyOfBookDao.countAllExisting(fromDate));
+            booksStockReport.setTotalCountTo(copyOfBookDao.countAllExisting(toDate));
+            booksStockReport.setTotalPrice(totalPrice);
             booksStockReport.setCountByCategoryFrom(countByCategoryFrom);
             booksStockReport.setCountByCategoryTo(countByCategoryTo);
+            booksStockReport.setPriceByCategory(priceByCategory);
 
             return booksStockReport;
         } catch (DaoException e) {

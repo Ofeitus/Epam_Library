@@ -25,4 +25,6 @@ public interface CopyOfBookDao extends AbstractDao<CopyOfBook> {
     int updateStatus(int inventoryId, int statusId) throws DaoException;
 
     int countByCategory(BookCategory bookCategory, Date date) throws DaoException;
+
+    List<CopyOfBook> findByCategory(BookCategory bookCategory, Date date) throws DaoException;
 }

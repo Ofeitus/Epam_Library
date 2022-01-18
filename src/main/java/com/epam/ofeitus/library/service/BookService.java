@@ -8,6 +8,7 @@ import com.epam.ofeitus.library.entity.dto.CopyOfBookDto;
 import com.epam.ofeitus.library.entity.report.BooksStockReport;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public interface BookService {
 
     void writeOffCopiesOfBooks(int fromInventoryId, int toInventoryId) throws ServiceException;
 
-    void addCopiesOfBook(String bookIsbn, int copiesCount) throws ServiceException;
+    void addCopiesOfBook(String bookIsbn, BigDecimal price, int copiesCount) throws ServiceException;
 
     void deleteCopyOfBook(int inventoryId) throws ServiceException;
 
