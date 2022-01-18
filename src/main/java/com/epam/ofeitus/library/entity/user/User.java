@@ -3,10 +3,12 @@ package com.epam.ofeitus.library.entity.user;
 import com.epam.ofeitus.library.entity.user.constituent.UserRole;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 public class User implements Serializable {
     private int userId;
+    private Date registrationDate;
     private String name;
     private String surname;
     private String phoneNumber;
@@ -18,8 +20,9 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(int userId, String name, String surname, String phoneNumber, String email, String passwordHash, UserRole userRole, boolean deleted) {
+    public User(int userId, Date registrationDate, String name, String surname, String phoneNumber, String email, String passwordHash, UserRole userRole, boolean deleted) {
         this.userId = userId;
+        this.registrationDate = registrationDate;
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
@@ -35,6 +38,14 @@ public class User implements Serializable {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
     public String getName() {
@@ -98,18 +109,19 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userId == user.userId && deleted == user.deleted && Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(phoneNumber, user.phoneNumber) && Objects.equals(email, user.email) && Objects.equals(passwordHash, user.passwordHash) && userRole == user.userRole;
+        return userId == user.userId && deleted == user.deleted && Objects.equals(registrationDate, user.registrationDate) && Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(phoneNumber, user.phoneNumber) && Objects.equals(email, user.email) && Objects.equals(passwordHash, user.passwordHash) && userRole == user.userRole;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, name, surname, phoneNumber, email, passwordHash, userRole, deleted);
+        return Objects.hash(userId, registrationDate, name, surname, phoneNumber, email, passwordHash, userRole, deleted);
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "userId=" + userId +
+                ", registrationDate=" + registrationDate +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +

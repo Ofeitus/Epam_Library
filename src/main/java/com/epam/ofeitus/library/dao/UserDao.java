@@ -3,6 +3,7 @@ package com.epam.ofeitus.library.dao;
 import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.entity.user.User;
 
+import java.util.Date;
 import java.util.List;
 
 public interface UserDao extends AbstractDao<User> {
@@ -18,7 +19,7 @@ public interface UserDao extends AbstractDao<User> {
 
     List<User> findBySearchRequest(int userRoleId, int userId, String email, int offset, int itemsOnPage) throws DaoException;
 
-    int countBySearchRequest(int userRoleId, int userId, String email) throws DaoException;
+    int countBySearchRequest(int userRoleId, int userId, String email, Date date) throws DaoException;
 
     int restoreById(int userId) throws DaoException;
 }

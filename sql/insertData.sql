@@ -5,12 +5,13 @@ INSERT INTO `library`.`users_roles` (`role_id`, `role_name`) VALUES
     ('3', 'MEMBER');
 
 -- Users
-INSERT INTO `library`.`users` (user_id, name, surname, phone_number, email, password_hash, role_id, deleted) VALUES
-    ('0', 'Timothy', 'Tyushev', '375015552368', '2008655z@email.com', '9e1774b83c29e5886cfad800a09529700838f61203851bde75bf8bea4e3a0d81', '1', '0'),
-    ('0', 'Nikita', 'Strachinski', '375015550100', 'strachinski@email.com', '598e7086cebecbf663325f771c0bf44382ea367fa0702a0c26c6978a1971ccb4', '2', '0'),
-    ('0', 'Maxim', 'Melnikov', '', 'melnikov@email.com', '9e2939ae2775f6e406f052361b0cc679f6d83f742c9309a2dd781572c402f430', '3', '0'),
-    ('0', 'Alex', 'Nevstruev', '375015550101', 'nevstruev@email.com', '1a95730e6577eab1f04dcbdc04d0154e01956458869a93b3d6e658b9648ff47e', '3', '0'),
-    ('0', 'Kliment', 'Severin', '375015550102', 'severin@email.com', '6bd9ce43d5c204a559a81d33d4739199e0339de5cb3448470f6698f4ebf3716f', '3', '0');
+INSERT INTO `library`.`users` (user_id, registration_date, name, surname, phone_number, email, password_hash, role_id, deleted) VALUES
+    ('0', '2021-06-01', 'Timothy', 'Tyushev', '375015552368', '2008655z@email.com', '9e1774b83c29e5886cfad800a09529700838f61203851bde75bf8bea4e3a0d81', '1', '0'),
+    ('0', '2021-08-01', 'Nikita', 'Strachinski', '375015550100', 'strachinski@email.com', '598e7086cebecbf663325f771c0bf44382ea367fa0702a0c26c6978a1971ccb4', '2', '0'),
+    ('0', '2021-09-01', 'Maxim', 'Melnikov', '', 'melnikov@email.com', '9e2939ae2775f6e406f052361b0cc679f6d83f742c9309a2dd781572c402f430', '3', '0'),
+    ('0', '2021-10-01', 'Alex', 'Nevstruev', '375015550101', 'nevstruev@email.com', '1a95730e6577eab1f04dcbdc04d0154e01956458869a93b3d6e658b9648ff47e', '3', '0'),
+    ('0', '2021-12-01', 'Kliment', 'Severin', '375015550102', 'severin@email.com', '6bd9ce43d5c204a559a81d33d4739199e0339de5cb3448470f6698f4ebf3716f', '3', '0'),
+    ('0', '2021-12-01', 'Pavel', 'Soroka', '375015550103', 'soroka@email.com', 'b970d520b867ccd8b66c373f3d9dce395816e7c72e22b6325bb1563fa71d144b', '3', '0');
 
 -- Book Categories
 INSERT INTO `library`.`book_categories` (`category_id`, `category_name`) VALUES
@@ -67,20 +68,20 @@ INSERT INTO `library`.`copy_of_book_status` (copy_of_book_status_id, copy_of_boo
     ('5', 'WRITTEN_OFF');
 
 -- Copies of Books
-INSERT INTO `library`.`copies_of_books` (inventory_id, receipt_date, book_isbn, copy_of_book_status_id) VALUES
-    ('0', CURDATE(), '9785389074354', '4'),
-    ('0', CURDATE(), '9785389077812', '1'),
-    ('0', CURDATE(), '9785389077881', '1'),
-    ('0', CURDATE(), '9785389077881', '1'),
-    ('0', CURDATE(), '9785389077898', '1'),
-    ('0', CURDATE(), '9785389077904', '4'),
-    ('0', CURDATE(), '9785389077911', '1'),
-    ('0', CURDATE(), '9785389077928', '3'),
-    ('0', CURDATE(), '5941170688', '4'),
-    ('0', CURDATE(), '9785699923595', '1'),
-    ('0', CURDATE(), '9785170801152', '1'),
-    ('0', CURDATE(), '9785041034979', '3'),
-    ('0', CURDATE(), '9785041078713', '1');
+INSERT INTO `library`.`copies_of_books` (inventory_id, receipt_date, price, book_isbn, copy_of_book_status_id) VALUES
+    ('0', CURDATE(), '10.3', '9785389074354', '4'),
+    ('0', CURDATE(), '20.5', '9785389077812', '1'),
+    ('0', CURDATE(), '10.7', '9785389077881', '1'),
+    ('0', CURDATE(), '10.5', '9785389077881', '1'),
+    ('0', CURDATE(), '12.5', '9785389077898', '1'),
+    ('0', CURDATE(), '40.4', '9785389077904', '4'),
+    ('0', CURDATE(), '10.5', '9785389077911', '1'),
+    ('0', CURDATE(), '4.5', '9785389077928', '3'),
+    ('0', CURDATE(), '10.5', '5941170688', '4'),
+    ('0', CURDATE(), '10.5', '9785699923595', '1'),
+    ('0', CURDATE(), '30.5', '9785170801152', '1'),
+    ('0', CURDATE(), '10.1', '9785041034979', '3'),
+    ('0', CURDATE(), '8.5', '9785041078713', '1');
 
 -- Loan statuses
 INSERT INTO `library`.`loan_status` (loan_status_id, loan_status_value) VALUES

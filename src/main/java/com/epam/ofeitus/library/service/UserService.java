@@ -1,8 +1,10 @@
 package com.epam.ofeitus.library.service;
 
+import com.epam.ofeitus.library.entity.report.UserCompositionReport;
 import com.epam.ofeitus.library.entity.user.User;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 
+import java.util.Date;
 import java.util.List;
 
 public interface UserService {
@@ -33,4 +35,6 @@ public interface UserService {
     int deleteUser(int userId) throws ServiceException;
 
     int restoreUser(int userId) throws ServiceException;
+
+    UserCompositionReport getUserCompositionReport(Date fromDate, Date toDate) throws ServiceException;
 }

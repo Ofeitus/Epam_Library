@@ -22,4 +22,5 @@ public class RequestAttribute {
     public static final String MAX_MEMBER_BOOKS = "max_member_books";
     public static final String CURRENT_PAGE = "current_page";
     public static final String PAGES_COUNT = "pages_count";
+    public static final String USER_COMPOSITION_REPORT = "user_composition_report";
 }

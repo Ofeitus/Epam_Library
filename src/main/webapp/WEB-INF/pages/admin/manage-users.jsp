@@ -12,7 +12,7 @@
 <body>
 <jsp:include page="../tamplate/header.jsp" />
 <div class="manage-members-container">
-    <h2><fmt:message key="manage-users.manage-users" /></h2>
+    <h2><fmt:message key="header.manage-users" /></h2>
     <div class="manage-members-forms">
         <div class="form-container" style="width: 60%">
             <h3 class="title"><fmt:message key="inventory-book.search-page" /></h3>
@@ -109,12 +109,12 @@
                     </c:if>
                 </td>
                 <td style="text-align: center">
-                    <c:if test="${!user.deleted}">
+                    <c:if test="${!user.deleted and user.userId != sessionScope.user_id}">
                         <a href="?command=delete-user&user-id=${user.userId}&page=${requestScope.current_page}">
                             <i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i>
                         </a>
                     </c:if>
-                    <c:if test="${user.deleted}">
+                    <c:if test="${user.deleted and user.userId != sessionScope.user_id}">
                         <i class="bi bi-arrow-clockwise" style="font-size: 20px;color: royalblue"></i>
                         <a href="?command=restore-user&user-id=${user.userId}&page=${requestScope.current_page}">
                             <fmt:message key="manage-users.restore" />

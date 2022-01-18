@@ -46,4 +46,5 @@ public class CommandName {
     public static final String SET_ROLE_COMMAND = "set-role";
     public static final String DELETE_USER_COMMAND = "delete-user";
     public static final String RESTORE_USER_COMMAND = "restore-user";
+    public static final String GOTO_REPORTS_PAGE_COMMAND = "goto-reports-page";
 }

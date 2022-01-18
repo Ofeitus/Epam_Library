@@ -73,6 +73,7 @@
                         <a href="?command=goto-profile-page"><fmt:message key="header.admin-profile" /></a>
                         <hr>
                         <a href="?command=goto-manage-users-page"><fmt:message key="header.manage-users" /></a>
+                        <a href="?command=goto-reports-page"><fmt:message key="header.reports" /></a>
                     </c:if>
                     <hr>
                     <a href="?command=log-out"><fmt:message key="header.log-out" /></a>

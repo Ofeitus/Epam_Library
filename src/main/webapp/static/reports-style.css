@@ -1,0 +1,40 @@
+.reports-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 15%;
+}
+
+.reports-container h2 {
+    margin: 25px 0;
+}
+
+.reports-forms {
+    display: flex;
+    justify-content: space-between;
+}
+
+.reports-container .form-container {
+    margin: 20px 0;
+}
+
+.report-data {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.report-data td {
+    width: 50%;
+    border-bottom: 1px solid #aaa;
+}
+
+.report-data .data-name {
+    height: 30px;
+    color: #888888;
+    font-size: 20px;
+}
+
+.report-data .data-value {
+    height: 30px;
+    font-size: 20px;
+}

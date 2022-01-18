@@ -8,6 +8,7 @@ import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
 import com.epam.ofeitus.library.entity.user.User;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
@@ -167,20 +168,20 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
     }
 
     @Override
-    public int countBySearchRequest(int userRoleId, int userId, String email) throws DaoException {
+    public int countBySearchRequest(int userRoleId, int userId, String email, Date date) throws DaoException {
         List<Object> parameters = new ArrayList<>();
 
         String FIND_BY_SEARCH_REQUEST_QUERY = String.format(
-                "SELECT COUNT(*) FROM %s ",
-                Table.USER_TABLE);
+                "SELECT COUNT(*) FROM %s WHERE %s <= ? ",
+                Table.USER_TABLE,
+                Column.USER_REGISTRATION_DATE);
+        parameters.add(date);
 
         if (!email.equals("")) {
             FIND_BY_SEARCH_REQUEST_QUERY += String.format(
                     "AND %s=? ",
                     Column.USER_EMAIL);
             parameters.add(email);
-        } else {
-            FIND_BY_SEARCH_REQUEST_QUERY += "WHERE 1=1 ";
         }
 
         if (userId != 0) {

@@ -3,6 +3,7 @@ package com.epam.ofeitus.library.service.impl;
 import com.epam.ofeitus.library.dao.UserDao;
 import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.dao.factory.impl.MySqlDaoFactory;
+import com.epam.ofeitus.library.entity.report.UserCompositionReport;
 import com.epam.ofeitus.library.entity.user.User;
 import com.epam.ofeitus.library.entity.user.constituent.UserRole;
 import com.epam.ofeitus.library.service.UserService;
@@ -10,7 +11,7 @@ import com.epam.ofeitus.library.service.exception.ServiceException;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-import java.util.List;
+import java.util.*;
 
 public class UserServiceImpl implements UserService {
     @Override
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(String firstName, String lastName, String email, String password) throws ServiceException {
         // TODO Validation
-        User user = new User(0, firstName, lastName, "", email, DigestUtils.sha256Hex(password), UserRole.MEMBER, false);
+        User user = new User(0, new Date(), firstName, lastName, "", email, DigestUtils.sha256Hex(password), UserRole.MEMBER, false);
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
         try {
             userDao.save(user);
@@ -136,7 +137,7 @@ public class UserServiceImpl implements UserService {
     public int countUsersBySearchRequest(int userRoleId, int userId, String email) throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
         try {
-            return userDao.countBySearchRequest(userRoleId, userId, email);
+            return userDao.countBySearchRequest(userRoleId, userId, email, new Date());
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -169,6 +170,45 @@ public class UserServiceImpl implements UserService {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
         try {
             return userDao.restoreById(userId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public UserCompositionReport getUserCompositionReport(Date fromDate, Date toDate) throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+        try {
+            UserCompositionReport userCompositionReport = new UserCompositionReport(
+                    userDao.countBySearchRequest(0, 0, "", fromDate),
+                    userDao.countBySearchRequest(0, 0, "", toDate),
+                    userDao.countBySearchRequest(1, 0, "", fromDate),
+                    userDao.countBySearchRequest(1, 0, "", toDate),
+                    userDao.countBySearchRequest(2, 0, "", fromDate),
+                    userDao.countBySearchRequest(2, 0, "", toDate),
+                    userDao.countBySearchRequest(3, 0, "", fromDate),
+                    userDao.countBySearchRequest(3, 0, "", toDate),
+                    null,
+                    null
+            );
+
+            List<Date> dynamicsDates = new ArrayList<>();
+            List<Integer> dynamicsValues = new ArrayList<>();
+
+            Calendar start = Calendar.getInstance();
+            start.setTime(fromDate);
+            Calendar end = Calendar.getInstance();
+            end.setTime(toDate);
+
+            for (Date date = start.getTime(); start.before(end); start.add(Calendar.MONTH, 1), date = start.getTime()) {
+                dynamicsDates.add(date);
+                dynamicsValues.add(userDao.countBySearchRequest(3, 0, "", date));
+            }
+
+            userCompositionReport.setDynamicsDates(dynamicsDates);
+            userCompositionReport.setDynamicsValues(dynamicsValues);
+
+            return userCompositionReport;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

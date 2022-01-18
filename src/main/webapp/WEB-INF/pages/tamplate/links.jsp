@@ -22,3 +22,4 @@
 <link rel="stylesheet" href="static/profile-style.css">
 <link rel="stylesheet" href="static/inventory-book-style.css">
 <link rel="stylesheet" href="static/manage-members-style.css">
+<link rel="stylesheet" href="static/reports-style.css">

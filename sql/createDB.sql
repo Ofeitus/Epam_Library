@@ -72,6 +72,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Library`.`users` (
   `user_id` INT NOT NULL AUTO_INCREMENT,
+  `registration_date` DATE NULL,
   `name` VARCHAR(45) NULL,
   `surname` VARCHAR(45) NULL,
   `phone_number` VARCHAR(15) NULL,
@@ -105,6 +106,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Library`.`copies_of_books` (
   `inventory_id` INT NOT NULL AUTO_INCREMENT,
   `receipt_date` DATE NULL,
+  `price` DECIMAL(10,2) NULL,
   `book_isbn` VARCHAR(45) NOT NULL,
   `copy_of_book_status_id` INT NOT NULL,
   PRIMARY KEY (`inventory_id`),
@@ -243,4 +245,3 @@ DROP EVENT IF EXISTS delete_outdated_reservations;
 -- TODO Schedule at specific time
 -- CREATE EVENT IF NOT EXISTS delete_outdated_reservations ON SCHEDULE AT CURRENT_TIMESTAMP() + INTERVAL 1 HOUR DO
 --     DELETE FROM reservations WHERE date < DATE_SUB(CURRENT_DATE(), INTERVAL 5 DAY)
-

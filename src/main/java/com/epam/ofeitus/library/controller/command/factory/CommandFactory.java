@@ -31,6 +31,7 @@ public class CommandFactory {
         put(CommandName.GOTO_MANAGE_MEMBERS_PAGE_COMMAND, new GoToManageMembersPageCommand());
         put(CommandName.GOTO_INVENTORY_BOOK_PAGE_COMMAND, new GoToInventoryBookPageCommand());
         put(CommandName.GOTO_ADD_NEW_BOOK_PAGE_COMMAND, new GoToAddNewBookPageCommand());
+        put(CommandName.GOTO_REPORTS_PAGE_COMMAND, new GoToReportsPageCommand());
         put(CommandName.LOG_IN_COMMAND, new LogInCommand());
         put(CommandName.LOG_OUT_COMMAND, new LogOutCommand());
         put(CommandName.SIGN_UP_COMMAND, new SignUpCommand());
