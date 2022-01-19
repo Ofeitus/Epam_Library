@@ -3,6 +3,7 @@ package com.epam.ofeitus.library.dao;
 import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.entity.order.Reservation;
 
+import java.util.Date;
 import java.util.List;
 
 public interface ReservationDao extends AbstractDao<Reservation> {
@@ -14,7 +15,7 @@ public interface ReservationDao extends AbstractDao<Reservation> {
 
     List<Reservation> findByStatusId(int statusId, int offset, int itemsOnPage) throws DaoException;
 
-    int countByStatusId(int statusId) throws DaoException;
+    int countByStatusId(int statusId, Date date) throws DaoException;
 
     List<Reservation> findByUserIdAndStatusId(int userId, int statusId) throws DaoException;
 

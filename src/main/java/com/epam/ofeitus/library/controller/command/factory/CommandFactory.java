@@ -57,6 +57,7 @@ public class CommandFactory {
         put(CommandName.SET_ROLE_COMMAND, new SetRoleCommand());
         put(CommandName.DELETE_USER_COMMAND, new DeleteUserCommand());
         put(CommandName.RESTORE_USER_COMMAND, new RestoreUserCommand());
+        put(CommandName.GET_PERIOD_REPORTS_COMMAND, new GetPeriodReportsCommand());
     }};
 
     private CommandFactory() {

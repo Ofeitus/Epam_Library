@@ -9,7 +9,6 @@ import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.entity.book.constituent.BookCategory;
 import com.epam.ofeitus.library.entity.report.BooksStockReport;
-import com.epam.ofeitus.library.entity.report.IssueReport;
 import com.epam.ofeitus.library.entity.report.UserCompositionReport;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.UserService;
@@ -21,19 +20,22 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class GoToReportsPageCommand implements Command {
-    Logger logger = LogManager.getLogger(GoToReportsPageCommand.class);
+public class GetPeriodReportsCommand implements Command {
+    Logger logger = LogManager.getLogger(GetPeriodReportsCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         UserService userService = ServiceFactory.getInstance().getUserService();
         BookService bookService = ServiceFactory.getInstance().getBookService();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         String from = request.getParameter(RequestParameter.FROM_DATE);
         String to = request.getParameter(RequestParameter.TO_DATE);
@@ -46,23 +48,18 @@ public class GoToReportsPageCommand implements Command {
         Date fromDate;
         Date toDate;
         try {
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(new Date());
-            cal.add(Calendar.YEAR, -1);
-            fromDate = cal.getTime();
-            toDate = new Date();
+            fromDate = formatter.parse(from);
+            toDate = formatter.parse(to);
 
             UserCompositionReport userCompositionReport = userService.getUserCompositionReport(fromDate, toDate);
             BooksStockReport booksStockReport = bookService.getBooksReport(fromDate, toDate);
             List<BookCategory> bookCategories = bookService.getBookCategories();
-            IssueReport issueReport = bookService.getIssueReport(fromDate, toDate);
 
             request.setAttribute(RequestAttribute.USER_COMPOSITION_REPORT, userCompositionReport);
             request.setAttribute(RequestAttribute.BOOKS_STOCK_REPORT, booksStockReport);
             request.setAttribute(RequestAttribute.BOOK_CATEGORIES, bookCategories);
-            request.setAttribute(RequestAttribute.ISSUE_REPORT, issueReport);
             return new CommandResult(Page.REPORTS_PAGE, RoutingType.FORWARD);
-        } catch (ServiceException e) {
+        } catch (ServiceException | ParseException e) {
             logger.error("Unable to get reports.");
             return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }

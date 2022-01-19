@@ -15,6 +15,7 @@ import com.epam.ofeitus.library.service.ReservationsService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ReservationsServiceImpl implements ReservationsService {
@@ -142,7 +143,7 @@ public class ReservationsServiceImpl implements ReservationsService {
     public int countUnconfirmedReservationsDto() throws ServiceException {
         ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
         try {
-            return reservationDao.countByStatusId(ReservationStatus.RESERVED.ordinal() + 1);
+            return reservationDao.countByStatusId(ReservationStatus.RESERVED.ordinal() + 1, new Date());
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

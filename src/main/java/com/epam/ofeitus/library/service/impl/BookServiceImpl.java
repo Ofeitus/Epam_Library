@@ -16,14 +16,12 @@ import com.epam.ofeitus.library.entity.order.Reservation;
 import com.epam.ofeitus.library.entity.order.constiuent.LoanStatus;
 import com.epam.ofeitus.library.entity.order.constiuent.ReservationStatus;
 import com.epam.ofeitus.library.entity.report.BooksStockReport;
+import com.epam.ofeitus.library.entity.report.IssueReport;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class BookServiceImpl implements BookService {
 
@@ -371,32 +369,86 @@ public class BookServiceImpl implements BookService {
 
             List<Integer> countByCategoryFrom = new ArrayList<>();
             List<Integer> countByCategoryTo = new ArrayList<>();
-            List<BigDecimal> priceByCategory = new ArrayList<>();
+            List<BigDecimal> priceByCategoryFrom = new ArrayList<>();
+            List<BigDecimal> priceByCategoryTo = new ArrayList<>();
 
             for (BookCategory bookCategory : bookCategoryDao.findAll()) {
                 countByCategoryFrom.add(copyOfBookDao.countByCategory(bookCategory, fromDate));
                 countByCategoryTo.add(copyOfBookDao.countByCategory(bookCategory, toDate));
-                List<CopyOfBook> copiesOfBooks = copyOfBookDao.findByCategory(bookCategory, new Date());
+                List<CopyOfBook> copiesOfBooks = copyOfBookDao.findByCategory(bookCategory, fromDate);
                 BigDecimal price = new BigDecimal("0.00");
                 for (CopyOfBook copyOfBook : copiesOfBooks) {
                     price = price.add(copyOfBook.getPrice());
                 }
-                priceByCategory.add(price);
+                priceByCategoryFrom.add(price);
+                copiesOfBooks = copyOfBookDao.findByCategory(bookCategory, toDate);
+                price = new BigDecimal("0.00");
+                for (CopyOfBook copyOfBook : copiesOfBooks) {
+                    price = price.add(copyOfBook.getPrice());
+                }
+                priceByCategoryTo.add(price);
             }
 
-            BigDecimal totalPrice = new BigDecimal("0.00");
-            for (BigDecimal price : priceByCategory) {
-                totalPrice = totalPrice.add(price);
+            BigDecimal totalPriceFrom = new BigDecimal("0.00");
+            for (BigDecimal price : priceByCategoryFrom) {
+                totalPriceFrom = totalPriceFrom.add(price);
+            }
+
+            BigDecimal totalPriceTo = new BigDecimal("0.00");
+            for (BigDecimal price : priceByCategoryTo) {
+                totalPriceTo = totalPriceTo.add(price);
             }
 
             booksStockReport.setTotalCountFrom(copyOfBookDao.countAllExisting(fromDate));
             booksStockReport.setTotalCountTo(copyOfBookDao.countAllExisting(toDate));
-            booksStockReport.setTotalPrice(totalPrice);
+            booksStockReport.setTotalPriceFrom(totalPriceFrom);
+            booksStockReport.setTotalPriceTo(totalPriceTo);
             booksStockReport.setCountByCategoryFrom(countByCategoryFrom);
             booksStockReport.setCountByCategoryTo(countByCategoryTo);
-            booksStockReport.setPriceByCategory(priceByCategory);
+            booksStockReport.setPriceByCategoryFrom(priceByCategoryFrom);
+            booksStockReport.setPriceByCategoryTo(priceByCategoryTo);
 
             return booksStockReport;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public IssueReport getIssueReport(Date fromDate, Date toDate) throws ServiceException {
+        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
+        CopyOfBookDao copyOfBookDao = daoFactory.getCopyOfBookDao();
+        ReservationDao reservationDao = daoFactory.getReservationDao();
+        LoanDao loanDao = daoFactory.getLoanDao();
+
+        try {
+            IssueReport issueReport = new IssueReport();
+
+            List<Date> dynamicsDates = new ArrayList<>();
+            List<Integer> dynamicsValues = new ArrayList<>();
+
+            Calendar start = Calendar.getInstance();
+            start.setTime(fromDate);
+            Calendar end = Calendar.getInstance();
+            end.setTime(toDate);
+
+            for (Date date = start.getTime(); start.before(end); start.add(Calendar.MONTH, 1), date = start.getTime()) {
+                dynamicsDates.add(date);
+                dynamicsValues.add(loanDao.countByStatusId(1, date));
+                dynamicsValues.add(reservationDao.countByStatusId(3, date));
+            }
+
+            issueReport.setTotalIssuedFrom(loanDao.countByStatusId(1, fromDate));
+            issueReport.setTotalIssuedTo(loanDao.countByStatusId(1, toDate));
+            issueReport.setTotalIssuedReservedFrom(reservationDao.countByStatusId(3, fromDate));
+            issueReport.setTotalIssuedReservedTo(reservationDao.countByStatusId(3, toDate));
+            issueReport.setTotalAvailable(copyOfBookDao.countBySearchRequest("", 0, 1));
+            issueReport.setTotalReserved(copyOfBookDao.countBySearchRequest("", 0, 3));
+            issueReport.setTotalLoaned(copyOfBookDao.countBySearchRequest("", 0, 4));
+            issueReport.setDynamicsDates(dynamicsDates);
+            issueReport.setDynamicsValues(dynamicsValues);
+
+            return issueReport;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

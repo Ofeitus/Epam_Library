@@ -126,6 +126,11 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Table.COPY_OF_BOOK_TABLE,
             Column.COPY_OF_BOOK_STATUS_ID,
             Column.COPY_OF_BOOK_INVENTORY_ID);
+    private static final String COUNT_BY_STATUS_ID_QUERY = String.format(
+            "SELECT COUNT(*) FROM %s WHERE %s=? AND %s <= ?",
+            Table.LOAN_TABLE,
+            Column.LOAN_STATUS_ID,
+            Column.LOAN_ISSUE_DATE);
 
     public MySqlLoanDao() {
         super(RowMapperFactory.getLoanRowMapper(), Table.LOAN_TABLE, Column.LOAN_ID);
@@ -289,5 +294,10 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
                 LoanStatus.FINED.ordinal() + 1,
                 loan.getLoanId()));
         return queryOperator.executeTransaction(parametrizedQueries);
+    }
+
+    @Override
+    public int countByStatusId(int statusId, Date date) throws DaoException {
+        return queryOperator.executeCountQuery(COUNT_BY_STATUS_ID_QUERY, statusId, date);
     }
 }

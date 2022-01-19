@@ -7,22 +7,27 @@ import java.util.Objects;
 public class BooksStockReport {
     private int totalCountFrom;
     private int totalCountTo;
-    private BigDecimal totalPrice;
+    private BigDecimal totalPriceFrom;
+    private BigDecimal totalPriceTo;
     private List<Integer> countByCategoryFrom;
     private List<Integer> countByCategoryTo;
-    private List<BigDecimal> priceByCategory;
+    private List<BigDecimal> priceByCategoryFrom;
+    private List<BigDecimal> priceByCategoryTo;
 
     public BooksStockReport() {
     }
 
-    public BooksStockReport(int totalCountFrom, int totalCountTo, BigDecimal totalPrice, List<Integer> countByCategoryFrom, List<Integer> countByCategoryTo, List<BigDecimal> priceByCategory) {
+    public BooksStockReport(int totalCountFrom, int totalCountTo, BigDecimal totalPriceFrom, BigDecimal totalPriceTo, List<Integer> countByCategoryFrom, List<Integer> countByCategoryTo, List<BigDecimal> priceByCategoryFrom, List<BigDecimal> priceByCategoryTo) {
         this.totalCountFrom = totalCountFrom;
         this.totalCountTo = totalCountTo;
-        this.totalPrice = totalPrice;
+        this.totalPriceFrom = totalPriceFrom;
+        this.totalPriceTo = totalPriceTo;
         this.countByCategoryFrom = countByCategoryFrom;
         this.countByCategoryTo = countByCategoryTo;
-        this.priceByCategory = priceByCategory;
+        this.priceByCategoryFrom = priceByCategoryFrom;
+        this.priceByCategoryTo = priceByCategoryTo;
     }
+
 
     public int getTotalCountFrom() {
         return totalCountFrom;
@@ -40,12 +45,20 @@ public class BooksStockReport {
         this.totalCountTo = totalCountTo;
     }
 
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
+    public BigDecimal getTotalPriceFrom() {
+        return totalPriceFrom;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setTotalPriceFrom(BigDecimal totalPriceFrom) {
+        this.totalPriceFrom = totalPriceFrom;
+    }
+
+    public BigDecimal getTotalPriceTo() {
+        return totalPriceTo;
+    }
+
+    public void setTotalPriceTo(BigDecimal totalPriceTo) {
+        this.totalPriceTo = totalPriceTo;
     }
 
     public List<Integer> getCountByCategoryFrom() {
@@ -64,12 +77,20 @@ public class BooksStockReport {
         this.countByCategoryTo = countByCategoryTo;
     }
 
-    public List<BigDecimal> getPriceByCategory() {
-        return priceByCategory;
+    public List<BigDecimal> getPriceByCategoryFrom() {
+        return priceByCategoryFrom;
     }
 
-    public void setPriceByCategory(List<BigDecimal> priceByCategory) {
-        this.priceByCategory = priceByCategory;
+    public void setPriceByCategoryFrom(List<BigDecimal> priceByCategoryFrom) {
+        this.priceByCategoryFrom = priceByCategoryFrom;
+    }
+
+    public List<BigDecimal> getPriceByCategoryTo() {
+        return priceByCategoryTo;
+    }
+
+    public void setPriceByCategoryTo(List<BigDecimal> priceByCategoryTo) {
+        this.priceByCategoryTo = priceByCategoryTo;
     }
 
     @Override
@@ -77,12 +98,12 @@ public class BooksStockReport {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BooksStockReport that = (BooksStockReport) o;
-        return totalCountFrom == that.totalCountFrom && totalCountTo == that.totalCountTo && totalPrice == that.totalPrice && Objects.equals(countByCategoryFrom, that.countByCategoryFrom) && Objects.equals(countByCategoryTo, that.countByCategoryTo) && Objects.equals(priceByCategory, that.priceByCategory);
+        return totalCountFrom == that.totalCountFrom && totalCountTo == that.totalCountTo && Objects.equals(totalPriceFrom, that.totalPriceFrom) && Objects.equals(totalPriceTo, that.totalPriceTo) && Objects.equals(countByCategoryFrom, that.countByCategoryFrom) && Objects.equals(countByCategoryTo, that.countByCategoryTo) && Objects.equals(priceByCategoryFrom, that.priceByCategoryFrom) && Objects.equals(priceByCategoryTo, that.priceByCategoryTo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(totalCountFrom, totalCountTo, totalPrice, countByCategoryFrom, countByCategoryTo, priceByCategory);
+        return Objects.hash(totalCountFrom, totalCountTo, totalPriceFrom, totalPriceTo, countByCategoryFrom, countByCategoryTo, priceByCategoryFrom, priceByCategoryTo);
     }
 
     @Override
@@ -90,10 +111,12 @@ public class BooksStockReport {
         return "BooksStockReport{" +
                 "totalCountFrom=" + totalCountFrom +
                 ", totalCountTo=" + totalCountTo +
-                ", totalPrice=" + totalPrice +
+                ", totalPriceFrom=" + totalPriceFrom +
+                ", totalPriceTo=" + totalPriceTo +
                 ", countByCategoryFrom=" + countByCategoryFrom +
                 ", countByCategoryTo=" + countByCategoryTo +
-                ", priceByCategory=" + priceByCategory +
+                ", priceByCategoryFrom=" + priceByCategoryFrom +
+                ", priceByCategoryTo=" + priceByCategoryTo +
                 '}';
     }
 }

@@ -47,4 +47,5 @@ public class CommandName {
     public static final String DELETE_USER_COMMAND = "delete-user";
     public static final String RESTORE_USER_COMMAND = "restore-user";
     public static final String GOTO_REPORTS_PAGE_COMMAND = "goto-reports-page";
+    public static final String GET_PERIOD_REPORTS_COMMAND = "get-period-reports";
 }

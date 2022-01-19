@@ -5,6 +5,7 @@ import com.epam.ofeitus.library.entity.order.Loan;
 import com.epam.ofeitus.library.entity.order.Reservation;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 public interface LoanDao extends AbstractDao<Loan> {
@@ -31,4 +32,6 @@ public interface LoanDao extends AbstractDao<Loan> {
     int returnNoFine(Loan loan) throws DaoException;
 
     int returnWithFine(Loan loan, BigDecimal fineRate) throws DaoException;
+
+    int countByStatusId(int statusId, Date date) throws DaoException;
 }

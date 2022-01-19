@@ -37,7 +37,7 @@
     <div class="reports-forms">
         <c:set value="${requestScope.user_composition_report}" var="users_report" />
         <c:set value="${requestScope.books_stock_report}" var="books_report" />
-        <div class="form-container" style="width: 49%">
+        <div class="form-container" style="width: 44%">
             <h3 class="title"><fmt:message key="reports.user-composition" /></h3>
             <table class="report-data">
                 <tr>
@@ -92,7 +92,7 @@
             <h3 class="title"><fmt:message key="reports.members-count-dynamics" /></h3>
             <canvas id="users-composition-chart"></canvas>
         </div>
-        <div class="form-container" style="width: 49%">
+        <div class="form-container" style="width: 54%">
             <h3 class="title"><fmt:message key="reports.books-stock" /></h3>
             <table class="report-data">
                 <tr>
@@ -101,7 +101,7 @@
                     <th><fmt:message key="reports.price" /></th>
                 </tr>
                 <tr>
-                    <td class="data-name" style="width: 50%"><b><fmt:message key="reports.total-copies" /></b></td>
+                    <td class="data-name" style="width: 40%"><b><fmt:message key="reports.total-copies" /></b></td>
                     <td class="data-value" style="width: 25%">${books_report.totalCountTo}
                         <c:if test="${books_report.totalCountTo >= books_report.totalCountFrom}">
                             <span style="color: forestgreen">&nbsp;&nbsp;+${books_report.totalCountTo - books_report.totalCountFrom}</span>
@@ -110,7 +110,14 @@
                             <span style="color: firebrick">&nbsp;&nbsp;-${books_report.totalCountFrom - books_report.totalCountTo}</span>
                         </c:if>
                     </td>
-                    <td class="data-value" style="width: 25%">${books_report.totalPrice}</td>
+                    <td class="data-value" style="width: 35%">${books_report.totalPriceTo}
+                        <c:if test="${books_report.totalPriceTo >= books_report.totalPriceFrom}">
+                            <span style="color: forestgreen">&nbsp;&nbsp;+${books_report.totalPriceTo - books_report.totalPriceFrom}</span>
+                        </c:if>
+                        <c:if test="${books_report.totalPriceTo < books_report.totalPriceFrom}">
+                            <span style="color: firebrick">&nbsp;&nbsp;-${books_report.totalPriceFrom - books_report.totalPriceTo}</span>
+                        </c:if>
+                    </td>
                 </tr>
             </table>
             <h3 class="title"><fmt:message key="reports.categories" /></h3>
@@ -122,7 +129,7 @@
                 </tr>
                 <c:forEach items="${requestScope.book_categories}" var="book_category" varStatus="i">
                     <tr>
-                        <td class="data-name" style="width: 50%"><b>${book_category.name}</b></td>
+                        <td class="data-name" style="width: 40%"><b>${book_category.name}</b></td>
                         <td class="data-value" style="width: 25%">${books_report.countByCategoryTo[i.index]}
                             <c:if test="${books_report.countByCategoryTo[i.index] >= books_report.countByCategoryFrom[i.index]}">
                                 <span style="color: forestgreen">&nbsp;&nbsp;+${books_report.countByCategoryTo[i.index] - books_report.countByCategoryFrom[i.index]}</span>
@@ -131,10 +138,87 @@
                                 <span style="color: firebrick">&nbsp;&nbsp;-${books_report.countByCategoryFrom[i.index] - books_report.countByCategoryTo[i.index]}</span>
                             </c:if>
                         </td>
-                        <td class="data-value" style="width: 25%">${books_report.priceByCategory[i.index]}</td>
+                        <td class="data-value" style="width: 35%">${books_report.priceByCategoryTo[i.index]}
+                            <c:if test="${books_report.priceByCategoryTo[i.index] >= books_report.priceByCategoryFrom[i.index]}">
+                                <span style="color: forestgreen">&nbsp;&nbsp;+${books_report.priceByCategoryTo[i.index] - books_report.priceByCategoryFrom[i.index]}</span>
+                            </c:if>
+                            <c:if test="${books_report.priceByCategoryTo[i.index] < books_report.priceByCategoryFrom[i.index]}">
+                                <span style="color: firebrick">&nbsp;&nbsp;-${books_report.priceByCategoryFrom[i.index] - books_report.priceByCategoryTo[i.index]}</span>
+                            </c:if>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>
+        </div>
+    </div>
+    <c:set value="${requestScope.issue_report}" var="issue_report" />
+    <div class="form-container">
+        <div style="display: flex; justify-content: space-between">
+            <div style="width: 50%">
+                <h3 class="title"><fmt:message key="reports.issue-report" /></h3>
+                <table class="report-data">
+                    <tr>
+                        <th><fmt:message key="reports.criteria" /></th>
+                        <th><fmt:message key="reports.total" /></th>
+                        <th><fmt:message key="reports.over-a-period" /></th>
+                    </tr>
+                    <tr>
+                        <td class="data-name" style="width: 40%"><b><fmt:message key="reports.issued" /></b></td>
+                        <td class="data-value" style="width: 25%">${issue_report.totalIssuedTo}</td>
+                        <td class="data-value" style="width: 35%">${issue_report.totalIssuedTo - issue_report.totalIssuedFrom}</td>
+                    </tr>
+                    <tr>
+                        <td class="data-name" style="width: 40%"><b><fmt:message key="reports.issued-through-reservation" /></b></td>
+                        <td class="data-value" style="width: 25%">${issue_report.totalIssuedReservedTo}</td>
+                        <td class="data-value" style="width: 35%">${issue_report.totalIssuedReservedTo - issue_report.totalIssuedReservedFrom}</td>
+                    </tr>
+                </table>
+            </div>
+            <div><canvas id="issuing-method-chart" style="height: 250px"></canvas></div>
+        </div>
+        <div style="display: flex; justify-content: space-between">
+            <div style="width: 50%">
+                <h3 class="title"><fmt:message key="reports.books-stock-status" /></h3>
+                <table class="report-data">
+                    <tr>
+                        <th><fmt:message key="reports.status" /></th>
+                        <th><fmt:message key="reports.count" /></th>
+                    </tr>
+                    <tr>
+                        <td class="data-name"><b><fmt:message key="copy-of-book-status.available" /></b></td>
+                        <td class="data-value">${issue_report.totalAvailable}</td>
+                    </tr>
+                    <tr>
+                        <td class="data-name"><b><fmt:message key="copy-of-book-status.reserved" /></b></td>
+                        <td class="data-value">${issue_report.totalReserved}</td>
+                    </tr>
+                    <tr>
+                        <td class="data-name"><b><fmt:message key="copy-of-book-status.loaned" /></b></td>
+                        <td class="data-value">${issue_report.totalLoaned}</td>
+                    </tr>
+                </table>
+            </div>
+            <div><canvas id="stock-status-chart" style="height: 250px; margin-top: 15px"></canvas></div>
+        </div>
+        <div style="display: flex; justify-content: space-between">
+            <div style="width: 40%">
+                <h3 class="title"><fmt:message key="issue-dynamics" /></h3>
+                <table class="report-data">
+                    <tr>
+                        <th><fmt:message key="reports.criteria" /></th>
+                        <th><fmt:message key="reports.count-per-month" /></th>
+                    </tr>
+                    <tr>
+                        <td class="data-name"><b><fmt:message key="reports.average-issued" /></b></td>
+                        <td class="data-value"><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${(issue_report.totalIssuedTo - issue_report.totalIssuedFrom) * 2 / issue_report.dynamicsValues.size()}" /></td>
+                    </tr>
+                    <tr>
+                        <td class="data-name"><b><fmt:message key="reports.average-issued-through-reservations" /></b></td>
+                        <td class="data-value"><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${(issue_report.totalIssuedReservedTo - issue_report.totalIssuedReservedFrom) * 2 / issue_report.dynamicsValues.size()}" /></td>
+                    </tr>
+                </table>
+            </div>
+            <div><canvas id="issue-dynamics-chart" style="height: 270px; margin-top: 15px"></canvas></div>
         </div>
     </div>
 </div>
@@ -143,11 +227,11 @@
 
 <script>
     var xValues = [];
-    <c:forEach items="${requestScope.user_composition_report.dynamicsDates}" var="date">
+    <c:forEach items="${users_report.dynamicsDates}" var="date">
         xValues.push("<fmt:formatDate value="${date}" pattern="yyyy-MM-dd" />");
     </c:forEach>
     var yValues = [];
-    <c:forEach items="${requestScope.user_composition_report.dynamicsValues}" var="value">
+    <c:forEach items="${users_report.dynamicsValues}" var="value">
         yValues.push(${value});
     </c:forEach>
 
@@ -166,6 +250,92 @@
             legend: {display: false},
         }
     });
+
+    xValues = ["<fmt:message key="reports.through-reservation" />", "<fmt:message key="reports.in-library" />"];
+    yValues = [${issue_report.totalIssuedReservedTo}, ${issue_report.totalIssuedTo - issue_report.totalIssuedReservedTo}];
+    var barColors = [
+        "#4169E1",
+        "#228B22"
+    ];
+
+    new Chart("issuing-method-chart", {
+        type: "pie",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: "<fmt:message key="reports.issuing-method" />"
+            }
+        }
+    });
+
+    xValues = ["<fmt:message key="copy-of-book-status.available" />",
+        "<fmt:message key="copy-of-book-status.reserved" />",
+        "<fmt:message key="copy-of-book-status.loaned" />"];
+    yValues = [${issue_report.totalAvailable}, ${issue_report.totalReserved}, ${issue_report.totalLoaned}];
+    barColors = [
+        "#808080",
+        "#4169E1",
+        "#228B22"
+    ];
+
+    new Chart("stock-status-chart", {
+        type: "pie",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: "<fmt:message key="reports.books-stock-status" />"
+            }
+        }
+    });
+
+    xValues = [];
+    <c:forEach items="${issue_report.dynamicsDates}" var="date">
+        xValues.push("<fmt:formatDate value="${date}" pattern="yyyy-MM-dd" />");
+    </c:forEach>
+    yValues = [];
+    var yValues2 = [];
+    <c:forEach items="${issue_report.dynamicsValues}" varStatus="i" var="value">
+        <c:if test="${i.index % 2 == 0}">
+            yValues.push(${value});
+        </c:if>
+        <c:if test="${i.index % 2 != 0}">
+            yValues2.push(${value});
+        </c:if>
+    </c:forEach>
+
+    new Chart("issue-dynamics-chart", {
+        type: "bar",
+        data: {
+            labels: xValues,
+            datasets: [
+                {
+                data: yValues,
+                backgroundColor: "#228B22"
+            },
+                {
+                data: yValues2,
+                backgroundColor: "#4169E1"
+            }]
+        },
+        options: {
+            legend: {display: false},
+        }
+    });
+
 </script>
 
 </html>

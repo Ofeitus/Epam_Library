@@ -216,7 +216,7 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
         }
 
         if (statusId != 0) {
-            if (statusId == 5) {
+            if (statusId > 0) {
                 FIND_BY_SEARCH_REQUEST_QUERY += String.format(
                         "AND %s=? ",
                         Column.COPY_OF_BOOK_STATUS_ID);

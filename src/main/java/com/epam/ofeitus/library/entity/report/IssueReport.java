@@ -1,44 +1,105 @@
 package com.epam.ofeitus.library.entity.report;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 public class IssueReport {
-    private int totalIssued;
-    private int reserved;
-    private List<Integer> issueDynamics;
+    private int totalIssuedFrom;
+    private int totalIssuedTo;
+    private int totalIssuedReservedFrom;
+    private int totalIssuedReservedTo;
+    private int totalAvailable;
+    private int totalReserved;
+    private int totalLoaned;
+    private List<Date> dynamicsDates;
+    private List<Integer> dynamicsValues;
 
     public IssueReport() {
     }
 
-    public IssueReport(int totalIssued, int reserved, List<Integer> issueDynamics) {
-        this.totalIssued = totalIssued;
-        this.reserved = reserved;
-        this.issueDynamics = issueDynamics;
+    public IssueReport(int totalIssuedFrom, int totalIssuedTo, int totalIssuedReservedFrom, int totalIssuedReservedTo, int totalAvailable, int totalReserved, int totalLoaned, List<Date> dynamicsDates, List<Integer> dynamicsValues) {
+        this.totalIssuedFrom = totalIssuedFrom;
+        this.totalIssuedTo = totalIssuedTo;
+        this.totalIssuedReservedFrom = totalIssuedReservedFrom;
+        this.totalIssuedReservedTo = totalIssuedReservedTo;
+        this.totalAvailable = totalAvailable;
+        this.totalReserved = totalReserved;
+        this.totalLoaned = totalLoaned;
+        this.dynamicsDates = dynamicsDates;
+        this.dynamicsValues = dynamicsValues;
     }
 
-    public int getTotalIssued() {
-        return totalIssued;
+    public int getTotalIssuedFrom() {
+        return totalIssuedFrom;
     }
 
-    public void setTotalIssued(int totalIssued) {
-        this.totalIssued = totalIssued;
+    public void setTotalIssuedFrom(int totalIssuedFrom) {
+        this.totalIssuedFrom = totalIssuedFrom;
     }
 
-    public int getReserved() {
-        return reserved;
+    public int getTotalIssuedTo() {
+        return totalIssuedTo;
     }
 
-    public void setReserved(int reserved) {
-        this.reserved = reserved;
+    public void setTotalIssuedTo(int totalIssuedTo) {
+        this.totalIssuedTo = totalIssuedTo;
     }
 
-    public List<Integer> getIssueDynamics() {
-        return issueDynamics;
+    public int getTotalIssuedReservedFrom() {
+        return totalIssuedReservedFrom;
     }
 
-    public void setIssueDynamics(List<Integer> issueDynamics) {
-        this.issueDynamics = issueDynamics;
+    public void setTotalIssuedReservedFrom(int totalIssuedReservedFrom) {
+        this.totalIssuedReservedFrom = totalIssuedReservedFrom;
+    }
+
+    public int getTotalIssuedReservedTo() {
+        return totalIssuedReservedTo;
+    }
+
+    public void setTotalIssuedReservedTo(int totalIssuedReservedTo) {
+        this.totalIssuedReservedTo = totalIssuedReservedTo;
+    }
+
+    public int getTotalAvailable() {
+        return totalAvailable;
+    }
+
+    public void setTotalAvailable(int totalAvailable) {
+        this.totalAvailable = totalAvailable;
+    }
+
+    public int getTotalReserved() {
+        return totalReserved;
+    }
+
+    public void setTotalReserved(int totalReserved) {
+        this.totalReserved = totalReserved;
+    }
+
+    public int getTotalLoaned() {
+        return totalLoaned;
+    }
+
+    public void setTotalLoaned(int totalLoaned) {
+        this.totalLoaned = totalLoaned;
+    }
+
+    public List<Date> getDynamicsDates() {
+        return dynamicsDates;
+    }
+
+    public void setDynamicsDates(List<Date> dynamicsDates) {
+        this.dynamicsDates = dynamicsDates;
+    }
+
+    public List<Integer> getDynamicsValues() {
+        return dynamicsValues;
+    }
+
+    public void setDynamicsValues(List<Integer> dynamicsValues) {
+        this.dynamicsValues = dynamicsValues;
     }
 
     @Override
@@ -46,20 +107,26 @@ public class IssueReport {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         IssueReport that = (IssueReport) o;
-        return totalIssued == that.totalIssued && reserved == that.reserved && Objects.equals(issueDynamics, that.issueDynamics);
+        return totalIssuedFrom == that.totalIssuedFrom && totalIssuedTo == that.totalIssuedTo && totalIssuedReservedFrom == that.totalIssuedReservedFrom && totalIssuedReservedTo == that.totalIssuedReservedTo && totalAvailable == that.totalAvailable && totalReserved == that.totalReserved && totalLoaned == that.totalLoaned && Objects.equals(dynamicsDates, that.dynamicsDates) && Objects.equals(dynamicsValues, that.dynamicsValues);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(totalIssued, reserved, issueDynamics);
+        return Objects.hash(totalIssuedFrom, totalIssuedTo, totalIssuedReservedFrom, totalIssuedReservedTo, totalAvailable, totalReserved, totalLoaned, dynamicsDates, dynamicsValues);
     }
 
     @Override
     public String toString() {
         return "IssueReport{" +
-                "totalIssued=" + totalIssued +
-                ", reserved=" + reserved +
-                ", issueDynamics=" + issueDynamics +
+                "totalIssuedFrom=" + totalIssuedFrom +
+                ", totalIssuedTo=" + totalIssuedTo +
+                ", totalIssuedReservedFrom=" + totalIssuedReservedFrom +
+                ", totalIssuedReservedTo=" + totalIssuedReservedTo +
+                ", totalAvailable=" + totalAvailable +
+                ", totalReserved=" + totalReserved +
+                ", totalLoaned=" + totalLoaned +
+                ", datesDynamics=" + dynamicsDates +
+                ", issueDynamics=" + dynamicsValues +
                 '}';
     }
 }

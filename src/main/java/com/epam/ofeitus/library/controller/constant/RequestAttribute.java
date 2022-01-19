@@ -24,4 +24,5 @@ public class RequestAttribute {
     public static final String PAGES_COUNT = "pages_count";
     public static final String USER_COMPOSITION_REPORT = "user_composition_report";
     public static final String BOOKS_STOCK_REPORT = "books_stock_report";
+    public static final String ISSUE_REPORT = "issue_report";
 }

@@ -6,6 +6,7 @@ import com.epam.ofeitus.library.entity.book.constituent.BookCategory;
 import com.epam.ofeitus.library.entity.dto.BookDto;
 import com.epam.ofeitus.library.entity.dto.CopyOfBookDto;
 import com.epam.ofeitus.library.entity.report.BooksStockReport;
+import com.epam.ofeitus.library.entity.report.IssueReport;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 
 import java.math.BigDecimal;
@@ -48,4 +49,6 @@ public interface BookService {
     CopyOfBook getCopyByInventoryId(int inventoryId) throws ServiceException;
 
     BooksStockReport getBooksReport(Date fromDate, Date toDate) throws ServiceException;
+
+    IssueReport getIssueReport(Date fromDate, Date toDate) throws ServiceException;
 }

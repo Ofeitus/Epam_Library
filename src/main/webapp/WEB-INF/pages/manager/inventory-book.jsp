@@ -134,7 +134,7 @@
                     <td>
                         <c:choose>
                             <c:when test="${copy_of_book.copyOfBookStatus == 'AVAILABLE'}">
-                                <i class="bi bi-circle-fill" style="color:gray"></i>
+                                <i class="bi bi-circle-fill" style="color:#808080"></i>
                                 <fmt:message key="copy-of-book-status.available" />
                             </c:when>
                             <c:when test="${copy_of_book.copyOfBookStatus == 'READING_ROOM'}">
@@ -142,7 +142,7 @@
                                 <fmt:message key="copy-of-book-status.reading-room" />
                             </c:when>
                             <c:when test="${copy_of_book.copyOfBookStatus == 'RESERVED'}">
-                                <i class="bi bi-circle-fill" style="color:royalblue"></i>
+                                <i class="bi bi-circle-fill" style="color:#4169e1"></i>
                                 <c:if test="${copy_of_book.userId != 0}">
                                     <a href="?command=goto-user-reservations-page&user-id=${copy_of_book.userId}">
                                         <fmt:message key="copy-of-book-status.reserved" /></a>
@@ -152,7 +152,7 @@
                                 </c:if>
                             </c:when>
                             <c:when test="${copy_of_book.copyOfBookStatus == 'LOANED'}">
-                                <i class="bi bi-circle-fill" style="color:forestgreen"></i>
+                                <i class="bi bi-circle-fill" style="color:#228b22"></i>
                                 <c:if test="${copy_of_book.userId != 0}">
                                     <a href="?command=goto-user-loans-page&user-id=${copy_of_book.userId}">
                                         <fmt:message key="copy-of-book-status.loaned" />
