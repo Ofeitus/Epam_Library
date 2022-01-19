@@ -114,4 +114,4 @@ INSERT INTO `library`.`reservation_status` (reservation_status_id, reservations_
 INSERT INTO `library`.`reservations` (reservation_id, date, user_id, inventory_id, reservation_status_id) VALUES
     ('0', '2021-12-22', '3', '8', '1'),
     ('0', '2021-12-18', '3', '12', '2'),
-    ('0', '2021-12-10', '3', '1', '3');
+    ('0', '2021-11-29', '3', '1', '3');

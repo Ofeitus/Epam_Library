@@ -9,6 +9,7 @@ import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.entity.book.constituent.BookCategory;
 import com.epam.ofeitus.library.entity.report.BooksStockReport;
+import com.epam.ofeitus.library.entity.report.IssueReport;
 import com.epam.ofeitus.library.entity.report.UserCompositionReport;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.UserService;
@@ -54,10 +55,12 @@ public class GetPeriodReportsCommand implements Command {
             UserCompositionReport userCompositionReport = userService.getUserCompositionReport(fromDate, toDate);
             BooksStockReport booksStockReport = bookService.getBooksReport(fromDate, toDate);
             List<BookCategory> bookCategories = bookService.getBookCategories();
+            IssueReport issueReport = bookService.getIssueReport(fromDate, toDate);
 
             request.setAttribute(RequestAttribute.USER_COMPOSITION_REPORT, userCompositionReport);
             request.setAttribute(RequestAttribute.BOOKS_STOCK_REPORT, booksStockReport);
             request.setAttribute(RequestAttribute.BOOK_CATEGORIES, bookCategories);
+            request.setAttribute(RequestAttribute.ISSUE_REPORT, issueReport);
             return new CommandResult(Page.REPORTS_PAGE, RoutingType.FORWARD);
         } catch (ServiceException | ParseException e) {
             logger.error("Unable to get reports.");

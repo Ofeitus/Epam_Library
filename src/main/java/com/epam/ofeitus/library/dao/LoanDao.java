@@ -33,5 +33,5 @@ public interface LoanDao extends AbstractDao<Loan> {
 
     int returnWithFine(Loan loan, BigDecimal fineRate) throws DaoException;
 
-    int countByStatusId(int statusId, Date date) throws DaoException;
+    int countAll(Date date) throws DaoException;
 }

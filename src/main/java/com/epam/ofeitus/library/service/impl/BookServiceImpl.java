@@ -427,19 +427,35 @@ public class BookServiceImpl implements BookService {
             List<Date> dynamicsDates = new ArrayList<>();
             List<Integer> dynamicsValues = new ArrayList<>();
 
+            Calendar before = Calendar.getInstance();
+            before.setTime(fromDate);
+            before.add(Calendar.MONTH, -1);
             Calendar start = Calendar.getInstance();
             start.setTime(fromDate);
             Calendar end = Calendar.getInstance();
             end.setTime(toDate);
 
-            for (Date date = start.getTime(); start.before(end); start.add(Calendar.MONTH, 1), date = start.getTime()) {
+            dynamicsDates.add(fromDate);
+            dynamicsValues.add(reservationDao.countByStatusId(3, fromDate) - reservationDao.countByStatusId(3, before.getTime()));
+            dynamicsValues.add(loanDao.countAll(fromDate) - loanDao.countAll(before.getTime()) - dynamicsValues.get(dynamicsValues.size() - 1));
+            start.add(Calendar.MONTH, 1);
+
+            Date oldDate = fromDate;
+
+            for (Date date; start.before(end); start.add(Calendar.MONTH, 1)) {
+                date = start.getTime();
                 dynamicsDates.add(date);
-                dynamicsValues.add(loanDao.countByStatusId(1, date));
-                dynamicsValues.add(reservationDao.countByStatusId(3, date));
+                dynamicsValues.add(reservationDao.countByStatusId(3, date) - reservationDao.countByStatusId(3, oldDate));
+                dynamicsValues.add(loanDao.countAll(date) - loanDao.countAll(oldDate) - dynamicsValues.get(dynamicsValues.size() - 1));
+                oldDate = date;
             }
 
-            issueReport.setTotalIssuedFrom(loanDao.countByStatusId(1, fromDate));
-            issueReport.setTotalIssuedTo(loanDao.countByStatusId(1, toDate));
+            dynamicsDates.add(new Date());
+            dynamicsValues.add(reservationDao.countByStatusId(3, new Date()) - reservationDao.countByStatusId(3, oldDate));
+            dynamicsValues.add(loanDao.countAll(new Date()) - loanDao.countAll(oldDate) - dynamicsValues.get(dynamicsValues.size() - 1));
+
+            issueReport.setTotalIssuedFrom(loanDao.countAll(fromDate));
+            issueReport.setTotalIssuedTo(loanDao.countAll(toDate));
             issueReport.setTotalIssuedReservedFrom(reservationDao.countByStatusId(3, fromDate));
             issueReport.setTotalIssuedReservedTo(reservationDao.countByStatusId(3, toDate));
             issueReport.setTotalAvailable(copyOfBookDao.countBySearchRequest("", 0, 1));

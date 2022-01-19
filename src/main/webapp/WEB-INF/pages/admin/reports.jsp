@@ -202,7 +202,7 @@
         </div>
         <div style="display: flex; justify-content: space-between">
             <div style="width: 40%">
-                <h3 class="title"><fmt:message key="issue-dynamics" /></h3>
+                <h3 class="title"><fmt:message key="reports.issue-dynamics" /></h3>
                 <table class="report-data">
                     <tr>
                         <th><fmt:message key="reports.criteria" /></th>
@@ -210,11 +210,11 @@
                     </tr>
                     <tr>
                         <td class="data-name"><b><fmt:message key="reports.average-issued" /></b></td>
-                        <td class="data-value"><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${(issue_report.totalIssuedTo - issue_report.totalIssuedFrom) * 2 / issue_report.dynamicsValues.size()}" /></td>
+                        <td class="data-value"><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${(issue_report.totalIssuedTo - issue_report.totalIssuedFrom) / (issue_report.dynamicsValues.size() / 2 - 1)}" /></td>
                     </tr>
                     <tr>
                         <td class="data-name"><b><fmt:message key="reports.average-issued-through-reservations" /></b></td>
-                        <td class="data-value"><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${(issue_report.totalIssuedReservedTo - issue_report.totalIssuedReservedFrom) * 2 / issue_report.dynamicsValues.size()}" /></td>
+                        <td class="data-value"><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${(issue_report.totalIssuedReservedTo - issue_report.totalIssuedReservedFrom) / (issue_report.dynamicsValues.size() / 2 - 1)}" /></td>
                     </tr>
                 </table>
             </div>
@@ -323,16 +323,15 @@
             labels: xValues,
             datasets: [
                 {
+                label: "<fmt:message key="reports.through-reservation" />",
                 data: yValues,
-                backgroundColor: "#228B22"
+                backgroundColor: "#4169E1"
             },
                 {
+                label: "<fmt:message key="reports.in-library" />",
                 data: yValues2,
-                backgroundColor: "#4169E1"
+                backgroundColor: "#228B22"
             }]
-        },
-        options: {
-            legend: {display: false},
         }
     });
 

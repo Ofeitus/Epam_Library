@@ -205,6 +205,9 @@ public class UserServiceImpl implements UserService {
                 dynamicsValues.add(userDao.countBySearchRequest(3, 0, "", date));
             }
 
+            dynamicsDates.add(new Date());
+            dynamicsValues.add(userDao.countBySearchRequest(3, 0, "", new Date()));
+
             userCompositionReport.setDynamicsDates(dynamicsDates);
             userCompositionReport.setDynamicsValues(dynamicsValues);
 
