@@ -30,7 +30,6 @@ public class IssueReservedBookCommand implements Command {
 
         ConfigResourceManager configResourceManager = ConfigResourceManager.getInstance();
 
-
         try {
             int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
             int reservationId = Integer.parseInt(request.getParameter(RequestParameter.RESERVATION_ID));
