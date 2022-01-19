@@ -9,6 +9,7 @@ public class CommandName {
     public static final String EDIT_BOOK_DATA_COMMAND = "edit-book-data";
     public static final String EDIT_PERSONAL_DATA_COMMAND = "edit-personal-data";
     public static final String GET_PERIOD_REPORTS_COMMAND = "get-period-reports";
+    public static final String GOTO_403_PAGE_COMMAND = "goto-403-page";
     public static final String GOTO_404_PAGE_COMMAND = "goto-404-page";
     public static final String GOTO_500_PAGE_COMMAND = "goto-500-page";
     public static final String GOTO_ADD_NEW_BOOK_PAGE_COMMAND = "goto-add-new-book-page";

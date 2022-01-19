@@ -56,7 +56,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="data-name"><b><fmt:message key="user-role.admin" /></b></td>
+                    <td class="data-name"><b><i class="bi bi-circle-fill" style="color:firebrick; font-size: 16px; margin-right: 5px"></i>
+                        <fmt:message key="user-role.admin" /></b></td>
                     <td class="data-value">${users_report.adminCountTo}
                         <c:if test="${users_report.adminCountTo >= users_report.adminCountFrom}">
                             <span style="color: forestgreen">&nbsp;&nbsp;+${users_report.adminCountTo - users_report.adminCountFrom}</span>
@@ -67,7 +68,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="data-name"><b><fmt:message key="user-role.manager" /></b></td>
+                    <td class="data-name"><b><i class="bi bi-circle-fill" style="color:royalblue; font-size: 16px; margin-right: 5px"></i>
+                        <fmt:message key="user-role.manager" /></b></td>
                     <td class="data-value">${users_report.managerCountTo}
                         <c:if test="${users_report.managerCountTo >= users_report.managerCountFrom}">
                             <span style="color: forestgreen">&nbsp;&nbsp;+${users_report.managerCountTo - users_report.managerCountFrom}</span>
@@ -78,7 +80,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="data-name"><b><fmt:message key="user-role.member" /></b></td>
+                    <td class="data-name"><b><i class="bi bi-circle-fill" style="color:gray; font-size: 16px; margin-right: 5px"></i>
+                        <fmt:message key="user-role.member" /></b></td>
                     <td class="data-value">${users_report.memberCountTo}
                         <c:if test="${users_report.memberCountTo >= users_report.memberCountFrom}">
                             <span style="color: forestgreen">&nbsp;&nbsp;+${users_report.memberCountTo - users_report.memberCountFrom}</span>
@@ -185,15 +188,18 @@
                         <th><fmt:message key="reports.count" /></th>
                     </tr>
                     <tr>
-                        <td class="data-name"><b><fmt:message key="copy-of-book-status.available" /></b></td>
+                        <td class="data-name"><b><i class="bi bi-circle-fill" style="color:gray; font-size: 16px; margin-right: 5px"></i>
+                            <fmt:message key="copy-of-book-status.available" /></b></td>
                         <td class="data-value">${issue_report.totalAvailable}</td>
                     </tr>
                     <tr>
-                        <td class="data-name"><b><fmt:message key="copy-of-book-status.reserved" /></b></td>
+                        <td class="data-name"><b><i class="bi bi-circle-fill" style="color:royalblue; font-size: 16px; margin-right: 5px"></i>
+                            <fmt:message key="copy-of-book-status.reserved" /></b></td>
                         <td class="data-value">${issue_report.totalReserved}</td>
                     </tr>
                     <tr>
-                        <td class="data-name"><b><fmt:message key="copy-of-book-status.loaned" /></b></td>
+                        <td class="data-name"><b><i class="bi bi-circle-fill" style="color:forestgreen; font-size: 16px; margin-right: 5px"></i>
+                            <fmt:message key="copy-of-book-status.loaned" /></b></td>
                         <td class="data-value">${issue_report.totalLoaned}</td>
                     </tr>
                 </table>
@@ -234,6 +240,8 @@
     <c:forEach items="${users_report.dynamicsValues}" var="value">
         yValues.push(${value});
     </c:forEach>
+
+    Chart.defaults.global.defaultFontSize=15;
 
     new Chart("users-composition-chart", {
         type: "line",

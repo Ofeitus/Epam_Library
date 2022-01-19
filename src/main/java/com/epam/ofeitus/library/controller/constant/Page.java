@@ -2,6 +2,7 @@ package com.epam.ofeitus.library.controller.constant;
 
 public class Page {
     // errors
+    public static final String ERROR_403_PAGE = "WEB-INF/pages/errors/403.jsp";
     public static final String ERROR_404_PAGE = "WEB-INF/pages/errors/404.jsp";
     public static final String ERROR_500_PAGE = "WEB-INF/pages/errors/500.jsp";
 

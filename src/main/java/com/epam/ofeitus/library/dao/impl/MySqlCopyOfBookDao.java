@@ -15,10 +15,11 @@ import java.util.List;
 
 public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements CopyOfBookDao {
     public final static String SAVE_COPY_OF_BOOK_QUERY = String.format(
-            "INSERT INTO %s (%s, %s, %s, %s) VALUES (0, ?, ?, ?)",
+            "INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (0, ?, ?, ?, ?)",
             Table.COPY_OF_BOOK_TABLE,
             Column.COPY_OF_BOOK_INVENTORY_ID,
             Column.COPY_OF_BOOK_RECEIPT_DATE,
+            Column.COPY_OF_BOOK_PRICE,
             Column.BOOK_ISBN,
             Column.COPY_OF_BOOK_STATUS_ID);
     public final static String UPDATE_COPY_OF_BOOK_QUERY = String.format(
@@ -100,6 +101,7 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
             parametrizedQueries.add(new ParametrizedQuery(
                     SAVE_COPY_OF_BOOK_QUERY,
                     copyOfBook.getReceiptDate(),
+                    copyOfBook.getPrice(),
                     copyOfBook.getBookIsbn(),
                     copyOfBook.getCopyOfBookStatus().ordinal() + 1
             ));

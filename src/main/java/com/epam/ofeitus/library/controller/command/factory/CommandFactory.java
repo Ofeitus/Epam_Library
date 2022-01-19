@@ -19,6 +19,7 @@ public class CommandFactory {
         put(CommandName.EDIT_BOOK_DATA_COMMAND, new EditBookDataCommand());
         put(CommandName.EDIT_PERSONAL_DATA_COMMAND, new EditPersonalDataCommand());
         put(CommandName.GET_PERIOD_REPORTS_COMMAND, new GetPeriodReportsCommand());
+        put(CommandName.GOTO_403_PAGE_COMMAND, new GoTo403PageCommand());
         put(CommandName.GOTO_404_PAGE_COMMAND, new GoTo404PageCommand());
         put(CommandName.GOTO_500_PAGE_COMMAND, new GoTo500PageCommand());
         put(CommandName.GOTO_ADD_NEW_BOOK_PAGE_COMMAND, new GoToAddNewBookPageCommand());

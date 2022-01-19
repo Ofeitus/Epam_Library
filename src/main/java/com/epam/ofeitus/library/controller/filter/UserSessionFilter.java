@@ -26,18 +26,23 @@ public class UserSessionFilter implements Filter {
 
         UserService userService = ServiceFactory.getInstance().getUserService();
 
-        int userId = (int) session.getAttribute(SessionAttribute.USER_ID);
-        UserRole role = (UserRole) session.getAttribute(SessionAttribute.USER_ROLE);
-
         try {
-            User user = userService.getByUserId(userId);
+            Object userId = session.getAttribute(SessionAttribute.USER_ID);
 
-            if (user == null || role != user.getUserRole()) {
-                session.invalidate();
-                response.sendRedirect("/controller?command=goto-log-in-page");
-                return;
+            if (userId == null) {
+                session.setAttribute(SessionAttribute.USER_ROLE, UserRole.GUEST);
+            } else {
+                UserRole role = (UserRole) session.getAttribute(SessionAttribute.USER_ROLE);
+
+                User user = userService.getByUserId((int) userId);
+                // User deleted or role changed case
+                if (user == null || role != user.getUserRole()) {
+                    session.invalidate();
+                    response.sendRedirect("/controller?command=goto-log-in-page");
+                    return;
+                }
             }
-        } catch (ServiceException e) {
+        } catch (ServiceException | ClassCastException e) {
             logger.error("Unable to get user.", e);
             response.sendRedirect("/controller?command=goto-500-page");
             return;
