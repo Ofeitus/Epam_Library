@@ -21,36 +21,38 @@ import java.util.MissingResourceException;
 import java.util.Optional;
 
 public class IssueReservedBookCommand implements Command {
-    Logger logger = LogManager.getLogger(IssueReservedBookCommand.class);
+    private final Logger logger = LogManager.getLogger(IssueReservedBookCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
-        int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
-        int reservationId = Integer.parseInt(request.getParameter(RequestParameter.RESERVATION_ID));
-
         HttpSession session = request.getSession();
-
-        int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
-
-        String command = "?command=goto-user-reservations-page&user-id=" + userId;
-        session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
-        session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
-
         LoansService loansService = ServiceFactory.getInstance().getLoansService();
 
         ConfigResourceManager configResourceManager = ConfigResourceManager.getInstance();
+
+
         try {
+            int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
+            int reservationId = Integer.parseInt(request.getParameter(RequestParameter.RESERVATION_ID));
+            int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
+
+            String command = "?command=goto-user-reservations-page&user-id=" + userId;
+            session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
+            session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
+
             int loanPeriod = 30;
             try {
                 loanPeriod = Integer.parseInt(configResourceManager.getValue(ConfigParameter.LOAN_PERIOD));
             } catch (NumberFormatException | MissingResourceException e) {
                 logger.error("Unable to get loan period.", e);
             }
+
             loansService.loanFromReservation(reservationId, loanPeriod);
+
             return new CommandResult("/controller" + command + "&page=" + page, RoutingType.REDIRECT);
-        } catch (ServiceException e) {
+        } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to loan from reservation.", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

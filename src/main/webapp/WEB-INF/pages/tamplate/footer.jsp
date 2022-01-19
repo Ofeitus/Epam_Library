@@ -7,6 +7,6 @@
 <fmt:setBundle basename="locale"/>
 <footer>
     <!-- TODO Copyright -->
-    <label>© 2022 WebLib by Ofeitus</label>
+    <label>2022 WebLib by Ofeitus</label>
     <a id="home-link" href="?command=goto-home-page">WebLib</a>
 </footer>

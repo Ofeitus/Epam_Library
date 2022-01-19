@@ -24,68 +24,46 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class GoToProfilePageCommand implements Command {
-    Logger logger = LogManager.getLogger(GoToProfilePageCommand.class);
+    private final Logger logger = LogManager.getLogger(GoToProfilePageCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-
-        int userId = (int) session.getAttribute(SessionAttribute.USER_ID);
-
-        String requestUserId = request.getParameter(RequestParameter.USER_ID);
-
-        if (session.getAttribute(SessionAttribute.USER_ROLE) == UserRole.MANAGER && requestUserId != null) {
-            userId = Integer.parseInt(requestUserId);
-        }
-
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-profile-page&user-id=" + userId);
 
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         UserService userService = serviceFactory.getUserService();
         ReservationsService reservationsService = serviceFactory.getReservationsService();
         LoansService loansService = serviceFactory.getLoansService();
 
-        User user;
+        String requestUserId = request.getParameter(RequestParameter.USER_ID);
+
+        int userId = (int) session.getAttribute(SessionAttribute.USER_ID);
+
         try {
-            user = userService.getByUserId(userId);
-            request.setAttribute(RequestAttribute.USER, user);
-        } catch (ServiceException e) {
-            logger.error("Unable to get user.", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
-        }
+            if (session.getAttribute(SessionAttribute.USER_ROLE) == UserRole.MANAGER && requestUserId != null) {
+                userId = Integer.parseInt(requestUserId);
+            }
 
-        if (user.getUserRole() == UserRole.MEMBER || requestUserId != null) {
-            try {
+            session.setAttribute(SessionAttribute.URL, "/controller?command=goto-profile-page&user-id=" + userId);
+
+            User user = userService.getByUserId(userId);
+
+            if (user.getUserRole() == UserRole.MEMBER || requestUserId != null) {
                 int debtsCount = loansService.getDebtsCountByUserId(userId);
+                int unpaidFinesCount = loansService.getLoansCountByUserIdAndStatusId(userId, LoanStatus.FINED.ordinal() + 1);
+                int readyReservationsCount = reservationsService.getReservationsCountByUserIdAndStatusId(userId, ReservationStatus.READY_TO_ISSUE.ordinal() + 1);
+
                 request.setAttribute(RequestAttribute.DEBTS_COUNT, debtsCount);
-            } catch (ServiceException e) {
-                logger.error("Unable to get user debts count.", e);
-                return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
-            }
-
-            try {
-                int unpaidFinesCount = loansService.getLoansCountByUserIdAndStatusId(
-                        userId,
-                        LoanStatus.FINED.ordinal() + 1
-                );
                 request.setAttribute(RequestAttribute.UNPAID_FINES_COUNT, unpaidFinesCount);
-            } catch (ServiceException e) {
-                logger.error("Unable to get user unpaid fines count.", e);
-                return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
-            }
-
-            try {
-                int readyReservationsCount = reservationsService.getReservationsCountByUserIdAndStatusId(
-                        userId,
-                        ReservationStatus.READY_TO_ISSUE.ordinal() + 1
-                );
                 request.setAttribute(RequestAttribute.READY_RESERVATIONS_COUNT, readyReservationsCount);
-            } catch (ServiceException e) {
-                logger.error("Unable to get user ready reservations count.", e);
-                return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
             }
-        }
 
-        return new CommandResult(Page.PROFILE_PAGE, RoutingType.FORWARD);
+            request.setAttribute(RequestAttribute.USER, user);
+
+            return new CommandResult(Page.PROFILE_PAGE, RoutingType.FORWARD);
+        } catch (ServiceException | NumberFormatException e) {
+            logger.error("Unable to get user data.", e);
+        }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

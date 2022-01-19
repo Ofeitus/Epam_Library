@@ -19,29 +19,31 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 public class CancelReservationCommand implements Command {
-    Logger logger = LogManager.getLogger(CancelReservationCommand.class);
+    private final Logger logger = LogManager.getLogger(CancelReservationCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-
         ReservationsService reservationsService = ServiceFactory.getInstance().getReservationsService();
 
-        int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
-        String redirectCommand = request.getParameter(RequestParameter.REDIRECT_COMMAND);
-
-        int reservationId = Integer.parseInt(request.getParameter(RequestParameter.RESERVATION_ID));
         try {
+            int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
+            int reservationId = Integer.parseInt(request.getParameter(RequestParameter.RESERVATION_ID));
+            String redirectCommand = request.getParameter(RequestParameter.REDIRECT_COMMAND);
+
             Reservation reservation = reservationsService.getByReservationId(reservationId);
+
             String command = "?command=" + redirectCommand +
                              "&user-id=" + reservation.getUserId();
             session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
             session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
+
             reservationsService.cancelReservation(reservationId);
+
             return new CommandResult("/controller" + command + "&page=" + page, RoutingType.REDIRECT);
-        } catch (ServiceException e) {
+        } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to cancel reservation.", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

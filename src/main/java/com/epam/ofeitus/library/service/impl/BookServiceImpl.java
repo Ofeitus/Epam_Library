@@ -141,13 +141,18 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public int updateBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<Author> authors) throws ServiceException {
+    public int updateBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<String> authorNames, List<String> authorSurnames) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         BookDao bookDao = daoFactory.getBookDao();
         BookCategoryDao bookCategoryDao = daoFactory.getBookCategoryDao();
         AuthorDao authorDao = daoFactory.getAuthorDao();
 
         try {
+            List<Author> authors = new ArrayList<>();
+            for (int i = 0; i < authorNames.size(); i++) {
+                authors.add(new Author(0, authorNames.get(i), authorSurnames.get(i)));
+            }
+
             int categoryId = bookCategoryDao.findByName(category).getCategoryId();
             for (Author author : authors) {
                 Author authorInDb = authorDao.findByName(author.getName(), author.getSurname());
@@ -165,13 +170,18 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public int saveBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<Author> authors) throws ServiceException {
+    public int saveBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<String> authorNames, List<String> authorSurnames) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         BookDao bookDao = daoFactory.getBookDao();
         BookCategoryDao bookCategoryDao = daoFactory.getBookCategoryDao();
         AuthorDao authorDao = daoFactory.getAuthorDao();
 
         try {
+            List<Author> authors = new ArrayList<>();
+            for (int i = 0; i < authorNames.size(); i++) {
+                authors.add(new Author(0, authorNames.get(i), authorSurnames.get(i)));
+            }
+
             int categoryId = bookCategoryDao.findByName(category).getCategoryId();
             for (Author author : authors) {
                 Author authorInDb = authorDao.findByName(author.getName(), author.getSurname());

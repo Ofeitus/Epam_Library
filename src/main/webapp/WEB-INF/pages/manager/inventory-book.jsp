@@ -138,6 +138,7 @@
                                 <fmt:message key="copy-of-book-status.available" />
                             </c:when>
                             <c:when test="${copy_of_book.copyOfBookStatus == 'READING_ROOM'}">
+                                <!-- TODO Reading room -->
                                 <i class="bi bi-circle-fill" style="color:lawngreen"></i>
                                 <fmt:message key="copy-of-book-status.reading-room" />
                             </c:when>

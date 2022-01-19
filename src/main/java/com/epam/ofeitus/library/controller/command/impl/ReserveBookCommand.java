@@ -17,31 +17,27 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class ReserveBookCommand implements Command {
-    Logger logger = LogManager.getLogger(ReserveBookCommand.class);
+    private final Logger logger = LogManager.getLogger(ReserveBookCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
-        String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
-
         HttpSession session = request.getSession();
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-book-details-page&book-isbn=" + bookIsbn);
-
-        int userId = (int) session.getAttribute(SessionAttribute.USER_ID);
         ReservationsService reservationsService = ServiceFactory.getInstance().getReservationsService();
 
+        String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
+        int userId = (int) session.getAttribute(SessionAttribute.USER_ID);
+
+        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-book-details-page&book-isbn=" + bookIsbn);
+
         try {
-            boolean reserved = reservationsService.makeReservation(userId, bookIsbn);
-            if (!reserved) {
+            if (!reservationsService.makeReservation(userId, bookIsbn)) {
                 session.setAttribute(SessionAttribute.ERROR, "No copies available");
             }
+
             return new CommandResult("/controller?command=goto-book-details-page&book-isbn=" + bookIsbn, RoutingType.REDIRECT);
         } catch (ServiceException e) {
-            logger.error("Unable to cancel reservation.", e);
-            session.setAttribute(SessionAttribute.ERROR, "No copies available");
-            if (e.getCause().getCause().getMessage().contains("foreign key constraint fails")) {
-                return new CommandResult("/controller?command=goto-book-details-page&book-isbn=" + bookIsbn, RoutingType.REDIRECT);
-            }
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
+            logger.error("Unable to reserve book.", e);
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

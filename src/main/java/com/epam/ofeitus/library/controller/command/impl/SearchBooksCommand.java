@@ -24,31 +24,24 @@ import java.util.List;
 import java.util.Optional;
 
 public class SearchBooksCommand implements Command {
-    Logger logger = LogManager.getLogger(SearchBooksCommand.class);
+    private final Logger logger = LogManager.getLogger(SearchBooksCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
         BookService bookService = ServiceFactory.getInstance().getBookService();
 
         String searchRequest = request.getParameter(RequestParameter.SEARCH_REQUEST);
         String category = request.getParameter(RequestParameter.CATEGORY);
         String authorName = request.getParameter(RequestParameter.AUTHOR_NAME);
         String authorSurname = request.getParameter(RequestParameter.AUTHOR_SURNAME);
-        int yearFrom = 0;
-        int yearTo = 0;
-        try {
-            yearFrom = Integer.parseInt(request.getParameter(RequestParameter.YEAR_FROM));
-            yearTo = Integer.parseInt(request.getParameter(RequestParameter.YEAR_TO));
-        } catch (NumberFormatException e) {
-            logger.warn("Wrong search parameters.", e);
-        }
-
-        HttpSession session = request.getSession();
-
-        int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
-        int itemsOnPage = 8;
 
         try {
+            int yearFrom = Integer.parseInt(request.getParameter(RequestParameter.YEAR_FROM));
+            int yearTo = Integer.parseInt(request.getParameter(RequestParameter.YEAR_TO));
+            int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
+            int itemsOnPage = 8;
+
             String command = "?command=search-books" +
                              "&search-request="+URLEncoder.encode(searchRequest, "UTF-8")+
                              "&category="+URLEncoder.encode(category, "UTF-8")+
@@ -59,40 +52,26 @@ public class SearchBooksCommand implements Command {
             session.setAttribute(SessionAttribute.URL, ("/controller" + command + "&page=" + page));
             session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
 
-            List<BookDto> books = bookService.getBooksDtoBySearchRequest(
-                    searchRequest,
-                    category,
-                    authorName,
-                    authorSurname,
-                    yearFrom,
-                    yearTo,
-                    page,
-                    itemsOnPage
-            );
-            int itemsCount = bookService.countBooksBySearchRequest(
-                    searchRequest,
-                    category,
-                    authorName,
-                    authorSurname,
-                    yearFrom,
-                    yearTo
-            );
+            List<BookDto> books = bookService.getBooksDtoBySearchRequest(searchRequest, category, authorName, authorSurname, yearFrom, yearTo, page, itemsOnPage);
+            List<BookCategory> bookCategories = bookService.getBookCategories();
+
+            int itemsCount = bookService.countBooksBySearchRequest(searchRequest, category, authorName, authorSurname, yearFrom, yearTo);
             int pagesCount = itemsCount / itemsOnPage;
             if (itemsCount % itemsOnPage != 0) {
                 pagesCount++;
             }
+
             request.setAttribute(RequestAttribute.CURRENT_PAGE, page);
             request.setAttribute(RequestAttribute.PAGES_COUNT, pagesCount);
             request.setAttribute(RequestAttribute.BOOKS, books);
-            List<BookCategory> bookCategories = bookService.getBookCategories();
             request.setAttribute(RequestAttribute.BOOK_CATEGORIES, bookCategories);
+
             return new CommandResult(Page.CATALOG_PAGE, RoutingType.FORWARD);
-        } catch (ServiceException e) {
+        } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to get books DTO by search request.", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         } catch (UnsupportedEncodingException e) {
             logger.error("Unable to convert request to UTF-8.", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

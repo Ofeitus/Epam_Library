@@ -17,28 +17,31 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class EditPersonalDataCommand implements Command {
-    Logger logger = LogManager.getLogger(SignUpCommand.class);
+    private final Logger logger = LogManager.getLogger(EditPersonalDataCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
+        UserService userService = ServiceFactory.getInstance().getUserService();
 
-        int id = (int) session.getAttribute(SessionAttribute.USER_ID);
         String name = request.getParameter(RequestParameter.FIRST_NAME);
         String surname = request.getParameter(RequestParameter.SECOND_NAME);
         String phoneNumber = request.getParameter(RequestParameter.PHONE_NUMBER);
 
-        UserService userService = ServiceFactory.getInstance().getUserService();
+        int id = (int) session.getAttribute(SessionAttribute.USER_ID);
+
+        session.setAttribute(SessionAttribute.USER_NAME, name);
+        session.setAttribute(SessionAttribute.USER_SURNAME, surname);
+        session.setAttribute(SessionAttribute.USER_PHONE_NUMBER, phoneNumber);
+        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-profile-page");
+
         try {
             userService.editPersonalData(id, name, surname, phoneNumber);
-            session.setAttribute(SessionAttribute.USER_NAME, name);
-            session.setAttribute(SessionAttribute.USER_SURNAME, surname);
-            session.setAttribute(SessionAttribute.USER_PHONE_NUMBER, phoneNumber);
+
+            return new CommandResult("/controller?command=goto-profile-page", RoutingType.REDIRECT);
         } catch (ServiceException e) {
             logger.error("Unable to edit personal data.", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-profile-page");
-        return new CommandResult("/controller?command=goto-profile-page", RoutingType.REDIRECT);
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

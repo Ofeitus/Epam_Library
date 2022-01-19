@@ -22,44 +22,46 @@ import java.util.List;
 import java.util.Optional;
 
 public class GoToUserReservationsPageCommand implements Command {
-    Logger logger = LogManager.getLogger(GoToUserReservationsPageCommand.class);
+    private final Logger logger = LogManager.getLogger(GoToUserReservationsPageCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-
-        int userId = (int) session.getAttribute(SessionAttribute.USER_ID);
+        ReservationsService reservationsService = ServiceFactory.getInstance().getReservationsService();
 
         String requestUserId = request.getParameter(RequestParameter.USER_ID);
 
-        if (session.getAttribute(SessionAttribute.USER_ROLE) == UserRole.MANAGER && requestUserId != null) {
-            userId = Integer.parseInt(requestUserId);
-        }
-
-        ReservationsService reservationsService = ServiceFactory.getInstance().getReservationsService();
-
-        int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
-        int itemsOnPage = 10;
-
-        String command = "?command=goto-user-reservations-page&user-id=" + userId;
-        session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
-        session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
+        int userId = (int) session.getAttribute(SessionAttribute.USER_ID);
 
         try {
+            if (session.getAttribute(SessionAttribute.USER_ROLE) == UserRole.MANAGER && requestUserId != null) {
+                userId = Integer.parseInt(requestUserId);
+            }
+
+            int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
+            int itemsOnPage = 10;
+
+            String command = "?command=goto-user-reservations-page&user-id=" + userId;
+            session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
+            session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
+
             List<ReservationDto> reservations = reservationsService.getReservationsDtoByUserId(userId, page, itemsOnPage);
+
             int itemsCount = reservationsService.countReservationsDtoByUserId(userId);
             int pagesCount = itemsCount / itemsOnPage;
             if (itemsCount % itemsOnPage != 0) {
                 pagesCount++;
             }
+
             request.setAttribute(RequestAttribute.CURRENT_PAGE, page);
             request.setAttribute(RequestAttribute.PAGES_COUNT, pagesCount);
             request.setAttribute(RequestAttribute.RESERVATIONS, reservations);
             request.setAttribute(RequestAttribute.USER_ID, userId);
+
             return new CommandResult(Page.USER_RESERVATIONS_PAGE, RoutingType.FORWARD);
-        } catch (ServiceException e) {
+        } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to get user reservations DTO", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

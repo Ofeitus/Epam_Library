@@ -22,45 +22,42 @@ import java.util.List;
 import java.util.Optional;
 
 public class SearchMembersCommand implements Command {
-    Logger logger = LogManager.getLogger(SearchMembersCommand.class);
+    private final Logger logger = LogManager.getLogger(SearchMembersCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-
-        String email = request.getParameter(RequestParameter.EMAIL);
-        int userId = 0;
-        try {
-            userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
-        } catch (NumberFormatException e) {
-            logger.warn("Wrong search parameters.", e);
-        }
-
         UserService userService = ServiceFactory.getInstance().getUserService();
 
-        int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
-        int itemsOnPage = 10;
-
-        String command = "?command=goto-manage-members-page" +
-                "&email=" + email +
-                "&user-id=" + userId;
-        session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
-        session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
+        String email = request.getParameter(RequestParameter.EMAIL);
 
         try {
+            int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
+            int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
+            int itemsOnPage = 10;
+
+            String command = "?command=goto-manage-members-page" +
+                    "&email=" + email +
+                    "&user-id=" + userId;
+            session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
+            session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
+
             List<User> users = userService.getUsersBySearchRequest(UserRole.MEMBER.ordinal() + 1, userId, email, page, itemsOnPage);
+
             int itemsCount = userService.countUsersBySearchRequest(UserRole.MEMBER.ordinal() + 1, userId, email);
             int pagesCount = itemsCount / itemsOnPage;
             if (itemsCount % itemsOnPage != 0) {
                 pagesCount++;
             }
+
             request.setAttribute(RequestAttribute.CURRENT_PAGE, page);
             request.setAttribute(RequestAttribute.PAGES_COUNT, pagesCount);
             request.setAttribute(RequestAttribute.USERS, users);
+
             return new CommandResult(Page.MANAGE_MEMBERS_PAGE, RoutingType.FORWARD);
-        } catch (ServiceException e) {
+        } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to get all members", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

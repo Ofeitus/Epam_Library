@@ -15,7 +15,8 @@ import java.util.List;
 
 public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implements ReservationDao {
     public final static String SAVE_RESERVATION_QUERY = String.format(
-            "INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (0, ?, ?, LAST_INSERT_ID(), ?)",
+            "INSERT INTO %s (%s, %s, %s, %s, %s) " +
+                    "SELECT 0, ?, ?, LAST_INSERT_ID(), ? FROM dual WHERE LAST_INSERT_ID() != 0",
             Table.RESERVATION_TABLE,
             Column.RESERVATION_ID,
             Column.RESERVATION_DATE,

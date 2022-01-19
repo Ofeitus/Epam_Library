@@ -22,35 +22,37 @@ import java.util.List;
 import java.util.Optional;
 
 public class GoToManageReservationsPageCommand implements Command {
-    Logger logger = LogManager.getLogger(GoToManageReservationsPageCommand.class);
+    private final Logger logger = LogManager.getLogger(GoToManageReservationsPageCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-
         ReservationsService reservationsService = ServiceFactory.getInstance().getReservationsService();
 
-        int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
-        int itemsOnPage = 10;
-
-        String command = "?command=goto-manage-reservations-page";
-        session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
-        session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
-
         try {
+            int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
+            int itemsOnPage = 10;
+
+            String command = "?command=goto-manage-reservations-page";
+            session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
+            session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
+
             List<ReservationDto> reservations = reservationsService.getUnconfirmedReservationsDto(page, itemsOnPage);
+
             int itemsCount = reservationsService.countUnconfirmedReservationsDto();
             int pagesCount = itemsCount / itemsOnPage;
             if (itemsCount % itemsOnPage != 0) {
                 pagesCount++;
             }
+
             request.setAttribute(RequestAttribute.CURRENT_PAGE, page);
             request.setAttribute(RequestAttribute.PAGES_COUNT, pagesCount);
             request.setAttribute(RequestAttribute.RESERVATIONS, reservations);
+
             return new CommandResult(Page.MANAGE_RESERVATIONS_PAGE, RoutingType.FORWARD);
-        } catch (ServiceException e) {
+        } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to get unconfirmed reservations DTO", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

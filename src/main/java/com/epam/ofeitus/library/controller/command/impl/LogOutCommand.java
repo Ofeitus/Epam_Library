@@ -14,12 +14,15 @@ public class LogOutCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
+
         session.setAttribute(SessionAttribute.URL, "/controller?command=goto-home-page");
+
         session.removeAttribute(SessionAttribute.USER_ID);
         session.removeAttribute(SessionAttribute.USER_NAME);
         session.removeAttribute(SessionAttribute.USER_SURNAME);
         session.removeAttribute(SessionAttribute.USER_EMAIL);
         session.removeAttribute(SessionAttribute.USER_ROLE);
+
         return new CommandResult(Page.HOME_PAGE, RoutingType.FORWARD);
     }
 }

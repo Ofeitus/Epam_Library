@@ -21,12 +21,11 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class GoToEditBookDataPageCommand implements Command {
-    Logger logger = LogManager.getLogger(GoToEditBookDataPageCommand.class);
+    private final Logger logger = LogManager.getLogger(GoToEditBookDataPageCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-
         BookService bookService = ServiceFactory.getInstance().getBookService();
 
         String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
@@ -35,13 +34,15 @@ public class GoToEditBookDataPageCommand implements Command {
 
         try {
             BookDto book = bookService.getBookDtoByIsbn(bookIsbn);
-            request.setAttribute(RequestAttribute.BOOK, book);
             List<BookCategory> bookCategories = bookService.getBookCategories();
+
+            request.setAttribute(RequestAttribute.BOOK, book);
             request.setAttribute(RequestAttribute.BOOK_CATEGORIES, bookCategories);
+
             return new CommandResult(Page.EDIT_BOOK_DATA_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Unable to get book DTO.", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

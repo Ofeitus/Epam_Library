@@ -18,28 +18,27 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 public class RestoreUserCommand implements Command {
-    Logger logger = LogManager.getLogger(RestoreUserCommand.class);
+    private final Logger logger = LogManager.getLogger(RestoreUserCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-
         UserService userService = ServiceFactory.getInstance().getUserService();
 
-        int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
-        int itemsOnPage = 10;
-
-        String command = "?command=goto-manage-users-page";
-        session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
-        session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
-
         try {
+            int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
             int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
+
+            String command = "?command=goto-manage-users-page";
+            session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
+            session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
+
             userService.restoreUser(userId);
+
             return new CommandResult("/controller" + command + "&page=" + page, RoutingType.REDIRECT);
         } catch (ServiceException | NumberFormatException e) {
-            logger.error("Unable to delete user.", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
+            logger.error("Unable to restore user.", e);
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

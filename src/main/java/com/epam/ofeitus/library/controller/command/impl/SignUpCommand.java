@@ -18,18 +18,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class SignUpCommand implements Command {
-    Logger logger = LogManager.getLogger(SignUpCommand.class);
+    private final Logger logger = LogManager.getLogger(SignUpCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
+        UserService userService = ServiceFactory.getInstance().getUserService();
 
         String firstName = request.getParameter(RequestParameter.FIRST_NAME);
         String lastName = request.getParameter(RequestParameter.SECOND_NAME);
         String email = request.getParameter(RequestParameter.EMAIL);
         String password = request.getParameter(RequestParameter.PASSWORD);
 
-        UserService userService = ServiceFactory.getInstance().getUserService();
         try {
             if (userService.getByEmail(email) != null) {
                 session.setAttribute(SessionAttribute.ERROR, "Email is already taken");
@@ -37,13 +37,16 @@ public class SignUpCommand implements Command {
                 return new CommandResult(Page.SIGN_UP_PAGE, RoutingType.FORWARD);
             }
             userService.register(firstName, lastName, email, password);
+
             request.setAttribute(RequestAttribute.EMAIL, email);
+
+            session.setAttribute(SessionAttribute.URL, "/controller?command=goto-log-in-page");
+
             logger.info("User" + email + "is registered.");
+            return new CommandResult(Page.LOG_IN_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Unable to register new user.", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-log-in-page");
-        return new CommandResult(Page.LOG_IN_PAGE, RoutingType.FORWARD);
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

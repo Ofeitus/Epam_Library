@@ -17,22 +17,24 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class DeleteBookCommand implements Command {
-    Logger logger = LogManager.getLogger(DeleteBookCommand.class);
+    private final Logger logger = LogManager.getLogger(DeleteBookCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-catalog-page");
-
         BookService bookService = ServiceFactory.getInstance().getBookService();
 
         String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
+
+        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-catalog-page");
+
         try {
             bookService.deleteBook(bookIsbn);
+
             return new CommandResult("/controller?command=goto-catalog-page", RoutingType.REDIRECT);
         } catch (ServiceException e) {
             logger.error("Unable to delete book.", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

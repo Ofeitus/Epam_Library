@@ -19,23 +19,24 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class GoToAddNewBookPageCommand implements Command {
-    Logger logger = LogManager.getLogger(GoToAddNewBookPageCommand.class);
+    private final Logger logger = LogManager.getLogger(GoToAddNewBookPageCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-
         BookService bookService = ServiceFactory.getInstance().getBookService();
 
         session.setAttribute(SessionAttribute.URL, "/controller?command=goto-add-new-book-page");
 
         try {
             List<BookCategory> bookCategories = bookService.getBookCategories();
+
             request.setAttribute(RequestAttribute.BOOK_CATEGORIES, bookCategories);
+
             return new CommandResult(Page.ADD_NEW_BOOK_DATA_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Unable to get book categories.", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 import java.util.MissingResourceException;
 
 public class GoToBookDetailsPageCommand implements Command {
-    Logger logger = LogManager.getLogger(GoToBookDetailsPageCommand.class);
+    private final Logger logger = LogManager.getLogger(GoToBookDetailsPageCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
@@ -37,18 +37,21 @@ public class GoToBookDetailsPageCommand implements Command {
         LoansService loansService = serviceFactory.getLoansService();
         ReservationsService reservationsService = serviceFactory.getReservationsService();
 
+        ConfigResourceManager configResourceManager = ConfigResourceManager.getInstance();
+
         String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
+
         Object userIdAtr = session.getAttribute(SessionAttribute.USER_ID);
         int userId = userIdAtr != null ? (int)userIdAtr : -1;
 
         session.setAttribute(SessionAttribute.URL, "/controller?command=goto-book-details-page&book-isbn=" + bookIsbn);
 
-        ConfigResourceManager configResourceManager = ConfigResourceManager.getInstance();
         try {
             int copiesCount = bookService.getCopiesCount(bookIsbn);
             int availableCopiesCount = bookService.getAvailableCopiesCount(bookIsbn);
             int reservedBooksCount;
             int issuedBooksCount;
+
             if (userId != -1) {
                 reservedBooksCount = reservationsService.getReservationsCountByUserIdAndStatusId(userId, ReservationStatus.RESERVED.ordinal() + 1) +
                         reservationsService.getReservationsCountByUserIdAndStatusId(userId, ReservationStatus.READY_TO_ISSUE.ordinal() + 1);
@@ -57,24 +60,27 @@ public class GoToBookDetailsPageCommand implements Command {
                 reservedBooksCount = 0;
                 issuedBooksCount = 0;
             }
-            BookDto book = bookService.getBookDtoByIsbn(bookIsbn);
-            request.setAttribute(RequestAttribute.BOOK, book);
-            request.setAttribute(RequestAttribute.COPIES_COUNT, copiesCount);
-            request.setAttribute(RequestAttribute.AVAILABLE_COPIES_COUNT, availableCopiesCount);
-            request.setAttribute(RequestAttribute.RESERVED_BOOKS_COUNT, reservedBooksCount);
-            request.setAttribute(RequestAttribute.ISSUED_BOOKS_COUNT, issuedBooksCount);
+
             int maxMemberBooks = 5;
             try {
                 maxMemberBooks = Integer.parseInt(configResourceManager.getValue(ConfigParameter.MAX_MEMBER_BOOKS));
             } catch (NumberFormatException | MissingResourceException e) {
                 logger.error("Unable to get max member books.", e);
             }
+
+            BookDto book = bookService.getBookDtoByIsbn(bookIsbn);
+
+            request.setAttribute(RequestAttribute.BOOK, book);
+            request.setAttribute(RequestAttribute.COPIES_COUNT, copiesCount);
+            request.setAttribute(RequestAttribute.AVAILABLE_COPIES_COUNT, availableCopiesCount);
+            request.setAttribute(RequestAttribute.RESERVED_BOOKS_COUNT, reservedBooksCount);
+            request.setAttribute(RequestAttribute.ISSUED_BOOKS_COUNT, issuedBooksCount);
             request.setAttribute(RequestAttribute.MAX_MEMBER_BOOKS, maxMemberBooks);
 
             return new CommandResult(Page.BOOK_DETAILS_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Unable to get book DTO.", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

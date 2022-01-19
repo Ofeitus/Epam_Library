@@ -18,24 +18,27 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 
 public class WriteInCopiesOfBookCommand implements Command {
-    Logger logger = LogManager.getLogger(WriteInCopiesOfBookCommand.class);
+    private final Logger logger = LogManager.getLogger(WriteInCopiesOfBookCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-inventory-book-page");
+        BookService bookService = ServiceFactory.getInstance().getBookService();
 
         String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
 
-        BookService bookService = ServiceFactory.getInstance().getBookService();
+        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-inventory-book-page");
+
         try {
             int copiesCount = Integer.parseInt(request.getParameter(RequestParameter.COPIES_COUNT));
             BigDecimal price = new BigDecimal(request.getParameter(RequestParameter.PRICE));
+
             bookService.addCopiesOfBook(bookIsbn, price, copiesCount);
+
             return new CommandResult("/controller?command=goto-inventory-book-page", RoutingType.REDIRECT);
         } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to add copies of book.", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

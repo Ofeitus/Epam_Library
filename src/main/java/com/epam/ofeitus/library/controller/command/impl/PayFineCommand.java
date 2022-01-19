@@ -18,29 +18,28 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 public class PayFineCommand implements Command {
-    Logger logger = LogManager.getLogger(PayFineCommand.class);
+    private final Logger logger = LogManager.getLogger(PayFineCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
-        int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
-        int loanId = Integer.parseInt(request.getParameter(RequestParameter.LOAN_ID));
-
         HttpSession session = request.getSession();
-
-        int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
-
-        String command = "?command=goto-user-fines-page&user-id=" + userId;
-        session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
-        session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
-
         LoansService loansService = ServiceFactory.getInstance().getLoansService();
 
         try {
+            int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
+            int loanId = Integer.parseInt(request.getParameter(RequestParameter.LOAN_ID));
+            int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
+
+            String command = "?command=goto-user-fines-page&user-id=" + userId;
+            session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
+            session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
+
             loansService.payFine(loanId);
+
             return new CommandResult("/controller" + command + "&page=" + page, RoutingType.REDIRECT);
-        } catch (ServiceException e) {
+        } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to pay fine.", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

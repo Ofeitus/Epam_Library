@@ -22,37 +22,37 @@ import java.util.MissingResourceException;
 import java.util.Optional;
 
 public class ReturnLoanedBookCommand implements Command {
-    Logger logger = LogManager.getLogger(ReturnLoanedBookCommand.class);
+    private final Logger logger = LogManager.getLogger(ReturnLoanedBookCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
-        int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
-        int loanId = Integer.parseInt(request.getParameter(RequestParameter.LOAN_ID));
-
         HttpSession session = request.getSession();
-
-        int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
-
-        String command = "?command=goto-user-loans-page&user-id=" + userId;
-        session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
-        session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
-
         LoansService loansService = ServiceFactory.getInstance().getLoansService();
 
         ConfigResourceManager configResourceManager = ConfigResourceManager.getInstance();
+
         try {
-            BigDecimal fineRate;
+            int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
+            int loanId = Integer.parseInt(request.getParameter(RequestParameter.LOAN_ID));
+            int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
+
+            String command = "?command=goto-user-loans-page&user-id=" + userId;
+            session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
+            session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
+
+            BigDecimal fineRate = new BigDecimal("0.5");
             try {
                 fineRate = new BigDecimal(configResourceManager.getValue(ConfigParameter.FINE_RATE));
             } catch (NumberFormatException | MissingResourceException e) {
                 logger.error("Unable to get fine rate.", e);
-                fineRate = new BigDecimal("0.5");
             }
+
             loansService.returnBook(loanId, fineRate);
+
             return new CommandResult("/controller" + command + "&page=" + page, RoutingType.REDIRECT);
-        } catch (ServiceException e) {
+        } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to return book.", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

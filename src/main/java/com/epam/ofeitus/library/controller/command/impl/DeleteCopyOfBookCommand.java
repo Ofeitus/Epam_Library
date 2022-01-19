@@ -18,26 +18,27 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 public class DeleteCopyOfBookCommand implements Command {
-    Logger logger = LogManager.getLogger(DeleteCopyOfBookCommand.class);
+    private final Logger logger = LogManager.getLogger(DeleteCopyOfBookCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-
         BookService bookService = ServiceFactory.getInstance().getBookService();
-        int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
 
-        String command = "?command=goto-inventory-book-page";
-        session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
-        session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
-
-        int inventoryId = Integer.parseInt(request.getParameter(RequestParameter.INVENTORY_ID));
         try {
+            int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
+            int inventoryId = Integer.parseInt(request.getParameter(RequestParameter.INVENTORY_ID));
+
+            String command = "?command=goto-inventory-book-page";
+            session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
+            session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
+
             bookService.deleteCopyOfBook(inventoryId);
+
             return new CommandResult("/controller" + command + "&page=" + page, RoutingType.REDIRECT);
-        } catch (ServiceException e) {
+        } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to delete copy of book.", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

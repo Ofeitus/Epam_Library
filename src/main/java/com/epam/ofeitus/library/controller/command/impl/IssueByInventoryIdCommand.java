@@ -24,28 +24,11 @@ import javax.servlet.http.HttpSession;
 import java.util.MissingResourceException;
 
 public class IssueByInventoryIdCommand implements Command {
-    Logger logger = LogManager.getLogger(IssueByInventoryIdCommand.class);
+    private final Logger logger = LogManager.getLogger(IssueByInventoryIdCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-
-        // TODO Bad logic
-        int inventoryId = 0;
-        try {
-            inventoryId = Integer.parseInt(request.getParameter(RequestParameter.INVENTORY_ID));
-        } catch (NumberFormatException e) {
-            logger.warn("Wrong user id number format.", e);
-        }
-
-        int userId = 0;
-        try {
-            userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
-        } catch (NumberFormatException e) {
-            logger.warn("Wrong user id number format.", e);
-        }
-
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-user-loans-page&user-id=" + userId);
 
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         BookService bookService = serviceFactory.getBookService();
@@ -54,20 +37,28 @@ public class IssueByInventoryIdCommand implements Command {
 
         ConfigResourceManager configResourceManager = ConfigResourceManager.getInstance();
         try {
+            int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
+            int inventoryId = Integer.parseInt(request.getParameter(RequestParameter.INVENTORY_ID));
+
+            session.setAttribute(SessionAttribute.URL, "/controller?command=goto-user-loans-page&user-id=" + userId);
+
+            // Copy does not exist case
             if (bookService.getCopyByInventoryId(inventoryId) == null) {
                 session.setAttribute(SessionAttribute.ERROR, "Copy does not exist");
                 return new CommandResult("/controller?command=goto-user-loans-page&user-id=" + userId, RoutingType.REDIRECT);
             }
 
-            int reservedBooksCount = reservationsService.getReservationsCountByUserIdAndStatusId(userId, ReservationStatus.RESERVED.ordinal() + 1) +
-                reservationsService.getReservationsCountByUserIdAndStatusId(userId, ReservationStatus.READY_TO_ISSUE.ordinal() + 1);
-            int issuedBooksCount = loansService.getLoansCountByUserIdAndStatusId(userId, LoanStatus.ISSUED.ordinal() + 1);
             int maxMemberBooks = 5;
             try {
                 maxMemberBooks = Integer.parseInt(configResourceManager.getValue(ConfigParameter.MAX_MEMBER_BOOKS));
             } catch (NumberFormatException | MissingResourceException e) {
                 logger.error("Unable to get max member books.", e);
             }
+
+            int reservedBooksCount = reservationsService.getReservationsCountByUserIdAndStatusId(userId, ReservationStatus.RESERVED.ordinal() + 1) +
+                reservationsService.getReservationsCountByUserIdAndStatusId(userId, ReservationStatus.READY_TO_ISSUE.ordinal() + 1);
+            int issuedBooksCount = loansService.getLoansCountByUserIdAndStatusId(userId, LoanStatus.ISSUED.ordinal() + 1);
+            // Issue limit reached case
             if (reservedBooksCount + issuedBooksCount >= maxMemberBooks) {
                 session.setAttribute(SessionAttribute.ERROR, "Issue limit reached");
                 return new CommandResult("/controller?command=goto-user-loans-page&user-id=" + userId, RoutingType.REDIRECT);
@@ -79,17 +70,15 @@ public class IssueByInventoryIdCommand implements Command {
             } catch (NumberFormatException | MissingResourceException e) {
                 logger.error("Unable to get loan period.", e);
             }
+            // Copy is not available
             if (!loansService.loanByInventoryId(userId, inventoryId, loanPeriod)) {
                 session.setAttribute(SessionAttribute.ERROR, "Copy is not available");
             }
+
             return new CommandResult("/controller?command=goto-user-loans-page&user-id=" + userId, RoutingType.REDIRECT);
-        } catch (ServiceException e) {
+        } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to issue book by inventory id.", e);
-            session.setAttribute(SessionAttribute.ERROR, "Copy is not available");
-            if (e.getCause().getCause().getMessage().contains("foreign key constraint fails")) {
-                return new CommandResult("/controller?command=goto-user-loans-page&user-id=" + userId, RoutingType.REDIRECT);
-            }
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

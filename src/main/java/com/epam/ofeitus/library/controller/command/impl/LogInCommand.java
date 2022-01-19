@@ -19,41 +19,40 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class LogInCommand implements Command {
-    Logger logger = LogManager.getLogger(LogInCommand.class);
+    private final Logger logger = LogManager.getLogger(LogInCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
+        UserService userService = ServiceFactory.getInstance().getUserService();
 
         String email = request.getParameter(RequestParameter.EMAIL);
         String password = request.getParameter((RequestParameter.PASSWORD));
 
-        UserService userService = ServiceFactory.getInstance().getUserService();
-        User user;
         try {
-            user = userService.login(email, password);
+            User user = userService.login(email, password);
+            if (user != null) {
+                if (user.getUserRole() == UserRole.ADMIN) {
+                    logger.info("User " + user.getEmail() + " logged in as admin.");
+                }
+                session.setAttribute(SessionAttribute.USER_ID, user.getUserId());
+                session.setAttribute(SessionAttribute.USER_NAME, user.getName());
+                session.setAttribute(SessionAttribute.USER_SURNAME, user.getSurname());
+                session.setAttribute(SessionAttribute.USER_PHONE_NUMBER, user.getPhoneNumber());
+                session.setAttribute(SessionAttribute.USER_EMAIL, user.getEmail());
+                session.setAttribute(SessionAttribute.USER_ROLE, user.getUserRole());
+            } else {
+                session.setAttribute(SessionAttribute.ERROR, "Invalid login or password");
+                session.setAttribute(SessionAttribute.URL, "/controller?command=goto-log-in-page");
+                return new CommandResult(Page.LOG_IN_PAGE, RoutingType.FORWARD);
+            }
+
+            session.setAttribute(SessionAttribute.URL, "/controller?command=goto-home-page");
+
+            return new CommandResult(Page.HOME_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Unable to check user log-in data.", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
-        if (user != null) {
-            if (user.getUserRole() == UserRole.ADMIN) {
-                logger.info("User " + user.getEmail() + " logged in as admin.");
-            }
-            session.removeAttribute(SessionAttribute.ERROR);
-            session.setAttribute(SessionAttribute.USER_ID, user.getUserId());
-            session.setAttribute(SessionAttribute.USER_NAME, user.getName());
-            session.setAttribute(SessionAttribute.USER_SURNAME, user.getSurname());
-            session.setAttribute(SessionAttribute.USER_PHONE_NUMBER, user.getPhoneNumber());
-            session.setAttribute(SessionAttribute.USER_EMAIL, user.getEmail());
-            session.setAttribute(SessionAttribute.USER_ROLE, user.getUserRole());
-        } else {
-            session.setAttribute(SessionAttribute.ERROR, "Invalid login or password");
-            session.setAttribute(SessionAttribute.URL, "/controller?command=goto-log-in-page");
-            return new CommandResult(Page.LOG_IN_PAGE, RoutingType.FORWARD);
-        }
-
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-home-page");
-        return new CommandResult(Page.HOME_PAGE, RoutingType.FORWARD);
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

@@ -30,7 +30,8 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Column.LOAN_INVENTORY_ID,
             Column.LOAN_STATUS_ID);
     private static final String SAVE_LOAN_WITH_LAST_LOANED_COPY_QUERY = String.format(
-            "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s, %s) VALUES (0, ?, ?, ?, ?, ?, LAST_INSERT_ID(), ?)",
+            "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s, %s) " +
+                    "SELECT 0, ?, ?, ?, ?, ?, LAST_INSERT_ID(), ? FROM dual WHERE LAST_INSERT_ID() != 0",
             Table.LOAN_TABLE,
             Column.LOAN_ID,
             Column.LOAN_ISSUE_DATE,

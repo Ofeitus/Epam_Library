@@ -21,35 +21,37 @@ import java.util.List;
 import java.util.Optional;
 
 public class GoToManageUsersPageCommand implements Command {
-    Logger logger = LogManager.getLogger(GoToManageUsersPageCommand.class);
+    private final Logger logger = LogManager.getLogger(GoToManageUsersPageCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-
         UserService userService = ServiceFactory.getInstance().getUserService();
 
-        int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
-        int itemsOnPage = 10;
-
-        String command = "?command=goto-manage-users-page";
-        session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
-        session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
-
         try {
+            int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
+            int itemsOnPage = 10;
+
+            String command = "?command=goto-manage-users-page";
+            session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
+            session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
+
             List<User> users = userService.getAll(page, itemsOnPage);
+
             int itemsCount = userService.countAll();
             int pagesCount = itemsCount / itemsOnPage;
             if (itemsCount % itemsOnPage != 0) {
                 pagesCount++;
             }
+
             request.setAttribute(RequestAttribute.CURRENT_PAGE, page);
             request.setAttribute(RequestAttribute.PAGES_COUNT, pagesCount);
             request.setAttribute(RequestAttribute.USERS, users);
+
             return new CommandResult(Page.MANAGE_USERS_PAGE, RoutingType.FORWARD);
-        } catch (ServiceException e) {
+        } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to get all users", e);
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

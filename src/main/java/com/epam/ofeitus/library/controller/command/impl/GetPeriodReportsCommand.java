@@ -23,20 +23,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class GetPeriodReportsCommand implements Command {
-    Logger logger = LogManager.getLogger(GetPeriodReportsCommand.class);
+    private final Logger logger = LogManager.getLogger(GetPeriodReportsCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        UserService userService = ServiceFactory.getInstance().getUserService();
-        BookService bookService = ServiceFactory.getInstance().getBookService();
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        UserService userService = serviceFactory.getUserService();
+        BookService bookService = serviceFactory.getBookService();
 
         String from = request.getParameter(RequestParameter.FROM_DATE);
         String to = request.getParameter(RequestParameter.TO_DATE);
@@ -46,11 +45,10 @@ public class GetPeriodReportsCommand implements Command {
                         "&from-date=" + from +
                         "&to-date=" + to);
 
-        Date fromDate;
-        Date toDate;
         try {
-            fromDate = formatter.parse(from);
-            toDate = formatter.parse(to);
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date fromDate = formatter.parse(from);
+            Date toDate = formatter.parse(to);
 
             UserCompositionReport userCompositionReport = userService.getUserCompositionReport(fromDate, toDate);
             BooksStockReport booksStockReport = bookService.getBooksReport(fromDate, toDate);
@@ -61,10 +59,11 @@ public class GetPeriodReportsCommand implements Command {
             request.setAttribute(RequestAttribute.BOOKS_STOCK_REPORT, booksStockReport);
             request.setAttribute(RequestAttribute.BOOK_CATEGORIES, bookCategories);
             request.setAttribute(RequestAttribute.ISSUE_REPORT, issueReport);
+
             return new CommandResult(Page.REPORTS_PAGE, RoutingType.FORWARD);
         } catch (ServiceException | ParseException e) {
-            logger.error("Unable to get reports.");
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
+            logger.error("Unable to get reports over a period.");
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }

@@ -27,7 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 public class GoToReportsPageCommand implements Command {
-    Logger logger = LogManager.getLogger(GoToReportsPageCommand.class);
+    private final Logger logger = LogManager.getLogger(GoToReportsPageCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
@@ -43,14 +43,12 @@ public class GoToReportsPageCommand implements Command {
                         "&from-date=" + from +
                         "&to-date=" + to);
 
-        Date fromDate;
-        Date toDate;
         try {
             Calendar cal = Calendar.getInstance();
             cal.setTime(new Date());
             cal.add(Calendar.YEAR, -1);
-            fromDate = cal.getTime();
-            toDate = new Date();
+            Date fromDate = cal.getTime();
+            Date toDate = new Date();
 
             UserCompositionReport userCompositionReport = userService.getUserCompositionReport(fromDate, toDate);
             BooksStockReport booksStockReport = bookService.getBooksReport(fromDate, toDate);
@@ -61,10 +59,11 @@ public class GoToReportsPageCommand implements Command {
             request.setAttribute(RequestAttribute.BOOKS_STOCK_REPORT, booksStockReport);
             request.setAttribute(RequestAttribute.BOOK_CATEGORIES, bookCategories);
             request.setAttribute(RequestAttribute.ISSUE_REPORT, issueReport);
+
             return new CommandResult(Page.REPORTS_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Unable to get reports.");
-            return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
         }
+        return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }
 }
