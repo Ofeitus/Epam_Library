@@ -185,10 +185,12 @@
                         </c:choose>
                     </td>
                     <td style="text-align: center">
-                        <!-- TODO Post -->
                         <c:if test="${copy_of_book.canBeDeleted}">
-                            <a href="?${RequestParameter.COMMAND}=${CommandName.DELETE_COPY_OF_BOOK_COMMAND}&${RequestParameter.INVENTORY_ID}=${copy_of_book.inventoryId}">
-                                <i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i></a>
+                            <form action="controller" method="post">
+                                <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.DELETE_COPY_OF_BOOK_COMMAND}">
+                                <input type="hidden" name="${RequestParameter.INVENTORY_ID}" value="${copy_of_book.inventoryId}">
+                                <button type="submit" class="link-button"><i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i></button>
+                            </form>
                         </c:if>
                         <c:if test="${!copy_of_book.canBeDeleted}">
                             <a title="<fmt:message key="inventory-book.cant-delete" />"><i class="bi bi-trash-fill" style="font-size: 20px;color: gray"></i></a>

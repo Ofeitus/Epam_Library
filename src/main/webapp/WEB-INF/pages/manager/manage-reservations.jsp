@@ -41,16 +41,19 @@
                     </a></td>
                     <td>${reservation.date}</td>
                     <td style="text-align: center">
-                        <!-- TODO Post -->
-                        <a href="?${RequestParameter.COMMAND}=${CommandName.CANCEL_RESERVATION_COMMAND}&${RequestParameter.RESERVATION_ID}=${reservation.reservationId}">
-                            <i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i></a>
+                        <form action="controller" method="post">
+                            <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.CANCEL_RESERVATION_COMMAND}">
+                            <input type="hidden" name="${RequestParameter.RESERVATION_ID}" value="${reservation.reservationId}">
+                            <button type="submit" class="link-button"><i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i></button>
+                        </form>
                     </td>
                     <td>
-                        <!-- TODO Post -->
-                        <a href="?${RequestParameter.COMMAND}=${CommandName.CONFIRM_RESERVATION_COMMAND}&${RequestParameter.RESERVATION_ID}=${reservation.reservationId}">
-                            <i class="bi bi-check-circle-fill" style="font-size: 18px"></i>
-                            <fmt:message key="manage-reservations.confirm-reservation" />
-                        </a>
+                        <form action="controller" method="post">
+                            <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.CONFIRM_RESERVATION_COMMAND}">
+                            <input type="hidden" name="${RequestParameter.RESERVATION_ID}" value="${reservation.reservationId}">
+                            <button type="submit" class="link-button"><i class="bi bi-check-circle-fill" style="font-size: 18px"></i>
+                                <span><fmt:message key="manage-reservations.confirm-reservation" /></span></button>
+                        </form>
                     </td>
                 </tr>
             </c:forEach>

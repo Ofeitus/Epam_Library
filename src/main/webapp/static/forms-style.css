@@ -139,3 +139,16 @@
 .loan-forms .form-container {
     margin-top: 0;
 }
+
+.link-button {
+    display: contents;
+    color: #0d6efd;
+}
+
+.link-button:hover {
+    color: #0a58ca;
+}
+
+.link-button span:hover {
+    text-decoration: underline;
+}

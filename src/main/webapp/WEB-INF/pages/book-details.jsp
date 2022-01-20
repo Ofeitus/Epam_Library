@@ -33,8 +33,11 @@
                         <a class="edit-data-link" title="<fmt:message key="book-details.cant-delete" />" style="padding-top: 5px;"><i class="bi bi-trash-fill"></i></a>
                     </c:if>
                     <c:if test="${requestScope.copies_count == 0}">
-                        <!-- TODO Post -->
-                        <a class="edit-data-link" style="padding-top: 5px; color: firebrick" href="?${RequestParameter.COMMAND}=${CommandName.DELETE_BOOK_COMMAND}&${RequestParameter.BOOK_ISBN}=${requestScope.book.isbn}"><i class="bi bi-trash-fill"></i></a>
+                        <form action="controller" method="post" style="margin-top: 10px">
+                            <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.DELETE_BOOK_COMMAND}">
+                            <input type="hidden" name="${RequestParameter.BOOK_ISBN}" value="${requestScope.book.isbn}">
+                            <button type="submit" class="link-button"><i class="bi bi-trash-fill edit-data-link" style="color: firebrick"></i></button>
+                        </form>
                     </c:if>
                 </div>
             </c:if>

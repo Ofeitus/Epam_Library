@@ -125,11 +125,12 @@
                     <c:if test="${sessionScope.user_role == 'MANAGER'}">
                         <td>
                             <c:if test="${loan.loanStatus == 'ISSUED'}">
-                                <!-- TODO Post -->
-                                <a href="?${RequestParameter.COMMAND}=${CommandName.RETURN_LOANED_BOOK_COMMAND}&${RequestParameter.LOAN_ID}=${loan.loanId}">
-                                    <i class="bi bi-journal-arrow-down" style="font-size: 18px"></i>
-                                    <fmt:message key="user-loans.return" />
-                                </a>
+                                <form action="controller" method="post">
+                                    <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.RETURN_LOANED_BOOK_COMMAND}">
+                                    <input type="hidden" name="${RequestParameter.LOAN_ID}" value="${loan.loanId}">
+                                    <button type="submit" class="link-button"><i class="bi bi-journal-arrow-down" style="font-size: 18px"></i>
+                                        <span><fmt:message key="user-loans.return" /></span></button>
+                                </form>
                             </c:if>
                         </td>
                     </c:if>

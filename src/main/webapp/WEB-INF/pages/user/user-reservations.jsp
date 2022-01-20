@@ -72,19 +72,22 @@
                     </td>
                     <td style="text-align: center">
                         <c:if test="${reservation.reservationStatus != 'ISSUED'}">
-                            <!-- TODO Post -->
-                            <a href="?${RequestParameter.COMMAND}=${CommandName.CANCEL_RESERVATION_COMMAND}&${RequestParameter.RESERVATION_ID}=${reservation.reservationId}">
-                                <i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i></a>
+                            <form action="controller" method="post">
+                                <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.CANCEL_RESERVATION_COMMAND}">
+                                <input type="hidden" name="${RequestParameter.RESERVATION_ID}" value="${reservation.reservationId}">
+                                <button type="submit" class="link-button"><i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i></button>
+                            </form>
                         </c:if>
                     </td>
                     <c:if test="${sessionScope.user_role == 'MANAGER'}">
                         <td>
                             <c:if test="${reservation.reservationStatus != 'ISSUED'}">
-                                <!-- TODO Post -->
-                                <a href="?${RequestParameter.COMMAND}=${CommandName.ISSUE_RESERVED_BOOK_COMMAND}&${RequestParameter.RESERVATION_ID}=${reservation.reservationId}">
-                                    <i class="bi bi-journal-arrow-up" style="font-size: 18px"></i>
-                                    <fmt:message key="user-reservations.issue-for-loan" />
-                                </a>
+                                <form action="controller" method="post">
+                                    <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.ISSUE_RESERVED_BOOK_COMMAND}">
+                                    <input type="hidden" name="${RequestParameter.RESERVATION_ID}" value="${reservation.reservationId}">
+                                    <button type="submit" class="link-button"><i class="bi bi-journal-arrow-up" style="font-size: 18px"></i>
+                                        <span><fmt:message key="user-reservations.issue-for-loan" /></span></button>
+                                </form>
                             </c:if>
                         </td>
                     </c:if>

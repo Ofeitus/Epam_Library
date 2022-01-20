@@ -72,11 +72,12 @@
                     <c:if test="${sessionScope.user_role == 'MANAGER'}">
                         <td>
                             <c:if test="${fine.loanStatus == 'FINED'}">
-                                <!-- TODO Post -->
-                                <a href="?${RequestParameter.COMMAND}=${CommandName.PAY_FINE_COMMAND}&${RequestParameter.LOAN_ID}=${fine.loanId}">
-                                    <i class="bi bi-cash-stack" style="font-size: 18px"></i>
-                                    <fmt:message key="user-fines.pay-fine" />
-                                </a>
+                                <form action="controller" method="post">
+                                    <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.PAY_FINE_COMMAND}">
+                                    <input type="hidden" name="${RequestParameter.LOAN_ID}" value="${fine.loanId}">
+                                    <button type="submit" class="link-button"><i class="bi bi-cash-stack" style="font-size: 18px"></i>
+                                        <span><fmt:message key="user-fines.pay-fine" /></span></button>
+                                </form>
                             </c:if>
                         </td>
                     </c:if>

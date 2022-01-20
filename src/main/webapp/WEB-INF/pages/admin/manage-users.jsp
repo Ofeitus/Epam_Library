@@ -85,21 +85,21 @@
                     </c:choose>
                     <c:if test="${user.userId != sessionScope.user_id}">
                         <label>
-                            <!-- TODO Post -->
-                            <select onchange="window.location.href=this.value;">
-                                <option data-content="<i class='fa fa-circle red'></i>" <c:if test="${user.userRole == 'ADMIN'}">selected</c:if>
-                                        value="?${RequestParameter.COMMAND}=${CommandName.SET_ROLE_COMMAND}&${RequestParameter.USER_ID}=${user.userId}&${RequestParameter.USER_ROLE_ID}=1">
-                                    <fmt:message key="user-role.admin" />
-                                </option>
-                                <option data-content="<i class='fa fa-circle red'></i>" <c:if test="${user.userRole == 'MANAGER'}">selected</c:if>
-                                        value="?${RequestParameter.COMMAND}=${CommandName.SET_ROLE_COMMAND}&${RequestParameter.USER_ID}=${user.userId}&${RequestParameter.USER_ROLE_ID}=2">
-                                    <fmt:message key="user-role.manager" />
-                                </option>
-                                <option data-content="<i class='fa fa-circle red'></i>" <c:if test="${user.userRole == 'MEMBER'}">selected</c:if>
-                                        value="?${RequestParameter.COMMAND}=${CommandName.SET_ROLE_COMMAND}&${RequestParameter.USER_ID}=${user.userId}&${RequestParameter.USER_ROLE_ID}=3">
-                                    <fmt:message key="user-role.member" />
-                                </option>
-                            </select>
+                            <form action="controller" method="post">
+                                <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.SET_ROLE_COMMAND}">
+                                <input type="hidden" name="${RequestParameter.USER_ID}" value="${user.userId}">
+                                <select onchange="this.form.submit()" name="${RequestParameter.USER_ROLE_ID}">
+                                    <option data-content="<i class='fa fa-circle red'></i>" <c:if test="${user.userRole == 'ADMIN'}">selected</c:if> value="1">
+                                        <fmt:message key="user-role.admin" />
+                                    </option>
+                                    <option data-content="<i class='fa fa-circle red'></i>" <c:if test="${user.userRole == 'MANAGER'}">selected</c:if> value="2">
+                                        <fmt:message key="user-role.manager" />
+                                    </option>
+                                    <option data-content="<i class='fa fa-circle red'></i>" <c:if test="${user.userRole == 'MEMBER'}">selected</c:if> value="3">
+                                        <fmt:message key="user-role.member" />
+                                    </option>
+                                </select>
+                            </form>
                         </label>
                     </c:if>
                     <c:if test="${user.userId == sessionScope.user_id}">
@@ -117,11 +117,12 @@
                     </c:if>
                 </td>
                 <td style="text-align: center">
-                    <!-- TODO Post -->
                     <c:if test="${!user.deleted and user.userId != sessionScope.user_id}">
-                        <a href="?${RequestParameter.COMMAND}=${CommandName.DELETE_USER_COMMAND}&${RequestParameter.USER_ID}=${user.userId}">
-                            <i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i>
-                        </a>
+                        <form action="controller" method="post">
+                            <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.DELETE_USER_COMMAND}">
+                            <input type="hidden" name="${RequestParameter.USER_ID}" value="${user.userId}">
+                            <button type="submit" class="link-button"><i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i></button>
+                        </form>
                     </c:if>
                     <c:if test="${user.deleted and user.userId != sessionScope.user_id}">
                         <i class="bi bi-arrow-clockwise" style="font-size: 20px;color: royalblue"></i>
