@@ -1,6 +1,7 @@
 package com.epam.ofeitus.library.controller.command.impl;
 
 import com.epam.ofeitus.library.controller.command.Command;
+import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
@@ -30,7 +31,9 @@ public class GoToEditBookDataPageCommand implements Command {
 
         String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
 
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-edit-book-data-page&book-isbn=" + bookIsbn);
+        session.setAttribute(SessionAttribute.URL, "/controller?" +
+                RequestParameter.COMMAND + "=" + CommandName.GOTO_CATALOG_PAGE_COMMAND +
+                "&" + RequestParameter.BOOK_ISBN + "=" + bookIsbn);
 
         try {
             BookDto book = bookService.getBookDtoByIsbn(bookIsbn);

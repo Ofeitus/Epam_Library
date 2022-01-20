@@ -1,6 +1,7 @@
 package com.epam.ofeitus.library.controller.command.impl;
 
 import com.epam.ofeitus.library.controller.command.Command;
+import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
@@ -42,14 +43,15 @@ public class SearchBooksCommand implements Command {
             int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
             int itemsOnPage = 8;
 
-            String command = "?command=search-books" +
-                             "&search-request="+URLEncoder.encode(searchRequest, "UTF-8")+
-                             "&category="+URLEncoder.encode(category, "UTF-8")+
-                             "&author-name="+URLEncoder.encode(authorName, "UTF-8")+
-                             "&author-surname="+URLEncoder.encode(authorSurname, "UTF-8")+
-                             "&year-from="+yearFrom+
-                             "&year-to="+yearTo;
-            session.setAttribute(SessionAttribute.URL, ("/controller" + command + "&page=" + page));
+            String command = "?" + RequestParameter.COMMAND + "=" + CommandName.SEARCH_BOOKS_COMMAND +
+                             "&" + RequestParameter.SEARCH_REQUEST + "=" + URLEncoder.encode(searchRequest, "UTF-8") +
+                             "&" + RequestParameter.CATEGORY + "=" + URLEncoder.encode(category, "UTF-8") +
+                             "&" + RequestParameter.AUTHOR_NAME + "=" + URLEncoder.encode(authorName, "UTF-8") +
+                             "&" + RequestParameter.AUTHOR_SURNAME + "=" + URLEncoder.encode(authorSurname, "UTF-8") +
+                             "&" + RequestParameter.YEAR_FROM + "=" + yearFrom +
+                             "&" + RequestParameter.YEAR_TO + "=" + yearTo;
+            session.setAttribute(SessionAttribute.URL, ("/controller" + command +
+                    "&" + RequestParameter.PAGE + "=" + page));
             session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
 
             List<BookDto> books = bookService.getBooksDtoBySearchRequest(searchRequest, category, authorName, authorSurname, yearFrom, yearTo, page, itemsOnPage);

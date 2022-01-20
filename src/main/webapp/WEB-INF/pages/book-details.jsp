@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="com.epam.ofeitus.library.controller.constant.RequestParameter" %>
+<%@ page import="com.epam.ofeitus.library.controller.command.CommandName" %>
 
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
 <fmt:setBundle basename="locale"/>
@@ -26,12 +28,12 @@
             <h3 class="book-title">${requestScope.book.title}</h3>
             <c:if test="${sessionScope.user_role == 'MANAGER'}">
                 <div class="edit-book-data-links">
-                    <a class="edit-data-link" style="padding-top: 5px" href="?command=goto-edit-book-data-page&book-isbn=${requestScope.book.isbn}"><i class="bi bi-pencil-square"></i></a>
+                    <a class="edit-data-link" style="padding-top: 5px" href="?${RequestParameter.COMMAND}=${CommandName.GOTO_EDIT_BOOK_DATA_PAGE_COMMAND}&${RequestParameter.BOOK_ISBN}=${requestScope.book.isbn}"><i class="bi bi-pencil-square"></i></a>
                     <c:if test="${requestScope.copies_count > 0}">
                         <a class="edit-data-link" title="<fmt:message key="book-details.cant-delete" />" style="padding-top: 5px;"><i class="bi bi-trash-fill"></i></a>
                     </c:if>
                     <c:if test="${requestScope.copies_count == 0}">
-                        <a class="edit-data-link" style="padding-top: 5px; color: firebrick" href="?command=delete-book&book-isbn=${requestScope.book.isbn}"><i class="bi bi-trash-fill"></i></a>
+                        <a class="edit-data-link" style="padding-top: 5px; color: firebrick" href="?${RequestParameter.COMMAND}=${CommandName.DELETE_BOOK_COMMAND}&${RequestParameter.BOOK_ISBN}=${requestScope.book.isbn}"><i class="bi bi-trash-fill"></i></a>
                     </c:if>
                 </div>
             </c:if>
@@ -72,9 +74,9 @@
         <c:if test="${sessionScope.user_role == null || sessionScope.user_role == 'MEMBER'}">
             <div class="form-container">
                 <h3 class="title"><fmt:message key="book-details.reservation" /></h3>
-                <form class="form-horizontal" action="controller" method="get">
-                    <input type="hidden" name="command" value="reserve-book">
-                    <input type="hidden" name="book-isbn" value="${requestScope.book.isbn}">
+                <form class="form-horizontal" action="controller" method="post">
+                    <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.RESERVE_BOOK_COMMAND}">
+                    <input type="hidden" name="${RequestParameter.BOOK_ISBN}" value="${requestScope.book.isbn}">
                     <c:if test="${requestScope.available_copies_count > 0}">
                         <div class="reservation-info">
                             <label><fmt:message key="book-details.available-copies" />&nbsp;${requestScope.available_copies_count}</label>
@@ -95,7 +97,7 @@
                     <c:if test="${sessionScope.user_id == null}">
                         <div class="reservation-info">
                             <i class="bi bi-exclamation-circle-fill" style="color: royalblue;"></i>
-                            <label><a href="?command=goto-log-in-page"><fmt:message key="book-details.log-in-" /></a><fmt:message key="book-details.-to-reserve" /></label>
+                            <label><a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_LOG_IN_PAGE_COMMAND}"><fmt:message key="book-details.log-in-" /></a><fmt:message key="book-details.-to-reserve" /></label>
                         </div>
                     </c:if>
                     <c:if test="${sessionScope.error != null}">
@@ -122,11 +124,11 @@
         <c:if test="${sessionScope.user_role == 'MANAGER'}">
             <div class="form-container">
                 <h3 class="title"><fmt:message key="book-details.copies" /></h3>
-                <form class="form-horizontal" action="controller" method="get">
-                    <input type="hidden" name="command" value="search-copies-of-books">
-                    <input type="hidden" name="book-isbn" value="${requestScope.book.isbn}">
-                    <input type="hidden" name="inventory-id" value="0">
-                    <input type="hidden" name="status" value="only-existing">
+                <form class="form-horizontal" action="controller" method="post">
+                    <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.SEARCH_COPIES_OF_BOOKS_COMMAND}">
+                    <input type="hidden" name="${RequestParameter.BOOK_ISBN}" value="${requestScope.book.isbn}">
+                    <input type="hidden" name="${RequestParameter.INVENTORY_ID}" value="0">
+                    <input type="hidden" name="${RequestParameter.STATUS}" value="${RequestParameter.STATUS_EXISTING}">
                     <c:if test="${requestScope.copies_count > 0}">
                         <div class="reservation-info">
                             <label><fmt:message key="book-details.number-of-copies" />&nbsp;${requestScope.copies_count}</label>
@@ -150,9 +152,9 @@
             </div>
             <div class="form-container">
                 <h3 class="title"><fmt:message key="book-details.issue" /></h3>
-                <form class="form-horizontal" action="controller" method="get">
-                    <input type="hidden" name="command" value="issue-book">
-                    <input type="hidden" name="book-isbn" value="${requestScope.book.isbn}">
+                <form class="form-horizontal" action="controller" method="post">
+                    <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.ISSUE_BOOK_COMMAND}">
+                    <input type="hidden" name="${RequestParameter.BOOK_ISBN}" value="${requestScope.book.isbn}">
                     <c:if test="${requestScope.available_copies_count > 0}">
                         <div class="reservation-info">
                             <label><fmt:message key="book-details.available-copies" />&nbsp;${requestScope.available_copies_count}</label>
@@ -165,8 +167,9 @@
                         </div>
                     </c:if>
                     <div class="form-group" style="width: 100%">
-                        <label><fmt:message key="book-details.member-id" /></label>
-                        <input type="number" name="user-id" value="0" class="form-control" required placeholder="<fmt:message key="manage-users.id" />">
+                        <label><fmt:message key="book-details.member-id" />
+                            <input type="number" name="${RequestParameter.USER_ID}" value="0" class="form-control" required placeholder="<fmt:message key="manage-users.id" />">
+                        </label>
                     </div>
                     <c:if test="${sessionScope.error != null}">
                         <div class="w-100 row justify-content-left">

@@ -1,6 +1,7 @@
 package com.epam.ofeitus.library.controller.command.impl;
 
 import com.epam.ofeitus.library.controller.command.Command;
+import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
@@ -36,11 +37,14 @@ public class EditBookDataCommand implements Command {
             List<String> authorNames = Arrays.asList(request.getParameterValues(RequestParameter.AUTHOR_NAME).clone());
             List<String> authorSurnames = Arrays.asList(request.getParameterValues(RequestParameter.AUTHOR_SURNAME).clone());
 
-            session.setAttribute(SessionAttribute.URL, "/controller?command=goto-book-details-page&book-isbn=" + bookIsbn);
+            String url = "/controller?" +
+                    RequestParameter.COMMAND + "=" + CommandName.GOTO_BOOK_DETAILS_PAGE_COMMAND +
+                    "&" + RequestParameter.BOOK_ISBN + "=" + bookIsbn;
+            session.setAttribute(SessionAttribute.URL, url);
 
             bookService.updateBook(bookIsbn, title, category, publicationYear, language, keyWords, authorNames, authorSurnames);
 
-            return new CommandResult("/controller?command=goto-book-details-page&book-isbn=" + bookIsbn, RoutingType.REDIRECT);
+            return new CommandResult(url, RoutingType.REDIRECT);
         } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to update book.", e);
         }

@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="com.epam.ofeitus.library.controller.constant.RequestParameter" %>
+<%@ page import="com.epam.ofeitus.library.controller.command.CommandName" %>
 
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
 <fmt:setBundle basename="locale"/>
@@ -17,15 +19,17 @@
     <div class="reports-forms">
         <div class="form-container" style="width: 60%">
             <h3 class="title"><fmt:message key="reports.period" /></h3>
-            <form class="form-horizontal" action="controller" method="get">
-                <input type="hidden" name="command" value="get-period-reports">
+            <form class="form-horizontal" action="controller" method="post">
+                <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.GET_PERIOD_REPORTS_COMMAND}">
                 <div class="form-group">
-                    <label><fmt:message key="reports.from-date" /></label>
-                    <input type="date" name="from-date" value="" class="form-control" required />
+                    <label><fmt:message key="reports.from-date" />
+                        <input type="date" name="${RequestParameter.FROM_DATE}" value="" class="form-control" required />
+                    </label>
                 </div>
                 <div class="form-group">
-                    <label><fmt:message key="reports.to-date" /></label>
-                    <input type="date" name="to-date" value="" class="form-control" required />
+                    <label><fmt:message key="reports.to-date" />
+                        <input type="date" name="${RequestParameter.TO_DATE}" value="" class="form-control" required />
+                    </label>
                 </div>
                 <div class="w-100 row justify-content-end search-buttons">
                     <button type="submit" class="h-50 col-3 btn submit"><fmt:message key="reports.get-report" /></button>
@@ -232,11 +236,11 @@
 </body>
 
 <script>
-    var xValues = [];
+    let xValues = [];
     <c:forEach items="${users_report.dynamicsDates}" var="date">
         xValues.push("<fmt:formatDate value="${date}" pattern="yyyy-MM-dd" />");
     </c:forEach>
-    var yValues = [];
+    let yValues = [];
     <c:forEach items="${users_report.dynamicsValues}" var="value">
         yValues.push(${value});
     </c:forEach>
@@ -261,7 +265,7 @@
 
     xValues = ["<fmt:message key="reports.through-reservation" />", "<fmt:message key="reports.in-library" />"];
     yValues = [${issue_report.totalIssuedReservedTo}, ${issue_report.totalIssuedTo - issue_report.totalIssuedReservedTo}];
-    var barColors = [
+    let barColors = [
         "#4169E1",
         "#228B22"
     ];
@@ -315,7 +319,7 @@
         xValues.push("<fmt:formatDate value="${date}" pattern="yyyy-MM-dd" />");
     </c:forEach>
     yValues = [];
-    var yValues2 = [];
+    let yValues2 = [];
     <c:forEach items="${issue_report.dynamicsValues}" varStatus="i" var="value">
         <c:if test="${i.index % 2 == 0}">
             yValues.push(${value});

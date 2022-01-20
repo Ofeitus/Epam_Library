@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="com.epam.ofeitus.library.controller.constant.RequestParameter" %>
+<%@ page import="com.epam.ofeitus.library.controller.command.CommandName" %>
 
 <jsp:useBean id="now" class="java.util.Date" />
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
@@ -16,12 +18,13 @@
     <div class="loan-forms">
         <div class="form-container" style="width: 60%">
             <h3 class="title"><fmt:message key="user-loans.issue-by-inventory-id" /></h3>
-            <form class="form-horizontal" action="controller" method="get">
-                <input type="hidden" name="command" value="issue-by-inventory-id">
-                <input type="hidden" name="user-id" value="${requestScope.user_id}">
+            <form class="form-horizontal" action="controller" method="post">
+                <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.ISSUE_BY_INVENTORY_ID_COMMAND}">
+                <input type="hidden" name="${RequestParameter.USER_ID}" value="${requestScope.user_id}">
                 <div class="form-group" style="width: 100%">
-                    <label><fmt:message key="inventory-book.inventory-id" /></label>
-                    <input type="number" name="inventory-id" value="0" class="form-control" required placeholder="<fmt:message key="inventory-book.inventory-id-placeholder" />">
+                    <label><fmt:message key="inventory-book.inventory-id" />
+                        <input type="number" name="${RequestParameter.INVENTORY_ID}" value="0" class="form-control" required placeholder="<fmt:message key="inventory-book.inventory-id-placeholder" />">
+                    </label>
                 </div>
                 <c:if test="${sessionScope.error != null}">
                     <div class="w-100 row justify-content-left">
@@ -41,7 +44,7 @@
     <c:if test="${requestScope.loans.size() == 0}">
         <h3>
             <c:if test="${sessionScope.user_role == 'MANAGER'}">
-                <a href="?command=goto-profile-page&user-id=${requestScope.user_id}">
+                <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_PROFILE_PAGE_COMMAND}&${RequestParameter.USER_ID}=${requestScope.user_id}">
                     <fmt:message key="user-reservations.member" />&nbsp;(id: ${requestScope.user_id})</a>&nbsp;-&nbsp;
             </c:if>
             <fmt:message key="user-loans.empty-loan" />
@@ -50,7 +53,7 @@
     <c:if test="${requestScope.loans.size() > 0}">
         <h3>
             <c:if test="${sessionScope.user_role == 'MANAGER'}">
-                <a href="?command=goto-profile-page&user-id=${requestScope.user_id}">
+                <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_PROFILE_PAGE_COMMAND}&${RequestParameter.USER_ID}=${requestScope.user_id}">
                     <fmt:message key="user-reservations.member" />&nbsp;(id: ${requestScope.user_id})</a>&nbsp;-&nbsp;
             </c:if>
             <fmt:message key="user-loans.loan" />
@@ -78,7 +81,7 @@
                 <tr>
                     <td>${loan.loanId}</td>
                     <td>${loan.inventoryId}</td>
-                    <td><a href="?command=goto-book-details-page&book-isbn=${loan.book.isbn}">
+                    <td><a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_BOOK_DETAILS_PAGE_COMMAND}&${RequestParameter.BOOK_ISBN}=${loan.book.isbn}">
                             ${loan.book.title}
                     </a></td>
                     <td>${loan.issueDate}</td>
@@ -122,7 +125,7 @@
                     <c:if test="${sessionScope.user_role == 'MANAGER'}">
                         <td>
                             <c:if test="${loan.loanStatus == 'ISSUED'}">
-                                <a href="?command=return-loaned-book&user-id=${loan.userId}&loan-id=${loan.loanId}">
+                                <a href="?${RequestParameter.COMMAND}=${CommandName.RETURN_LOANED_BOOK_COMMAND}&${RequestParameter.LOAN_ID}=${loan.loanId}">
                                     <i class="bi bi-journal-arrow-down" style="font-size: 18px"></i>
                                     <fmt:message key="user-loans.return" />
                                 </a>
@@ -135,11 +138,11 @@
         </table>
         <div class="pages-navigation">
             <c:if test="${requestScope.current_page != 1}">
-                <a href="${sessionScope.url_without_page}${"&page="}${requestScope.current_page - 1}"><i class="bi bi-arrow-left-circle-fill"></i></a>
+                <a href="${sessionScope.url_without_page}&${RequestParameter.PAGE}=${requestScope.current_page - 1}"><i class="bi bi-arrow-left-circle-fill"></i></a>
             </c:if>
             &nbsp;<span><fmt:message key="catalog.page" /> ${requestScope.current_page} <fmt:message key="catalog.of" /> ${requestScope.pages_count}</span>&nbsp;
             <c:if test="${requestScope.current_page < requestScope.pages_count}">
-                <a href="${sessionScope.url_without_page}${"&page="}${requestScope.current_page + 1}"><i class="bi bi-arrow-right-circle-fill"></i></a>
+                <a href="${sessionScope.url_without_page}&${RequestParameter.PAGE}=${requestScope.current_page + 1}"><i class="bi bi-arrow-right-circle-fill"></i></a>
             </c:if>
         </div>
     </c:if>

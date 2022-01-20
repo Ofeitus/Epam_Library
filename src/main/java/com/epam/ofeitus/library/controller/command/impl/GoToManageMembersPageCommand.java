@@ -1,6 +1,7 @@
 package com.epam.ofeitus.library.controller.command.impl;
 
 import com.epam.ofeitus.library.controller.command.Command;
+import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
@@ -32,8 +33,9 @@ public class GoToManageMembersPageCommand implements Command {
             int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
             int itemsOnPage = 10;
 
-            String command = "?command=goto-manage-members-page";
-            session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
+            String command = "?" + RequestParameter.COMMAND + "=" + CommandName.GOTO_MANAGE_MEMBERS_PAGE_COMMAND;
+            session.setAttribute(SessionAttribute.URL, "/controller" + command +
+                    "&" + RequestParameter.PAGE + "=" + page);
             session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
 
             List<User> users = userService.getAllMembers(page, itemsOnPage);

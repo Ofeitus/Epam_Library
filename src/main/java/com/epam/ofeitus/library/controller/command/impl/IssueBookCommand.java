@@ -3,6 +3,7 @@ package com.epam.ofeitus.library.controller.command.impl;
 import com.epam.ofeitus.library.constant.ConfigParameter;
 import com.epam.ofeitus.library.constant.ConfigResourceManager;
 import com.epam.ofeitus.library.controller.command.Command;
+import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
@@ -79,9 +80,11 @@ public class IssueBookCommand implements Command {
                 return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
             }
 
-            session.setAttribute(SessionAttribute.URL, "/controller?command=goto-user-loans-page&user-id=" + userId);
+            String url = "/controller?" + RequestParameter.COMMAND + "=" + CommandName.GOTO_USER_LOANS_PAGE_COMMAND +
+                    "&" + RequestParameter.USER_ID + "=" + userId;
+            session.setAttribute(SessionAttribute.URL, url);
 
-            return new CommandResult("/controller?command=goto-user-loans-page&user-id=" + userId, RoutingType.REDIRECT);
+            return new CommandResult(url, RoutingType.REDIRECT);
         } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to issue book.", e);
         }

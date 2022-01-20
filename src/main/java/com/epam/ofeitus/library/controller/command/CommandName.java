@@ -13,7 +13,7 @@ public class CommandName {
     public static final String GOTO_404_PAGE_COMMAND = "goto-404-page";
     public static final String GOTO_500_PAGE_COMMAND = "goto-500-page";
     public static final String GOTO_ADD_NEW_BOOK_PAGE_COMMAND = "goto-add-new-book-page";
-    public static final String GOTO_BOOK_DETAILS_COMMAND = "goto-book-details-page";
+    public static final String GOTO_BOOK_DETAILS_PAGE_COMMAND = "goto-book-details-page";
     public static final String GOTO_CATALOG_PAGE_COMMAND = "goto-catalog-page";
     public static final String GOTO_CONTACTS_PAGE_COMMAND = "goto-contacts-page";
     public static final String GOTO_EDIT_BOOK_DATA_PAGE_COMMAND = "goto-edit-book-data-page";

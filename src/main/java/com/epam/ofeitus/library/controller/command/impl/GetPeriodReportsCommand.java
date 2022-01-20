@@ -1,6 +1,7 @@
 package com.epam.ofeitus.library.controller.command.impl;
 
 import com.epam.ofeitus.library.controller.command.Command;
+import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
@@ -40,10 +41,11 @@ public class GetPeriodReportsCommand implements Command {
         String from = request.getParameter(RequestParameter.FROM_DATE);
         String to = request.getParameter(RequestParameter.TO_DATE);
 
-        session.setAttribute(SessionAttribute.URL,
-                "/controller?command=goto-reports-page" +
-                        "&from-date=" + from +
-                        "&to-date=" + to);
+        String url = "/controller?" +
+                RequestParameter.COMMAND + "=" + CommandName.GOTO_REPORTS_PAGE_COMMAND +
+                "&" + RequestParameter.FROM_DATE + "=" + from +
+                "&" + RequestParameter.TO_DATE + "=" + to;
+        session.setAttribute(SessionAttribute.URL, url);
 
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

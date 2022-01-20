@@ -1,6 +1,7 @@
 package com.epam.ofeitus.library.controller;
 
 import com.epam.ofeitus.library.controller.command.Command;
+import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.factory.CommandFactory;
 import com.epam.ofeitus.library.controller.constant.Page;
@@ -36,7 +37,8 @@ public class Controller extends HttpServlet {
 
         CommandResult result = command.execute(request, response);
         if (result.getResource().equals(Page.ERROR_500_PAGE)) {
-            session.setAttribute(SessionAttribute.URL, "/controller?command=goto-500-page");
+            session.setAttribute(SessionAttribute.URL, "/controller?" +
+                    RequestParameter.COMMAND + "=" + CommandName.GOTO_500_PAGE_COMMAND);
         }
         String resource = result.getResource();
         switch (result.getRoutingType()) {

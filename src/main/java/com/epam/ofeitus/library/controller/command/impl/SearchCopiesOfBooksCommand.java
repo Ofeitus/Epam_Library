@@ -1,6 +1,7 @@
 package com.epam.ofeitus.library.controller.command.impl;
 
 import com.epam.ofeitus.library.controller.command.Command;
+import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
@@ -35,10 +36,10 @@ public class SearchCopiesOfBooksCommand implements Command {
             int inventoryId = Integer.parseInt(request.getParameter(RequestParameter.INVENTORY_ID));
             int statusId;
             switch (status) {
-                case "only-existing":
+                case RequestParameter.STATUS_EXISTING:
                     statusId = -5;
                     break;
-                case "only-written-off":
+                case RequestParameter.STATUS_WRITTEN_OFF:
                     statusId = 5;
                     break;
                 default:
@@ -47,11 +48,12 @@ public class SearchCopiesOfBooksCommand implements Command {
             int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
             int itemsOnPage = 10;
 
-            String command = "?command=search-copies-of-books" +
-                    "&book-isbn=" + bookIsbn +
-                    "&inventory-id=" + inventoryId +
-                    "&status=" + status;
-            session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
+            String command = "?" + RequestParameter.COMMAND + "=" + CommandName.SEARCH_COPIES_OF_BOOKS_COMMAND +
+                    "&" + RequestParameter.BOOK_ISBN + "=" + bookIsbn +
+                    "&" + RequestParameter.INVENTORY_ID + "=" + inventoryId +
+                    "&" + RequestParameter.STATUS + "=" + status;
+            session.setAttribute(SessionAttribute.URL, "/controller" + command +
+                    "&" + RequestParameter.PAGE + "=" + page);
             session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
 
             List<CopyOfBookDto> copiesOfBooks = bookService.getCopiesOfBooksBySearchRequest(bookIsbn, inventoryId, statusId, page, itemsOnPage);

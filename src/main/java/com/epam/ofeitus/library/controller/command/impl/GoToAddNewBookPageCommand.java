@@ -1,10 +1,12 @@
 package com.epam.ofeitus.library.controller.command.impl;
 
 import com.epam.ofeitus.library.controller.command.Command;
+import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
 import com.epam.ofeitus.library.controller.constant.RequestAttribute;
+import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.entity.book.constituent.BookCategory;
 import com.epam.ofeitus.library.service.BookService;
@@ -26,7 +28,8 @@ public class GoToAddNewBookPageCommand implements Command {
         HttpSession session = request.getSession();
         BookService bookService = ServiceFactory.getInstance().getBookService();
 
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-add-new-book-page");
+        session.setAttribute(SessionAttribute.URL, "/controller?" +
+                RequestParameter.COMMAND + "=" + CommandName.GOTO_ADD_NEW_BOOK_PAGE_COMMAND);
 
         try {
             List<BookCategory> bookCategories = bookService.getBookCategories();

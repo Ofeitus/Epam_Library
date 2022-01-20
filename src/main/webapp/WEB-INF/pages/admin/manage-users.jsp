@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="com.epam.ofeitus.library.controller.constant.RequestParameter" %>
+<%@ page import="com.epam.ofeitus.library.controller.command.CommandName" %>
 
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
 <fmt:setBundle basename="locale"/>
@@ -17,23 +19,26 @@
         <div class="form-container" style="width: 60%">
             <h3 class="title"><fmt:message key="inventory-book.search-page" /></h3>
             <form class="form-horizontal" action="controller" method="get">
-                <input type="hidden" name="command" value="search-users">
+                <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.SEARCH_MEMBERS_COMMAND}">
                 <div class="form-group" style="width: 100%">
-                    <label><fmt:message key="manage-users.role" /></label>
-                    <select class="form-control" name="user-role">
-                        <option value="ALL" selected><fmt:message key="manage-users.all-users" /></option>
-                        <option value="ADMIN"><fmt:message key="user-role.admin" /></option>
-                        <option value="MANAGER"><fmt:message key="user-role.manager" /></option>
-                        <option value="MEMBER"><fmt:message key="user-role.member" /></option>
-                    </select>
+                    <label><fmt:message key="manage-users.role" />
+                        <select class="form-control" name="${RequestParameter.USER_ROLE_ID}">
+                            <option value="0" selected><fmt:message key="manage-users.all-users" /></option>
+                            <option value="1"><fmt:message key="user-role.admin" /></option>
+                            <option value="2"><fmt:message key="user-role.manager" /></option>
+                            <option value="3"><fmt:message key="user-role.member" /></option>
+                        </select>
+                    </label>
                 </div>
                 <div class="form-group">
-                    <label><fmt:message key="manage-users.id" /></label>
-                    <input type="number" name="user-id" value="0" class="form-control" required placeholder="<fmt:message key="manage-users.id" />">
+                    <label><fmt:message key="manage-users.id" />
+                        <input type="number" name="${RequestParameter.USER_ID}" value="0" class="form-control" required placeholder="<fmt:message key="manage-users.id" />">
+                    </label>
                 </div>
                 <div class="form-group">
-                    <label><fmt:message key="manage-users.email" /></label>
-                    <input type="text" name="email" value="" class="form-control" placeholder="<fmt:message key="manage-users.email-placeholder" />">
+                    <label><fmt:message key="manage-users.email" />
+                        <input type="text" name="${RequestParameter.EMAIL}" value="" class="form-control" placeholder="<fmt:message key="manage-users.email-placeholder" />">
+                    </label>
                 </div>
                 <div class="w-100 row justify-content-between search-buttons">
                     <button type="reset" class="h-50 col-3 btn reset"><fmt:message key="inventory-book.clear" /></button>
@@ -79,20 +84,22 @@
                         </c:when>
                     </c:choose>
                     <c:if test="${user.userId != sessionScope.user_id}">
-                        <select onchange="window.location.href=this.value;">
-                            <option data-content="<i class='fa fa-circle red'></i>" <c:if test="${user.userRole == 'ADMIN'}">selected</c:if>
-                                    value="?command=set-role&user-id=${user.userId}&user-role=1">
-                                <fmt:message key="user-role.admin" />
-                            </option>
-                            <option data-content="<i class='fa fa-circle red'></i>" <c:if test="${user.userRole == 'MANAGER'}">selected</c:if>
-                                    value="?command=set-role&user-id=${user.userId}&user-role=2">
-                                <fmt:message key="user-role.manager" />
-                            </option>
-                            <option data-content="<i class='fa fa-circle red'></i>" <c:if test="${user.userRole == 'MEMBER'}">selected</c:if>
-                                    value="?command=set-role&user-id=${user.userId}&user-role=3">
-                                <fmt:message key="user-role.member" />
-                            </option>
-                        </select>
+                        <label>
+                            <select onchange="window.location.href=this.value;">
+                                <option data-content="<i class='fa fa-circle red'></i>" <c:if test="${user.userRole == 'ADMIN'}">selected</c:if>
+                                        value="?${RequestParameter.COMMAND}=${CommandName.SET_ROLE_COMMAND}&${RequestParameter.USER_ID}=${user.userId}&${RequestParameter.USER_ROLE_ID}=1">
+                                    <fmt:message key="user-role.admin" />
+                                </option>
+                                <option data-content="<i class='fa fa-circle red'></i>" <c:if test="${user.userRole == 'MANAGER'}">selected</c:if>
+                                        value="?${RequestParameter.COMMAND}=${CommandName.SET_ROLE_COMMAND}&${RequestParameter.USER_ID}=${user.userId}&${RequestParameter.USER_ROLE_ID}=2">
+                                    <fmt:message key="user-role.manager" />
+                                </option>
+                                <option data-content="<i class='fa fa-circle red'></i>" <c:if test="${user.userRole == 'MEMBER'}">selected</c:if>
+                                        value="?${RequestParameter.COMMAND}=${CommandName.SET_ROLE_COMMAND}&${RequestParameter.USER_ID}=${user.userId}&${RequestParameter.USER_ROLE_ID}=3">
+                                    <fmt:message key="user-role.member" />
+                                </option>
+                            </select>
+                        </label>
                     </c:if>
                     <c:if test="${user.userId == sessionScope.user_id}">
                         <c:choose>
@@ -110,13 +117,13 @@
                 </td>
                 <td style="text-align: center">
                     <c:if test="${!user.deleted and user.userId != sessionScope.user_id}">
-                        <a href="?command=delete-user&user-id=${user.userId}">
+                        <a href="?${RequestParameter.COMMAND}=${CommandName.DELETE_USER_COMMAND}&${RequestParameter.USER_ID}=${user.userId}">
                             <i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i>
                         </a>
                     </c:if>
                     <c:if test="${user.deleted and user.userId != sessionScope.user_id}">
                         <i class="bi bi-arrow-clockwise" style="font-size: 20px;color: royalblue"></i>
-                        <a href="?command=restore-user&user-id=${user.userId}">
+                        <a href="?${RequestParameter.COMMAND}=${CommandName.RESTORE_USER_COMMAND}&${RequestParameter.USER_ID}=${user.userId}">
                             <fmt:message key="manage-users.restore" />
                         </a>
                     </c:if>
@@ -127,11 +134,11 @@
     </table>
     <div class="pages-navigation">
         <c:if test="${requestScope.current_page != 1}">
-            <a href="${sessionScope.url_without_page}${"&page="}${requestScope.current_page - 1}"><i class="bi bi-arrow-left-circle-fill"></i></a>
+            <a href="${sessionScope.url_without_page}&${RequestParameter.PAGE}=${requestScope.current_page - 1}"><i class="bi bi-arrow-left-circle-fill"></i></a>
         </c:if>
         &nbsp;<span><fmt:message key="catalog.page" /> ${requestScope.current_page} <fmt:message key="catalog.of" /> ${requestScope.pages_count}</span>&nbsp;
         <c:if test="${requestScope.current_page < requestScope.pages_count}">
-            <a href="${sessionScope.url_without_page}${"&page="}${requestScope.current_page + 1}"><i class="bi bi-arrow-right-circle-fill"></i></a>
+            <a href="${sessionScope.url_without_page}&${RequestParameter.PAGE}=${requestScope.current_page + 1}"><i class="bi bi-arrow-right-circle-fill"></i></a>
         </c:if>
     </div>
 </div>

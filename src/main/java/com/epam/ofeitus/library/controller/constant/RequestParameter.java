@@ -21,7 +21,6 @@ public class RequestParameter {
     public static final String PHONE_NUMBER = "phone-number";
     public static final String PRICE = "price";
     public static final String PUBLICATION_YEAR = "publication-year";
-    public static final String REDIRECT_COMMAND = "redirect-command";
     public static final String RESERVATION_ID = "reservation-id";
     public static final String SEARCH_REQUEST = "search-request";
     public static final String SECOND_NAME = "second-name";
@@ -30,7 +29,9 @@ public class RequestParameter {
     public static final String TO_DATE = "to-date";
     public static final String TO_INVENTORY_ID = "to-inventory-id";
     public static final String USER_ID = "user-id";
-    public static final String USER_ROLE = "user-role";
+    public static final String USER_ROLE_ID = "user-role-id";
     public static final String YEAR_FROM = "year-from";
     public static final String YEAR_TO = "year-to";
+    public static final String STATUS_EXISTING = "existing";
+    public static final String STATUS_WRITTEN_OFF = "written-off";
 }

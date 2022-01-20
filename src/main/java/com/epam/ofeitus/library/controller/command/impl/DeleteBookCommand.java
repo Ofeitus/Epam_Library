@@ -1,6 +1,7 @@
 package com.epam.ofeitus.library.controller.command.impl;
 
 import com.epam.ofeitus.library.controller.command.Command;
+import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
@@ -26,12 +27,14 @@ public class DeleteBookCommand implements Command {
 
         String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
 
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-catalog-page");
+        String url = "/controller?" +
+                RequestParameter.COMMAND + "=" + CommandName.GOTO_CATALOG_PAGE_COMMAND;
+        session.setAttribute(SessionAttribute.URL, url);
 
         try {
             bookService.deleteBook(bookIsbn);
 
-            return new CommandResult("/controller?command=goto-catalog-page", RoutingType.REDIRECT);
+            return new CommandResult(url, RoutingType.REDIRECT);
         } catch (ServiceException e) {
             logger.error("Unable to delete book.", e);
         }

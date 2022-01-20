@@ -1,6 +1,7 @@
 package com.epam.ofeitus.library.controller.command.impl;
 
 import com.epam.ofeitus.library.controller.command.Command;
+import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
@@ -41,8 +42,10 @@ public class GoToUserReservationsPageCommand implements Command {
             int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
             int itemsOnPage = 10;
 
-            String command = "?command=goto-user-reservations-page&user-id=" + userId;
-            session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
+            String command = "?" + RequestParameter.COMMAND + "=" + CommandName.GOTO_USER_RESERVATIONS_PAGE_COMMAND +
+                    "&" + RequestParameter.USER_ID + "=" + userId;
+            session.setAttribute(SessionAttribute.URL, "/controller" + command +
+                    "&" + RequestParameter.PAGE + "=" + page);
             session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
 
             List<ReservationDto> reservations = reservationsService.getReservationsDtoByUserId(userId, page, itemsOnPage);

@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="com.epam.ofeitus.library.controller.constant.RequestParameter" %>
+<%@ page import="com.epam.ofeitus.library.controller.command.CommandName" %>
 
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
 <fmt:setBundle basename="locale"/>
@@ -15,7 +17,7 @@
     <c:if test="${requestScope.fines.size() == 0}">
         <h3>
             <c:if test="${sessionScope.user_role == 'MANAGER'}">
-                <a href="?command=goto-profile-page&user-id=${requestScope.user_id}">
+                <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_PROFILE_PAGE_COMMAND}&${RequestParameter.USER_ID}=${requestScope.user_id}">
                     <fmt:message key="user-reservations.member" />&nbsp;(id: ${requestScope.user_id})</a>&nbsp;-&nbsp;
             </c:if>
             <fmt:message key="user-fines.empty-user-fines" />
@@ -24,7 +26,7 @@
     <c:if test="${requestScope.fines.size() > 0}">
         <h3>
             <c:if test="${sessionScope.user_role == 'MANAGER'}">
-                <a href="?command=goto-profile-page&user-id=${requestScope.user_id}">
+                <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_PROFILE_PAGE_COMMAND}&${RequestParameter.USER_ID}=${requestScope.user_id}">
                     <fmt:message key="user-reservations.member" />&nbsp;(id: ${requestScope.user_id})</a>&nbsp;-&nbsp;
             </c:if>
             <fmt:message key="user-fines.fines" />
@@ -48,7 +50,7 @@
             <c:forEach items="${requestScope.fines}" var="fine">
                 <tr>
                     <td>${fine.loanId}</td>
-                    <td><a href="?command=goto-book-details-page&book-isbn=${fine.book.isbn}">
+                    <td><a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_BOOK_DETAILS_PAGE_COMMAND}&${RequestParameter.BOOK_ISBN}=${fine.book.isbn}">
                             ${fine.book.title}
                     </a></td>
                     <td>${fine.issueDate}</td>
@@ -70,7 +72,7 @@
                     <c:if test="${sessionScope.user_role == 'MANAGER'}">
                         <td>
                             <c:if test="${fine.loanStatus == 'FINED'}">
-                                <a href="?command=pay-fine&user-id=${fine.userId}&loan-id=${fine.loanId}&page=${requestScope.current_page}">
+                                <a href="?${RequestParameter.COMMAND}=${CommandName.PAY_FINE_COMMAND}&${RequestParameter.LOAN_ID}=${fine.loanId}">
                                     <i class="bi bi-cash-stack" style="font-size: 18px"></i>
                                     <fmt:message key="user-fines.pay-fine" />
                                 </a>
@@ -83,11 +85,11 @@
         </table>
         <div class="pages-navigation">
             <c:if test="${requestScope.current_page != 1}">
-                <a href="${sessionScope.url_without_page}${"&page="}${requestScope.current_page - 1}"><i class="bi bi-arrow-left-circle-fill"></i></a>
+                <a href="${sessionScope.url_without_page}&${RequestParameter.PAGE}=${requestScope.current_page - 1}"><i class="bi bi-arrow-left-circle-fill"></i></a>
             </c:if>
             &nbsp;<span><fmt:message key="catalog.page" /> ${requestScope.current_page} <fmt:message key="catalog.of" /> ${requestScope.pages_count}</span>&nbsp;
             <c:if test="${requestScope.current_page < requestScope.pages_count}">
-                <a href="${sessionScope.url_without_page}${"&page="}${requestScope.current_page + 1}"><i class="bi bi-arrow-right-circle-fill"></i></a>
+                <a href="${sessionScope.url_without_page}&${RequestParameter.PAGE}=${requestScope.current_page + 1}"><i class="bi bi-arrow-right-circle-fill"></i></a>
             </c:if>
         </div>
     </c:if>

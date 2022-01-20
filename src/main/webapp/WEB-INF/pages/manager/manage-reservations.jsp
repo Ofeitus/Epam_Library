@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="com.epam.ofeitus.library.controller.constant.RequestParameter" %>
+<%@ page import="com.epam.ofeitus.library.controller.command.CommandName" %>
 
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
 <fmt:setBundle basename="locale"/>
@@ -34,16 +36,16 @@
                 <tr>
                     <td>${reservation.reservationId}</td>
                     <td>${reservation.inventoryId}</td>
-                    <td><a href="?command=goto-book-details-page&book-isbn=${reservation.book.isbn}">
+                    <td><a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_BOOK_DETAILS_PAGE_COMMAND}&${RequestParameter.BOOK_ISBN}=${reservation.book.isbn}">
                             ${reservation.book.title}
                     </a></td>
                     <td>${reservation.date}</td>
                     <td style="text-align: center">
-                        <a href="?command=cancel-reservation&reservation-id=${reservation.reservationId}">
+                        <a href="?${RequestParameter.COMMAND}=${CommandName.CANCEL_RESERVATION_COMMAND}&${RequestParameter.RESERVATION_ID}=${reservation.reservationId}">
                             <i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i></a>
                     </td>
                     <td>
-                        <a href="?command=confirm-reservation&reservation-id=${reservation.reservationId}">
+                        <a href="?${RequestParameter.COMMAND}=${CommandName.CONFIRM_RESERVATION_COMMAND}&${RequestParameter.RESERVATION_ID}=${reservation.reservationId}">
                             <i class="bi bi-check-circle-fill" style="font-size: 18px"></i>
                             <fmt:message key="manage-reservations.confirm-reservation" />
                         </a>
@@ -54,11 +56,11 @@
         </table>
         <div class="pages-navigation">
             <c:if test="${requestScope.current_page != 1}">
-                <a href="${sessionScope.url_without_page}${"&page="}${requestScope.current_page - 1}"><i class="bi bi-arrow-left-circle-fill"></i></a>
+                <a href="${sessionScope.url_without_page}&${RequestParameter.PAGE}=${requestScope.current_page - 1}"><i class="bi bi-arrow-left-circle-fill"></i></a>
             </c:if>
             &nbsp;<span><fmt:message key="catalog.page" /> ${requestScope.current_page} <fmt:message key="catalog.of" /> ${requestScope.pages_count}</span>&nbsp;
             <c:if test="${requestScope.current_page < requestScope.pages_count}">
-                <a href="${sessionScope.url_without_page}${"&page="}${requestScope.current_page + 1}"><i class="bi bi-arrow-right-circle-fill"></i></a>
+                <a href="${sessionScope.url_without_page}&${RequestParameter.PAGE}=${requestScope.current_page + 1}"><i class="bi bi-arrow-right-circle-fill"></i></a>
             </c:if>
         </div>
     </c:if>

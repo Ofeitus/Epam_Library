@@ -1,6 +1,7 @@
 package com.epam.ofeitus.library.controller.command.impl;
 
 import com.epam.ofeitus.library.controller.command.Command;
+import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
@@ -39,7 +40,8 @@ public class SignUpCommand implements Command {
 
             request.setAttribute(RequestAttribute.EMAIL, email);
 
-            session.setAttribute(SessionAttribute.URL, "/controller?command=goto-log-in-page");
+            session.setAttribute(SessionAttribute.URL, "/controller?" +
+                    RequestParameter.COMMAND + "=" + CommandName.GOTO_LOG_IN_PAGE_COMMAND);
 
             logger.info("User" + email + "is registered.");
             return new CommandResult(Page.LOG_IN_PAGE, RoutingType.FORWARD);

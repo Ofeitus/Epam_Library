@@ -23,7 +23,7 @@ public class CommandFactory {
         put(CommandName.GOTO_404_PAGE_COMMAND, new GoTo404PageCommand());
         put(CommandName.GOTO_500_PAGE_COMMAND, new GoTo500PageCommand());
         put(CommandName.GOTO_ADD_NEW_BOOK_PAGE_COMMAND, new GoToAddNewBookPageCommand());
-        put(CommandName.GOTO_BOOK_DETAILS_COMMAND, new GoToBookDetailsPageCommand());
+        put(CommandName.GOTO_BOOK_DETAILS_PAGE_COMMAND, new GoToBookDetailsPageCommand());
         put(CommandName.GOTO_CATALOG_PAGE_COMMAND, new GoToCatalogPageCommand());
         put(CommandName.GOTO_CONTACTS_PAGE_COMMAND, new GoToContactsPageCommand());
         put(CommandName.GOTO_EDIT_BOOK_DATA_PAGE_COMMAND, new GoToEditBookDataPageCommand());

@@ -3,6 +3,7 @@ package com.epam.ofeitus.library.controller.command.impl;
 import com.epam.ofeitus.library.constant.ConfigParameter;
 import com.epam.ofeitus.library.constant.ConfigResourceManager;
 import com.epam.ofeitus.library.controller.command.Command;
+import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
@@ -41,12 +42,15 @@ public class GoToBookDetailsPageCommand implements Command {
 
         String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
 
-        Object userIdAtr = session.getAttribute(SessionAttribute.USER_ID);
-        int userId = userIdAtr != null ? (int)userIdAtr : -1;
 
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-book-details-page&book-isbn=" + bookIsbn);
+        session.setAttribute(SessionAttribute.URL, "/controller?" +
+                RequestParameter.COMMAND + "=" + CommandName.GOTO_BOOK_DETAILS_PAGE_COMMAND +
+                "&" + RequestParameter.BOOK_ISBN + "=" + bookIsbn);
 
         try {
+            Object userIdAtr = session.getAttribute(SessionAttribute.USER_ID);
+            int userId = userIdAtr != null ? (int)userIdAtr : -1;
+
             int copiesCount = bookService.getCopiesCount(bookIsbn);
             int availableCopiesCount = bookService.getAvailableCopiesCount(bookIsbn);
             int reservedBooksCount;
@@ -78,7 +82,7 @@ public class GoToBookDetailsPageCommand implements Command {
             request.setAttribute(RequestAttribute.MAX_MEMBER_BOOKS, maxMemberBooks);
 
             return new CommandResult(Page.BOOK_DETAILS_PAGE, RoutingType.FORWARD);
-        } catch (ServiceException e) {
+        } catch (ServiceException | ClassCastException e) {
             logger.error("Unable to get book DTO.", e);
         }
         return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);

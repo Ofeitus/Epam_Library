@@ -1,6 +1,7 @@
 package com.epam.ofeitus.library.controller.command.impl;
 
 import com.epam.ofeitus.library.controller.command.Command;
+import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
@@ -35,7 +36,9 @@ public class WriteInCopiesOfNewBookCommand implements Command {
         List<String> authorNames = Arrays.asList(request.getParameterValues(RequestParameter.AUTHOR_NAME).clone());
         List<String> authorSurnames = Arrays.asList(request.getParameterValues(RequestParameter.AUTHOR_SURNAME).clone());
 
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-inventory-book-page");
+        String url = "/controller?" +
+                RequestParameter.COMMAND + "=" + CommandName.GOTO_INVENTORY_BOOK_PAGE_COMMAND;
+        session.setAttribute(SessionAttribute.URL, url);
 
         try {
             int publicationYear = Integer.parseInt(request.getParameter(RequestParameter.PUBLICATION_YEAR));
@@ -46,7 +49,7 @@ public class WriteInCopiesOfNewBookCommand implements Command {
 
             bookService.addCopiesOfBook(bookIsbn, price, copiesCount);
 
-            return new CommandResult("/controller?command=goto-inventory-book-page", RoutingType.REDIRECT);
+            return new CommandResult(url, RoutingType.REDIRECT);
         } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to add copies of new book.", e);
         }

@@ -1,6 +1,7 @@
 package com.epam.ofeitus.library.controller.command.impl;
 
 import com.epam.ofeitus.library.controller.command.Command;
+import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
@@ -44,7 +45,9 @@ public class GoToProfilePageCommand implements Command {
                 userId = Integer.parseInt(requestUserId);
             }
 
-            session.setAttribute(SessionAttribute.URL, "/controller?command=goto-profile-page&user-id=" + userId);
+            session.setAttribute(SessionAttribute.URL, "/controller?" +
+                    RequestParameter.COMMAND + "=" + CommandName.GOTO_CATALOG_PAGE_COMMAND +
+                    "&" + RequestParameter.USER_ID + "=" + userId);
 
             User user = userService.getByUserId(userId);
 

@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="com.epam.ofeitus.library.controller.constant.RequestParameter" %>
+<%@ page import="com.epam.ofeitus.library.controller.command.CommandName" %>
 
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
 <fmt:setBundle basename="locale"/>
@@ -16,23 +18,27 @@
             <div class="col-md-5">
                 <div class="form-container">
                     <h3 class="title"><fmt:message key="sign-up.sign-up" /></h3>
-                    <form class="form-horizontal" action="controller" method="get">
-                        <input type="hidden" name="command" value="sign-up">
+                    <form class="form-horizontal" action="controller" method="post">
+                        <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.SIGN_UP_COMMAND}">
                         <div class="form-group">
-                            <label><fmt:message key="sign-up.name" /></label>
-                            <input type="text" name="first-name" value="" class="form-control" placeholder="<fmt:message key="sign-up.name-placeholder" />" required>
+                            <label><fmt:message key="sign-up.name" />
+                                <input type="text" name="${RequestParameter.FIRST_NAME}" value="" class="form-control" placeholder="<fmt:message key="sign-up.name-placeholder" />" required>
+                            </label>
                         </div>
                         <div class="form-group">
-                            <label><fmt:message key="sign-up.surname" /></label>
-                            <input type="text" name="second-name" value="" class="form-control" placeholder="<fmt:message key="sign-up.surname-placeholder" />" required>
+                            <label><fmt:message key="sign-up.surname" />
+                                <input type="text" name="${RequestParameter.SECOND_NAME}" value="" class="form-control" placeholder="<fmt:message key="sign-up.surname-placeholder" />" required>
+                            </label>
                         </div>
                         <div class="form-group">
-                            <label><fmt:message key="sign-up.email" /></label>
-                            <input type="email" name="email" value="" class="form-control" placeholder="<fmt:message key="sign-up.email-placeholder" />" required>
+                            <label><fmt:message key="sign-up.email" />
+                                <input type="email" name="${RequestParameter.EMAIL}" value="" class="form-control" placeholder="<fmt:message key="sign-up.email-placeholder" />" required>
+                            </label>
                         </div>
                         <div class="form-group">
-                            <label><fmt:message key="sign-up.password" /></label>
-                            <input type="password" name="password" value="" class="form-control" placeholder="<fmt:message key="sign-up.password-placeholder" />" required>
+                            <label><fmt:message key="sign-up.password" />
+                                <input type="password" name="${RequestParameter.PASSWORD}" value="" class="form-control" placeholder="<fmt:message key="sign-up.password-placeholder" />" required>
+                            </label>
                         </div>
                         <c:if test="${sessionScope.error != null}">
                             <div class="w-100 row justify-content-left">
@@ -43,7 +49,7 @@
                         <div class="w-100 row justify-content-between">
                             <span class="col-5 sign-link">
                                 <fmt:message key="sign-up.log-in-offer" />
-                                <a href="?command=goto-log-in-page"><fmt:message key="sign-up.log-in" /></a></span>
+                                <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_LOG_IN_PAGE_COMMAND}"><fmt:message key="sign-up.log-in" /></a></span>
                             <button class="h-50 col-4 btn submit"><fmt:message key="sign-up.create-account" /></button>
                         </div>
                     </form>

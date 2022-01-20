@@ -3,7 +3,7 @@ package com.epam.ofeitus.library.controller.filter;
 import com.epam.ofeitus.library.controller.command.Command;
 import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.factory.CommandFactory;
-import com.epam.ofeitus.library.controller.constant.Page;
+import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.entity.user.constituent.UserRole;
 
@@ -32,7 +32,7 @@ public class AccessFilter implements Filter {
                 CommandName.GOTO_404_PAGE_COMMAND,
                 CommandName.GOTO_500_PAGE_COMMAND,
                 CommandName.GOTO_ADD_NEW_BOOK_PAGE_COMMAND,
-                CommandName.GOTO_BOOK_DETAILS_COMMAND,
+                CommandName.GOTO_BOOK_DETAILS_PAGE_COMMAND,
                 CommandName.GOTO_CATALOG_PAGE_COMMAND,
                 CommandName.GOTO_CONTACTS_PAGE_COMMAND,
                 CommandName.GOTO_EDIT_BOOK_DATA_PAGE_COMMAND,
@@ -80,7 +80,7 @@ public class AccessFilter implements Filter {
                 CommandName.GOTO_404_PAGE_COMMAND,
                 CommandName.GOTO_500_PAGE_COMMAND,
                 CommandName.GOTO_ADD_NEW_BOOK_PAGE_COMMAND,
-                CommandName.GOTO_BOOK_DETAILS_COMMAND,
+                CommandName.GOTO_BOOK_DETAILS_PAGE_COMMAND,
                 CommandName.GOTO_CATALOG_PAGE_COMMAND,
                 CommandName.GOTO_CONTACTS_PAGE_COMMAND,
                 CommandName.GOTO_EDIT_BOOK_DATA_PAGE_COMMAND,
@@ -118,7 +118,7 @@ public class AccessFilter implements Filter {
                 CommandName.GOTO_403_PAGE_COMMAND,
                 CommandName.GOTO_404_PAGE_COMMAND,
                 CommandName.GOTO_500_PAGE_COMMAND,
-                CommandName.GOTO_BOOK_DETAILS_COMMAND,
+                CommandName.GOTO_BOOK_DETAILS_PAGE_COMMAND,
                 CommandName.GOTO_CATALOG_PAGE_COMMAND,
                 CommandName.GOTO_CONTACTS_PAGE_COMMAND,
                 CommandName.GOTO_EDIT_PERSONAL_DATA_PAGE_COMMAND,
@@ -140,7 +140,7 @@ public class AccessFilter implements Filter {
                 CommandName.GOTO_403_PAGE_COMMAND,
                 CommandName.GOTO_404_PAGE_COMMAND,
                 CommandName.GOTO_500_PAGE_COMMAND,
-                CommandName.GOTO_BOOK_DETAILS_COMMAND,
+                CommandName.GOTO_BOOK_DETAILS_PAGE_COMMAND,
                 CommandName.GOTO_CATALOG_PAGE_COMMAND,
                 CommandName.GOTO_CONTACTS_PAGE_COMMAND,
                 CommandName.GOTO_HOME_PAGE_COMMAND,
@@ -175,14 +175,18 @@ public class AccessFilter implements Filter {
             Command command = CommandFactory.getInstance().getCommand(commandName);
 
             if (command == null) {
-                session.setAttribute(SessionAttribute.URL, "/controller?command=goto-404-page");
-                response.sendRedirect(request.getContextPath() + "/controller?command=goto-404-page");
+                String url = "/controller?" +
+                        RequestParameter.COMMAND + "=" + CommandName.GOTO_404_PAGE_COMMAND;
+                session.setAttribute(SessionAttribute.URL, url);
+                response.sendRedirect(request.getContextPath() + url);
                 return;
             }
 
             if (!commandsAvailableToRoles.get(role).contains(commandName)) {
-                session.setAttribute(SessionAttribute.URL, "/controller?command=goto-403-page");
-                response.sendRedirect(request.getContextPath() + "/controller?command=goto-403-page");
+                String url = "/controller?" +
+                        RequestParameter.COMMAND + "=" + CommandName.GOTO_403_PAGE_COMMAND;
+                session.setAttribute(SessionAttribute.URL, url);
+                response.sendRedirect(request.getContextPath() + url);
                 return;
             }
         }

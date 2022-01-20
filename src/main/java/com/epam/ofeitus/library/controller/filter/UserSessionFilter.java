@@ -1,5 +1,7 @@
 package com.epam.ofeitus.library.controller.filter;
 
+import com.epam.ofeitus.library.controller.command.CommandName;
+import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.entity.user.User;
 import com.epam.ofeitus.library.entity.user.constituent.UserRole;
@@ -42,15 +44,19 @@ public class UserSessionFilter implements Filter {
                     session.removeAttribute(SessionAttribute.USER_SURNAME);
                     session.removeAttribute(SessionAttribute.USER_EMAIL);
                     session.setAttribute(SessionAttribute.USER_ROLE, UserRole.GUEST);
-                    session.setAttribute(SessionAttribute.URL, "/controller?command=goto-log-in-page");
-                    response.sendRedirect(request.getContextPath() + "/controller?command=goto-log-in-page");
+                    String url = "/controller?" +
+                            RequestParameter.COMMAND + "=" + CommandName.GOTO_LOG_IN_PAGE_COMMAND;
+                    session.setAttribute(SessionAttribute.URL, url);
+                    response.sendRedirect(request.getContextPath() + url);
                     return;
                 }
             }
         } catch (ServiceException | ClassCastException e) {
             logger.error("Unable to get user.", e);
-            session.setAttribute(SessionAttribute.URL, "/controller?command=goto-500-page");
-            response.sendRedirect(request.getContextPath() + "/controller?command=goto-500-page");
+            String url = "/controller?" +
+                    RequestParameter.COMMAND + "=" + CommandName.GOTO_500_PAGE_COMMAND;
+            session.setAttribute(SessionAttribute.URL, url);
+            response.sendRedirect(request.getContextPath() + url);
             return;
         }
         filterChain.doFilter(servletRequest, servletResponse);

@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="com.epam.ofeitus.library.controller.constant.RequestParameter" %>
+<%@ page import="com.epam.ofeitus.library.controller.command.CommandName" %>
 
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
 <fmt:setBundle basename="locale"/>
@@ -16,58 +18,65 @@
         <div class="col-md-5">
             <div class="form-container">
                 <h3 class="title"><fmt:message key="edit-book-data.edit-book-data" /></h3>
-                <form class="form-horizontal" action="controller" method="get">
-                    <input type="hidden" name="command" value="edit-book-data">
-                    <input type="hidden" name="book-isbn" value="${requestScope.book.isbn}">
+                <form class="form-horizontal" action="controller" method="post">
+                    <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.EDIT_BOOK_DATA_COMMAND}">
+                    <input type="hidden" name="${RequestParameter.BOOK_ISBN}" value="${requestScope.book.isbn}">
                     <div class="form-group" style="width: 100%;">
-                        <label><fmt:message key="edit-book-data.title" /></label>
-                        <input type="text" name="title" value="${requestScope.book.title}" class="form-control"
-                               placeholder="<fmt:message key="edit-book-data.title-placeholder" />" required>
+                        <label><fmt:message key="edit-book-data.title" />
+                            <input type="text" name="${RequestParameter.TITLE}" value="${requestScope.book.title}" class="form-control"
+                                   placeholder="<fmt:message key="edit-book-data.title-placeholder" />" required>
+                        </label>
                     </div>
                     <div class="form-group">
-                        <label><fmt:message key="edit-book-data.isbn" /></label>
-                        <input type="text" name="book-isbn" value="${requestScope.book.isbn}" class="form-control"
-                               placeholder="<fmt:message key="edit-book-data.isbn-placeholder" />" required disabled>
+                        <label><fmt:message key="edit-book-data.isbn" />
+                            <input type="text" name="${RequestParameter.BOOK_ISBN}" value="${requestScope.book.isbn}" class="form-control"
+                                   placeholder="<fmt:message key="edit-book-data.isbn-placeholder" />" required disabled>
+                        </label>
                     </div>
                     <div class="form-group">
-                        <label><fmt:message key="edit-book-data.category" /></label>
-                        <select class="form-control" name="category">
-                            <c:forEach items="${requestScope.book_categories}" var="book_category">
-                                <c:if test="${book_category.name == requestScope.book.category}">
-                                    <option value="${book_category.name}" selected>${book_category.name}</option>
-                                </c:if>
-                                <c:if test="${book_category.name != requestScope.book.category}">
-                                    <option value="${book_category.name}">${book_category.name}</option>
-                                </c:if>
-                            </c:forEach>
-                        </select>
+                        <label><fmt:message key="edit-book-data.category" />
+                            <select class="form-control" name="${RequestParameter.CATEGORY}">
+                                <c:forEach items="${requestScope.book_categories}" var="book_category">
+                                    <c:if test="${book_category.name == requestScope.book.category}">
+                                        <option value="${book_category.name}" selected>${book_category.name}</option>
+                                    </c:if>
+                                    <c:if test="${book_category.name != requestScope.book.category}">
+                                        <option value="${book_category.name}">${book_category.name}</option>
+                                    </c:if>
+                                </c:forEach>
+                            </select>
+                        </label>
                     </div>
                     <div class="form-group">
-                        <label><fmt:message key="edit-book-data.publication-year" /></label>
-                        <input type="number" name="publication-year" value="${requestScope.book.publicationYear}" class="form-control"
-                               placeholder="<fmt:message key="edit-book-data.publication-year-placeholder" />" required>
+                        <label><fmt:message key="edit-book-data.publication-year" />
+                            <input type="number" name="${RequestParameter.PUBLICATION_YEAR}" value="${requestScope.book.publicationYear}" class="form-control"
+                                   placeholder="<fmt:message key="edit-book-data.publication-year-placeholder" />" required>
+                        </label>
                     </div>
                     <div class="form-group">
-                        <label><fmt:message key="edit-book-data.language" /></label>
-                        <input type="text" name="language" value="${requestScope.book.language}" class="form-control"
-                               placeholder="<fmt:message key="edit-book-data.language-placeholder" />" required>
+                        <label><fmt:message key="edit-book-data.language" />
+                            <input type="text" name="${RequestParameter.LANGUAGE}" value="${requestScope.book.language}" class="form-control"
+                                   placeholder="<fmt:message key="edit-book-data.language-placeholder" />" required>
+                        </label>
                     </div>
                     <div class="form-group" style="width: 100%">
-                        <label><fmt:message key="edit-book-data.key-words" /></label>
-                        <input type="text" name="key-words" value="${requestScope.book.keyWords}" class="form-control"
-                               placeholder="<fmt:message key="edit-book-data.key-words-placeholder" />" required>
+                        <label><fmt:message key="edit-book-data.key-words" />
+                            <input type="text" name="${RequestParameter.KEY_WORDS}" value="${requestScope.book.keyWords}" class="form-control"
+                                   placeholder="<fmt:message key="edit-book-data.key-words-placeholder" />" required>
+                        </label>
                     </div>
                     <div id="authors" class="form-group" style="width: 100%">
-                        <label><fmt:message key="edit-book-data.authors" /></label>
-                        <c:forEach var="author" items="${requestScope.book.authors}">
-                            <div class="author-data">
-                                <input type="text" name="author-name" value="${author.name}" class="form-control"
-                                       placeholder="<fmt:message key="edit-book-data.name" />" style="width: 42%" required>
-                                <input type="text" name="author-surname" value="${author.surname}" class="form-control"
-                                       placeholder="<fmt:message key="edit-book-data.surname" />" style="width: 42%" required>
-                                <i onclick="deleteAuthor(this)" class="bi bi-dash" style="font-size: 32px;color: firebrick"></i>
-                            </div>
-                        </c:forEach>
+                        <label><fmt:message key="edit-book-data.authors" />
+                            <c:forEach var="author" items="${requestScope.book.authors}">
+                                <div class="author-data">
+                                    <input type="text" name="${RequestParameter.AUTHOR_NAME}" value="${author.name}" class="form-control"
+                                           placeholder="<fmt:message key="edit-book-data.name" />" style="width: 42%" required>
+                                    <input type="text" name="${RequestParameter.AUTHOR_SURNAME}" value="${author.surname}" class="form-control"
+                                           placeholder="<fmt:message key="edit-book-data.surname" />" style="width: 42%" required>
+                                    <i onclick="deleteAuthor(this)" class="bi bi-dash" style="font-size: 32px;color: firebrick"></i>
+                                </div>
+                            </c:forEach>
+                        </label>
                     </div>
                     <i id="addAuthor" class="bi bi-plus" style="font-size: 32px;color: forestgreen"></i>
                     <div class="w-100 row justify-content-end">
@@ -85,9 +94,9 @@
     function addAuthor() {
         $('#authors').append(
             "<div class=\"author-data\">" +
-            "<input type=\"text\" name=\"author-name\" class=\"form-control\" " +
+            "<input type=\"text\" name=\"${RequestParameter.AUTHOR_NAME}\" class=\"form-control\" " +
             "placeholder=\"<fmt:message key="edit-book-data.name" />\" style=\"width: 42%\" required>"+
-            "<input type=\"text\" name=\"author-surname\"  class=\"form-control\" " +
+            "<input type=\"text\" name=\"${RequestParameter.AUTHOR_SURNAME}\"  class=\"form-control\" " +
             "placeholder=\"<fmt:message key="edit-book-data.surname" />\" style=\"width: 42%\" required>" +
             "<i onclick=\"deleteAuthor(this)\" class=\"bi bi-dash\" style=\"font-size: 32px;color: firebrick\"></i>" +
             "</div>");

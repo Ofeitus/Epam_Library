@@ -1,6 +1,7 @@
 package com.epam.ofeitus.library.controller.command.impl;
 
 import com.epam.ofeitus.library.controller.command.Command;
+import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
@@ -29,33 +30,20 @@ public class SearchUsersCommand implements Command {
         UserService userService = ServiceFactory.getInstance().getUserService();
 
         String email = request.getParameter(RequestParameter.EMAIL);
-        String userRole = request.getParameter(RequestParameter.USER_ROLE);
 
         try {
             int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
-            int userRoleId;
-            switch (userRole) {
-                case "ADMIN":
-                    userRoleId = 1;
-                    break;
-                case "MANAGER":
-                    userRoleId = 2;
-                    break;
-                case "MEMBER":
-                    userRoleId = 3;
-                    break;
-                default:
-                    userRoleId = 0;
-            }
+            int userRoleId = Integer.parseInt(request.getParameter(RequestParameter.USER_ROLE_ID));
 
             int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
             int itemsOnPage = 10;
 
-            String command = "?command=search-users" +
-                    "&user-role=" + userRoleId +
-                    "&user-id=" + userId +
-                    "&email=" + email;
-            session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
+            String command = "?" + RequestParameter.COMMAND + "=" + CommandName.SEARCH_USERS_COMMAND +
+                    "&" + RequestParameter.USER_ROLE_ID + "=" + userRoleId +
+                    "&" + RequestParameter.USER_ID + "=" + userId +
+                    "&" + RequestParameter.EMAIL + "=" + email;
+            session.setAttribute(SessionAttribute.URL, "/controller" + command +
+                    "&" + RequestParameter.PAGE + "=" + page);
             session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
 
             List<User> users = userService.getUsersBySearchRequest(userRoleId, userId, email, page, itemsOnPage);

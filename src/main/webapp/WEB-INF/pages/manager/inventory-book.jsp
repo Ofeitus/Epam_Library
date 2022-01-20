@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="com.epam.ofeitus.library.controller.constant.RequestParameter" %>
+<%@ page import="com.epam.ofeitus.library.controller.command.CommandName" %>
 
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
 <fmt:setBundle basename="locale"/>
@@ -17,23 +19,26 @@
     <div class="inventory-book-forms">
         <div class="form-container" style="width: 33%">
             <h3 class="title"><fmt:message key="inventory-book.search-page" /></h3>
-            <form class="form-horizontal" action="controller" method="get">
-                <input type="hidden" name="command" value="search-copies-of-books">
+            <form class="form-horizontal" action="controller" method="post">
+                <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.SEARCH_COPIES_OF_BOOKS_COMMAND}">
                 <div class="form-group" style="width: 100%">
-                    <label><fmt:message key="inventory-book.status" /></label>
-                    <select class="form-control" name="status">
-                        <option value="all-copies"><fmt:message key="inventory-book.all-copies" /></option>
-                        <option value="only-existing" selected><fmt:message key="inventory-book.only-existing" /></option>
-                        <option value="only-written-off"><fmt:message key="inventory-book.only-written-off" /></option>
-                    </select>
+                    <label><fmt:message key="inventory-book.status" />
+                        <select class="form-control" name="${RequestParameter.STATUS}">
+                            <option value=""><fmt:message key="inventory-book.all-copies" /></option>
+                            <option value="${RequestParameter.STATUS_EXISTING}" selected><fmt:message key="inventory-book.only-existing" /></option>
+                            <option value="${RequestParameter.STATUS_WRITTEN_OFF}"><fmt:message key="inventory-book.only-written-off" /></option>
+                        </select>
+                    </label>
                 </div>
                 <div class="form-group">
-                    <label><fmt:message key="inventory-book.inventory-id" /></label>
-                    <input type="number" name="inventory-id" value="0" class="form-control" required placeholder="<fmt:message key="inventory-book.inventory-id-placeholder" />">
+                    <label><fmt:message key="inventory-book.inventory-id" />
+                        <input type="number" name="${RequestParameter.INVENTORY_ID}" value="0" class="form-control" required placeholder="<fmt:message key="inventory-book.inventory-id-placeholder" />">
+                    </label>
                 </div>
                 <div class="form-group">
-                    <label><fmt:message key="inventory-book.book-isbn" /></label>
-                    <input type="text" name="book-isbn" value="" class="form-control" placeholder="<fmt:message key="inventory-book.book-isbn-placeholder" />">
+                    <label><fmt:message key="inventory-book.book-isbn" />
+                        <input type="text" name="${RequestParameter.BOOK_ISBN}" value="" class="form-control" placeholder="<fmt:message key="inventory-book.book-isbn-placeholder" />">
+                    </label>
                 </div>
                 <div class="w-100 row justify-content-between search-buttons">
                     <button type="reset" class="h-50 col-3 btn reset"><fmt:message key="inventory-book.clear" /></button>
@@ -43,27 +48,31 @@
         </div>
         <div class="form-container" style="width: 65%">
             <div style="display: flex">
-                <form style="width: 50%" class="form-horizontal" action="controller" method="get">
+                <form style="width: 50%" class="form-horizontal" action="controller" method="post">
                     <h3 class="title"><fmt:message key="inventory-book.arrival" /></h3>
-                    <input id="arrival-command" type="hidden" name="command" value="write-in-copies-of-book">
+                    <input id="arrival-command" type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.WRITE_IN_COPIES_OF_BOOK_COMMAND}">
                     <div class="form-group">
-                        <label><fmt:message key="inventory-book.write-in-method" /></label>
-                        <select id="method-select" class="form-control" name="write-in-method" onchange="changeMethod()">
-                            <option value="existing-book" selected><fmt:message key="inventory-book.existing-book" /></option>
-                            <option value="new-book"><fmt:message key="inventory-book.new-book" /></option>
-                        </select>
+                        <label><fmt:message key="inventory-book.write-in-method" />
+                            <select id="method-select" class="form-control" name="write-in-method" onchange="changeMethod()">
+                                <option value="existing-book" selected><fmt:message key="inventory-book.existing-book" /></option>
+                                <option value="new-book"><fmt:message key="inventory-book.new-book" /></option>
+                            </select>
+                        </label>
                     </div>
                     <div class="form-group existing-book">
-                        <label><fmt:message key="inventory-book.book-isbn" /></label>
-                        <input id="existing-book-isbn" type="text" name="book-isbn" value="" class="form-control" placeholder="<fmt:message key="inventory-book.book-isbn-placeholder" />">
+                        <label><fmt:message key="inventory-book.book-isbn" />
+                            <input id="existing-book-isbn" type="text" name="${RequestParameter.BOOK_ISBN}" value="" class="form-control" placeholder="<fmt:message key="inventory-book.book-isbn-placeholder" />">
+                        </label>
                     </div>
                     <div class="form-group existing-book">
-                        <label><fmt:message key="inventory-book.price" /></label>
-                        <input id="price" type="number" name="price" value="0.00" step="0.01" class="form-control" required placeholder="<fmt:message key="inventory-book.price-placeholder" />">
+                        <label><fmt:message key="inventory-book.price" />
+                            <input id="price" type="number" name="${RequestParameter.PRICE}" value="0.00" step="0.01" class="form-control" required placeholder="<fmt:message key="inventory-book.price-placeholder" />">
+                        </label>
                     </div>
                     <div class="form-group existing-book">
-                        <label><fmt:message key="inventory-book.number-of-copies" /></label>
-                        <input id="number-of-copies" type="number" name="copies-count" value="0" class="form-control" required placeholder="<fmt:message key="inventory-book.number-of-copies-placeholder" />">
+                        <label><fmt:message key="inventory-book.number-of-copies" />
+                            <input id="number-of-copies" type="number" name="${RequestParameter.COPIES_COUNT}" value="0" class="form-control" required placeholder="<fmt:message key="inventory-book.number-of-copies-placeholder" />">
+                        </label>
                     </div>
                     <c:if test="${sessionScope.error != null}">
                         <div class="w-100 row justify-content-left">
@@ -76,16 +85,18 @@
                     </div>
                 </form>
                 <div style="margin: 10px"></div>
-                <form style="width: 50%" class="form-horizontal" action="controller" method="get">
+                <form style="width: 50%" class="form-horizontal" action="controller" method="post">
                     <h3 class="title"><fmt:message key="inventory-book.writing-off" /></h3>
-                    <input type="hidden" name="command" value="write-off-copies-of-books">
+                    <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.WRITE_OFF_COPIES_OF_BOOKS_COMMAND}">
                     <div class="form-group">
-                        <label><fmt:message key="inventory-book.from-inv-id" /></label>
-                        <input type="number" name="from-inventory-id" value="0" class="form-control" required>
+                        <label><fmt:message key="inventory-book.from-inv-id" />
+                            <input type="number" name="${RequestParameter.FROM_INVENTORY_ID}" value="0" class="form-control" required>
+                        </label>
                     </div>
                     <div class="form-group">
-                        <label><fmt:message key="inventory-book.to-inv-id" /></label>
-                        <input type="number" name="to-inventory-id" value="0" class="form-control" required>
+                        <label><fmt:message key="inventory-book.to-inv-id" />
+                            <input type="number" name="${RequestParameter.TO_INVENTORY_ID}" value="0" class="form-control" required>
+                        </label>
                     </div>
                     <div class="w-100 row justify-content-end search-buttons">
                         <button type="submit" id="submit-writing-off" class="h-50 col-4 btn submit"><fmt:message key="inventory-book.write-off" /></button>
@@ -127,7 +138,11 @@
                             </c:if>
                         </c:forEach>
                     </td>
-                    <td>${copy_of_book.book.title}</td>
+                    <td>
+                        <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_BOOK_DETAILS_PAGE_COMMAND}&${RequestParameter.BOOK_ISBN}=${copy_of_book.bookIsbn}">
+                            ${copy_of_book.book.title}
+                        </a>
+                    </td>
                     <td>${copy_of_book.book.isbn}</td>
                     <td>${copy_of_book.book.publicationYear}</td>
                     <td>${copy_of_book.price}</td>
@@ -145,7 +160,7 @@
                             <c:when test="${copy_of_book.copyOfBookStatus == 'RESERVED'}">
                                 <i class="bi bi-circle-fill" style="color:#4169e1"></i>
                                 <c:if test="${copy_of_book.userId != 0}">
-                                    <a href="?command=goto-user-reservations-page&user-id=${copy_of_book.userId}">
+                                    <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_USER_RESERVATIONS_PAGE_COMMAND}&${RequestParameter.USER_ID}=${copy_of_book.userId}">
                                         <fmt:message key="copy-of-book-status.reserved" /></a>
                                 </c:if>
                                 <c:if test="${copy_of_book.userId == 0}">
@@ -155,7 +170,7 @@
                             <c:when test="${copy_of_book.copyOfBookStatus == 'LOANED'}">
                                 <i class="bi bi-circle-fill" style="color:#228b22"></i>
                                 <c:if test="${copy_of_book.userId != 0}">
-                                    <a href="?command=goto-user-loans-page&user-id=${copy_of_book.userId}">
+                                    <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_USER_LOANS_PAGE_COMMAND}&${RequestParameter.USER_ID}=${copy_of_book.userId}">
                                         <fmt:message key="copy-of-book-status.loaned" />
                                     </a>
                                 </c:if>
@@ -171,7 +186,7 @@
                     </td>
                     <td style="text-align: center">
                         <c:if test="${copy_of_book.canBeDeleted}">
-                            <a href="?command=delete-copy-of-book&inventory-id=${copy_of_book.inventoryId}">
+                            <a href="?${RequestParameter.COMMAND}=${CommandName.DELETE_COPY_OF_BOOK_COMMAND}&${RequestParameter.INVENTORY_ID}=${copy_of_book.inventoryId}">
                                 <i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i></a>
                         </c:if>
                         <c:if test="${!copy_of_book.canBeDeleted}">
@@ -184,11 +199,11 @@
         </table>
         <div class="pages-navigation">
             <c:if test="${requestScope.current_page != 1}">
-                <a href="${sessionScope.url_without_page}${"&page="}${requestScope.current_page - 1}"><i class="bi bi-arrow-left-circle-fill"></i></a>
+                <a href="${sessionScope.url_without_page}&${RequestParameter.PAGE}=${requestScope.current_page - 1}"><i class="bi bi-arrow-left-circle-fill"></i></a>
             </c:if>
             &nbsp;<span><fmt:message key="catalog.page" /> ${requestScope.current_page} <fmt:message key="catalog.of" /> ${requestScope.pages_count}</span>&nbsp;
             <c:if test="${requestScope.current_page < requestScope.pages_count}">
-                <a href="${sessionScope.url_without_page}${"&page="}${requestScope.current_page + 1}"><i class="bi bi-arrow-right-circle-fill"></i></a>
+                <a href="${sessionScope.url_without_page}&${RequestParameter.PAGE}=${requestScope.current_page + 1}"><i class="bi bi-arrow-right-circle-fill"></i></a>
             </c:if>
         </div>
     </c:if>
@@ -201,19 +216,19 @@
     let subForms = document.getElementsByClassName('existing-book');
     let arrivalCommand = document.getElementById('arrival-command');
     let submitArrival = document.getElementById('submit-arrival');
-    arrivalCommand.setAttribute('value', 'write-in-copies-of-book');
+    arrivalCommand.setAttribute('value', '${CommandName.WRITE_IN_COPIES_OF_BOOK_COMMAND}');
     submitArrival.innerHTML = "<fmt:message key="inventory-book.write-in" />";
 
     function changeMethod() {
         if (select.value === "existing-book") {
             subForms[0].setAttribute('style', 'display:inline-block');
             subForms[1].setAttribute('style', 'display:inline-block');
-            arrivalCommand.setAttribute('value', 'write-in-copies-of-book');
+            arrivalCommand.setAttribute('value', '${CommandName.WRITE_IN_COPIES_OF_BOOK_COMMAND}');
             submitArrival.innerHTML = "<fmt:message key="inventory-book.write-in" />";
         } else {
             subForms[0].setAttribute('style', 'display:none');
             subForms[1].setAttribute('style', 'display:none');
-            arrivalCommand.setAttribute('value', 'goto-add-new-book-page');
+            arrivalCommand.setAttribute('value', '${CommandName.GOTO_ADD_NEW_BOOK_PAGE_COMMAND}');
             submitArrival.innerHTML = "<fmt:message key="inventory-book.add-new-book" />";
         }
     }

@@ -1,6 +1,7 @@
 package com.epam.ofeitus.library.controller.command.impl;
 
 import com.epam.ofeitus.library.controller.command.Command;
+import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
@@ -46,7 +47,8 @@ public class LogInCommand implements Command {
                 return new CommandResult(Page.LOG_IN_PAGE, RoutingType.FORWARD);
             }
 
-            session.setAttribute(SessionAttribute.URL, "/controller?command=goto-home-page");
+            session.setAttribute(SessionAttribute.URL, "/controller?" +
+                    RequestParameter.COMMAND + "=" + CommandName.GOTO_HOME_PAGE_COMMAND);
 
             return new CommandResult(Page.HOME_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {

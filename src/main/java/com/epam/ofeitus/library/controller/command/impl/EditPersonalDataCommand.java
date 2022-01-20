@@ -1,6 +1,7 @@
 package com.epam.ofeitus.library.controller.command.impl;
 
 import com.epam.ofeitus.library.controller.command.Command;
+import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
@@ -33,12 +34,14 @@ public class EditPersonalDataCommand implements Command {
         session.setAttribute(SessionAttribute.USER_NAME, name);
         session.setAttribute(SessionAttribute.USER_SURNAME, surname);
         session.setAttribute(SessionAttribute.USER_PHONE_NUMBER, phoneNumber);
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-profile-page");
+        String url = "/controller?" +
+                RequestParameter.COMMAND + "=" + CommandName.GOTO_PROFILE_PAGE_COMMAND;
+        session.setAttribute(SessionAttribute.URL, url);
 
         try {
             userService.editPersonalData(userId, name, surname, phoneNumber);
 
-            return new CommandResult("/controller?command=goto-profile-page", RoutingType.REDIRECT);
+            return new CommandResult(url, RoutingType.REDIRECT);
         } catch (ServiceException e) {
             logger.error("Unable to edit personal data.", e);
         }

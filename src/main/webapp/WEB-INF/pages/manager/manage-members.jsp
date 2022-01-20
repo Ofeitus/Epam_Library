@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="com.epam.ofeitus.library.controller.constant.RequestParameter" %>
+<%@ page import="com.epam.ofeitus.library.controller.command.CommandName" %>
 
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
 <fmt:setBundle basename="locale"/>
@@ -16,15 +18,17 @@
     <div class="manage-members-forms">
         <div class="form-container" style="width: 60%">
             <h3 class="title"><fmt:message key="inventory-book.search-page" /></h3>
-            <form class="form-horizontal" action="controller" method="get">
-                <input type="hidden" name="command" value="search-members">
+            <form class="form-horizontal" action="controller" method="post">
+                <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.SEARCH_MEMBERS_COMMAND}">
                 <div class="form-group">
-                    <label><fmt:message key="manage-users.id" /></label>
-                    <input type="number" name="user-id" value="0" class="form-control" required placeholder="<fmt:message key="manage-users.id" />">
+                    <label><fmt:message key="manage-users.id" />
+                        <input type="number" name="${RequestParameter.USER_ID}" value="0" class="form-control" required placeholder="<fmt:message key="manage-users.id" />">
+                    </label>
                 </div>
                 <div class="form-group">
-                    <label><fmt:message key="manage-users.email" /></label>
-                    <input type="text" name="email" value="" class="form-control" placeholder="<fmt:message key="manage-users.email-placeholder" />">
+                    <label><fmt:message key="manage-users.email" />
+                        <input type="text" name="${RequestParameter.EMAIL}" value="" class="form-control" placeholder="<fmt:message key="manage-users.email-placeholder" />">
+                    </label>
                 </div>
                 <div class="w-100 row justify-content-between search-buttons">
                     <button type="reset" class="h-50 col-3 btn reset"><fmt:message key="inventory-book.clear" /></button>
@@ -56,19 +60,22 @@
                 <td>${user.surname}</td>
                 <td>${user.phoneNumber}</td>
                 <td>${user.email}</td>
-                <td><a href="?command=goto-profile-page&user-id=${user.userId}">
-                    <i class="bi bi-person-circle" style="font-size: 18px"></i><fmt:message key="header.member-profile" /></a></td>
+                <td>
+                    <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_PROFILE_PAGE_COMMAND}&${RequestParameter.USER_ID}=${user.userId}">
+                        <i class="bi bi-person-circle" style="font-size: 18px"></i><fmt:message key="header.member-profile" />
+                    </a>
+                </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
     <div class="pages-navigation">
         <c:if test="${requestScope.current_page != 1}">
-            <a href="${sessionScope.url_without_page}${"&page="}${requestScope.current_page - 1}"><i class="bi bi-arrow-left-circle-fill"></i></a>
+            <a href="${sessionScope.url_without_page}&${RequestParameter.PAGE}=${requestScope.current_page - 1}"><i class="bi bi-arrow-left-circle-fill"></i></a>
         </c:if>
         &nbsp;<span><fmt:message key="catalog.page" /> ${requestScope.current_page} <fmt:message key="catalog.of" /> ${requestScope.pages_count}</span>&nbsp;
         <c:if test="${requestScope.current_page < requestScope.pages_count}">
-            <a href="${sessionScope.url_without_page}${"&page="}${requestScope.current_page + 1}"><i class="bi bi-arrow-right-circle-fill"></i></a>
+            <a href="${sessionScope.url_without_page}&${RequestParameter.PAGE}=${requestScope.current_page + 1}"><i class="bi bi-arrow-right-circle-fill"></i></a>
         </c:if>
     </div>
 </div>

@@ -26,10 +26,10 @@ public class SetRoleCommand implements Command {
         UserService userService = ServiceFactory.getInstance().getUserService();
 
         try {
-            int roleId = Integer.parseInt(request.getParameter(RequestParameter.USER_ROLE));
+            int userRoleId = Integer.parseInt(request.getParameter(RequestParameter.USER_ROLE_ID));
             int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
 
-            userService.setRole(userId, roleId);
+            userService.setRole(userId, userRoleId);
 
             return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
         } catch (ServiceException | NumberFormatException e) {
