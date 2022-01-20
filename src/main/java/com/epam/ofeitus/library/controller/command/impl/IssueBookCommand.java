@@ -48,8 +48,7 @@ public class IssueBookCommand implements Command {
             // Invalid user id case
             if (user == null || user.getUserRole() != UserRole.MEMBER) {
                 session.setAttribute(SessionAttribute.ERROR, "Member with id: " + userId + " does not exist");
-                session.setAttribute(SessionAttribute.URL, "/controller?command=goto-book-details-page&book-isbn=" + bookIsbn);
-                return new CommandResult("/controller?command=goto-book-details-page&book-isbn=" + bookIsbn, RoutingType.REDIRECT);
+                return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
             }
 
             int maxMemberBooks = 5;
@@ -65,8 +64,7 @@ public class IssueBookCommand implements Command {
             // Issue limit reached case
             if (reservedBooksCount + issuedBooksCount >= maxMemberBooks) {
                 session.setAttribute(SessionAttribute.ERROR, "Issue limit reached");
-                session.setAttribute(SessionAttribute.URL, "/controller?command=goto-book-details-page&book-isbn=" + bookIsbn);
-                return new CommandResult("/controller?command=goto-book-details-page&book-isbn=" + bookIsbn, RoutingType.REDIRECT);
+                return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
             }
 
             int loanPeriod = 30;
@@ -78,8 +76,7 @@ public class IssueBookCommand implements Command {
             // No available copies case
             if (!loansService.loanBook(userId, bookIsbn, loanPeriod)) {
                 session.setAttribute(SessionAttribute.ERROR, "No copies available");
-                session.setAttribute(SessionAttribute.URL, "/controller?command=goto-book-details-page&book-isbn=" + bookIsbn);
-                return new CommandResult("/controller?command=goto-book-details-page&book-isbn=" + bookIsbn, RoutingType.REDIRECT);
+                return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
             }
 
             session.setAttribute(SessionAttribute.URL, "/controller?command=goto-user-loans-page&user-id=" + userId);

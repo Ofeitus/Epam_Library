@@ -110,13 +110,13 @@
                 </td>
                 <td style="text-align: center">
                     <c:if test="${!user.deleted and user.userId != sessionScope.user_id}">
-                        <a href="?command=delete-user&user-id=${user.userId}&page=${requestScope.current_page}">
+                        <a href="?command=delete-user&user-id=${user.userId}">
                             <i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i>
                         </a>
                     </c:if>
                     <c:if test="${user.deleted and user.userId != sessionScope.user_id}">
                         <i class="bi bi-arrow-clockwise" style="font-size: 20px;color: royalblue"></i>
-                        <a href="?command=restore-user&user-id=${user.userId}&page=${requestScope.current_page}">
+                        <a href="?command=restore-user&user-id=${user.userId}">
                             <fmt:message key="manage-users.restore" />
                         </a>
                     </c:if>

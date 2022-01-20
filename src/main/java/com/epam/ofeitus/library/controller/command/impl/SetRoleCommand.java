@@ -26,17 +26,12 @@ public class SetRoleCommand implements Command {
         UserService userService = ServiceFactory.getInstance().getUserService();
 
         try {
-            int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
             int roleId = Integer.parseInt(request.getParameter(RequestParameter.USER_ROLE));
             int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
 
-            String command = "?command=goto-manage-users-page";
-            session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
-            session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
-
             userService.setRole(userId, roleId);
 
-            return new CommandResult("/controller" + command + "&page=" + page, RoutingType.REDIRECT);
+            return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
         } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to set user role.", e);
         }

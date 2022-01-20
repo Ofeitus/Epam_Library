@@ -40,12 +40,10 @@ public class IssueByInventoryIdCommand implements Command {
             int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
             int inventoryId = Integer.parseInt(request.getParameter(RequestParameter.INVENTORY_ID));
 
-            session.setAttribute(SessionAttribute.URL, "/controller?command=goto-user-loans-page&user-id=" + userId);
-
             // Copy does not exist case
             if (bookService.getCopyByInventoryId(inventoryId) == null) {
                 session.setAttribute(SessionAttribute.ERROR, "Copy does not exist");
-                return new CommandResult("/controller?command=goto-user-loans-page&user-id=" + userId, RoutingType.REDIRECT);
+                return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
             }
 
             int maxMemberBooks = 5;
@@ -61,7 +59,7 @@ public class IssueByInventoryIdCommand implements Command {
             // Issue limit reached case
             if (reservedBooksCount + issuedBooksCount >= maxMemberBooks) {
                 session.setAttribute(SessionAttribute.ERROR, "Issue limit reached");
-                return new CommandResult("/controller?command=goto-user-loans-page&user-id=" + userId, RoutingType.REDIRECT);
+                return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
             }
 
             int loanPeriod = 30;
@@ -75,7 +73,7 @@ public class IssueByInventoryIdCommand implements Command {
                 session.setAttribute(SessionAttribute.ERROR, "Copy is not available");
             }
 
-            return new CommandResult("/controller?command=goto-user-loans-page&user-id=" + userId, RoutingType.REDIRECT);
+            return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
         } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to issue book by inventory id.", e);
         }

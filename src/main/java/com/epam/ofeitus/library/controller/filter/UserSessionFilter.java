@@ -36,15 +36,21 @@ public class UserSessionFilter implements Filter {
 
                 User user = userService.getByUserId((int) userId);
                 // User deleted or role changed case
-                if (user == null || role != user.getUserRole()) {
-                    session.invalidate();
-                    response.sendRedirect("/controller?command=goto-log-in-page");
+                if (user == null || role != user.getUserRole() || user.isDeleted()) {
+                    session.removeAttribute(SessionAttribute.USER_ID);
+                    session.removeAttribute(SessionAttribute.USER_NAME);
+                    session.removeAttribute(SessionAttribute.USER_SURNAME);
+                    session.removeAttribute(SessionAttribute.USER_EMAIL);
+                    session.setAttribute(SessionAttribute.USER_ROLE, UserRole.GUEST);
+                    session.setAttribute(SessionAttribute.URL, "/controller?command=goto-log-in-page");
+                    response.sendRedirect(request.getContextPath() + "/controller?command=goto-log-in-page");
                     return;
                 }
             }
         } catch (ServiceException | ClassCastException e) {
             logger.error("Unable to get user.", e);
-            response.sendRedirect("/controller?command=goto-500-page");
+            session.setAttribute(SessionAttribute.URL, "/controller?command=goto-500-page");
+            response.sendRedirect(request.getContextPath() + "/controller?command=goto-500-page");
             return;
         }
         filterChain.doFilter(servletRequest, servletResponse);

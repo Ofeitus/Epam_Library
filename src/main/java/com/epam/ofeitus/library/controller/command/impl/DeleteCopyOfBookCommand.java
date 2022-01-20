@@ -26,16 +26,11 @@ public class DeleteCopyOfBookCommand implements Command {
         BookService bookService = ServiceFactory.getInstance().getBookService();
 
         try {
-            int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
             int inventoryId = Integer.parseInt(request.getParameter(RequestParameter.INVENTORY_ID));
-
-            String command = "?command=goto-inventory-book-page";
-            session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
-            session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
-
+            
             bookService.deleteCopyOfBook(inventoryId);
 
-            return new CommandResult("/controller" + command + "&page=" + page, RoutingType.REDIRECT);
+            return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
         } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to delete copy of book.", e);
         }

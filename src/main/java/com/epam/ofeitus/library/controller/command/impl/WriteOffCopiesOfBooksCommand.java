@@ -24,15 +24,13 @@ public class WriteOffCopiesOfBooksCommand implements Command {
         HttpSession session = request.getSession();
         BookService bookService = ServiceFactory.getInstance().getBookService();
 
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-inventory-book-page");
-
         try {
             int fromInventoryId = Integer.parseInt(request.getParameter(RequestParameter.FROM_INVENTORY_ID));
             int toInventoryId = Integer.parseInt(request.getParameter(RequestParameter.TO_INVENTORY_ID));
 
             bookService.writeOffCopiesOfBooks(fromInventoryId, toInventoryId);
 
-            return new CommandResult("/controller?command=goto-inventory-book-page", RoutingType.REDIRECT);
+            return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
         } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to write off copies of books.", e);
         }

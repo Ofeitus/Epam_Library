@@ -31,9 +31,9 @@ public class GoToUserReservationsPageCommand implements Command {
 
         String requestUserId = request.getParameter(RequestParameter.USER_ID);
 
-        int userId = (int) session.getAttribute(SessionAttribute.USER_ID);
-
         try {
+            int userId = (int) session.getAttribute(SessionAttribute.USER_ID);
+
             if (session.getAttribute(SessionAttribute.USER_ROLE) == UserRole.MANAGER && requestUserId != null) {
                 userId = Integer.parseInt(requestUserId);
             }
@@ -59,7 +59,7 @@ public class GoToUserReservationsPageCommand implements Command {
             request.setAttribute(RequestAttribute.USER_ID, userId);
 
             return new CommandResult(Page.USER_RESERVATIONS_PAGE, RoutingType.FORWARD);
-        } catch (ServiceException | NumberFormatException e) {
+        } catch (ServiceException | ClassCastException | NumberFormatException e) {
             logger.error("Unable to get user reservations DTO", e);
         }
         return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);

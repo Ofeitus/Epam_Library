@@ -37,9 +37,9 @@ public class GoToProfilePageCommand implements Command {
 
         String requestUserId = request.getParameter(RequestParameter.USER_ID);
 
-        int userId = (int) session.getAttribute(SessionAttribute.USER_ID);
-
         try {
+            int userId = (int) session.getAttribute(SessionAttribute.USER_ID);
+
             if (session.getAttribute(SessionAttribute.USER_ROLE) == UserRole.MANAGER && requestUserId != null) {
                 userId = Integer.parseInt(requestUserId);
             }
@@ -61,7 +61,7 @@ public class GoToProfilePageCommand implements Command {
             request.setAttribute(RequestAttribute.USER, user);
 
             return new CommandResult(Page.PROFILE_PAGE, RoutingType.FORWARD);
-        } catch (ServiceException | NumberFormatException e) {
+        } catch (ServiceException | ClassCastException | NumberFormatException e) {
             logger.error("Unable to get user data.", e);
         }
         return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);

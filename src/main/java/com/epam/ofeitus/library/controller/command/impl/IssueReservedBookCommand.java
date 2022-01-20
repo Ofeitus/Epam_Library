@@ -31,13 +31,7 @@ public class IssueReservedBookCommand implements Command {
         ConfigResourceManager configResourceManager = ConfigResourceManager.getInstance();
 
         try {
-            int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
             int reservationId = Integer.parseInt(request.getParameter(RequestParameter.RESERVATION_ID));
-            int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
-
-            String command = "?command=goto-user-reservations-page&user-id=" + userId;
-            session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
-            session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
 
             int loanPeriod = 30;
             try {
@@ -48,7 +42,7 @@ public class IssueReservedBookCommand implements Command {
 
             loansService.loanFromReservation(reservationId, loanPeriod);
 
-            return new CommandResult("/controller" + command + "&page=" + page, RoutingType.REDIRECT);
+            return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
         } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to loan from reservation.", e);
         }

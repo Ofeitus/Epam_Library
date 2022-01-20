@@ -122,7 +122,7 @@
                     <c:if test="${sessionScope.user_role == 'MANAGER'}">
                         <td>
                             <c:if test="${loan.loanStatus == 'ISSUED'}">
-                                <a href="?command=return-loaned-book&user-id=${loan.userId}&loan-id=${loan.loanId}&page=${requestScope.current_page}">
+                                <a href="?command=return-loaned-book&user-id=${loan.userId}&loan-id=${loan.loanId}">
                                     <i class="bi bi-journal-arrow-down" style="font-size: 18px"></i>
                                     <fmt:message key="user-loans.return" />
                                 </a>

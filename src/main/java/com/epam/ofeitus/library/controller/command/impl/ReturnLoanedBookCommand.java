@@ -32,13 +32,7 @@ public class ReturnLoanedBookCommand implements Command {
         ConfigResourceManager configResourceManager = ConfigResourceManager.getInstance();
 
         try {
-            int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
             int loanId = Integer.parseInt(request.getParameter(RequestParameter.LOAN_ID));
-            int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
-
-            String command = "?command=goto-user-loans-page&user-id=" + userId;
-            session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
-            session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
 
             BigDecimal fineRate = new BigDecimal("0.5");
             try {
@@ -49,7 +43,7 @@ public class ReturnLoanedBookCommand implements Command {
 
             loansService.returnBook(loanId, fineRate);
 
-            return new CommandResult("/controller" + command + "&page=" + page, RoutingType.REDIRECT);
+            return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
         } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to return book.", e);
         }

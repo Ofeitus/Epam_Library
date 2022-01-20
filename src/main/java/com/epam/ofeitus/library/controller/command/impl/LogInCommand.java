@@ -43,7 +43,6 @@ public class LogInCommand implements Command {
                 session.setAttribute(SessionAttribute.USER_ROLE, user.getUserRole());
             } else {
                 session.setAttribute(SessionAttribute.ERROR, "Invalid login or password");
-                session.setAttribute(SessionAttribute.URL, "/controller?command=goto-log-in-page");
                 return new CommandResult(Page.LOG_IN_PAGE, RoutingType.FORWARD);
             }
 

@@ -5,6 +5,7 @@ import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
+import com.epam.ofeitus.library.entity.user.constituent.UserRole;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +22,7 @@ public class LogOutCommand implements Command {
         session.removeAttribute(SessionAttribute.USER_NAME);
         session.removeAttribute(SessionAttribute.USER_SURNAME);
         session.removeAttribute(SessionAttribute.USER_EMAIL);
-        session.removeAttribute(SessionAttribute.USER_ROLE);
+        session.setAttribute(SessionAttribute.USER_ROLE, UserRole.GUEST);
 
         return new CommandResult(Page.HOME_PAGE, RoutingType.FORWARD);
     }

@@ -39,11 +39,11 @@
                     </a></td>
                     <td>${reservation.date}</td>
                     <td style="text-align: center">
-                        <a href="?command=cancel-reservation&redirect-command=goto-manage-reservations-page&reservation-id=${reservation.reservationId}&page=${requestScope.current_page}">
+                        <a href="?command=cancel-reservation&reservation-id=${reservation.reservationId}">
                             <i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i></a>
                     </td>
                     <td>
-                        <a href="?command=confirm-reservation&reservation-id=${reservation.reservationId}&page=${requestScope.current_page}">
+                        <a href="?command=confirm-reservation&reservation-id=${reservation.reservationId}">
                             <i class="bi bi-check-circle-fill" style="font-size: 18px"></i>
                             <fmt:message key="manage-reservations.confirm-reservation" />
                         </a>

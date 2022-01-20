@@ -27,15 +27,13 @@ public class WriteInCopiesOfBookCommand implements Command {
 
         String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
 
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-inventory-book-page");
-
         try {
             int copiesCount = Integer.parseInt(request.getParameter(RequestParameter.COPIES_COUNT));
             BigDecimal price = new BigDecimal(request.getParameter(RequestParameter.PRICE));
 
             bookService.addCopiesOfBook(bookIsbn, price, copiesCount);
 
-            return new CommandResult("/controller?command=goto-inventory-book-page", RoutingType.REDIRECT);
+            return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
         } catch (ServiceException | NumberFormatException e) {
             logger.error("Unable to add copies of book.", e);
         }

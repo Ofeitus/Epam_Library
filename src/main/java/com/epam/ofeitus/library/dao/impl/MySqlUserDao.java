@@ -33,17 +33,24 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
             Column.USER_PASSWORD_HASH,
             Column.USER_ROLE_ID,
             Column.USER_ID);
+    private static final String FIND_EXISTING_BY_ID_QUERY = String.format(
+            "SELECT * FROM %s WHERE %s=false AND %s=?",
+            Table.USER_TABLE,
+            Column.USER_DELETED,
+            Column.USER_ID);
     private static final String FIND_BY_EMAIL_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=?",
             Table.USER_TABLE,
             Column.USER_EMAIL);
     private static final String FIND_BY_ROLE_ID_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=? LIMIT ?, ?",
+            "SELECT * FROM %s WHERE %s=false AND %s=? LIMIT ?, ?",
             Table.USER_TABLE,
+            Column.USER_DELETED,
             Column.USER_ROLE_ID);
     private static final String COUNT_BY_ROLE_ID_QUERY = String.format(
-            "SELECT COUNT(*) FROM %s WHERE %s=?",
+            "SELECT COUNT(*) FROM %s WHERE %s=false AND %s=?",
             Table.USER_TABLE,
+            Column.USER_DELETED,
             Column.USER_ROLE_ID);
     private static final String FIND_ALL_QUERY = String.format(
             "SELECT * FROM %s JOIN %s UserRole ON %s.%s = UserRole.%s LIMIT ?, ?",
@@ -73,6 +80,11 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
     @Override
     public List<User> findAll(int offset, int itemsOnPage) throws DaoException {
         return queryOperator.executeQuery(FIND_ALL_QUERY, offset, itemsOnPage);
+    }
+
+    @Override
+    public User findById(int userId) throws DaoException {
+        return queryOperator.executeSingleEntityQuery(FIND_EXISTING_BY_ID_QUERY, userId);
     }
 
     @Override

@@ -26,16 +26,11 @@ public class ConfirmReservationCommand implements Command {
         ReservationsService reservationsService = ServiceFactory.getInstance().getReservationsService();
 
         try {
-            int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
             int reservationId = Integer.parseInt(request.getParameter(RequestParameter.RESERVATION_ID));
-
-            String command = "?command=goto-manage-reservations-page";
-            session.setAttribute(SessionAttribute.URL, "/controller" + command + "&page=" + page);
-            session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
 
             reservationsService.confirmReservation(reservationId);
 
-            return new CommandResult("/controller" + command + "&page=" + page, RoutingType.REDIRECT);
+            return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
         } catch (ServiceException e) {
             logger.error("Unable to confirm reservation.", e);
         }

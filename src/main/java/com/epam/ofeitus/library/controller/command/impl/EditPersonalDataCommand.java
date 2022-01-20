@@ -28,7 +28,7 @@ public class EditPersonalDataCommand implements Command {
         String surname = request.getParameter(RequestParameter.SECOND_NAME);
         String phoneNumber = request.getParameter(RequestParameter.PHONE_NUMBER);
 
-        int id = (int) session.getAttribute(SessionAttribute.USER_ID);
+        int userId = (int) session.getAttribute(SessionAttribute.USER_ID);
 
         session.setAttribute(SessionAttribute.USER_NAME, name);
         session.setAttribute(SessionAttribute.USER_SURNAME, surname);
@@ -36,7 +36,7 @@ public class EditPersonalDataCommand implements Command {
         session.setAttribute(SessionAttribute.URL, "/controller?command=goto-profile-page");
 
         try {
-            userService.editPersonalData(id, name, surname, phoneNumber);
+            userService.editPersonalData(userId, name, surname, phoneNumber);
 
             return new CommandResult("/controller?command=goto-profile-page", RoutingType.REDIRECT);
         } catch (ServiceException e) {

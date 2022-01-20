@@ -176,13 +176,13 @@ public class AccessFilter implements Filter {
 
             if (command == null) {
                 session.setAttribute(SessionAttribute.URL, "/controller?command=goto-404-page");
-                request.getRequestDispatcher(Page.ERROR_404_PAGE).forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/controller?command=goto-404-page");
                 return;
             }
 
             if (!commandsAvailableToRoles.get(role).contains(commandName)) {
                 session.setAttribute(SessionAttribute.URL, "/controller?command=goto-403-page");
-                request.getRequestDispatcher(Page.ERROR_403_PAGE).forward(request, response);
+                response.sendRedirect(request.getContextPath() + "/controller?command=goto-403-page");
                 return;
             }
         }

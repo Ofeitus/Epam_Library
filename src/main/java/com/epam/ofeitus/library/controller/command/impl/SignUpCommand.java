@@ -33,8 +33,7 @@ public class SignUpCommand implements Command {
         try {
             if (userService.getByEmail(email) != null) {
                 session.setAttribute(SessionAttribute.ERROR, "Email is already taken");
-                session.setAttribute(SessionAttribute.URL, "/controller?command=goto-sign-up-page");
-                return new CommandResult(Page.SIGN_UP_PAGE, RoutingType.FORWARD);
+                return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
             }
             userService.register(firstName, lastName, email, password);
 

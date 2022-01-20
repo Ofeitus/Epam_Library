@@ -25,17 +25,16 @@ public class ReserveBookCommand implements Command {
         ReservationsService reservationsService = ServiceFactory.getInstance().getReservationsService();
 
         String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
-        int userId = (int) session.getAttribute(SessionAttribute.USER_ID);
-
-        session.setAttribute(SessionAttribute.URL, "/controller?command=goto-book-details-page&book-isbn=" + bookIsbn);
 
         try {
+            int userId = (int) session.getAttribute(SessionAttribute.USER_ID);
+
             if (!reservationsService.makeReservation(userId, bookIsbn)) {
                 session.setAttribute(SessionAttribute.ERROR, "No copies available");
             }
 
-            return new CommandResult("/controller?command=goto-book-details-page&book-isbn=" + bookIsbn, RoutingType.REDIRECT);
-        } catch (ServiceException e) {
+            return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
+        } catch (ServiceException | ClassCastException e) {
             logger.error("Unable to reserve book.", e);
         }
         return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
