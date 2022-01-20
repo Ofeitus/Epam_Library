@@ -72,6 +72,7 @@
                     </td>
                     <td style="text-align: center">
                         <c:if test="${reservation.reservationStatus != 'ISSUED'}">
+                            <!-- TODO Post -->
                             <a href="?${RequestParameter.COMMAND}=${CommandName.CANCEL_RESERVATION_COMMAND}&${RequestParameter.RESERVATION_ID}=${reservation.reservationId}">
                                 <i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i></a>
                         </c:if>
@@ -79,6 +80,7 @@
                     <c:if test="${sessionScope.user_role == 'MANAGER'}">
                         <td>
                             <c:if test="${reservation.reservationStatus != 'ISSUED'}">
+                                <!-- TODO Post -->
                                 <a href="?${RequestParameter.COMMAND}=${CommandName.ISSUE_RESERVED_BOOK_COMMAND}&${RequestParameter.RESERVATION_ID}=${reservation.reservationId}">
                                     <i class="bi bi-journal-arrow-up" style="font-size: 18px"></i>
                                     <fmt:message key="user-reservations.issue-for-loan" />

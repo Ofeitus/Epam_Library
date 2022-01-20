@@ -49,7 +49,7 @@
             <div class="col-md-4">
                 <div class="form-container">
                     <h3 class="title"><fmt:message key="profile.loan" /></h3>
-                    <form class="form-horizontal" action="controller" method="post">
+                    <form class="form-horizontal" action="controller" method="get">
                         <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.GOTO_USER_LOANS_PAGE_COMMAND}">
                         <input type="hidden" name="${RequestParameter.USER_ID}" value=${requestScope.user.userId}>
                         <c:if test="${requestScope.debts_count == 0}">
@@ -73,7 +73,7 @@
             <div class="col-md-4">
                 <div class="form-container">
                     <h3 class="title"><fmt:message key="profile.reservations" /></h3>
-                    <form class="form-horizontal" action="controller" method="post">
+                    <form class="form-horizontal" action="controller" method="get">
                         <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.GOTO_USER_RESERVATIONS_PAGE_COMMAND}">
                         <input type="hidden" name="${RequestParameter.USER_ID}" value=${requestScope.user.userId}>
                         <c:if test="${requestScope.ready_reservations_count == 0}">
@@ -96,7 +96,7 @@
             <div class="col-md-4">
                 <div class="form-container">
                     <h3 class="title"><fmt:message key="profile.fines" /></h3>
-                    <form class="form-horizontal" action="controller" method="post">
+                    <form class="form-horizontal" action="controller" method="get">
                         <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.GOTO_USER_FINES_PAGE_COMMAND}">
                         <input type="hidden" name="${RequestParameter.USER_ID}" value=${requestScope.user.userId}>
                         <c:if test="${requestScope.unpaid_fines_count == 0}">

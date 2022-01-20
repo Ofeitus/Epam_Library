@@ -125,6 +125,7 @@
                     <c:if test="${sessionScope.user_role == 'MANAGER'}">
                         <td>
                             <c:if test="${loan.loanStatus == 'ISSUED'}">
+                                <!-- TODO Post -->
                                 <a href="?${RequestParameter.COMMAND}=${CommandName.RETURN_LOANED_BOOK_COMMAND}&${RequestParameter.LOAN_ID}=${loan.loanId}">
                                     <i class="bi bi-journal-arrow-down" style="font-size: 18px"></i>
                                     <fmt:message key="user-loans.return" />

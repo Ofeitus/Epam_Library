@@ -85,6 +85,7 @@
                     </c:choose>
                     <c:if test="${user.userId != sessionScope.user_id}">
                         <label>
+                            <!-- TODO Post -->
                             <select onchange="window.location.href=this.value;">
                                 <option data-content="<i class='fa fa-circle red'></i>" <c:if test="${user.userRole == 'ADMIN'}">selected</c:if>
                                         value="?${RequestParameter.COMMAND}=${CommandName.SET_ROLE_COMMAND}&${RequestParameter.USER_ID}=${user.userId}&${RequestParameter.USER_ROLE_ID}=1">
@@ -116,6 +117,7 @@
                     </c:if>
                 </td>
                 <td style="text-align: center">
+                    <!-- TODO Post -->
                     <c:if test="${!user.deleted and user.userId != sessionScope.user_id}">
                         <a href="?${RequestParameter.COMMAND}=${CommandName.DELETE_USER_COMMAND}&${RequestParameter.USER_ID}=${user.userId}">
                             <i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i>

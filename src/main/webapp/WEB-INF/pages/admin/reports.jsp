@@ -19,7 +19,7 @@
     <div class="reports-forms">
         <div class="form-container" style="width: 60%">
             <h3 class="title"><fmt:message key="reports.period" /></h3>
-            <form class="form-horizontal" action="controller" method="post">
+            <form class="form-horizontal" action="controller" method="get">
                 <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.GET_PERIOD_REPORTS_COMMAND}">
                 <div class="form-group">
                     <label><fmt:message key="reports.from-date" />

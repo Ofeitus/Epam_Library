@@ -22,7 +22,7 @@
     <h2><fmt:message key="catalog.catalog" /></h2>
     <div class="form-container">
         <h3 class="title"><fmt:message key="catalog.search-page" /></h3>
-        <form class="form-horizontal" action="controller" method="post">
+        <form class="form-horizontal" action="controller" method="get">
             <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.SEARCH_BOOKS_COMMAND}">
             <div class="form-group">
                 <label><fmt:message key="catalog.search-request" />

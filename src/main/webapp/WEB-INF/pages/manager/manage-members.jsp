@@ -18,7 +18,7 @@
     <div class="manage-members-forms">
         <div class="form-container" style="width: 60%">
             <h3 class="title"><fmt:message key="inventory-book.search-page" /></h3>
-            <form class="form-horizontal" action="controller" method="post">
+            <form class="form-horizontal" action="controller" method="get">
                 <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.SEARCH_MEMBERS_COMMAND}">
                 <div class="form-group">
                     <label><fmt:message key="manage-users.id" />

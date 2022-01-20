@@ -72,6 +72,7 @@
                     <c:if test="${sessionScope.user_role == 'MANAGER'}">
                         <td>
                             <c:if test="${fine.loanStatus == 'FINED'}">
+                                <!-- TODO Post -->
                                 <a href="?${RequestParameter.COMMAND}=${CommandName.PAY_FINE_COMMAND}&${RequestParameter.LOAN_ID}=${fine.loanId}">
                                     <i class="bi bi-cash-stack" style="font-size: 18px"></i>
                                     <fmt:message key="user-fines.pay-fine" />

@@ -33,6 +33,7 @@
                         <a class="edit-data-link" title="<fmt:message key="book-details.cant-delete" />" style="padding-top: 5px;"><i class="bi bi-trash-fill"></i></a>
                     </c:if>
                     <c:if test="${requestScope.copies_count == 0}">
+                        <!-- TODO Post -->
                         <a class="edit-data-link" style="padding-top: 5px; color: firebrick" href="?${RequestParameter.COMMAND}=${CommandName.DELETE_BOOK_COMMAND}&${RequestParameter.BOOK_ISBN}=${requestScope.book.isbn}"><i class="bi bi-trash-fill"></i></a>
                     </c:if>
                 </div>
@@ -124,7 +125,7 @@
         <c:if test="${sessionScope.user_role == 'MANAGER'}">
             <div class="form-container">
                 <h3 class="title"><fmt:message key="book-details.copies" /></h3>
-                <form class="form-horizontal" action="controller" method="post">
+                <form class="form-horizontal" action="controller" method="get">
                     <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.SEARCH_COPIES_OF_BOOKS_COMMAND}">
                     <input type="hidden" name="${RequestParameter.BOOK_ISBN}" value="${requestScope.book.isbn}">
                     <input type="hidden" name="${RequestParameter.INVENTORY_ID}" value="0">

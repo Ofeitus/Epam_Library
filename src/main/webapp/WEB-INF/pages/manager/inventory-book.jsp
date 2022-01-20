@@ -19,7 +19,7 @@
     <div class="inventory-book-forms">
         <div class="form-container" style="width: 33%">
             <h3 class="title"><fmt:message key="inventory-book.search-page" /></h3>
-            <form class="form-horizontal" action="controller" method="post">
+            <form class="form-horizontal" action="controller" method="get">
                 <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.SEARCH_COPIES_OF_BOOKS_COMMAND}">
                 <div class="form-group" style="width: 100%">
                     <label><fmt:message key="inventory-book.status" />
@@ -185,6 +185,7 @@
                         </c:choose>
                     </td>
                     <td style="text-align: center">
+                        <!-- TODO Post -->
                         <c:if test="${copy_of_book.canBeDeleted}">
                             <a href="?${RequestParameter.COMMAND}=${CommandName.DELETE_COPY_OF_BOOK_COMMAND}&${RequestParameter.INVENTORY_ID}=${copy_of_book.inventoryId}">
                                 <i class="bi bi-trash-fill" style="font-size: 20px;color: firebrick"></i></a>
