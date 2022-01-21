@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="com.epam.ofeitus.library.controller.constant.RequestParameter" %>
 <%@ page import="com.epam.ofeitus.library.controller.command.CommandName" %>
+<%@ page import="com.epam.ofeitus.library.entity.user.constituent.UserRole" %>
 
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
 <fmt:setBundle basename="locale"/>
@@ -26,7 +27,7 @@
     <div class="book-data">
         <div style="display: flex;justify-content: space-between">
             <h3 class="book-title">${requestScope.book.title}</h3>
-            <c:if test="${sessionScope.user_role == 'MANAGER'}">
+            <c:if test="${sessionScope.user_role == UserRole.MANAGER}">
                 <div class="edit-book-data-links">
                     <a class="edit-data-link" style="padding-top: 5px" href="?${RequestParameter.COMMAND}=${CommandName.GOTO_EDIT_BOOK_DATA_PAGE_COMMAND}&${RequestParameter.BOOK_ISBN}=${requestScope.book.isbn}"><i class="bi bi-pencil-square"></i></a>
                     <c:if test="${requestScope.copies_count > 0}">
@@ -75,7 +76,7 @@
                 <td class="book-field-value">${requestScope.book.keyWords}</td>
             </tr>
         </table>
-        <c:if test="${sessionScope.user_role == null || sessionScope.user_role == 'MEMBER'}">
+        <c:if test="${sessionScope.user_role == UserRole.GUEST || sessionScope.user_role == UserRole.MEMBER}">
             <div class="form-container">
                 <h3 class="title"><fmt:message key="book-details.reservation" /></h3>
                 <form class="form-horizontal" action="controller" method="post">
@@ -125,7 +126,7 @@
                 </form>
             </div>
         </c:if>
-        <c:if test="${sessionScope.user_role == 'MANAGER'}">
+        <c:if test="${sessionScope.user_role == UserRole.MANAGER}">
             <div class="form-container">
                 <h3 class="title"><fmt:message key="book-details.copies" /></h3>
                 <form class="form-horizontal" action="controller" method="get">

@@ -88,7 +88,7 @@
                     <td>${loan.dueDate}</td>
                     <td>
                         <fmt:formatNumber var="diff"
-                                          value="${(now.time - loan.dueDate.time) / (1000*60*60*24) - 1}"
+                                          value="${(now.time - loan.dueDate.time) / (1000*60*60*24)}"
                                           maxFractionDigits="0" />
                         <c:if test="${diff <= 0 and loan.loanStatus == 'ISSUED'}">
                             <c:if test="${diff > -5 and loan.loanStatus == 'ISSUED'}">

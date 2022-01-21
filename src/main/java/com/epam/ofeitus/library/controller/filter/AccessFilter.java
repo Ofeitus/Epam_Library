@@ -147,6 +147,7 @@ public class AccessFilter implements Filter {
                 CommandName.GOTO_LOG_IN_PAGE_COMMAND,
                 CommandName.GOTO_SIGN_UP_PAGE_COMMAND,
                 CommandName.LOG_IN_COMMAND,
+                CommandName.SEARCH_BOOKS_COMMAND,
                 CommandName.SET_LOCALE_COMMAND,
                 CommandName.SIGN_UP_COMMAND
         ));
