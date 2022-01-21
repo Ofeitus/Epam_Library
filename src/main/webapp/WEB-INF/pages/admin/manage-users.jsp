@@ -38,7 +38,7 @@
                 </div>
                 <div class="form-group">
                     <label><fmt:message key="manage-users.email" />
-                        <input type="text" name="${RequestParameter.EMAIL}" value="" class="form-control" placeholder="<fmt:message key="manage-users.email-placeholder" />">
+                        <input type="email" name="${RequestParameter.EMAIL}" value="" class="form-control" placeholder="<fmt:message key="manage-users.email-placeholder" />">
                     </label>
                 </div>
                 <div class="w-100 row justify-content-between search-buttons">

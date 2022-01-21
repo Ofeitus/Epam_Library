@@ -22,14 +22,14 @@
                     <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.WRITE_IN_COPIES_OF_NEW_BOOK_COMMAND}">
                     <div class="form-group" style="width: 100%;">
                         <label><fmt:message key="edit-book-data.title" />
-                            <input type="text" name="${RequestParameter.TITLE}" value="" class="form-control"
-                                   placeholder="<fmt:message key="edit-book-data.title-placeholder" />" required>
+                            <input type="text" class="form-control"
+                                   name="${RequestParameter.TITLE}" value="" minlength="1" placeholder="<fmt:message key="edit-book-data.title-placeholder" />" required>
                         </label>
                     </div>
                     <div class="form-group">
                         <label><fmt:message key="edit-book-data.isbn" />
-                            <input type="text" name="${RequestParameter.BOOK_ISBN}" value="" class="form-control"
-                                   placeholder="<fmt:message key="edit-book-data.isbn-placeholder" />" required>
+                            <input type="text" class="form-control" pattern="^([\d]{10}|[\d]{13})$" title="<fmt:message key="validation-pattern.isbn" />"
+                                   name="${RequestParameter.BOOK_ISBN}" value="" placeholder="<fmt:message key="edit-book-data.isbn-placeholder" />" required>
                         </label>
                     </div>
                     <div class="form-group">
@@ -43,14 +43,14 @@
                     </div>
                     <div class="form-group">
                         <label><fmt:message key="edit-book-data.publication-year" />
-                            <input type="number" name="${RequestParameter.PUBLICATION_YEAR}" value="" class="form-control"
-                                   placeholder="<fmt:message key="edit-book-data.publication-year-placeholder" />" required>
+                            <input type="number" class="form-control"
+                                   name="${RequestParameter.PUBLICATION_YEAR}" value="" min="0" placeholder="<fmt:message key="edit-book-data.publication-year-placeholder" />" required>
                         </label>
                     </div>
                     <div class="form-group">
                         <label><fmt:message key="edit-book-data.language" />
-                            <input type="text" name="${RequestParameter.LANGUAGE}" value="" class="form-control"
-                                   placeholder="<fmt:message key="edit-book-data.language-placeholder" />" required>
+                            <input type="text" class="form-control" pattern="^([А-Я][а-яё]{1,29}|[A-Z][a-z]{1,29})$" title="<fmt:message key="validation-pattern.language" />"
+                                   name="${RequestParameter.LANGUAGE}" value="" placeholder="<fmt:message key="edit-book-data.language-placeholder" />" required>
                         </label>
                     </div>
                     <div class="form-group" style="width: 100%">
@@ -65,12 +65,12 @@
                     <p id="addAuthor" class="bi bi-plus" style="font-size: 32px;color: forestgreen"></p>
                     <div class="form-group">
                         <label><fmt:message key="inventory-book.price" />
-                            <input id="price" type="number" name="${RequestParameter.PRICE}" value="0.00" step="0.01" class="form-control" required placeholder="<fmt:message key="inventory-book.price-placeholder" />">
+                            <input id="price" type="number" name="${RequestParameter.PRICE}" value="0.00" min="0" step="0.01" class="form-control" required placeholder="<fmt:message key="inventory-book.price-placeholder" />">
                         </label>
                     </div>
                     <div class="form-group">
                         <label><fmt:message key="add-new-book.copies-count" />
-                            <input type="number" name="${RequestParameter.COPIES_COUNT}" value="" class="form-control"
+                            <input type="number" name="${RequestParameter.COPIES_COUNT}" value="" min="0" class="form-control"
                                    placeholder="<fmt:message key="add-new-book.copies-count-placeholder" />" required>
                         </label>
                     </div>
@@ -89,10 +89,10 @@
     function addAuthor() {
         $('#authors').append(
             "<div class=\"author-data\">" +
-            "<input type=\"text\" name=\"${RequestParameter.AUTHOR_NAME}\" class=\"form-control\" " +
-            "placeholder=\"<fmt:message key="edit-book-data.name" />\" style=\"width: 42%\" required>"+
-            "<input type=\"text\" name=\"${RequestParameter.AUTHOR_SURNAME}\"  class=\"form-control\" " +
-            "placeholder=\"<fmt:message key="edit-book-data.surname" />\" style=\"width: 42%\" required>" +
+            "<input type=\"text\" class=\"form-control\" pattern=\"^([А-Я][а-яё]{1,29}|[A-Z][a-z]{1,29})$\" title=\"<fmt:message key="validation-pattern.name" />\" " +
+            "name=\"${RequestParameter.AUTHOR_NAME}\" placeholder=\"<fmt:message key="edit-book-data.name" />\" style=\"width: 42%\" required>"+
+            "<input type=\"text\" class=\"form-control\" pattern=\"^([А-Я][а-яё]{1,29}|[A-Z][a-z]{1,29})$\" title=\"<fmt:message key="validation-pattern.name" />\" " +
+            "name=\"${RequestParameter.AUTHOR_SURNAME}\" placeholder=\"<fmt:message key="edit-book-data.surname" />\" style=\"width: 42%\" required>" +
             "<i onclick=\"deleteAuthor(this)\" class=\"bi bi-dash\" style=\"font-size: 32px;color: firebrick\"></i>" +
             "</div>");
     }

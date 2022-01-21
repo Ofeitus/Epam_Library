@@ -76,6 +76,10 @@
     box-shadow: none;
 }
 
+.form-container .form-horizontal .form-control:invalid:not(:placeholder-shown) {
+    box-shadow: 0 0 5px firebrick;
+}
+
 .form-container .form-horizontal .form-control::placeholder{
     font-weight: 500;
 }

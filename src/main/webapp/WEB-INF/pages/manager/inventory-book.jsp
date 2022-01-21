@@ -32,12 +32,13 @@
                 </div>
                 <div class="form-group">
                     <label><fmt:message key="inventory-book.inventory-id" />
-                        <input type="number" name="${RequestParameter.INVENTORY_ID}" value="0" class="form-control" required placeholder="<fmt:message key="inventory-book.inventory-id-placeholder" />">
+                        <input type="number" name="${RequestParameter.INVENTORY_ID}" value="0" min="1" class="form-control" required placeholder="<fmt:message key="inventory-book.inventory-id-placeholder" />">
                     </label>
                 </div>
                 <div class="form-group">
                     <label><fmt:message key="inventory-book.book-isbn" />
-                        <input type="text" name="${RequestParameter.BOOK_ISBN}" value="" class="form-control" placeholder="<fmt:message key="inventory-book.book-isbn-placeholder" />">
+                        <input type="text" class="form-control" pattern="^([\d]{10}|[\d]{13})$" title="<fmt:message key="validation-pattern.isbn" />"
+                               name="${RequestParameter.BOOK_ISBN}" value="" placeholder="<fmt:message key="inventory-book.book-isbn-placeholder" />">
                     </label>
                 </div>
                 <div class="w-100 row justify-content-between search-buttons">
@@ -61,17 +62,18 @@
                     </div>
                     <div class="form-group existing-book">
                         <label><fmt:message key="inventory-book.book-isbn" />
-                            <input id="existing-book-isbn" type="text" name="${RequestParameter.BOOK_ISBN}" value="" class="form-control" placeholder="<fmt:message key="inventory-book.book-isbn-placeholder" />">
+                            <input id="existing-book-isbn" type="text" class="form-control" pattern="^([\d]{10}|[\d]{13})$" title="<fmt:message key="validation-pattern.isbn" />"
+                                   name="${RequestParameter.BOOK_ISBN}" value="" placeholder="<fmt:message key="inventory-book.book-isbn-placeholder" />">
                         </label>
                     </div>
                     <div class="form-group existing-book">
                         <label><fmt:message key="inventory-book.price" />
-                            <input id="price" type="number" name="${RequestParameter.PRICE}" value="0.00" step="0.01" class="form-control" required placeholder="<fmt:message key="inventory-book.price-placeholder" />">
+                            <input id="price" type="number" name="${RequestParameter.PRICE}" value="0.00" step="0.01" min="0" class="form-control" required placeholder="<fmt:message key="inventory-book.price-placeholder" />">
                         </label>
                     </div>
                     <div class="form-group existing-book">
                         <label><fmt:message key="inventory-book.number-of-copies" />
-                            <input id="number-of-copies" type="number" name="${RequestParameter.COPIES_COUNT}" value="0" class="form-control" required placeholder="<fmt:message key="inventory-book.number-of-copies-placeholder" />">
+                            <input id="number-of-copies" type="number" name="${RequestParameter.COPIES_COUNT}" value="0" min="0" class="form-control" required placeholder="<fmt:message key="inventory-book.number-of-copies-placeholder" />">
                         </label>
                     </div>
                     <c:if test="${sessionScope.error != null}">
@@ -90,12 +92,12 @@
                     <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.WRITE_OFF_COPIES_OF_BOOKS_COMMAND}">
                     <div class="form-group">
                         <label><fmt:message key="inventory-book.from-inv-id" />
-                            <input type="number" name="${RequestParameter.INVENTORY_ID_FROM}" value="0" class="form-control" required>
+                            <input type="number" name="${RequestParameter.INVENTORY_ID_FROM}" value="0" min="1" class="form-control" required>
                         </label>
                     </div>
                     <div class="form-group">
                         <label><fmt:message key="inventory-book.to-inv-id" />
-                            <input type="number" name="${RequestParameter.INVENTORY_ID_TO}" value="0" class="form-control" required>
+                            <input type="number" name="${RequestParameter.INVENTORY_ID_TO}" value="0" min="1" class="form-control" required>
                         </label>
                     </div>
                     <div class="w-100 row justify-content-end search-buttons">

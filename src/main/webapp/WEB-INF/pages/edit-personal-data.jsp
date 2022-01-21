@@ -22,17 +22,19 @@
                     <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.EDIT_PERSONAL_DATA_COMMAND}">
                     <div class="form-group">
                         <label><fmt:message key="edit-personal-data.name" />
-                            <input type="text" name="${RequestParameter.USER_NAME}" value="${sessionScope.user_name}" class="form-control" placeholder="<fmt:message key="edit-personal-data.name-placeholder" />" required>
+                            <input type="text" class="form-control" pattern="^([А-Я][а-яё]{1,29}|[A-Z][a-z]{1,29})$" title="<fmt:message key="validation-pattern.name" />"
+                                   name="${RequestParameter.USER_NAME}" value="${sessionScope.user_name}" placeholder="<fmt:message key="edit-personal-data.name-placeholder" />" required>
                         </label>
                     </div>
                     <div class="form-group">
                         <label><fmt:message key="edit-personal-data.surname" />
-                            <input type="text" name="${RequestParameter.USER_SURNAME}" value="${sessionScope.user_surname}" class="form-control" placeholder="<fmt:message key="edit-personal-data.surname-placeholder" />" required>
+                            <input type="text" class="form-control" pattern="^([А-Я][а-яё]{1,29}|[A-Z][a-z]{1,29})$" title="<fmt:message key="validation-pattern.name" />"
+                                   name="${RequestParameter.USER_SURNAME}" value="${sessionScope.user_surname}" placeholder="<fmt:message key="edit-personal-data.surname-placeholder" />" required>
                         </label>
                     </div>
                     <div class="form-group" style="width: 100%">
                         <label><fmt:message key="edit-personal-data.phone-number" />
-                            <input type="tel" name="${RequestParameter.PHONE_NUMBER}" value="${sessionScope.user_phone_number}" class="form-control" placeholder="<fmt:message key="edit-personal-data.phone-number-placeholder" />">
+                            <input type="tel" class="form-control" pattern="^375[\d]{9}$" title="<fmt:message key="validation-pattern.phone-number" />" name="${RequestParameter.PHONE_NUMBER}" value="${sessionScope.user_phone_number}" placeholder="<fmt:message key="edit-personal-data.phone-number-placeholder" />">
                         </label>
                     </div>
                     <div class="w-100 row justify-content-end">
