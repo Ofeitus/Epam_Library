@@ -148,6 +148,9 @@ public class UserServiceImpl implements UserService {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
         try {
             User user = userDao.findById(userId);
+            if (user.getUserRole() == UserRole.ADMIN) {
+                throw new ServiceException("Can't change role.");
+            }
             user.setUserRole(UserRole.values()[roleId - 1]);
             return userDao.update(user);
         } catch (DaoException e) {
@@ -159,6 +162,10 @@ public class UserServiceImpl implements UserService {
     public int deleteUser(int userId) throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
         try {
+            User user = userDao.findById(userId);
+            if (user.getUserRole() == UserRole.ADMIN) {
+                throw new ServiceException("Can't delete.");
+            }
             return userDao.deleteById(userId);
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -169,6 +176,10 @@ public class UserServiceImpl implements UserService {
     public int restoreUser(int userId) throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
         try {
+            User user = userDao.findById(userId);
+            if (user.getUserRole() == UserRole.ADMIN) {
+                throw new ServiceException("Can't restore.");
+            }
             return userDao.restoreById(userId);
         } catch (DaoException e) {
             throw new ServiceException(e);

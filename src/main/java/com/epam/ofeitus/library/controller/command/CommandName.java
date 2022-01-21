@@ -30,8 +30,8 @@ public class CommandName {
     public static final String GOTO_USER_FINES_PAGE_COMMAND = "goto-user-fines-page";
     public static final String GOTO_USER_LOANS_PAGE_COMMAND = "goto-user-loans-page";
     public static final String GOTO_USER_RESERVATIONS_PAGE_COMMAND = "goto-user-reservations-page";
-    public static final String ISSUE_BOOK_COMMAND = "issue-book";
     public static final String ISSUE_BY_INVENTORY_ID_COMMAND = "issue-by-inventory-id";
+    public static final String ISSUE_BY_USER_ID_COMMAND = "issue-by-user-id-book";
     public static final String ISSUE_RESERVED_BOOK_COMMAND = "issue-reserved-book";
     public static final String LOG_IN_COMMAND = "log-in";
     public static final String LOG_OUT_COMMAND = "log-out";

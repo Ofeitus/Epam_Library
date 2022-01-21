@@ -26,8 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.MissingResourceException;
 
-public class IssueBookCommand implements Command {
-    private final Logger logger = LogManager.getLogger(IssueBookCommand.class);
+public class IssueByUserIdCommand implements Command {
+    private final Logger logger = LogManager.getLogger(IssueByUserIdCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {

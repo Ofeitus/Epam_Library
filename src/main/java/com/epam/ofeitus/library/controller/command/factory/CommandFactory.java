@@ -40,7 +40,7 @@ public class CommandFactory {
         put(CommandName.GOTO_USER_FINES_PAGE_COMMAND, new GoToUserFinesPageCommand());
         put(CommandName.GOTO_USER_LOANS_PAGE_COMMAND, new GoToUserLoansPageCommand());
         put(CommandName.GOTO_USER_RESERVATIONS_PAGE_COMMAND, new GoToUserReservationsPageCommand());
-        put(CommandName.ISSUE_BOOK_COMMAND, new IssueBookCommand());
+        put(CommandName.ISSUE_BY_USER_ID_COMMAND, new IssueByUserIdCommand());
         put(CommandName.ISSUE_BY_INVENTORY_ID_COMMAND, new IssueByInventoryIdCommand());
         put(CommandName.ISSUE_RESERVED_BOOK_COMMAND, new IssueReservedBookCommand());
         put(CommandName.LOG_IN_COMMAND, new LogInCommand());

@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="com.epam.ofeitus.library.controller.constant.RequestParameter" %>
 <%@ page import="com.epam.ofeitus.library.controller.command.CommandName" %>
+<%@ page import="com.epam.ofeitus.library.entity.user.constituent.UserRole" %>
 
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
 <fmt:setBundle basename="locale"/>
@@ -83,7 +84,7 @@
                             <i class="bi bi-circle-fill" style="color:gray"></i>
                         </c:when>
                     </c:choose>
-                    <c:if test="${user.userId != sessionScope.user_id}">
+                    <c:if test="${user.userRole != UserRole.ADMIN}">
                         <label>
                             <form action="controller" method="post">
                                 <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.SET_ROLE_COMMAND}">
@@ -102,7 +103,7 @@
                             </form>
                         </label>
                     </c:if>
-                    <c:if test="${user.userId == sessionScope.user_id}">
+                    <c:if test="${user.userRole == UserRole.ADMIN}">
                         <c:choose>
                             <c:when test="${user.userRole == 'ADMIN'}">
                                 <fmt:message key="user-role.admin" />

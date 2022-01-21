@@ -158,7 +158,7 @@
             <div class="form-container">
                 <h3 class="title"><fmt:message key="book-details.issue" /></h3>
                 <form class="form-horizontal" action="controller" method="post">
-                    <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.ISSUE_BOOK_COMMAND}">
+                    <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.ISSUE_BY_USER_ID_COMMAND}">
                     <input type="hidden" name="${RequestParameter.BOOK_ISBN}" value="${requestScope.book.isbn}">
                     <c:if test="${requestScope.available_copies_count > 0}">
                         <div class="reservation-info">
