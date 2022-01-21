@@ -38,8 +38,8 @@ public class SearchBooksCommand implements Command {
         String authorSurname = request.getParameter(RequestParameter.AUTHOR_SURNAME);
 
         try {
-            int yearFrom = Integer.parseInt(request.getParameter(RequestParameter.YEAR_FROM));
-            int yearTo = Integer.parseInt(request.getParameter(RequestParameter.YEAR_TO));
+            int yearFrom = Integer.parseInt(request.getParameter(RequestParameter.PUBLICATION_YEAR_FROM));
+            int yearTo = Integer.parseInt(request.getParameter(RequestParameter.PUBLICATION_YEAR_TO));
             int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
             int itemsOnPage = 8;
 
@@ -48,8 +48,8 @@ public class SearchBooksCommand implements Command {
                              "&" + RequestParameter.CATEGORY + "=" + URLEncoder.encode(category, "UTF-8") +
                              "&" + RequestParameter.AUTHOR_NAME + "=" + URLEncoder.encode(authorName, "UTF-8") +
                              "&" + RequestParameter.AUTHOR_SURNAME + "=" + URLEncoder.encode(authorSurname, "UTF-8") +
-                             "&" + RequestParameter.YEAR_FROM + "=" + yearFrom +
-                             "&" + RequestParameter.YEAR_TO + "=" + yearTo;
+                             "&" + RequestParameter.PUBLICATION_YEAR_FROM + "=" + yearFrom +
+                             "&" + RequestParameter.PUBLICATION_YEAR_TO + "=" + yearTo;
             session.setAttribute(SessionAttribute.URL, ("/controller" + command +
                     "&" + RequestParameter.PAGE + "=" + page));
             session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);

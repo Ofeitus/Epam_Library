@@ -90,12 +90,12 @@
                     <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.WRITE_OFF_COPIES_OF_BOOKS_COMMAND}">
                     <div class="form-group">
                         <label><fmt:message key="inventory-book.from-inv-id" />
-                            <input type="number" name="${RequestParameter.FROM_INVENTORY_ID}" value="0" class="form-control" required>
+                            <input type="number" name="${RequestParameter.INVENTORY_ID_FROM}" value="0" class="form-control" required>
                         </label>
                     </div>
                     <div class="form-group">
                         <label><fmt:message key="inventory-book.to-inv-id" />
-                            <input type="number" name="${RequestParameter.TO_INVENTORY_ID}" value="0" class="form-control" required>
+                            <input type="number" name="${RequestParameter.INVENTORY_ID_TO}" value="0" class="form-control" required>
                         </label>
                     </div>
                     <div class="w-100 row justify-content-end search-buttons">

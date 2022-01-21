@@ -26,8 +26,8 @@ public class SignUpCommand implements Command {
         HttpSession session = request.getSession();
         UserService userService = ServiceFactory.getInstance().getUserService();
 
-        String firstName = request.getParameter(RequestParameter.FIRST_NAME);
-        String lastName = request.getParameter(RequestParameter.SECOND_NAME);
+        String firstName = request.getParameter(RequestParameter.USER_NAME);
+        String lastName = request.getParameter(RequestParameter.USER_SURNAME);
         String email = request.getParameter(RequestParameter.EMAIL);
         String password = request.getParameter(RequestParameter.PASSWORD);
 

@@ -22,12 +22,12 @@
                     <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.EDIT_PERSONAL_DATA_COMMAND}">
                     <div class="form-group">
                         <label><fmt:message key="edit-personal-data.name" />
-                            <input type="text" name="${RequestParameter.FIRST_NAME}" value="${sessionScope.user_name}" class="form-control" placeholder="<fmt:message key="edit-personal-data.name-placeholder" />" required>
+                            <input type="text" name="${RequestParameter.USER_NAME}" value="${sessionScope.user_name}" class="form-control" placeholder="<fmt:message key="edit-personal-data.name-placeholder" />" required>
                         </label>
                     </div>
                     <div class="form-group">
                         <label><fmt:message key="edit-personal-data.surname" />
-                            <input type="text" name="${RequestParameter.SECOND_NAME}" value="${sessionScope.user_surname}" class="form-control" placeholder="<fmt:message key="edit-personal-data.surname-placeholder" />" required>
+                            <input type="text" name="${RequestParameter.USER_SURNAME}" value="${sessionScope.user_surname}" class="form-control" placeholder="<fmt:message key="edit-personal-data.surname-placeholder" />" required>
                         </label>
                     </div>
                     <div class="form-group" style="width: 100%">

@@ -22,7 +22,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -36,13 +35,13 @@ public class GoToReportsPageCommand implements Command {
         UserService userService = ServiceFactory.getInstance().getUserService();
         BookService bookService = ServiceFactory.getInstance().getBookService();
 
-        String from = request.getParameter(RequestParameter.FROM_DATE);
-        String to = request.getParameter(RequestParameter.TO_DATE);
+        String from = request.getParameter(RequestParameter.DATE_FROM);
+        String to = request.getParameter(RequestParameter.DATE_TO);
 
         session.setAttribute(SessionAttribute.URL, "/controller?" +
                 RequestParameter.COMMAND + "=" + CommandName.GOTO_REPORTS_PAGE_COMMAND +
-                        "&" + RequestParameter.FROM_DATE + "=" + from +
-                        "&" + RequestParameter.TO_DATE + "=" + to);
+                        "&" + RequestParameter.DATE_FROM + "=" + from +
+                        "&" + RequestParameter.DATE_TO + "=" + to);
 
         try {
             Calendar cal = Calendar.getInstance();

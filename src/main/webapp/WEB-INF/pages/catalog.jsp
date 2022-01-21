@@ -49,8 +49,8 @@
             <div class="form-group">
                 <label><fmt:message key="catalog.publication-year" />
                     <div class="input-group">
-                        <input type="number" name="${RequestParameter.YEAR_FROM}" class="form-control" placeholder="<fmt:message key="catalog.year-from-placeholder" />" required value="0">
-                        <input type="number" name="${RequestParameter.YEAR_TO}" class="form-control" placeholder="<fmt:message key="catalog.year-to-placeholder" />" required value="0">
+                        <input type="number" name="${RequestParameter.PUBLICATION_YEAR_FROM}" class="form-control" placeholder="<fmt:message key="catalog.year-from-placeholder" />" required value="0">
+                        <input type="number" name="${RequestParameter.PUBLICATION_YEAR_TO}" class="form-control" placeholder="<fmt:message key="catalog.year-to-placeholder" />" required value="0">
                     </div>
                 </label>
             </div>

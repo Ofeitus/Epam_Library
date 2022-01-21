@@ -38,13 +38,13 @@ public class GetPeriodReportsCommand implements Command {
         UserService userService = serviceFactory.getUserService();
         BookService bookService = serviceFactory.getBookService();
 
-        String from = request.getParameter(RequestParameter.FROM_DATE);
-        String to = request.getParameter(RequestParameter.TO_DATE);
+        String from = request.getParameter(RequestParameter.DATE_FROM);
+        String to = request.getParameter(RequestParameter.DATE_TO);
 
         String url = "/controller?" +
                 RequestParameter.COMMAND + "=" + CommandName.GOTO_REPORTS_PAGE_COMMAND +
-                "&" + RequestParameter.FROM_DATE + "=" + from +
-                "&" + RequestParameter.TO_DATE + "=" + to;
+                "&" + RequestParameter.DATE_FROM + "=" + from +
+                "&" + RequestParameter.DATE_TO + "=" + to;
         session.setAttribute(SessionAttribute.URL, url);
 
         try {

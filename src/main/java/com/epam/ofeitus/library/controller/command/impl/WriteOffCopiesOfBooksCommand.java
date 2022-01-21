@@ -25,8 +25,8 @@ public class WriteOffCopiesOfBooksCommand implements Command {
         BookService bookService = ServiceFactory.getInstance().getBookService();
 
         try {
-            int fromInventoryId = Integer.parseInt(request.getParameter(RequestParameter.FROM_INVENTORY_ID));
-            int toInventoryId = Integer.parseInt(request.getParameter(RequestParameter.TO_INVENTORY_ID));
+            int fromInventoryId = Integer.parseInt(request.getParameter(RequestParameter.INVENTORY_ID_FROM));
+            int toInventoryId = Integer.parseInt(request.getParameter(RequestParameter.INVENTORY_ID_TO));
 
             bookService.writeOffCopiesOfBooks(fromInventoryId, toInventoryId);
 

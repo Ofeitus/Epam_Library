@@ -23,12 +23,12 @@
                 <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.GET_PERIOD_REPORTS_COMMAND}">
                 <div class="form-group">
                     <label><fmt:message key="reports.from-date" />
-                        <input type="date" name="${RequestParameter.FROM_DATE}" value="" class="form-control" required />
+                        <input type="date" name="${RequestParameter.DATE_FROM}" value="" class="form-control" required />
                     </label>
                 </div>
                 <div class="form-group">
                     <label><fmt:message key="reports.to-date" />
-                        <input type="date" name="${RequestParameter.TO_DATE}" value="" class="form-control" required />
+                        <input type="date" name="${RequestParameter.DATE_TO}" value="" class="form-control" required />
                     </label>
                 </div>
                 <div class="w-100 row justify-content-end search-buttons">

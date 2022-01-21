@@ -25,8 +25,8 @@ public class EditPersonalDataCommand implements Command {
         HttpSession session = request.getSession();
         UserService userService = ServiceFactory.getInstance().getUserService();
 
-        String name = request.getParameter(RequestParameter.FIRST_NAME);
-        String surname = request.getParameter(RequestParameter.SECOND_NAME);
+        String name = request.getParameter(RequestParameter.USER_NAME);
+        String surname = request.getParameter(RequestParameter.USER_SURNAME);
         String phoneNumber = request.getParameter(RequestParameter.PHONE_NUMBER);
 
         int userId = (int) session.getAttribute(SessionAttribute.USER_ID);

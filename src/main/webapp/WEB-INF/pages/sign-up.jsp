@@ -19,25 +19,28 @@
                 <div class="form-container">
                     <h3 class="title"><fmt:message key="sign-up.sign-up" /></h3>
                     <form class="form-horizontal" action="controller" method="post">
-                        <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.SIGN_UP_COMMAND}">
+                        <--input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.SIGN_UP_COMMAND}">
                         <div class="form-group">
                             <label><fmt:message key="sign-up.name" />
-                                <input type="text" name="${RequestParameter.FIRST_NAME}" value="" class="form-control" placeholder="<fmt:message key="sign-up.name-placeholder" />" required>
+                                <input class="form-control" type="text" pattern="^([А-Я][а-яё]{1,29}|[A-Z][a-z]{1,29})$" title="<fmt:message key="sign-up.name-pattern" />"
+                                       name="${RequestParameter.USER_NAME}" value="" placeholder="<fmt:message key="sign-up.name-placeholder" />" required>
                             </label>
                         </div>
                         <div class="form-group">
                             <label><fmt:message key="sign-up.surname" />
-                                <input type="text" name="${RequestParameter.SECOND_NAME}" value="" class="form-control" placeholder="<fmt:message key="sign-up.surname-placeholder" />" required>
+                                <input class="form-control" type="text" pattern="^([А-Я][а-яё]{1,29}|[A-Z][a-z]{1,29})$" title="<fmt:message key="sign-up.name-pattern" />"
+                                       name="${RequestParameter.USER_SURNAME}" value="" placeholder="<fmt:message key="sign-up.surname-placeholder" />" required>
                             </label>
                         </div>
                         <div class="form-group">
                             <label><fmt:message key="sign-up.email" />
-                                <input type="email" name="${RequestParameter.EMAIL}" value="" class="form-control" placeholder="<fmt:message key="sign-up.email-placeholder" />" required>
+                                <input class="form-control" type="email" name="${RequestParameter.EMAIL}" value="" placeholder="<fmt:message key="sign-up.email-placeholder" />" required>
                             </label>
                         </div>
                         <div class="form-group">
                             <label><fmt:message key="sign-up.password" />
-                                <input type="password" name="${RequestParameter.PASSWORD}" value="" class="form-control" placeholder="<fmt:message key="sign-up.password-placeholder" />" required>
+                                <input class="form-control" type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,30}$" title="<fmt:message key="sign-up.password-pattern" />"
+                                       name="${RequestParameter.PASSWORD}" value="" placeholder="<fmt:message key="sign-up.password-placeholder" />" required>
                             </label>
                         </div>
                         <c:if test="${sessionScope.error != null}">
