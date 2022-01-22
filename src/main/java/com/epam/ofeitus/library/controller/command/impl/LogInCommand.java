@@ -34,7 +34,7 @@ public class LogInCommand implements Command {
             User user = userService.login(email, password);
             if (user != null) {
                 if (user.getUserRole() == UserRole.ADMIN) {
-                    logger.info("User " + user.getEmail() + " logged in as admin.");
+                    logger.info("User {} logged in as admin.", user.getEmail());
                 }
                 session.setAttribute(SessionAttribute.USER_ID, user.getUserId());
                 session.setAttribute(SessionAttribute.USER_NAME, user.getName());

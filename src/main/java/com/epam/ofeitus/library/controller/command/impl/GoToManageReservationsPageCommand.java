@@ -9,7 +9,6 @@ import com.epam.ofeitus.library.controller.constant.RequestAttribute;
 import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.entity.dto.ReservationDto;
-import com.epam.ofeitus.library.entity.user.constituent.UserRole;
 import com.epam.ofeitus.library.service.ReservationsService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 import com.epam.ofeitus.library.service.factory.ServiceFactory;

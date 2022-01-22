@@ -1,18 +1,19 @@
 package com.epam.ofeitus.library.dao.connectionpool;
 
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.Locale;
 import java.util.Map;
+import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
+
 public final class ConnectionPool {
-    Logger logger = LogManager.getLogger(ConnectionPool.class);
+    private static final Logger logger = LogManager.getLogger(ConnectionPool.class);
     private static final ConnectionPool instance = new ConnectionPool();
 
     private BlockingQueue<Connection> connectionQueue;
@@ -31,7 +32,7 @@ public final class ConnectionPool {
         this.password = dbResourceManager.getValue(DBParameter.DB_PASSWORD);
         try {
             this.poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POLL_SIZE));
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | MissingResourceException e) {
             logger.error("Unable to get pool size value", e);
             poolSize = 5;
         }

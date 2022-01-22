@@ -11,4 +11,7 @@ public class SessionAttribute {
     public static final String USER_PHONE_NUMBER = "user_phone_number";
     public static final String USER_ROLE = "user_role";
     public static final String USER_SURNAME = "user_surname";
+
+    private SessionAttribute() {
+    }
 }

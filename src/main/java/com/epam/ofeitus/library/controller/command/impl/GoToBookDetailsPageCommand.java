@@ -42,7 +42,6 @@ public class GoToBookDetailsPageCommand implements Command {
 
         String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
 
-
         session.setAttribute(SessionAttribute.URL, "/controller?" +
                 RequestParameter.COMMAND + "=" + CommandName.GOTO_BOOK_DETAILS_PAGE_COMMAND +
                 "&" + RequestParameter.BOOK_ISBN + "=" + bookIsbn);
@@ -65,12 +64,7 @@ public class GoToBookDetailsPageCommand implements Command {
                 issuedBooksCount = 0;
             }
 
-            int maxMemberBooks = 5;
-            try {
-                maxMemberBooks = Integer.parseInt(configResourceManager.getValue(ConfigParameter.MAX_MEMBER_BOOKS));
-            } catch (NumberFormatException | MissingResourceException e) {
-                logger.error("Unable to get max member books.", e);
-            }
+            int maxMemberBooks = configResourceManager.getMaxMemberBooks();
 
             BookDto book = bookService.getBookDtoByIsbn(bookIsbn);
 

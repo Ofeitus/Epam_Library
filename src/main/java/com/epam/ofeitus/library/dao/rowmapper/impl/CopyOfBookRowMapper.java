@@ -2,7 +2,6 @@ package com.epam.ofeitus.library.dao.rowmapper.impl;
 
 import com.epam.ofeitus.library.constant.Column;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapper;
-import com.epam.ofeitus.library.entity.book.Book;
 import com.epam.ofeitus.library.entity.book.CopyOfBook;
 import com.epam.ofeitus.library.entity.book.constituent.CopyOfBookStatus;
 

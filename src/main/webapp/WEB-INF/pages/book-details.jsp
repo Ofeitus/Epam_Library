@@ -173,7 +173,7 @@
                     </c:if>
                     <div class="form-group" style="width: 100%">
                         <label><fmt:message key="book-details.member-id" />
-                            <input type="number" name="${RequestParameter.USER_ID}" value="0" min="1" class="form-control" required placeholder="<fmt:message key="manage-users.id" />">
+                            <input type="number" name="${RequestParameter.USER_ID}" value="" min="1" class="form-control" required placeholder="<fmt:message key="manage-users.id" />">
                         </label>
                     </div>
                     <c:if test="${sessionScope.error != null}">

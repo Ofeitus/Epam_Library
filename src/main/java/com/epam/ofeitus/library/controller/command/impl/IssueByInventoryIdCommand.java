@@ -36,6 +36,7 @@ public class IssueByInventoryIdCommand implements Command {
         ReservationsService reservationsService = serviceFactory.getReservationsService();
 
         ConfigResourceManager configResourceManager = ConfigResourceManager.getInstance();
+
         try {
             int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
             int inventoryId = Integer.parseInt(request.getParameter(RequestParameter.INVENTORY_ID));
@@ -46,12 +47,7 @@ public class IssueByInventoryIdCommand implements Command {
                 return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
             }
 
-            int maxMemberBooks = 5;
-            try {
-                maxMemberBooks = Integer.parseInt(configResourceManager.getValue(ConfigParameter.MAX_MEMBER_BOOKS));
-            } catch (NumberFormatException | MissingResourceException e) {
-                logger.error("Unable to get max member books.", e);
-            }
+            int maxMemberBooks = configResourceManager.getMaxMemberBooks();
 
             int reservedBooksCount = reservationsService.getReservationsCountByUserIdAndStatusId(userId, ReservationStatus.RESERVED.ordinal() + 1) +
                 reservationsService.getReservationsCountByUserIdAndStatusId(userId, ReservationStatus.READY_TO_ISSUE.ordinal() + 1);
@@ -62,12 +58,7 @@ public class IssueByInventoryIdCommand implements Command {
                 return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
             }
 
-            int loanPeriod = 30;
-            try {
-                loanPeriod = Integer.parseInt(configResourceManager.getValue(ConfigParameter.LOAN_PERIOD));
-            } catch (NumberFormatException | MissingResourceException e) {
-                logger.error("Unable to get loan period.", e);
-            }
+            int loanPeriod = configResourceManager.getLoanPeriod();
             // Copy is not available
             if (!loansService.loanByInventoryId(userId, inventoryId, loanPeriod)) {
                 session.setAttribute(SessionAttribute.ERROR, "Copy is not available");

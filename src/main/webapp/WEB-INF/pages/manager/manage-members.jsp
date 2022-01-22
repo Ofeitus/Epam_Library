@@ -22,7 +22,7 @@
                 <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.SEARCH_MEMBERS_COMMAND}">
                 <div class="form-group">
                     <label><fmt:message key="manage-users.id" />
-                        <input type="number" name="${RequestParameter.USER_ID}" value="0" min="0" class="form-control" required placeholder="<fmt:message key="manage-users.id" />">
+                        <input type="number" name="${RequestParameter.USER_ID}" value="" min="1" class="form-control" placeholder="<fmt:message key="manage-users.id" />">
                     </label>
                 </div>
                 <div class="form-group">

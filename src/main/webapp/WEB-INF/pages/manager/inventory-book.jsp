@@ -32,7 +32,7 @@
                 </div>
                 <div class="form-group">
                     <label><fmt:message key="inventory-book.inventory-id" />
-                        <input type="number" name="${RequestParameter.INVENTORY_ID}" value="0" min="1" class="form-control" required placeholder="<fmt:message key="inventory-book.inventory-id-placeholder" />">
+                        <input type="number" name="${RequestParameter.INVENTORY_ID}" value="" min="1" class="form-control" placeholder="<fmt:message key="inventory-book.inventory-id-placeholder" />">
                     </label>
                 </div>
                 <div class="form-group">
@@ -92,12 +92,12 @@
                     <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.WRITE_OFF_COPIES_OF_BOOKS_COMMAND}">
                     <div class="form-group">
                         <label><fmt:message key="inventory-book.from-inv-id" />
-                            <input type="number" name="${RequestParameter.INVENTORY_ID_FROM}" value="0" min="1" class="form-control" required>
+                            <input type="number" name="${RequestParameter.INVENTORY_ID_FROM}" value="" min="1" class="form-control" placeholder="<fmt:message key="inventory-book.inventory-id-placeholder" />" required>
                         </label>
                     </div>
                     <div class="form-group">
                         <label><fmt:message key="inventory-book.to-inv-id" />
-                            <input type="number" name="${RequestParameter.INVENTORY_ID_TO}" value="0" min="1" class="form-control" required>
+                            <input type="number" name="${RequestParameter.INVENTORY_ID_TO}" value="" min="1" class="form-control" placeholder="<fmt:message key="inventory-book.inventory-id-placeholder" />" required>
                         </label>
                     </div>
                     <div class="w-100 row justify-content-end search-buttons">

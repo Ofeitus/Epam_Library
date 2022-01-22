@@ -4,7 +4,6 @@ import com.epam.ofeitus.library.dao.exception.DaoException;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 
 public interface QueryOperator<T> {

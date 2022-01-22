@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implements ReservationDao {
-    public final static String SAVE_RESERVATION_QUERY = String.format(
+    public static final String SAVE_RESERVATION_QUERY = String.format(
             "INSERT INTO %s (%s, %s, %s, %s, %s) " +
                     "SELECT 0, ?, ?, LAST_INSERT_ID(), ? FROM dual WHERE LAST_INSERT_ID() != 0",
             Table.RESERVATION_TABLE,
@@ -23,7 +23,7 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
             Column.RESERVATION_USER_ID,
             Column.RESERVATION_INVENTORY_ID,
             Column.RESERVATION_STATUS_ID);
-    public final static String UPDATE_RESERVATION_QUERY = String.format(
+    public static final String UPDATE_RESERVATION_QUERY = String.format(
             "UPDATE %s SET %s=?, %s=?, %s=?, %s=? WHERE %s=?",
             Table.RESERVATION_TABLE,
             Column.RESERVATION_DATE,
@@ -31,7 +31,7 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
             Column.RESERVATION_INVENTORY_ID,
             Column.RESERVATION_STATUS_ID,
             Column.RESERVATION_ID);
-    public final static String SET_STATUS_QUERY = String.format(
+    public static final String SET_STATUS_QUERY = String.format(
             "UPDATE %s SET %s=? WHERE %s=?",
             Table.RESERVATION_TABLE,
             Column.RESERVATION_STATUS_ID,

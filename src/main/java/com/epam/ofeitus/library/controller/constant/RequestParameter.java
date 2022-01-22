@@ -34,4 +34,7 @@ public class RequestParameter {
     public static final String USER_NAME = "user-name";
     public static final String USER_ROLE_ID = "user-role-id";
     public static final String USER_SURNAME = "user-surname";
+
+    private RequestParameter() {
+    }
 }

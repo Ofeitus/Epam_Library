@@ -43,11 +43,12 @@ public class SearchBooksCommand implements Command {
             int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
             int itemsOnPage = 8;
 
+            String encoding = "UTF-8";
             String command = "?" + RequestParameter.COMMAND + "=" + CommandName.SEARCH_BOOKS_COMMAND +
-                             "&" + RequestParameter.SEARCH_REQUEST + "=" + URLEncoder.encode(searchRequest, "UTF-8") +
-                             "&" + RequestParameter.CATEGORY + "=" + URLEncoder.encode(category, "UTF-8") +
-                             "&" + RequestParameter.AUTHOR_NAME + "=" + URLEncoder.encode(authorName, "UTF-8") +
-                             "&" + RequestParameter.AUTHOR_SURNAME + "=" + URLEncoder.encode(authorSurname, "UTF-8") +
+                             "&" + RequestParameter.SEARCH_REQUEST + "=" + URLEncoder.encode(searchRequest, encoding) +
+                             "&" + RequestParameter.CATEGORY + "=" + URLEncoder.encode(category, encoding) +
+                             "&" + RequestParameter.AUTHOR_NAME + "=" + URLEncoder.encode(authorName, encoding) +
+                             "&" + RequestParameter.AUTHOR_SURNAME + "=" + URLEncoder.encode(authorSurname, encoding) +
                              "&" + RequestParameter.PUBLICATION_YEAR_FROM + "=" + yearFrom +
                              "&" + RequestParameter.PUBLICATION_YEAR_TO + "=" + yearTo;
             session.setAttribute(SessionAttribute.URL, ("/controller" + command +

@@ -11,6 +11,9 @@ public class RowMapperFactory {
     public static final ReservationRowMapper reservationRowMapper = new ReservationRowMapper();
     public static final UserRowMapper userRowMapper = new UserRowMapper();
 
+    private RowMapperFactory() {
+    }
+
     public static AuthorRowMapper getAuthorRowMapper() {
         return authorRowMapper;
     }

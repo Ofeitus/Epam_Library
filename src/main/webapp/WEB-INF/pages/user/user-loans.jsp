@@ -23,7 +23,7 @@
                 <input type="hidden" name="${RequestParameter.USER_ID}" value="${requestScope.user_id}">
                 <div class="form-group" style="width: 100%">
                     <label><fmt:message key="inventory-book.inventory-id" />
-                        <input type="number" name="${RequestParameter.INVENTORY_ID}" value="0" min="1" class="form-control" required placeholder="<fmt:message key="inventory-book.inventory-id-placeholder" />">
+                        <input type="number" name="${RequestParameter.INVENTORY_ID}" value="" min="1" class="form-control" required placeholder="<fmt:message key="inventory-book.inventory-id-placeholder" />">
                     </label>
                 </div>
                 <c:if test="${sessionScope.error != null}">

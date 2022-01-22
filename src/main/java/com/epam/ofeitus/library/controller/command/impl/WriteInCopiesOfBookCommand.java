@@ -7,7 +7,6 @@ import com.epam.ofeitus.library.controller.constant.Page;
 import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.entity.dto.BookDto;
-import com.epam.ofeitus.library.entity.user.constituent.UserRole;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 import com.epam.ofeitus.library.service.factory.ServiceFactory;
@@ -17,7 +16,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.awt.print.Book;
 import java.math.BigDecimal;
 
 public class WriteInCopiesOfBookCommand implements Command {

@@ -10,13 +10,13 @@ import com.epam.ofeitus.library.entity.book.Author;
 import java.util.List;
 
 public class MySqlAuthorDao extends AbstractMySqlDao<Author> implements AuthorDao {
-    public final static String SAVE_AUTHOR_QUERY = String.format(
+    public static final String SAVE_AUTHOR_QUERY = String.format(
             "INSERT INTO %s (%s, %s, %s) VALUES (0, ?, ?)",
             Table.AUTHOR_TABLE,
             Column.AUTHOR_ID,
             Column.AUTHOR_NAME,
             Column.AUTHOR_SURNAME);
-    public final static String UPDATE_AUTHOR_QUERY = String.format(
+    public static final String UPDATE_AUTHOR_QUERY = String.format(
             "UPDATE %s SET %s=?, %s=? WHERE %s=?",
             Table.AUTHOR_TABLE,
             Column.AUTHOR_NAME,

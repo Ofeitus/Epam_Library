@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements CopyOfBookDao {
-    public final static String SAVE_COPY_OF_BOOK_QUERY = String.format(
+    public static final String SAVE_COPY_OF_BOOK_QUERY = String.format(
             "INSERT INTO %s (%s, %s, %s, %s, %s) VALUES (0, ?, ?, ?, ?)",
             Table.COPY_OF_BOOK_TABLE,
             Column.COPY_OF_BOOK_INVENTORY_ID,
@@ -22,14 +22,14 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
             Column.COPY_OF_BOOK_PRICE,
             Column.BOOK_ISBN,
             Column.COPY_OF_BOOK_STATUS_ID);
-    public final static String UPDATE_COPY_OF_BOOK_QUERY = String.format(
+    public static final String UPDATE_COPY_OF_BOOK_QUERY = String.format(
             "UPDATE %s SET %s=?, %s=?, %s=? WHERE %s=?",
             Table.COPY_OF_BOOK_TABLE,
             Column.COPY_OF_BOOK_RECEIPT_DATE,
             Column.BOOK_ISBN,
             Column.COPY_OF_BOOK_STATUS_ID,
             Column.COPY_OF_BOOK_INVENTORY_ID);
-    private static final String FIND_ALL_QUERY = String.format(
+    private static final String FIND_ALL_EXISTING_QUERY = String.format(
             "SELECT * FROM %s WHERE %s!='5' ORDER BY %s LIMIT ?, ?",
             Table.COPY_OF_BOOK_TABLE,
             Column.COPY_OF_BOOK_STATUS_ID,
@@ -122,7 +122,7 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
 
     @Override
     public List<CopyOfBook> findAllExisting(int offset, int itemsOnPage) throws DaoException {
-        return queryOperator.executeQuery(FIND_ALL_QUERY, offset, itemsOnPage);
+        return queryOperator.executeQuery(FIND_ALL_EXISTING_QUERY, offset, itemsOnPage);
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
-    public final static String SAVE_USER_QUERY = String.format(
+    public static final String SAVE_USER_QUERY = String.format(
             "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s, %s) VALUES (0, ?, ?, ?, ?, ?, ?, 0)",
             Table.USER_TABLE,
             Column.USER_ID,
@@ -23,7 +23,7 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
             Column.USER_PASSWORD_HASH,
             Column.USER_ROLE_ID,
             Column.USER_DELETED);
-    public final static String UPDATE_USER_QUERY = String.format(
+    public static final String UPDATE_USER_QUERY = String.format(
             "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?",
             Table.USER_TABLE,
             Column.USER_NAME,
@@ -52,7 +52,7 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
             Table.USER_TABLE,
             Column.USER_DELETED,
             Column.USER_ROLE_ID);
-    private static final String FIND_ALL_QUERY = String.format(
+    private static final String FIND_ALL_USERS_QUERY = String.format(
             "SELECT * FROM %s JOIN %s UserRole ON %s.%s = UserRole.%s LIMIT ?, ?",
             Table.USER_TABLE,
             Table.USER_ROLE_TABLE,
@@ -79,7 +79,7 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
 
     @Override
     public List<User> findAll(int offset, int itemsOnPage) throws DaoException {
-        return queryOperator.executeQuery(FIND_ALL_QUERY, offset, itemsOnPage);
+        return queryOperator.executeQuery(FIND_ALL_USERS_QUERY, offset, itemsOnPage);
     }
 
     @Override

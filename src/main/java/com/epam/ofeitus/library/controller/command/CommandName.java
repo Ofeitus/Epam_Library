@@ -49,4 +49,7 @@ public class CommandName {
     public static final String WRITE_IN_COPIES_OF_BOOK_COMMAND = "write-in-copies-of-book";
     public static final String WRITE_IN_COPIES_OF_NEW_BOOK_COMMAND = "write-in-copies-of-new-book";
     public static final String WRITE_OFF_COPIES_OF_BOOKS_COMMAND = "write-off-copies-of-books";
+
+    private CommandName() {
+    }
 }

@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.MissingResourceException;
-import java.util.Optional;
 
 public class ReturnLoanedBookCommand implements Command {
     private final Logger logger = LogManager.getLogger(ReturnLoanedBookCommand.class);
@@ -34,12 +33,7 @@ public class ReturnLoanedBookCommand implements Command {
         try {
             int loanId = Integer.parseInt(request.getParameter(RequestParameter.LOAN_ID));
 
-            BigDecimal fineRate = new BigDecimal("0.5");
-            try {
-                fineRate = new BigDecimal(configResourceManager.getValue(ConfigParameter.FINE_RATE));
-            } catch (NumberFormatException | MissingResourceException e) {
-                logger.error("Unable to get fine rate.", e);
-            }
+            BigDecimal fineRate = configResourceManager.getFineRate();
 
             loansService.returnBook(loanId, fineRate);
 

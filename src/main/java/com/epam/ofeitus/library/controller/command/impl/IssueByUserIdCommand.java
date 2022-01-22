@@ -52,12 +52,7 @@ public class IssueByUserIdCommand implements Command {
                 return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
             }
 
-            int maxMemberBooks = 5;
-            try {
-                maxMemberBooks = Integer.parseInt(configResourceManager.getValue(ConfigParameter.MAX_MEMBER_BOOKS));
-            } catch (NumberFormatException | MissingResourceException e) {
-                logger.error("Unable to get max member books.", e);
-            }
+            int maxMemberBooks = configResourceManager.getMaxMemberBooks();
 
             int reservedBooksCount = reservationsService.getReservationsCountByUserIdAndStatusId(userId, ReservationStatus.RESERVED.ordinal() + 1) +
                     reservationsService.getReservationsCountByUserIdAndStatusId(userId, ReservationStatus.READY_TO_ISSUE.ordinal() + 1);
@@ -68,12 +63,7 @@ public class IssueByUserIdCommand implements Command {
                 return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
             }
 
-            int loanPeriod = 30;
-            try {
-                loanPeriod = Integer.parseInt(configResourceManager.getValue(ConfigParameter.LOAN_PERIOD));
-            } catch (NumberFormatException | MissingResourceException e) {
-                logger.error("Unable to get loan period.", e);
-            }
+            int loanPeriod = configResourceManager.getLoanPeriod();
             // No available copies case
             if (!loansService.loanBook(userId, bookIsbn, loanPeriod)) {
                 session.setAttribute(SessionAttribute.ERROR, "No copies available");

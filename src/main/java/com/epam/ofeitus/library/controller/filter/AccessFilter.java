@@ -18,8 +18,13 @@ import java.util.List;
 import java.util.Map;
 
 public class AccessFilter implements Filter {
-    private final Map<UserRole, List<String>> commandsAvailableToRoles = new EnumMap<>(UserRole.class) {{
-        put(UserRole.ADMIN, Arrays.asList(
+    private final Map<UserRole, List<String>> commandsAvailableToRoles = new EnumMap<>(UserRole.class);
+
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        Filter.super.init(filterConfig);
+
+        commandsAvailableToRoles.put(UserRole.ADMIN, Arrays.asList(
                 CommandName.CANCEL_RESERVATION_COMMAND,
                 CommandName.CONFIRM_RESERVATION_COMMAND,
                 CommandName.DELETE_BOOK_COMMAND,
@@ -69,7 +74,7 @@ public class AccessFilter implements Filter {
                 CommandName.WRITE_IN_COPIES_OF_NEW_BOOK_COMMAND,
                 CommandName.WRITE_OFF_COPIES_OF_BOOKS_COMMAND
         ));
-        put(UserRole.MANAGER, Arrays.asList(
+        commandsAvailableToRoles.put(UserRole.MANAGER, Arrays.asList(
                 CommandName.CANCEL_RESERVATION_COMMAND,
                 CommandName.CONFIRM_RESERVATION_COMMAND,
                 CommandName.DELETE_BOOK_COMMAND,
@@ -112,7 +117,7 @@ public class AccessFilter implements Filter {
                 CommandName.WRITE_IN_COPIES_OF_NEW_BOOK_COMMAND,
                 CommandName.WRITE_OFF_COPIES_OF_BOOKS_COMMAND
         ));
-        put(UserRole.MEMBER, Arrays.asList(
+        commandsAvailableToRoles.put(UserRole.MEMBER, Arrays.asList(
                 CommandName.CANCEL_RESERVATION_COMMAND,
                 CommandName.EDIT_PERSONAL_DATA_COMMAND,
                 CommandName.GOTO_403_PAGE_COMMAND,
@@ -136,7 +141,7 @@ public class AccessFilter implements Filter {
                 CommandName.SET_LOCALE_COMMAND,
                 CommandName.SIGN_UP_COMMAND
         ));
-        put(UserRole.GUEST, Arrays.asList(
+        commandsAvailableToRoles.put(UserRole.GUEST, Arrays.asList(
                 CommandName.GOTO_403_PAGE_COMMAND,
                 CommandName.GOTO_404_PAGE_COMMAND,
                 CommandName.GOTO_500_PAGE_COMMAND,
@@ -151,11 +156,6 @@ public class AccessFilter implements Filter {
                 CommandName.SET_LOCALE_COMMAND,
                 CommandName.SIGN_UP_COMMAND
         ));
-    }};
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        Filter.super.init(filterConfig);
     }
 
     @Override

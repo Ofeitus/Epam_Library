@@ -8,12 +8,12 @@ import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
 import com.epam.ofeitus.library.entity.book.constituent.BookCategory;
 
 public class MySqlBookCategoryDao extends AbstractMySqlDao<BookCategory> implements BookCategoryDao {
-    public final static String SAVE_CATEGORY_QUERY = String.format(
+    public static final String SAVE_CATEGORY_QUERY = String.format(
             "INSERT INTO %s (%s, %s) VALUES (0, ?)",
             Table.BOOK_CATEGORY_TABLE,
             Column.CATEGORY_ID,
             Column.CATEGORY_NAME);
-    public final static String UPDATE_CATEGORY_QUERY = String.format(
+    public static final String UPDATE_CATEGORY_QUERY = String.format(
             "UPDATE %s SET %s=? WHERE %s=?",
             Table.BOOK_CATEGORY_TABLE,
             Column.CATEGORY_NAME,

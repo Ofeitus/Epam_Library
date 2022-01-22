@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
-    public final static String SAVE_LOAN_QUERY = String.format(
+    public static final String SAVE_LOAN_QUERY = String.format(
             "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s, %s) VALUES (0, ?, ?, ?, ?, ?, ?, ?)",
             Table.LOAN_TABLE,
             Column.LOAN_ID,
@@ -41,7 +41,7 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Column.LOAN_USER_ID,
             Column.LOAN_INVENTORY_ID,
             Column.LOAN_STATUS_ID);
-    public final static String UPDATE_LOAN_QUERY = String.format(
+    public static final String UPDATE_LOAN_QUERY = String.format(
             "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?",
             Table.LOAN_TABLE,
             Column.LOAN_ISSUE_DATE,

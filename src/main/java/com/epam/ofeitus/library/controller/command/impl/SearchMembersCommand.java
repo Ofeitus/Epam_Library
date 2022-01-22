@@ -33,7 +33,7 @@ public class SearchMembersCommand implements Command {
         String email = request.getParameter(RequestParameter.EMAIL);
 
         try {
-            int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
+            int userId = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.USER_ID)).orElse("0"));
             int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
             int itemsOnPage = 10;
 

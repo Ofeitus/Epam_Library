@@ -43,7 +43,7 @@ public class SignUpCommand implements Command {
             session.setAttribute(SessionAttribute.URL, "/controller?" +
                     RequestParameter.COMMAND + "=" + CommandName.GOTO_LOG_IN_PAGE_COMMAND);
 
-            logger.info("User" + email + "is registered.");
+            logger.info("User {} is registered.", email);
             return new CommandResult(Page.LOG_IN_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Unable to register new user.", e);

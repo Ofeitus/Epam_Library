@@ -241,7 +241,7 @@ public class BookServiceImpl implements BookService {
                                 copyOfBook.getCopyOfBookStatus(),
                                 bookDto,
                                 userId,
-                        reservations.size() == 0 && loans.size() == 0
+                        reservations.isEmpty() && loans.isEmpty()
                         )
                 );
             }
@@ -295,7 +295,7 @@ public class BookServiceImpl implements BookService {
                         copyOfBook.getCopyOfBookStatus(),
                         bookDto,
                         userId,
-                        reservations.size() == 0 && loans.size() == 0)
+                        reservations.isEmpty() && loans.isEmpty())
                 );
             }
             return copiesOfBooksDto;
@@ -452,8 +452,7 @@ public class BookServiceImpl implements BookService {
 
             Date oldDate = fromDate;
 
-            for (Date date; start.before(end); start.add(Calendar.MONTH, 1)) {
-                date = start.getTime();
+            for (Date date = start.getTime(); start.before(end); start.add(Calendar.MONTH, 1), date = start.getTime()) {
                 dynamicsDates.add(date);
                 dynamicsValues.add(reservationDao.countByStatusId(3, date) - reservationDao.countByStatusId(3, oldDate));
                 dynamicsValues.add(loanDao.countAll(date) - loanDao.countAll(oldDate) - dynamicsValues.get(dynamicsValues.size() - 1));

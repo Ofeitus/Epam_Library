@@ -69,7 +69,7 @@ public class MySqlQueryOperator<T> implements QueryOperator<T> {
     @Override
     public T executeSingleEntityQuery(String query, Object... params) throws DaoException {
         List<T> result = executeQuery(query, params);
-        if (result.size() > 0) {
+        if (!result.isEmpty()) {
             return result.get(0);
         } else {
             return null;

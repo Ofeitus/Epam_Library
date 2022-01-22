@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.MissingResourceException;
-import java.util.Optional;
 
 public class IssueReservedBookCommand implements Command {
     private final Logger logger = LogManager.getLogger(IssueReservedBookCommand.class);
@@ -33,12 +32,7 @@ public class IssueReservedBookCommand implements Command {
         try {
             int reservationId = Integer.parseInt(request.getParameter(RequestParameter.RESERVATION_ID));
 
-            int loanPeriod = 30;
-            try {
-                loanPeriod = Integer.parseInt(configResourceManager.getValue(ConfigParameter.LOAN_PERIOD));
-            } catch (NumberFormatException | MissingResourceException e) {
-                logger.error("Unable to get loan period.", e);
-            }
+            int loanPeriod = configResourceManager.getLoanPeriod();
 
             loansService.loanFromReservation(reservationId, loanPeriod);
 

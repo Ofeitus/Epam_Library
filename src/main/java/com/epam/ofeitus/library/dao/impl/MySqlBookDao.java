@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlBookDao extends AbstractMySqlDao<Book> implements BookDao {
-    public final static String SAVE_BOOK_QUERY = String.format(
+    public static final String SAVE_BOOK_QUERY = String.format(
             "INSERT INTO %s (%s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?)",
             Table.BOOK_TABLE,
             Column.BOOK_ISBN,
@@ -22,7 +22,7 @@ public class MySqlBookDao extends AbstractMySqlDao<Book> implements BookDao {
             Column.BOOK_CATEGORY_ID,
             Column.BOOK_LANGUAGE,
             Column.BOOK_KEY_WORDS);
-    public final static String ADD_AUTHOR_TO_BOOK_QUERY = String.format(
+    public static final String ADD_AUTHOR_TO_BOOK_QUERY = String.format(
             "INSERT INTO %s (%s, %s) VALUES (?, ?)",
             Table.BOOK_HAS_AUTHOR_TABLE,
             Column.BOOK_ISBN,
@@ -31,7 +31,7 @@ public class MySqlBookDao extends AbstractMySqlDao<Book> implements BookDao {
             "DELETE FROM %s WHERE %s=?",
             Table.BOOK_HAS_AUTHOR_TABLE,
             Column.BOOK_ISBN);
-    public final static String UPDATE_BOOK_QUERY = String.format(
+    public static final String UPDATE_BOOK_QUERY = String.format(
             "UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=?",
             Table.BOOK_TABLE,
             Column.BOOK_TITLE,

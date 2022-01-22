@@ -25,4 +25,7 @@ public class RequestAttribute {
     public static final String USERS = "users";
     public static final String USER_COMPOSITION_REPORT = "user_composition_report";
     public static final String USER_ID = "user_id";
+
+    private RequestAttribute() {
+    }
 }
