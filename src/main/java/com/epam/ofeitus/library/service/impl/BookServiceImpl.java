@@ -26,7 +26,6 @@ import java.math.BigDecimal;
 import java.util.*;
 
 public class BookServiceImpl implements BookService {
-
     @Override
     public boolean saveBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<String> authorNames, List<String> authorSurnames) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();

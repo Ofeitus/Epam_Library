@@ -7,6 +7,16 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface LoansService {
+    boolean loanByUserId(int userId, String bookIsbn, int loanPeriod) throws ServiceException;
+
+    boolean loanByInventoryId(int userId, int inventoryId, int loanPeriod) throws ServiceException;
+
+    void loanFromReservation(int reservationId, int loanPeriod) throws ServiceException;
+
+    void returnBook(int loanId, BigDecimal fineRate) throws ServiceException;
+
+    void payFine(int loanId) throws ServiceException;
+
     List<LoanDto> getLoansDtoByUserId(int userId, int page, int itemsOnPage) throws ServiceException;
 
     int countLoansDtoByUserId(int userId) throws ServiceException;
@@ -18,14 +28,4 @@ public interface LoansService {
     int getDebtsCountByUserId(int userId) throws ServiceException;
 
     int getLoansCountByUserIdAndStatusId(int userId, int statusId) throws ServiceException;
-
-    boolean loanBook(int userId, String bookIsbn, int loanPeriod) throws ServiceException;
-
-    boolean loanByInventoryId(int userId, int inventoryId, int loanPeriod) throws ServiceException;
-
-    boolean loanFromReservation(int reservationId, int loanPeriod) throws ServiceException;
-
-    void returnBook(int loanId, BigDecimal fineRate) throws ServiceException;
-
-    void payFine(int loanId) throws ServiceException;
 }

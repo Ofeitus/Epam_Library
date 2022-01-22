@@ -1,6 +1,5 @@
 package com.epam.ofeitus.library.controller.command.impl;
 
-import com.epam.ofeitus.library.constant.ConfigParameter;
 import com.epam.ofeitus.library.constant.ConfigResourceManager;
 import com.epam.ofeitus.library.controller.command.Command;
 import com.epam.ofeitus.library.controller.command.CommandName;
@@ -24,7 +23,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.MissingResourceException;
 
 public class IssueByUserIdCommand implements Command {
     private final Logger logger = LogManager.getLogger(IssueByUserIdCommand.class);
@@ -65,7 +63,7 @@ public class IssueByUserIdCommand implements Command {
 
             int loanPeriod = configResourceManager.getLoanPeriod();
             // No available copies case
-            if (!loansService.loanBook(userId, bookIsbn, loanPeriod)) {
+            if (!loansService.loanByUserId(userId, bookIsbn, loanPeriod)) {
                 session.setAttribute(SessionAttribute.ERROR, "No copies available");
                 return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
             }

@@ -20,6 +20,72 @@ import java.util.List;
 
 public class LoanServiceImpl implements LoansService {
     @Override
+    public boolean loanByUserId(int userId, String bookIsbn, int loanPeriod) throws ServiceException {
+        LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
+
+        try {
+            return loanDao.loan(userId, bookIsbn, loanPeriod) != -1;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean loanByInventoryId(int userId, int inventoryId, int loanPeriod) throws ServiceException {
+        LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
+
+        try {
+            return loanDao.loanByInventoryId(userId, inventoryId, loanPeriod) != -1;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void loanFromReservation(int reservationId, int loanPeriod) throws ServiceException {
+        ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
+        LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
+
+        try {
+            Reservation reservation = reservationDao.findById(reservationId);
+
+            loanDao.loanFromReservation(reservation, loanPeriod);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void returnBook(int loanId, BigDecimal fineRate) throws ServiceException {
+        LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
+
+        try {
+            Loan loan = loanDao.findById(loanId);
+
+            if (loan.getDueDate().before(new Date())) {
+                loanDao.returnWithFine(loan, fineRate);
+            } else {
+                loanDao.returnNoFine(loan);
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void payFine(int loanId) throws ServiceException {
+        LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
+        try {
+            Loan loan = loanDao.findById(loanId);
+            loan.setLoanStatus(LoanStatus.PAID);
+
+            loanDao.update(loan);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public List<LoanDto> getLoansDtoByUserId(int userId, int page, int itemsOnPage) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         LoanDao loanDao = daoFactory.getLoanDao();
@@ -101,6 +167,7 @@ public class LoanServiceImpl implements LoansService {
     @Override
     public int countLoansDtoByUserIdWithFine(int userId) throws ServiceException {
         LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
+
         try {
             return loanDao.countByUserIdWithFine(userId);
         } catch (DaoException e) {
@@ -111,6 +178,7 @@ public class LoanServiceImpl implements LoansService {
     @Override
     public int getDebtsCountByUserId(int userId) throws ServiceException {
         LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
+
         try {
             return loanDao.findDebtsByUserId(userId).size();
         } catch (DaoException e) {
@@ -121,69 +189,9 @@ public class LoanServiceImpl implements LoansService {
     @Override
     public int getLoansCountByUserIdAndStatusId(int userId, int statusId) throws ServiceException {
         LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
+
         try {
             return loanDao.findByUserIdAndStatusId(userId, statusId).size();
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public boolean loanBook(int userId, String bookIsbn, int loanPeriod) throws ServiceException {
-        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
-        LoanDao loanDao = daoFactory.getLoanDao();
-        try {
-            return loanDao.loan(userId, bookIsbn, loanPeriod) != -1;
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public boolean loanByInventoryId(int userId, int inventoryId, int loanPeriod) throws ServiceException {
-        LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
-        try {
-            return loanDao.loanByInventoryId(userId, inventoryId, loanPeriod) != -1;
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public boolean loanFromReservation(int reservationId, int loanPeriod) throws ServiceException {
-        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
-        ReservationDao reservationDao = daoFactory.getReservationDao();
-        LoanDao loanDao = daoFactory.getLoanDao();
-        try {
-            Reservation reservation = reservationDao.findById(reservationId);
-            return loanDao.loanFromReservation(reservation, loanPeriod) == 1;
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void returnBook(int loanId, BigDecimal fineRate) throws ServiceException {
-        LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
-        try {
-            Loan loan = loanDao.findById(loanId);
-            if (loan.getDueDate().before(new Date())) {
-                loanDao.returnWithFine(loan, fineRate);
-            } else {
-                loanDao.returnNoFine(loan);
-            }
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void payFine(int loanId) throws ServiceException {
-        LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
-        try {
-            Loan loan = loanDao.findById(loanId);
-            loan.setLoanStatus(LoanStatus.PAID);
-            loanDao.update(loan);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

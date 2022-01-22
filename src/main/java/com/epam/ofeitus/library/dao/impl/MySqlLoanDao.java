@@ -238,11 +238,11 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
     public int loanFromReservation(Reservation reservation, int loanPeriod) throws DaoException {
         List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
         parametrizedQueries.add(new ParametrizedQuery(
-                MAKE_RESERVATION_ISSUED_QUERY,
-                reservation.getReservationId()));
-        parametrizedQueries.add(new ParametrizedQuery(
                 MAKE_RESERVED_COPY_OF_BOOK_LOANED_BY_ID_QUERY,
                 reservation.getInventoryId()));
+        parametrizedQueries.add(new ParametrizedQuery(
+                MAKE_RESERVATION_ISSUED_QUERY,
+                reservation.getReservationId()));
         parametrizedQueries.add(new ParametrizedQuery(
                 SAVE_LOAN_QUERY,
                 new Date(),
