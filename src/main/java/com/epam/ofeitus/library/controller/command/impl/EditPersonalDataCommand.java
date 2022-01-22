@@ -29,20 +29,24 @@ public class EditPersonalDataCommand implements Command {
         String surname = request.getParameter(RequestParameter.USER_SURNAME);
         String phoneNumber = request.getParameter(RequestParameter.PHONE_NUMBER);
 
-        int userId = (int) session.getAttribute(SessionAttribute.USER_ID);
-
-        session.setAttribute(SessionAttribute.USER_NAME, name);
-        session.setAttribute(SessionAttribute.USER_SURNAME, surname);
-        session.setAttribute(SessionAttribute.USER_PHONE_NUMBER, phoneNumber);
-        String url = "/controller?" +
-                RequestParameter.COMMAND + "=" + CommandName.GOTO_PROFILE_PAGE_COMMAND;
-        session.setAttribute(SessionAttribute.URL, url);
-
         try {
-            userService.editPersonalData(userId, name, surname, phoneNumber);
+            int userId = (int) session.getAttribute(SessionAttribute.USER_ID);
+
+            if (!userService.editPersonalData(userId, name, surname, phoneNumber)) {
+                session.setAttribute(SessionAttribute.ERROR, "Invalid data");
+                return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
+            }
+
+            session.setAttribute(SessionAttribute.USER_NAME, name);
+            session.setAttribute(SessionAttribute.USER_SURNAME, surname);
+            session.setAttribute(SessionAttribute.USER_PHONE_NUMBER, phoneNumber);
+
+            String url = "/controller?" +
+                    RequestParameter.COMMAND + "=" + CommandName.GOTO_PROFILE_PAGE_COMMAND;
+            session.setAttribute(SessionAttribute.URL, url);
 
             return new CommandResult(url, RoutingType.REDIRECT);
-        } catch (ServiceException e) {
+        } catch (ServiceException | ClassCastException e) {
             logger.error("Unable to edit personal data.", e);
         }
         return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);

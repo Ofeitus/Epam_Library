@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserService {
     User login(String email, String password) throws ServiceException;
 
-    void register(String firstName, String lastName, String email, String password) throws ServiceException;
+    boolean register(String firstName, String lastName, String email, String password) throws ServiceException;
 
     List<User> getAll(int page, int itemsOnPage) throws ServiceException;
 
@@ -18,7 +18,7 @@ public interface UserService {
 
     User getByEmail(String email) throws ServiceException;
 
-    int editPersonalData(int id, String name, String surname, String phoneNumber) throws ServiceException;
+    boolean editPersonalData(int userId, String name, String surname, String phoneNumber) throws ServiceException;
 
     List<User> getAllMembers(int page, int itemsOnPage) throws ServiceException;
 

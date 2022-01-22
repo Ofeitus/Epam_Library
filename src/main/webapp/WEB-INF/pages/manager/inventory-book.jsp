@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="com.epam.ofeitus.library.controller.constant.RequestParameter" %>
 <%@ page import="com.epam.ofeitus.library.controller.command.CommandName" %>
+<%@ page import="com.epam.ofeitus.library.service.validator.ValidationPattern" %>
 
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
 <fmt:setBundle basename="locale"/>
@@ -37,7 +38,7 @@
                 </div>
                 <div class="form-group">
                     <label><fmt:message key="inventory-book.book-isbn" />
-                        <input type="text" class="form-control" pattern="^([\d]{10}|[\d]{13})$" title="<fmt:message key="validation-pattern.isbn" />"
+                        <input type="text" class="form-control" pattern="${ValidationPattern.ISBN_PATTERN}" title="<fmt:message key="validation-pattern.isbn" />"
                                name="${RequestParameter.BOOK_ISBN}" value="" placeholder="<fmt:message key="inventory-book.book-isbn-placeholder" />">
                     </label>
                 </div>

@@ -9,9 +9,14 @@ import com.epam.ofeitus.library.entity.user.constituent.UserRole;
 import com.epam.ofeitus.library.service.UserService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 
+import com.epam.ofeitus.library.service.validator.EntityValidator;
+import com.epam.ofeitus.library.service.validator.ValidationPattern;
+import com.epam.ofeitus.library.service.validator.ValidatorFactory;
+import com.epam.ofeitus.library.service.validator.impl.UserValidator;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class UserServiceImpl implements UserService {
     @Override
@@ -32,12 +37,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(String firstName, String lastName, String email, String password) throws ServiceException {
-        // TODO Validation
-        User user = new User(0, new Date(), firstName, lastName, "", email, DigestUtils.sha256Hex(password), UserRole.MEMBER, false);
+    public boolean register(String firstName, String lastName, String email, String password) throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+        EntityValidator<User> userValidator = ValidatorFactory.getInstance().getUserValidator();
+
+        User user = new User(0, new Date(), firstName, lastName, "", email, DigestUtils.sha256Hex(password), UserRole.MEMBER, false);
+
+        if (password == null ||
+                !Pattern.compile(ValidationPattern.PASSWORD_PATTERN).matcher(password).matches() ||
+                !userValidator.validate(user)) {
+            return false;
+        }
+
         try {
-            userDao.save(user);
+            return userDao.save(user) == 1;
         } catch (DaoException e) {
             throw new ServiceException("Unable to save new user to Data Source.", e);
         }
@@ -76,14 +89,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int editPersonalData(int id, String name, String surname, String phoneNumber) throws ServiceException {
+    public boolean editPersonalData(int userId, String name, String surname, String phoneNumber) throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+        EntityValidator<User> userValidator = ValidatorFactory.getInstance().getUserValidator();
+
         try {
-            User user = userDao.findById(id);
+            User user = userDao.findById(userId);
             user.setName(name);
             user.setSurname(surname);
             user.setPhoneNumber(phoneNumber);
-            return userDao.update(user);
+
+            if (!userValidator.validate(user)) {
+                return false;
+            }
+
+            return userDao.update(user) == 1;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

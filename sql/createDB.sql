@@ -30,8 +30,8 @@ ENGINE = InnoDB;
 -- Table `Library`.`books`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Library`.`books` (
-  `book_isbn` VARCHAR(45) NOT NULL,
-  `title` VARCHAR(45) NULL,
+  `book_isbn` VARCHAR(13) NOT NULL,
+  `title` VARCHAR(100) NULL,
   `publication_year` INT NULL,
   `category_id` INT NOT NULL,
   `language` VARCHAR(45) NULL,
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `Library`.`copies_of_books` (
   `inventory_id` INT NOT NULL AUTO_INCREMENT,
   `receipt_date` DATE NULL,
   `price` DECIMAL(10,2) NULL,
-  `book_isbn` VARCHAR(45) NOT NULL,
+  `book_isbn` VARCHAR(13) NOT NULL,
   `copy_of_book_status_id` INT NOT NULL,
   PRIMARY KEY (`inventory_id`),
   INDEX `fk_book_item_book1_idx` (`book_isbn` ASC) VISIBLE,
@@ -214,7 +214,7 @@ ENGINE = InnoDB;
 -- Table `Library`.`book_has_author`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Library`.`book_has_author` (
-  `book_isbn` VARCHAR(45) NOT NULL,
+  `book_isbn` VARCHAR(13) NOT NULL,
   `author_id` INT NOT NULL,
   PRIMARY KEY (`book_isbn`, `author_id`),
   INDEX `fk_books_has_authors_authors1_idx` (`author_id` ASC) VISIBLE,

@@ -37,12 +37,15 @@ public class EditBookDataCommand implements Command {
             List<String> authorNames = Arrays.asList(request.getParameterValues(RequestParameter.AUTHOR_NAME).clone());
             List<String> authorSurnames = Arrays.asList(request.getParameterValues(RequestParameter.AUTHOR_SURNAME).clone());
 
+            if (!bookService.updateBook(bookIsbn, title, category, publicationYear, language, keyWords, authorNames, authorSurnames)) {
+                session.setAttribute(SessionAttribute.ERROR, "Invalid data");
+                return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
+            }
+
             String url = "/controller?" +
                     RequestParameter.COMMAND + "=" + CommandName.GOTO_BOOK_DETAILS_PAGE_COMMAND +
                     "&" + RequestParameter.BOOK_ISBN + "=" + bookIsbn;
             session.setAttribute(SessionAttribute.URL, url);
-
-            bookService.updateBook(bookIsbn, title, category, publicationYear, language, keyWords, authorNames, authorSurnames);
 
             return new CommandResult(url, RoutingType.REDIRECT);
         } catch (ServiceException | NumberFormatException e) {

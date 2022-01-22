@@ -36,18 +36,22 @@ public class WriteInCopiesOfNewBookCommand implements Command {
         List<String> authorNames = Arrays.asList(request.getParameterValues(RequestParameter.AUTHOR_NAME).clone());
         List<String> authorSurnames = Arrays.asList(request.getParameterValues(RequestParameter.AUTHOR_SURNAME).clone());
 
-        String url = "/controller?" +
-                RequestParameter.COMMAND + "=" + CommandName.GOTO_INVENTORY_BOOK_PAGE_COMMAND;
-        session.setAttribute(SessionAttribute.URL, url);
 
         try {
             int publicationYear = Integer.parseInt(request.getParameter(RequestParameter.PUBLICATION_YEAR));
             int copiesCount = Integer.parseInt(request.getParameter(RequestParameter.COPIES_COUNT));
             BigDecimal price = new BigDecimal(request.getParameter(RequestParameter.PRICE));
 
-            bookService.saveBook(bookIsbn, title, category, publicationYear, language, keyWords, authorNames, authorSurnames);
+            if (price.signum() < 1 || !bookService.saveBook(bookIsbn, title, category, publicationYear, language, keyWords, authorNames, authorSurnames)) {
+                session.setAttribute(SessionAttribute.ERROR, "Invalid data");
+                return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
+            }
 
             bookService.addCopiesOfBook(bookIsbn, price, copiesCount);
+
+            String url = "/controller?" +
+                    RequestParameter.COMMAND + "=" + CommandName.GOTO_INVENTORY_BOOK_PAGE_COMMAND;
+            session.setAttribute(SessionAttribute.URL, url);
 
             return new CommandResult(url, RoutingType.REDIRECT);
         } catch (ServiceException | NumberFormatException e) {

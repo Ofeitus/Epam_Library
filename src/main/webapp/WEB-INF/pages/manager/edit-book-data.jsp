@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="com.epam.ofeitus.library.controller.constant.RequestParameter" %>
 <%@ page import="com.epam.ofeitus.library.controller.command.CommandName" %>
+<%@ page import="com.epam.ofeitus.library.service.validator.ValidationPattern" %>
 
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
 <fmt:setBundle basename="locale"/>
@@ -24,12 +25,12 @@
                     <div class="form-group" style="width: 100%;">
                         <label><fmt:message key="edit-book-data.title" />
                             <input type="text" class="form-control"
-                                   name="${RequestParameter.TITLE}" value="${requestScope.book.title}" minlength="1" placeholder="<fmt:message key="edit-book-data.title-placeholder" />" required>
+                                   name="${RequestParameter.TITLE}" value="${requestScope.book.title}" minlength="1" maxlength="100" placeholder="<fmt:message key="edit-book-data.title-placeholder" />" required>
                         </label>
                     </div>
                     <div class="form-group">
                         <label><fmt:message key="edit-book-data.isbn" />
-                            <input type="text" class="form-control" pattern="^([\d]{10}|[\d]{13})$" title="<fmt:message key="validation-pattern.isbn" />"
+                            <input type="text" class="form-control" pattern="${ValidationPattern.ISBN_PATTERN}" title="<fmt:message key="validation-pattern.isbn" />"
                                    name="${RequestParameter.BOOK_ISBN}" value="${requestScope.book.isbn}" placeholder="<fmt:message key="edit-book-data.isbn-placeholder" />" required disabled>
                         </label>
                     </div>
@@ -55,7 +56,7 @@
                     </div>
                     <div class="form-group">
                         <label><fmt:message key="edit-book-data.language" />
-                            <input type="text" class="form-control" pattern="^([А-Я][а-яё]{1,29}|[A-Z][a-z]{1,29})$" title="<fmt:message key="validation-pattern.language" />"
+                            <input type="text" class="form-control" pattern="${ValidationPattern.NAME_PATTERN}" title="<fmt:message key="validation-pattern.language" />"
                                    name="${RequestParameter.LANGUAGE}" value="${requestScope.book.language}" placeholder="<fmt:message key="edit-book-data.language-placeholder" />" required>
                         </label>
                     </div>
@@ -69,9 +70,9 @@
                         <label><fmt:message key="edit-book-data.authors" />
                             <c:forEach var="author" items="${requestScope.book.authors}">
                                 <div class="author-data">
-                                    <input type="text" class="form-control" pattern="^([А-Я][а-яё]{1,29}|[A-Z][a-z]{1,29})$" title="<fmt:message key="validation-pattern.name" />"
+                                    <input type="text" class="form-control" pattern="${ValidationPattern.NAME_PATTERN}" title="<fmt:message key="validation-pattern.name" />"
                                            name="${RequestParameter.AUTHOR_NAME}" value="${author.name}" placeholder="<fmt:message key="edit-book-data.name" />" style="width: 42%" required>
-                                    <input type="text" class="form-control" pattern="^([А-Я][а-яё]{1,29}|[A-Z][a-z]{1,29})$" title="<fmt:message key="validation-pattern.name" />"
+                                    <input type="text" class="form-control" pattern="${ValidationPattern.NAME_PATTERN}" title="<fmt:message key="validation-pattern.name" />"
                                            name="${RequestParameter.AUTHOR_SURNAME}" value="${author.surname}" placeholder="<fmt:message key="edit-book-data.surname" />" style="width: 42%" required>
                                     <i onclick="deleteAuthor(this)" class="bi bi-dash" style="font-size: 32px;color: firebrick"></i>
                                 </div>
@@ -94,9 +95,9 @@
     function addAuthor() {
         $('#authors').append(
             "<div class=\"author-data\">" +
-            "<input type=\"text\" class=\"form-control\" pattern=\"^([А-Я][а-яё]{1,29}|[A-Z][a-z]{1,29})$\" title=\"<fmt:message key="validation-pattern.name" />\" " +
+            "<input type=\"text\" class=\"form-control\" pattern=\"${ValidationPattern.NAME_PATTERN}\" title=\"<fmt:message key="validation-pattern.name" />\" " +
             "name=\"${RequestParameter.AUTHOR_NAME}\" placeholder=\"<fmt:message key="edit-book-data.name" />\" style=\"width: 42%\" required>"+
-            "<input type=\"text\" class=\"form-control\" pattern=\"^([А-Я][а-яё]{1,29}|[A-Z][a-z]{1,29})$\" title=\"<fmt:message key="validation-pattern.name" />\" " +
+            "<input type=\"text\" class=\"form-control\" pattern=\"${ValidationPattern.NAME_PATTERN}\" title=\"<fmt:message key="validation-pattern.name" />\" " +
             "name=\"${RequestParameter.AUTHOR_SURNAME}\" placeholder=\"<fmt:message key="edit-book-data.surname" />\" style=\"width: 42%\" required>" +
             "<i onclick=\"deleteAuthor(this)\" class=\"bi bi-dash\" style=\"font-size: 32px;color: firebrick\"></i>" +
             "</div>");

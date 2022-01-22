@@ -25,9 +25,9 @@ public interface BookService {
 
     List<BookCategory> getBookCategories() throws ServiceException;
 
-    int updateBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<String> authorNames, List<String> authorSurnames) throws ServiceException;
+    boolean updateBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<String> authorNames, List<String> authorSurnames) throws ServiceException;
 
-    int saveBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<String> authorNames, List<String> authorSurnames) throws ServiceException;
+    boolean saveBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<String> authorNames, List<String> authorSurnames) throws ServiceException;
 
     void deleteBook(String bookIsbn) throws ServiceException;
 

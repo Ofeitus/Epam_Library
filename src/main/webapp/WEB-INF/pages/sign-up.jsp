@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="com.epam.ofeitus.library.controller.constant.RequestParameter" %>
 <%@ page import="com.epam.ofeitus.library.controller.command.CommandName" %>
+<%@ page import="com.epam.ofeitus.library.service.validator.ValidationPattern" %>
 
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
 <fmt:setBundle basename="locale"/>
@@ -22,13 +23,13 @@
                         <--input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.SIGN_UP_COMMAND}">
                         <div class="form-group">
                             <label><fmt:message key="sign-up.name" />
-                                <input class="form-control" type="text" pattern="^([А-Я][а-яё]{1,29}|[A-Z][a-z]{1,29})$" title="<fmt:message key="validation-pattern.name" />"
+                                <input class="form-control" type="text" pattern="${ValidationPattern.NAME_PATTERN}" title="<fmt:message key="validation-pattern.name" />"
                                        name="${RequestParameter.USER_NAME}" value="" placeholder="<fmt:message key="sign-up.name-placeholder" />" required>
                             </label>
                         </div>
                         <div class="form-group">
                             <label><fmt:message key="sign-up.surname" />
-                                <input class="form-control" type="text" pattern="^([А-Я][а-яё]{1,29}|[A-Z][a-z]{1,29})$" title="<fmt:message key="validation-pattern.name" />"
+                                <input class="form-control" type="text" pattern="${ValidationPattern.NAME_PATTERN}" title="<fmt:message key="validation-pattern.name" />"
                                        name="${RequestParameter.USER_SURNAME}" value="" placeholder="<fmt:message key="sign-up.surname-placeholder" />" required>
                             </label>
                         </div>
@@ -39,7 +40,7 @@
                         </div>
                         <div class="form-group">
                             <label><fmt:message key="sign-up.password" />
-                                <input class="form-control" type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,30}$" title="<fmt:message key="validation-pattern.password" />"
+                                <input class="form-control" type="password" pattern="${ValidationPattern.PASSWORD_PATTERN}" title="<fmt:message key="validation-pattern.password" />"
                                        name="${RequestParameter.PASSWORD}" value="" placeholder="<fmt:message key="sign-up.password-placeholder" />" required>
                             </label>
                         </div>

@@ -19,6 +19,8 @@ import com.epam.ofeitus.library.entity.report.BooksStockReport;
 import com.epam.ofeitus.library.entity.report.IssueReport;
 import com.epam.ofeitus.library.service.BookService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
+import com.epam.ofeitus.library.service.validator.EntityValidator;
+import com.epam.ofeitus.library.service.validator.ValidatorFactory;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -141,16 +143,25 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public int updateBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<String> authorNames, List<String> authorSurnames) throws ServiceException {
+    public boolean updateBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<String> authorNames, List<String> authorSurnames) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         BookDao bookDao = daoFactory.getBookDao();
         BookCategoryDao bookCategoryDao = daoFactory.getBookCategoryDao();
         AuthorDao authorDao = daoFactory.getAuthorDao();
 
+        EntityValidator<Book> bookValidator = ValidatorFactory.getInstance().getBookValidator();
+        EntityValidator<Author> authorValidator = ValidatorFactory.getInstance().getAuthorValidator();
+
         try {
             List<Author> authors = new ArrayList<>();
             for (int i = 0; i < authorNames.size(); i++) {
-                authors.add(new Author(0, authorNames.get(i), authorSurnames.get(i)));
+                Author author = new Author(0, authorNames.get(i), authorSurnames.get(i));
+
+                if (!authorValidator.validate(author)) {
+                    return false;
+                }
+
+                authors.add(author);
             }
 
             int categoryId = bookCategoryDao.findByName(category).getCategoryId();
@@ -163,22 +174,37 @@ public class BookServiceImpl implements BookService {
                     author.setAuthorId(authorInDb.getAuthorId());
                 }
             }
-            return bookDao.update(new Book(bookIsbn, title, publicationYear, categoryId, language, keyWords), authors);
+
+            Book book = new Book(bookIsbn, title, publicationYear, categoryId, language, keyWords);
+
+            if (!bookValidator.validate(book)) {
+                return false;
+            }
+
+            return bookDao.update(book, authors) == 1;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public int saveBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<String> authorNames, List<String> authorSurnames) throws ServiceException {
+    public boolean saveBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<String> authorNames, List<String> authorSurnames) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         BookDao bookDao = daoFactory.getBookDao();
         BookCategoryDao bookCategoryDao = daoFactory.getBookCategoryDao();
         AuthorDao authorDao = daoFactory.getAuthorDao();
 
+        EntityValidator<Book> bookValidator = ValidatorFactory.getInstance().getBookValidator();
+        EntityValidator<Author> authorValidator = ValidatorFactory.getInstance().getAuthorValidator();
+
         try {
             List<Author> authors = new ArrayList<>();
             for (int i = 0; i < authorNames.size(); i++) {
+                Author author = new Author(0, authorNames.get(i), authorSurnames.get(i));
+
+                if (!authorValidator.validate(author)) {
+                    return false;
+                }
                 authors.add(new Author(0, authorNames.get(i), authorSurnames.get(i)));
             }
 
@@ -192,7 +218,14 @@ public class BookServiceImpl implements BookService {
                     author.setAuthorId(authorInDb.getAuthorId());
                 }
             }
-            return bookDao.save(new Book(bookIsbn, title, publicationYear, categoryId, language, keyWords), authors);
+
+            Book book = new Book(bookIsbn, title, publicationYear, categoryId, language, keyWords);
+
+            if (!bookValidator.validate(book)) {
+                return false;
+            }
+
+            return bookDao.save(book, authors) == 1;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -320,6 +353,7 @@ public class BookServiceImpl implements BookService {
         CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
 
         try {
+            // TODO Write of through transaction
             if (fromInventoryId != 0 && toInventoryId == 0) {
                 copyOfBookDao.updateStatus(fromInventoryId, CopyOfBookStatus.WRITTEN_OFF.ordinal() + 1);
             } else if (fromInventoryId == 0 && toInventoryId != 0) {

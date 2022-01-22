@@ -36,7 +36,10 @@ public class SignUpCommand implements Command {
                 session.setAttribute(SessionAttribute.ERROR, "Email is already taken");
                 return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
             }
-            userService.register(firstName, lastName, email, password);
+            if (!userService.register(firstName, lastName, email, password)) {
+                session.setAttribute(SessionAttribute.ERROR, "Invalid data");
+                return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
+            }
 
             request.setAttribute(RequestAttribute.EMAIL, email);
 
