@@ -1,6 +1,5 @@
 package com.epam.ofeitus.library.controller.command.impl;
 
-import com.epam.ofeitus.library.constant.ConfigParameter;
 import com.epam.ofeitus.library.constant.ConfigResourceManager;
 import com.epam.ofeitus.library.controller.command.Command;
 import com.epam.ofeitus.library.controller.command.CommandResult;
@@ -21,7 +20,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.MissingResourceException;
 
 public class IssueByInventoryIdCommand implements Command {
     private final Logger logger = LogManager.getLogger(IssueByInventoryIdCommand.class);
@@ -42,7 +40,7 @@ public class IssueByInventoryIdCommand implements Command {
             int inventoryId = Integer.parseInt(request.getParameter(RequestParameter.INVENTORY_ID));
 
             // Copy does not exist case
-            if (bookService.getCopyByInventoryId(inventoryId) == null) {
+            if (bookService.getCopyOfBookByInventoryId(inventoryId) == null) {
                 session.setAttribute(SessionAttribute.ERROR, "Copy does not exist");
                 return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
             }

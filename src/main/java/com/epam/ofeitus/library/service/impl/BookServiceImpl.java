@@ -28,6 +28,131 @@ import java.util.*;
 public class BookServiceImpl implements BookService {
 
     @Override
+    public boolean saveBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<String> authorNames, List<String> authorSurnames) throws ServiceException {
+        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
+        BookDao bookDao = daoFactory.getBookDao();
+        BookCategoryDao bookCategoryDao = daoFactory.getBookCategoryDao();
+        AuthorDao authorDao = daoFactory.getAuthorDao();
+
+        EntityValidator<Book> bookValidator = ValidatorFactory.getInstance().getBookValidator();
+        EntityValidator<Author> authorValidator = ValidatorFactory.getInstance().getAuthorValidator();
+
+        try {
+            List<Author> authors = new ArrayList<>();
+            for (int i = 0; i < authorNames.size(); i++) {
+                Author author = new Author(0, authorNames.get(i), authorSurnames.get(i));
+
+                if (!authorValidator.validate(author)) {
+                    return false;
+                }
+                authors.add(new Author(0, authorNames.get(i), authorSurnames.get(i)));
+            }
+
+            int categoryId = bookCategoryDao.findByName(category).getCategoryId();
+            for (Author author : authors) {
+                Author authorInDb = authorDao.findByName(author.getName(), author.getSurname());
+                if (authorInDb == null) {
+                    authorDao.save(author);
+                    author.setAuthorId(authorDao.findByName(author.getName(), author.getSurname()).getAuthorId());
+                } else {
+                    author.setAuthorId(authorInDb.getAuthorId());
+                }
+            }
+
+            Book book = new Book(bookIsbn, title, publicationYear, categoryId, language, keyWords);
+
+            if (!bookValidator.validate(book)) {
+                return false;
+            }
+
+            return bookDao.save(book, authors) == 1;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean updateBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<String> authorNames, List<String> authorSurnames) throws ServiceException {
+        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
+        BookDao bookDao = daoFactory.getBookDao();
+        BookCategoryDao bookCategoryDao = daoFactory.getBookCategoryDao();
+        AuthorDao authorDao = daoFactory.getAuthorDao();
+
+        EntityValidator<Book> bookValidator = ValidatorFactory.getInstance().getBookValidator();
+        EntityValidator<Author> authorValidator = ValidatorFactory.getInstance().getAuthorValidator();
+
+        try {
+            List<Author> authors = new ArrayList<>();
+            for (int i = 0; i < authorNames.size(); i++) {
+                Author author = new Author(0, authorNames.get(i), authorSurnames.get(i));
+
+                if (!authorValidator.validate(author)) {
+                    return false;
+                }
+
+                authors.add(author);
+            }
+
+            int categoryId = bookCategoryDao.findByName(category).getCategoryId();
+            for (Author author : authors) {
+                Author authorInDb = authorDao.findByName(author.getName(), author.getSurname());
+                if (authorInDb == null) {
+                    authorDao.save(author);
+                    author.setAuthorId(authorDao.findByName(author.getName(), author.getSurname()).getAuthorId());
+                } else {
+                    author.setAuthorId(authorInDb.getAuthorId());
+                }
+            }
+
+            Book book = new Book(bookIsbn, title, publicationYear, categoryId, language, keyWords);
+
+            if (!bookValidator.validate(book)) {
+                return false;
+            }
+
+            return bookDao.update(book, authors) == 1;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void deleteBook(String bookIsbn) throws ServiceException {
+        BookDao bookDao = MySqlDaoFactory.getInstance().getBookDao();
+
+        try {
+            bookDao.deleteByIsbn(bookIsbn);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public BookDto getBookDtoByIsbn(String bookIsbn) throws ServiceException {
+        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
+        BookDao bookDao = daoFactory.getBookDao();
+        AuthorDao authorDao = daoFactory.getAuthorDao();
+        BookCategoryDao bookCategoryDao = daoFactory.getBookCategoryDao();
+
+        try {
+            Book book = bookDao.findByIsbn(bookIsbn);
+            List<Author> authors = authorDao.findByBookIsbn(book.getIsbn());
+            BookCategory category = bookCategoryDao.findById(book.getCategoryId());
+            return new BookDto(
+                    book.getIsbn(),
+                    book.getTitle(),
+                    authors,
+                    book.getPublicationYear(),
+                    category.getName(),
+                    book.getLanguage(),
+                    book.getKeyWords()
+            );
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public List<BookDto> getBooksDtoBySearchRequest(String searchRequest, String category, String authorName, String authorSurname, int yearFrom, int yearTo, int page, int itemsOnPage) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         BookDao bookDao = daoFactory.getBookDao();
@@ -85,25 +210,58 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto getBookDtoByIsbn(String bookIsbn) throws ServiceException {
-        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
-        BookDao bookDao = daoFactory.getBookDao();
-        AuthorDao authorDao = daoFactory.getAuthorDao();
-        BookCategoryDao bookCategoryDao = daoFactory.getBookCategoryDao();
+    public void addCopiesOfBook(String bookIsbn, BigDecimal price, int copiesCount) throws ServiceException {
+        CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
+
+        List<CopyOfBook> copiesOfBook = new ArrayList<>();
+        for (int i = 0; i < copiesCount; i++) {
+            copiesOfBook.add(new CopyOfBook(0, new Date(), price, bookIsbn, CopyOfBookStatus.AVAILABLE));
+        }
 
         try {
-            Book book = bookDao.findByIsbn(bookIsbn);
-            List<Author> authors = authorDao.findByBookIsbn(book.getIsbn());
-            BookCategory category = bookCategoryDao.findById(book.getCategoryId());
-            return new BookDto(
-                    book.getIsbn(),
-                    book.getTitle(),
-                    authors,
-                    book.getPublicationYear(),
-                    category.getName(),
-                    book.getLanguage(),
-                    book.getKeyWords()
-            );
+            copyOfBookDao.saveAll(copiesOfBook);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void deleteCopyOfBook(int inventoryId) throws ServiceException {
+        CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
+
+        try {
+            copyOfBookDao.deleteById(inventoryId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void writeOffCopiesOfBooks(int fromInventoryId, int toInventoryId) throws ServiceException {
+        CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
+
+        try {
+            // TODO Write of through transaction
+            if (fromInventoryId != 0 && toInventoryId == 0) {
+                copyOfBookDao.updateStatus(fromInventoryId, CopyOfBookStatus.WRITTEN_OFF.ordinal() + 1);
+            } else if (fromInventoryId == 0 && toInventoryId != 0) {
+                copyOfBookDao.updateStatus(toInventoryId, CopyOfBookStatus.WRITTEN_OFF.ordinal() + 1);
+            } else if (fromInventoryId != 0 && toInventoryId != 0 && fromInventoryId <= toInventoryId) {
+                for (int i = fromInventoryId; i <= toInventoryId; i++) {
+                    copyOfBookDao.updateStatus(i, CopyOfBookStatus.WRITTEN_OFF.ordinal() + 1);
+                }
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public CopyOfBook getCopyOfBookByInventoryId(int inventoryId) throws ServiceException {
+        CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
+
+        try {
+            return copyOfBookDao.findById(inventoryId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -126,116 +284,6 @@ public class BookServiceImpl implements BookService {
 
         try {
             return copyOfBookDao.findByIsbnAndStatusId(bookIsbn, CopyOfBookStatus.AVAILABLE.ordinal() + 1).size();
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public List<BookCategory> getBookCategories() throws ServiceException {
-        BookCategoryDao bookCategoryDao = MySqlDaoFactory.getInstance().getBookCategoryDao();
-
-        try {
-            return bookCategoryDao.findAll();
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public boolean updateBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<String> authorNames, List<String> authorSurnames) throws ServiceException {
-        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
-        BookDao bookDao = daoFactory.getBookDao();
-        BookCategoryDao bookCategoryDao = daoFactory.getBookCategoryDao();
-        AuthorDao authorDao = daoFactory.getAuthorDao();
-
-        EntityValidator<Book> bookValidator = ValidatorFactory.getInstance().getBookValidator();
-        EntityValidator<Author> authorValidator = ValidatorFactory.getInstance().getAuthorValidator();
-
-        try {
-            List<Author> authors = new ArrayList<>();
-            for (int i = 0; i < authorNames.size(); i++) {
-                Author author = new Author(0, authorNames.get(i), authorSurnames.get(i));
-
-                if (!authorValidator.validate(author)) {
-                    return false;
-                }
-
-                authors.add(author);
-            }
-
-            int categoryId = bookCategoryDao.findByName(category).getCategoryId();
-            for (Author author : authors) {
-                Author authorInDb = authorDao.findByName(author.getName(), author.getSurname());
-                if (authorInDb == null) {
-                    authorDao.save(author);
-                    author.setAuthorId(authorDao.findByName(author.getName(), author.getSurname()).getAuthorId());
-                } else {
-                    author.setAuthorId(authorInDb.getAuthorId());
-                }
-            }
-
-            Book book = new Book(bookIsbn, title, publicationYear, categoryId, language, keyWords);
-
-            if (!bookValidator.validate(book)) {
-                return false;
-            }
-
-            return bookDao.update(book, authors) == 1;
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public boolean saveBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<String> authorNames, List<String> authorSurnames) throws ServiceException {
-        DaoFactory daoFactory = MySqlDaoFactory.getInstance();
-        BookDao bookDao = daoFactory.getBookDao();
-        BookCategoryDao bookCategoryDao = daoFactory.getBookCategoryDao();
-        AuthorDao authorDao = daoFactory.getAuthorDao();
-
-        EntityValidator<Book> bookValidator = ValidatorFactory.getInstance().getBookValidator();
-        EntityValidator<Author> authorValidator = ValidatorFactory.getInstance().getAuthorValidator();
-
-        try {
-            List<Author> authors = new ArrayList<>();
-            for (int i = 0; i < authorNames.size(); i++) {
-                Author author = new Author(0, authorNames.get(i), authorSurnames.get(i));
-
-                if (!authorValidator.validate(author)) {
-                    return false;
-                }
-                authors.add(new Author(0, authorNames.get(i), authorSurnames.get(i)));
-            }
-
-            int categoryId = bookCategoryDao.findByName(category).getCategoryId();
-            for (Author author : authors) {
-                Author authorInDb = authorDao.findByName(author.getName(), author.getSurname());
-                if (authorInDb == null) {
-                    authorDao.save(author);
-                    author.setAuthorId(authorDao.findByName(author.getName(), author.getSurname()).getAuthorId());
-                } else {
-                    author.setAuthorId(authorInDb.getAuthorId());
-                }
-            }
-
-            Book book = new Book(bookIsbn, title, publicationYear, categoryId, language, keyWords);
-
-            if (!bookValidator.validate(book)) {
-                return false;
-            }
-
-            return bookDao.save(book, authors) == 1;
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void deleteBook(String bookIsbn) throws ServiceException {
-        BookDao bookDao = MySqlDaoFactory.getInstance().getBookDao();
-        try {
-            bookDao.deleteByIsbn(bookIsbn);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -274,7 +322,7 @@ public class BookServiceImpl implements BookService {
                                 copyOfBook.getCopyOfBookStatus(),
                                 bookDto,
                                 userId,
-                        reservations.isEmpty() && loans.isEmpty()
+                                reservations.isEmpty() && loans.isEmpty()
                         )
                 );
             }
@@ -349,54 +397,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void writeOffCopiesOfBooks(int fromInventoryId, int toInventoryId) throws ServiceException {
-        CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
+    public List<BookCategory> getBookCategories() throws ServiceException {
+        BookCategoryDao bookCategoryDao = MySqlDaoFactory.getInstance().getBookCategoryDao();
 
         try {
-            // TODO Write of through transaction
-            if (fromInventoryId != 0 && toInventoryId == 0) {
-                copyOfBookDao.updateStatus(fromInventoryId, CopyOfBookStatus.WRITTEN_OFF.ordinal() + 1);
-            } else if (fromInventoryId == 0 && toInventoryId != 0) {
-                copyOfBookDao.updateStatus(toInventoryId, CopyOfBookStatus.WRITTEN_OFF.ordinal() + 1);
-            } else if (fromInventoryId != 0 && toInventoryId != 0 && fromInventoryId <= toInventoryId) {
-                for (int i = fromInventoryId; i <= toInventoryId; i++) {
-                    copyOfBookDao.updateStatus(i, CopyOfBookStatus.WRITTEN_OFF.ordinal() + 1);
-                }
-            }
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void addCopiesOfBook(String bookIsbn, BigDecimal price, int copiesCount) throws ServiceException {
-        CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
-        List<CopyOfBook> copiesOfBook = new ArrayList<>();
-        for (int i = 0; i < copiesCount; i++) {
-            copiesOfBook.add(new CopyOfBook(0, new Date(), price, bookIsbn, CopyOfBookStatus.AVAILABLE));
-        }
-        try {
-            copyOfBookDao.saveAll(copiesOfBook);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void deleteCopyOfBook(int inventoryId) throws ServiceException {
-        CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
-        try {
-            copyOfBookDao.deleteById(inventoryId);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public CopyOfBook getCopyByInventoryId(int inventoryId) throws ServiceException {
-        CopyOfBookDao copyOfBookDao = MySqlDaoFactory.getInstance().getCopyOfBookDao();
-        try {
-            return copyOfBookDao.findById(inventoryId);
+            return bookCategoryDao.findAll();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

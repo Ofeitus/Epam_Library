@@ -40,6 +40,11 @@ public class WriteInCopiesOfBookCommand implements Command {
                 return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
             }
 
+            if (price.signum() < 1) {
+                session.setAttribute(SessionAttribute.ERROR, "Invalid price");
+                return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
+            }
+
             bookService.addCopiesOfBook(bookIsbn, price, copiesCount);
 
             return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);

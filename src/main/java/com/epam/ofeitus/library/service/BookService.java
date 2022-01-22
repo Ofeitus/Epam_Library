@@ -13,23 +13,29 @@ import java.util.Date;
 import java.util.List;
 
 public interface BookService {
+    boolean saveBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<String> authorNames, List<String> authorSurnames) throws ServiceException;
+
+    boolean updateBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<String> authorNames, List<String> authorSurnames) throws ServiceException;
+
+    void deleteBook(String bookIsbn) throws ServiceException;
+
+    BookDto getBookDtoByIsbn(String bookIsbn) throws ServiceException;
+
     List<BookDto> getBooksDtoBySearchRequest(String searchRequest, String category, String authorName, String authorSurname, int yearFrom, int yearTo, int page, int itemsOnPage) throws ServiceException;
 
     int countBooksBySearchRequest(String searchRequest, String category, String authorName, String authorSurname, int yearFrom, int yearTo) throws ServiceException;
 
-    BookDto getBookDtoByIsbn(String bookIsbn) throws ServiceException;
+    void addCopiesOfBook(String bookIsbn, BigDecimal price, int copiesCount) throws ServiceException;
+
+    void deleteCopyOfBook(int inventoryId) throws ServiceException;
+
+    void writeOffCopiesOfBooks(int fromInventoryId, int toInventoryId) throws ServiceException;
+
+    CopyOfBook getCopyOfBookByInventoryId(int inventoryId) throws ServiceException;
 
     int getCopiesCount(String bookIsbn) throws ServiceException;
 
     int getAvailableCopiesCount(String bookIsbn) throws ServiceException;
-
-    List<BookCategory> getBookCategories() throws ServiceException;
-
-    boolean updateBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<String> authorNames, List<String> authorSurnames) throws ServiceException;
-
-    boolean saveBook(String bookIsbn, String title, String category, int publicationYear, String language, String keyWords, List<String> authorNames, List<String> authorSurnames) throws ServiceException;
-
-    void deleteBook(String bookIsbn) throws ServiceException;
 
     List<CopyOfBookDto> getAllCopiesOfBooks(int page, int itemsOnPage) throws ServiceException;
 
@@ -39,13 +45,7 @@ public interface BookService {
 
     int countCopiesOfBooksBySearchRequest(String bookIsbn, int inventoryId, int statusId) throws ServiceException;
 
-    void writeOffCopiesOfBooks(int fromInventoryId, int toInventoryId) throws ServiceException;
-
-    void addCopiesOfBook(String bookIsbn, BigDecimal price, int copiesCount) throws ServiceException;
-
-    void deleteCopyOfBook(int inventoryId) throws ServiceException;
-
-    CopyOfBook getCopyByInventoryId(int inventoryId) throws ServiceException;
+    List<BookCategory> getBookCategories() throws ServiceException;
 
     BooksStockReport getBooksReport(Date fromDate, Date toDate) throws ServiceException;
 
