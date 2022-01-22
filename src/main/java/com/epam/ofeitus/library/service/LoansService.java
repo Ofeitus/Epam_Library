@@ -25,7 +25,7 @@ public interface LoansService {
 
     int countLoansDtoByUserIdWithFine(int userId) throws ServiceException;
 
-    int getDebtsCountByUserId(int userId) throws ServiceException;
+    int countDebtsByUserId(int userId) throws ServiceException;
 
-    int getLoansCountByUserIdAndStatusId(int userId, int statusId) throws ServiceException;
+    int countLoansByUserIdAndStatusId(int userId, int statusId) throws ServiceException;
 }

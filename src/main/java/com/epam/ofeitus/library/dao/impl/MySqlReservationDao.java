@@ -60,8 +60,8 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
             Table.RESERVATION_TABLE,
             Column.RESERVATION_STATUS_ID,
             Column.RESERVATION_DATE);
-    private static final String FIND_BY_USER_ID_AND_STATUS_ID_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=? AND %s=?",
+    private static final String COUNT_BY_USER_ID_AND_STATUS_ID_QUERY = String.format(
+            "SELECT COUNT(*) FROM %s WHERE %s=? AND %s=?",
             Table.RESERVATION_TABLE,
             Column.RESERVATION_USER_ID,
             Column.RESERVATION_STATUS_ID);
@@ -131,8 +131,8 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
     }
 
     @Override
-    public List<Reservation> findByUserIdAndStatusId(int userId, int statusId) throws DaoException {
-        return queryOperator.executeQuery(FIND_BY_USER_ID_AND_STATUS_ID_QUERY, userId, statusId);
+    public int countByUserIdAndStatusId(int userId, int statusId) throws DaoException {
+        return queryOperator.executeCountQuery(COUNT_BY_USER_ID_AND_STATUS_ID_QUERY, userId, statusId);
     }
 
     @Override

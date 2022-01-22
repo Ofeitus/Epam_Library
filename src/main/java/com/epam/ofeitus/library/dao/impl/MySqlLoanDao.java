@@ -67,8 +67,8 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Table.LOAN_TABLE,
             Column.LOAN_INVENTORY_ID,
             Column.LOAN_ISSUE_DATE);
-    private static final String FIND_BY_STATUS_ID_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=? AND %s=?",
+    private static final String COUNT_BY_USER_ID_AND_STATUS_ID_QUERY = String.format(
+            "SELECT COUNT(*) FROM %s WHERE %s=? AND %s=?",
             Table.LOAN_TABLE,
             Column.LOAN_USER_ID,
             Column.LOAN_STATUS_ID);
@@ -86,8 +86,8 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Column.LOAN_USER_ID,
             Column.LOAN_STATUS_ID,
             Column.LOAN_STATUS_ID);
-    private static final String FIND_DEBTS_BY_USER_ID = String.format(
-            "SELECT * FROM %s WHERE %s=? AND %s='1' AND %s < CURDATE()",
+    private static final String COUNT_DEBTS_BY_USER_ID = String.format(
+            "SELECT COUNT(*) FROM %s WHERE %s=? AND %s='1' AND %s < CURDATE()",
             Table.LOAN_TABLE,
             Column.LOAN_USER_ID,
             Column.LOAN_STATUS_ID,
@@ -191,13 +191,13 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
     }
 
     @Override
-    public List<Loan> findDebtsByUserId(int userId) throws DaoException {
-        return queryOperator.executeQuery(FIND_DEBTS_BY_USER_ID, userId);
+    public int countDebtsByUserId(int userId) throws DaoException {
+        return queryOperator.executeCountQuery(COUNT_DEBTS_BY_USER_ID, userId);
     }
 
     @Override
-    public List<Loan> findByUserIdAndStatusId(int userId, int statusId) throws DaoException {
-        return queryOperator.executeQuery(FIND_BY_STATUS_ID_QUERY, userId, statusId);
+    public int countByUserIdAndStatusId(int userId, int statusId) throws DaoException {
+        return queryOperator.executeCountQuery(COUNT_BY_USER_ID_AND_STATUS_ID_QUERY, userId, statusId);
     }
 
     @Override

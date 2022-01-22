@@ -176,22 +176,22 @@ public class LoanServiceImpl implements LoansService {
     }
 
     @Override
-    public int getDebtsCountByUserId(int userId) throws ServiceException {
+    public int countDebtsByUserId(int userId) throws ServiceException {
         LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
 
         try {
-            return loanDao.findDebtsByUserId(userId).size();
+            return loanDao.countDebtsByUserId(userId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public int getLoansCountByUserIdAndStatusId(int userId, int statusId) throws ServiceException {
+    public int countLoansByUserIdAndStatusId(int userId, int statusId) throws ServiceException {
         LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
 
         try {
-            return loanDao.findByUserIdAndStatusId(userId, statusId).size();
+            return loanDao.countByUserIdAndStatusId(userId, statusId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

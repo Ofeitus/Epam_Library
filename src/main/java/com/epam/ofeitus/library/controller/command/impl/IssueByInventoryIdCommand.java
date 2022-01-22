@@ -47,9 +47,9 @@ public class IssueByInventoryIdCommand implements Command {
 
             int maxMemberBooks = configResourceManager.getMaxMemberBooks();
 
-            int reservedBooksCount = reservationsService.getReservationsCountByUserIdAndStatusId(userId, ReservationStatus.RESERVED.ordinal() + 1) +
-                reservationsService.getReservationsCountByUserIdAndStatusId(userId, ReservationStatus.READY_TO_ISSUE.ordinal() + 1);
-            int issuedBooksCount = loansService.getLoansCountByUserIdAndStatusId(userId, LoanStatus.ISSUED.ordinal() + 1);
+            int reservedBooksCount = reservationsService.countReservationsByUserIdAndStatusId(userId, ReservationStatus.RESERVED.ordinal() + 1) +
+                reservationsService.countReservationsByUserIdAndStatusId(userId, ReservationStatus.READY_TO_ISSUE.ordinal() + 1);
+            int issuedBooksCount = loansService.countLoansByUserIdAndStatusId(userId, LoanStatus.ISSUED.ordinal() + 1);
             // Issue limit reached case
             if (reservedBooksCount + issuedBooksCount >= maxMemberBooks) {
                 session.setAttribute(SessionAttribute.ERROR, "Issue limit reached");

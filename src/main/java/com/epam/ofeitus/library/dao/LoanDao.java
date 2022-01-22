@@ -19,9 +19,9 @@ public interface LoanDao extends AbstractDao<Loan> {
 
     int countByUserIdWithFine(int userId) throws DaoException;
 
-    List<Loan> findDebtsByUserId(int userId) throws DaoException;
+    int countDebtsByUserId(int userId) throws DaoException;
 
-    List<Loan> findByUserIdAndStatusId(int userId, int statusId) throws DaoException;
+    int countByUserIdAndStatusId(int userId, int statusId) throws DaoException;
 
     int loan(int userId, String bookIsbn, int loanPeriod) throws DaoException;
 

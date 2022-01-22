@@ -20,6 +20,54 @@ import java.util.List;
 
 public class ReservationsServiceImpl implements ReservationsService {
     @Override
+    public boolean makeReservation(int userId, String bookIsbn) throws ServiceException {
+        ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
+
+        try {
+            return reservationDao.reserve(userId, bookIsbn) != -1;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void cancelReservation(int reservationId) throws ServiceException {
+        ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
+
+        try {
+            Reservation reservation = reservationDao.findById(reservationId);
+            if (reservation.getReservationStatus() == ReservationStatus.ISSUED) {
+                throw new ServiceException("Unable to cancel reservation with status 'ISSUED'");
+            }
+            reservationDao.cancel(reservation);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void confirmReservation(int reservationId) throws ServiceException {
+        ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
+
+        try {
+            reservationDao.setStatus(reservationId, ReservationStatus.READY_TO_ISSUE.ordinal() + 1);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int countReservationsByUserIdAndStatusId(int userId, int statusId) throws ServiceException {
+        ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
+
+        try {
+            return reservationDao.countByUserIdAndStatusId(userId, statusId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public List<ReservationDto> getReservationsDtoByUserId(int userId, int page, int itemsOnPage) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         ReservationDao reservationDao = daoFactory.getReservationDao();
@@ -62,53 +110,6 @@ public class ReservationsServiceImpl implements ReservationsService {
     }
 
     @Override
-    public int getReservationsCountByUserIdAndStatusId(int userId, int statusId) throws ServiceException {
-        ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
-        try {
-            return reservationDao.findByUserIdAndStatusId(userId, statusId).size();
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public boolean makeReservation(int userId, String bookIsbn) throws ServiceException {
-        ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
-
-        try {
-            return reservationDao.reserve(userId, bookIsbn) != -1;
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public int cancelReservation(int reservationId) throws ServiceException {
-        ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
-
-        try {
-            Reservation reservation = reservationDao.findById(reservationId);
-            if (reservation.getReservationStatus() == ReservationStatus.ISSUED) {
-                throw new ServiceException("Unable to cancel reservation with status 'ISSUED'");
-            }
-            return reservationDao.cancel(reservation);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public Reservation getByReservationId(int reservationId) throws ServiceException {
-        ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
-
-        try {
-            return reservationDao.findById(reservationId);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
     public List<ReservationDto> getUnconfirmedReservationsDto(int page, int itemsOnPage) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
         ReservationDao reservationDao = daoFactory.getReservationDao();
@@ -142,19 +143,9 @@ public class ReservationsServiceImpl implements ReservationsService {
     @Override
     public int countUnconfirmedReservationsDto() throws ServiceException {
         ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
+
         try {
             return reservationDao.countByStatusId(ReservationStatus.RESERVED.ordinal() + 1, new Date());
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public void confirmReservation(int reservationId) throws ServiceException {
-        ReservationDao reservationDao = MySqlDaoFactory.getInstance().getReservationDao();
-
-        try {
-            reservationDao.setStatus(reservationId, ReservationStatus.READY_TO_ISSUE.ordinal() + 1);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

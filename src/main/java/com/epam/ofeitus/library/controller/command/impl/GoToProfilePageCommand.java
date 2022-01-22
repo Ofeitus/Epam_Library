@@ -52,9 +52,9 @@ public class GoToProfilePageCommand implements Command {
             User user = userService.getByUserId(userId);
 
             if (user.getUserRole() == UserRole.MEMBER || requestUserId != null) {
-                int debtsCount = loansService.getDebtsCountByUserId(userId);
-                int unpaidFinesCount = loansService.getLoansCountByUserIdAndStatusId(userId, LoanStatus.FINED.ordinal() + 1);
-                int readyReservationsCount = reservationsService.getReservationsCountByUserIdAndStatusId(userId, ReservationStatus.READY_TO_ISSUE.ordinal() + 1);
+                int debtsCount = loansService.countDebtsByUserId(userId);
+                int unpaidFinesCount = loansService.countLoansByUserIdAndStatusId(userId, LoanStatus.FINED.ordinal() + 1);
+                int readyReservationsCount = reservationsService.countReservationsByUserIdAndStatusId(userId, ReservationStatus.READY_TO_ISSUE.ordinal() + 1);
 
                 request.setAttribute(RequestAttribute.DEBTS_COUNT, debtsCount);
                 request.setAttribute(RequestAttribute.UNPAID_FINES_COUNT, unpaidFinesCount);

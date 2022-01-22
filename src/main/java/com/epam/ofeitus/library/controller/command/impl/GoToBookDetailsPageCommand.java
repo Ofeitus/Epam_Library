@@ -1,6 +1,5 @@
 package com.epam.ofeitus.library.controller.command.impl;
 
-import com.epam.ofeitus.library.constant.ConfigParameter;
 import com.epam.ofeitus.library.constant.ConfigResourceManager;
 import com.epam.ofeitus.library.controller.command.Command;
 import com.epam.ofeitus.library.controller.command.CommandName;
@@ -24,7 +23,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.MissingResourceException;
 
 public class GoToBookDetailsPageCommand implements Command {
     private final Logger logger = LogManager.getLogger(GoToBookDetailsPageCommand.class);
@@ -56,9 +54,9 @@ public class GoToBookDetailsPageCommand implements Command {
             int issuedBooksCount;
 
             if (userId != -1) {
-                reservedBooksCount = reservationsService.getReservationsCountByUserIdAndStatusId(userId, ReservationStatus.RESERVED.ordinal() + 1) +
-                        reservationsService.getReservationsCountByUserIdAndStatusId(userId, ReservationStatus.READY_TO_ISSUE.ordinal() + 1);
-                issuedBooksCount = loansService.getLoansCountByUserIdAndStatusId(userId, LoanStatus.ISSUED.ordinal() + 1);
+                reservedBooksCount = reservationsService.countReservationsByUserIdAndStatusId(userId, ReservationStatus.RESERVED.ordinal() + 1) +
+                        reservationsService.countReservationsByUserIdAndStatusId(userId, ReservationStatus.READY_TO_ISSUE.ordinal() + 1);
+                issuedBooksCount = loansService.countLoansByUserIdAndStatusId(userId, LoanStatus.ISSUED.ordinal() + 1);
             } else {
                 reservedBooksCount = 0;
                 issuedBooksCount = 0;
