@@ -12,30 +12,12 @@ import com.epam.ofeitus.library.service.exception.ServiceException;
 import com.epam.ofeitus.library.service.validator.EntityValidator;
 import com.epam.ofeitus.library.service.validator.ValidationPattern;
 import com.epam.ofeitus.library.service.validator.ValidatorFactory;
-import com.epam.ofeitus.library.service.validator.impl.UserValidator;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.*;
 import java.util.regex.Pattern;
 
 public class UserServiceImpl implements UserService {
-    @Override
-    public User login(String email, String password) throws ServiceException {
-        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
-
-        User user = null;
-        try {
-            User userFromDB = userDao.findByEmail(email);
-            if (userFromDB != null && !userFromDB.isDeleted() && userFromDB.getPasswordHash().equals(DigestUtils.sha256Hex(password))) {
-                user = userFromDB;
-            }
-        } catch (DaoException e) {
-            throw new ServiceException("Unable to retrieve user from DB.", e);
-        }
-
-        return user;
-    }
-
     @Override
     public boolean register(String firstName, String lastName, String email, String password) throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
@@ -52,40 +34,25 @@ public class UserServiceImpl implements UserService {
         try {
             return userDao.save(user) == 1;
         } catch (DaoException e) {
-            throw new ServiceException("Unable to save new user to Data Source.", e);
-        }
-    }
-
-    @Override
-    public List<User> getAll(int page, int itemsOnPage) throws ServiceException {
-        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
-        try {
-            int offset = (page - 1) * itemsOnPage;
-
-            return userDao.findAll(offset, itemsOnPage);
-        } catch (DaoException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public int countAll() throws ServiceException {
+    public User login(String email, String password) throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
-        try {
-            return userDao.countAll();
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
 
-    @Override
-    public User getByEmail(String email) throws ServiceException {
-        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+        User user = null;
         try {
-            return userDao.findByEmail(email);
+            User userFromDB = userDao.findByEmail(email);
+            if (userFromDB != null && !userFromDB.isDeleted() && userFromDB.getPasswordHash().equals(DigestUtils.sha256Hex(password))) {
+                user = userFromDB;
+            }
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+
+        return user;
     }
 
     @Override
@@ -110,8 +77,101 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void deleteUser(int userId) throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+
+        try {
+            User user = userDao.findById(userId);
+            if (user.getUserRole() == UserRole.ADMIN) {
+                throw new ServiceException("Can't delete.");
+            }
+            userDao.deleteById(userId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void restoreUser(int userId) throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+
+        try {
+            User user = userDao.findById(userId);
+            if (user.getUserRole() == UserRole.ADMIN) {
+                throw new ServiceException("Can't restore.");
+            }
+            userDao.restoreById(userId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void setRole(int userId, int roleId) throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+
+        try {
+            User user = userDao.findById(userId);
+            if (user.getUserRole() == UserRole.ADMIN) {
+                throw new ServiceException("Can't change role.");
+            }
+            user.setUserRole(UserRole.values()[roleId - 1]);
+            userDao.update(user);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public User getByUserId(int userId) throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+
+        try {
+            return userDao.findById(userId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public User getByEmail(String email) throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+
+        try {
+            return userDao.findByEmail(email);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<User> getAll(int page, int itemsOnPage) throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+
+        try {
+            int offset = (page - 1) * itemsOnPage;
+
+            return userDao.findAll(offset, itemsOnPage);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int countAll() throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+
+        try {
+            return userDao.countAll();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public List<User> getAllMembers(int page, int itemsOnPage) throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+
         try {
             int offset = (page - 1) * itemsOnPage;
 
@@ -124,6 +184,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int countAllMembers() throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+
         try {
             return userDao.countByRoleId(UserRole.MEMBER.ordinal() + 1);
         } catch (DaoException e) {
@@ -132,18 +193,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getByUserId(int userId) throws ServiceException {
-        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
-        try {
-            return userDao.findById(userId);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
     public List<User> getUsersBySearchRequest(int userRoleId, int userId, String email, int page, int itemsOnPage) throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+
         try {
             int offset = (page - 1) * itemsOnPage;
 
@@ -156,6 +208,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int countUsersBySearchRequest(int userRoleId, int userId, String email) throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+
         try {
             return userDao.countBySearchRequest(userRoleId, userId, email, new Date());
         } catch (DaoException e) {
@@ -164,51 +217,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int setRole(int userId, int roleId) throws ServiceException {
-        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
-        try {
-            User user = userDao.findById(userId);
-            if (user.getUserRole() == UserRole.ADMIN) {
-                throw new ServiceException("Can't change role.");
-            }
-            user.setUserRole(UserRole.values()[roleId - 1]);
-            return userDao.update(user);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public int deleteUser(int userId) throws ServiceException {
-        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
-        try {
-            User user = userDao.findById(userId);
-            if (user.getUserRole() == UserRole.ADMIN) {
-                throw new ServiceException("Can't delete.");
-            }
-            return userDao.deleteById(userId);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
-    public int restoreUser(int userId) throws ServiceException {
-        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
-        try {
-            User user = userDao.findById(userId);
-            if (user.getUserRole() == UserRole.ADMIN) {
-                throw new ServiceException("Can't restore.");
-            }
-            return userDao.restoreById(userId);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    @Override
     public UserCompositionReport getUserCompositionReport(Date fromDate, Date toDate) throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+
         try {
             UserCompositionReport userCompositionReport = new UserCompositionReport(
                     userDao.countBySearchRequest(0, 0, "", fromDate),
