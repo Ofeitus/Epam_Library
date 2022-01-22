@@ -1,5 +1,6 @@
 package com.epam.ofeitus.library.controller.constant;
 
+
 public class Page {
     // errors
     public static final String ERROR_403_PAGE = "WEB-INF/pages/errors/403.jsp";

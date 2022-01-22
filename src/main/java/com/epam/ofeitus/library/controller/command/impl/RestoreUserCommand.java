@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Command to restore user.
+ */
 public class RestoreUserCommand implements Command {
     private final Logger logger = LogManager.getLogger(RestoreUserCommand.class);
 

@@ -1,5 +1,8 @@
 package com.epam.ofeitus.library.controller.command;
 
+/**
+ * Class with constants corresponding to command names
+ */
 public class CommandName {
     public static final String CANCEL_RESERVATION_COMMAND = "cancel-reservation";
     public static final String CONFIRM_RESERVATION_COMMAND = "confirm-reservation";

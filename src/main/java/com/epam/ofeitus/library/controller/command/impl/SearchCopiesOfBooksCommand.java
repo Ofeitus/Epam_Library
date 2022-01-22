@@ -21,6 +21,9 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Command to search copies of books.
+ */
 public class SearchCopiesOfBooksCommand implements Command {
     private final Logger logger = LogManager.getLogger(SearchCopiesOfBooksCommand.class);
 

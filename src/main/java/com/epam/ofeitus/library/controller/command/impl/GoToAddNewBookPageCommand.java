@@ -20,6 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * Command to go to add new book page.
+ */
 public class GoToAddNewBookPageCommand implements Command {
     private final Logger logger = LogManager.getLogger(GoToAddNewBookPageCommand.class);
 

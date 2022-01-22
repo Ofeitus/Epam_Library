@@ -19,6 +19,9 @@ import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Command to edit book data.
+ */
 public class EditBookDataCommand implements Command {
     private final Logger logger = LogManager.getLogger(EditBookDataCommand.class);
 

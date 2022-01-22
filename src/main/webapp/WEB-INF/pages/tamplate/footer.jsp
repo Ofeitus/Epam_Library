@@ -8,7 +8,6 @@
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
 <fmt:setBundle basename="locale"/>
 <footer>
-    <!-- TODO Copyright -->
     <label>2022 WebLib by Ofeitus</label>
     <a id="home-link" href="?${RequestParameter.COMMAND}=${CommandName.GOTO_HOME_PAGE_COMMAND}">WebLib</a>
 </footer>

@@ -21,6 +21,9 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Command to go to inventory book page.
+ */
 public class GoToInventoryBookPageCommand implements Command {
     private final Logger logger = LogManager.getLogger(GoToInventoryBookPageCommand.class);
 

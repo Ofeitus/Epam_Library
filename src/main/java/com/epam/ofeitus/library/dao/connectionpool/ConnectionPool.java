@@ -18,6 +18,7 @@ public final class ConnectionPool {
 
     private BlockingQueue<Connection> connectionQueue;
     private BlockingQueue<Connection> givenAwayConQueue;
+
     private final String driverName;
     private final String url;
     private final String user;
@@ -61,9 +62,11 @@ public final class ConnectionPool {
             throw new ConnectionPoolException("Can't find database driver class", e);
         }
     }
+
     public void dispose() {
         clearConnectionQueue();
     }
+
     private void clearConnectionQueue() {
         try {
             closeConnectionsQueue(givenAwayConQueue);
@@ -72,6 +75,7 @@ public final class ConnectionPool {
             logger.error("Error closing the connection.", e);
         }
     }
+
     public Connection takeConnection() throws ConnectionPoolException {
         Connection connection;
         try {
@@ -101,6 +105,7 @@ public final class ConnectionPool {
             logger.error("Connection isn't return to the pool.");
         }
     }
+
     public void closeConnection(Connection con, Statement st) {
         try {
             st.close();
@@ -113,6 +118,7 @@ public final class ConnectionPool {
             logger.error("Connection isn't return to the pool.");
         }
     }
+
     private void closeConnectionsQueue(BlockingQueue<Connection> queue) throws SQLException {
         Connection connection;
         while ((connection = queue.poll()) != null) {
@@ -122,15 +128,19 @@ public final class ConnectionPool {
             ((PooledConnection) connection).reallyClose();
         }
     }
+
     private class PooledConnection implements Connection {
         private final Connection connection;
+
         public PooledConnection(Connection c) throws SQLException {
             this.connection = c;
             this.connection.setAutoCommit(true);
         }
+
         public void reallyClose() throws SQLException {
             connection.close();
         }
+
         @Override
         public void clearWarnings() throws SQLException {
             connection.clearWarnings();

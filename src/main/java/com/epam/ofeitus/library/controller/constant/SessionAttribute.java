@@ -1,5 +1,8 @@
 package com.epam.ofeitus.library.controller.constant;
 
+/**
+ * Class with constants corresponding to session attributes names
+ */
 public class SessionAttribute {
     public static final String ERROR = "error";
     public static final String LOCALE = "locale";

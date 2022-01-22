@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Command to log in.
+ */
 public class LogInCommand implements Command {
     private final Logger logger = LogManager.getLogger(LogInCommand.class);
 

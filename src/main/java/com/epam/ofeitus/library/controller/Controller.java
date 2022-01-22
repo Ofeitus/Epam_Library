@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Controller servlet.
+ */
 public class Controller extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,6 +29,14 @@ public class Controller extends HttpServlet {
         processRequest(req, resp);
     }
 
+    /**
+     * Executes command from request parameter and forwards request or sends redirect
+     *
+     * @param request  http request
+     * @param response http response
+     * @throws ServletException is thrown when forward exception occurs
+     * @throws IOException      is thrown when redirect exception occurs
+     */
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         if (session.getAttribute(SessionAttribute.LOCALE) == null) {

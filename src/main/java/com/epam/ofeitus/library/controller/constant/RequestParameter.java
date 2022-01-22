@@ -1,5 +1,8 @@
 package com.epam.ofeitus.library.controller.constant;
 
+/**
+ * Class with constants corresponding to request parameters names
+ */
 public class RequestParameter {
     public static final String AUTHOR_NAME = "author-name";
     public static final String AUTHOR_SURNAME = "author-surname";

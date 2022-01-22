@@ -7,6 +7,9 @@ import com.epam.ofeitus.library.controller.command.impl.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class that provides command with given name.
+ */
 public class CommandFactory {
     private static final CommandFactory instance = new CommandFactory();
 
@@ -64,10 +67,21 @@ public class CommandFactory {
     private CommandFactory() {
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return the instance of <code>CommandFactory</code>
+     */
     public static CommandFactory getInstance() {
         return instance;
     }
 
+    /**
+     * Gets command.
+     *
+     * @param commandName the command name
+     * @return the command with corresponding name
+     */
     public Command getCommand(String commandName) {
         return commands.get(commandName);
     }

@@ -21,6 +21,9 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Command to search users.
+ */
 public class SearchUsersCommand implements Command {
     private final Logger logger = LogManager.getLogger(SearchUsersCommand.class);
 

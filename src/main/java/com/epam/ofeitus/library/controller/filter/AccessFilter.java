@@ -17,6 +17,9 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Filter, that controls access of users with different roles to commands of the system
+ */
 public class AccessFilter implements Filter {
     private final Map<UserRole, List<String>> commandsAvailableToRoles = new EnumMap<>(UserRole.class);
 

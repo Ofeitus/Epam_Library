@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.MissingResourceException;
 
+/**
+ * Command to issue reserved book.
+ */
 public class IssueReservedBookCommand implements Command {
     private final Logger logger = LogManager.getLogger(IssueReservedBookCommand.class);
 

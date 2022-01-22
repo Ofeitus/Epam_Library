@@ -20,6 +20,9 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.MissingResourceException;
 
+/**
+ * Command to return loaned book.
+ */
 public class ReturnLoanedBookCommand implements Command {
     private final Logger logger = LogManager.getLogger(ReturnLoanedBookCommand.class);
 

@@ -8,8 +8,11 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+/**
+ * Class, that gets notified about ServletContext lifecycle changes
+ */
 public class ContextListener implements ServletContextListener {
-    Logger logger = LogManager.getLogger(ContextListener.class);
+    private static final Logger logger = LogManager.getLogger(ContextListener.class);
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {

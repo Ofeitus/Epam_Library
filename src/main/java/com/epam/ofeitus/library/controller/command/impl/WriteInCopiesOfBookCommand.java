@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 
+/**
+ * Command to write in copies of book.
+ */
 public class WriteInCopiesOfBookCommand implements Command {
     private final Logger logger = LogManager.getLogger(WriteInCopiesOfBookCommand.class);
 

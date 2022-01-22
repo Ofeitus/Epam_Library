@@ -24,6 +24,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Command to go to book details page.
+ */
 public class GoToBookDetailsPageCommand implements Command {
     private final Logger logger = LogManager.getLogger(GoToBookDetailsPageCommand.class);
 

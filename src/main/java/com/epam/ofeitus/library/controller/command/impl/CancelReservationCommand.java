@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Command to cancel book reservation.
+ */
 public class CancelReservationCommand implements Command {
     private final Logger logger = LogManager.getLogger(CancelReservationCommand.class);
 

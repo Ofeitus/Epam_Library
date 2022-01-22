@@ -24,6 +24,9 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Command to search books in catalog.
+ */
 public class SearchBooksCommand implements Command {
     private final Logger logger = LogManager.getLogger(SearchBooksCommand.class);
 

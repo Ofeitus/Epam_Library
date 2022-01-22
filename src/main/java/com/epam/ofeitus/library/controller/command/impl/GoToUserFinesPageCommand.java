@@ -22,6 +22,9 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Command to go to user fines page.
+ */
 public class GoToUserFinesPageCommand implements Command {
     private final Logger logger = LogManager.getLogger(GoToUserFinesPageCommand.class);
 

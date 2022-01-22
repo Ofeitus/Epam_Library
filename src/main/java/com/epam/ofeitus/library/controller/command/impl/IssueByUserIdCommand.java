@@ -24,6 +24,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Command to issue book by user id.
+ */
 public class IssueByUserIdCommand implements Command {
     private final Logger logger = LogManager.getLogger(IssueByUserIdCommand.class);
 

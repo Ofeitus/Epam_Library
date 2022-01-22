@@ -21,6 +21,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * Command to go to edit book data page.
+ */
 public class GoToEditBookDataPageCommand implements Command {
     private final Logger logger = LogManager.getLogger(GoToEditBookDataPageCommand.class);
 

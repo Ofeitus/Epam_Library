@@ -27,6 +27,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Command to get reports for the given period.
+ */
 public class GetPeriodReportsCommand implements Command {
     private final Logger logger = LogManager.getLogger(GetPeriodReportsCommand.class);
 

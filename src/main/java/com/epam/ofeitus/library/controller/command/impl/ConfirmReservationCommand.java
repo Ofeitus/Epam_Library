@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Command to confirm book reservation.
+ */
 public class ConfirmReservationCommand implements Command {
     private final Logger logger = LogManager.getLogger(ConfirmReservationCommand.class);
 

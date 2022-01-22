@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Command to mark fine as paid.
+ */
 public class PayFineCommand implements Command {
     private final Logger logger = LogManager.getLogger(PayFineCommand.class);
 

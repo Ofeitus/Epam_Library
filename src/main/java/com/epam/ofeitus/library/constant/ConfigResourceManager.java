@@ -7,6 +7,10 @@ import java.math.BigDecimal;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+
+/**
+ * Class for getting config parameters values from resource bundle.
+ */
 public class ConfigResourceManager {
     private static final Logger logger = LogManager.getLogger(ConfigResourceManager.class);
 
@@ -21,10 +25,20 @@ public class ConfigResourceManager {
     private ConfigResourceManager() {
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return instance of <code>ConfigResourceManager</code>
+     */
     public static ConfigResourceManager getInstance() {
         return instance;
     }
 
+    /**
+     * Gets max member books.
+     *
+     * @return the max member books
+     */
     public int getMaxMemberBooks() {
         int maxMemberBooks = DEFAULT_MAX_MEMBER_BOOKS;
         try {
@@ -35,6 +49,11 @@ public class ConfigResourceManager {
         return maxMemberBooks;
     }
 
+    /**
+     * Gets loan period.
+     *
+     * @return the loan period
+     */
     public int getLoanPeriod() {
         int loanPeriod = DEFAULT_LOAN_PERIOD;
         try {
@@ -45,6 +64,11 @@ public class ConfigResourceManager {
         return loanPeriod;
     }
 
+    /**
+     * Gets fine rate.
+     *
+     * @return the fine rate
+     */
     public BigDecimal getFineRate() {
         BigDecimal fineRate = DEFAULT_FINE_RATE;
         try {

@@ -22,6 +22,9 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Command to search members.
+ */
 public class SearchMembersCommand implements Command {
     private final Logger logger = LogManager.getLogger(SearchMembersCommand.class);
 

@@ -20,6 +20,9 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Command to create new book and write in copies of it.
+ */
 public class WriteInCopiesOfNewBookCommand implements Command {
     private final Logger logger = LogManager.getLogger(WriteInCopiesOfNewBookCommand.class);
 

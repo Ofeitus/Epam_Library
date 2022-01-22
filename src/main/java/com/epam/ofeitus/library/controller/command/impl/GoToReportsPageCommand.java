@@ -26,6 +26,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Command to go to reports page.
+ */
 public class GoToReportsPageCommand implements Command {
     private final Logger logger = LogManager.getLogger(GoToReportsPageCommand.class);
 

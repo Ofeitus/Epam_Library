@@ -21,6 +21,9 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Command to go to manage members page.
+ */
 public class GoToManageMembersPageCommand implements Command {
     private final Logger logger = LogManager.getLogger(GoToManageMembersPageCommand.class);
 

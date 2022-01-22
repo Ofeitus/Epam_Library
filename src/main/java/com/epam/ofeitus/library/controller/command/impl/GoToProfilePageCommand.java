@@ -24,6 +24,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Command to go to profile page.
+ */
 public class GoToProfilePageCommand implements Command {
     private final Logger logger = LogManager.getLogger(GoToProfilePageCommand.class);
 

@@ -1,5 +1,8 @@
 package com.epam.ofeitus.library.constant;
 
+/**
+ * Class with constants corresponding to database column names
+ */
 public final class Column {
     public static final String BOOK_ISBN = "book_isbn";
     public static final String BOOK_TITLE = "title";

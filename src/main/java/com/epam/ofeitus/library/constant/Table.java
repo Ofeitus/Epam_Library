@@ -1,5 +1,8 @@
 package com.epam.ofeitus.library.constant;
 
+/**
+ * Class with constants corresponding to database table names.
+ */
 public class Table {
     public static final String AUTHOR_TABLE = "authors";
     public static final String BOOK_CATEGORY_TABLE = "book_categories";

@@ -1,5 +1,8 @@
 package com.epam.ofeitus.library.controller.constant;
 
+/**
+ * Class with constants corresponding to request attributes names
+ */
 public class RequestAttribute {
     public static final String AVAILABLE_COPIES_COUNT = "available_copies_count";
     public static final String BOOK = "book";

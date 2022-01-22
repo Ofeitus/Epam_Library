@@ -3,6 +3,9 @@ package com.epam.ofeitus.library.controller.filter;
 import javax.servlet.*;
 import java.io.IOException;
 
+/**
+ * Filter, that sets request and response encoding
+ */
 public class EncodingFilter implements Filter {
     private static final String REQUEST_ENCODING_PARAM = "request-encoding";
     private String encoding;
@@ -14,6 +17,7 @@ public class EncodingFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        // TODO Wtf???
         servletRequest.setCharacterEncoding(encoding);
         filterChain.doFilter(servletRequest, servletResponse);
     }

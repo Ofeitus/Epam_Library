@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Command to set role.
+ */
 public class SetRoleCommand implements Command {
     private final Logger logger = LogManager.getLogger(SetRoleCommand.class);
 

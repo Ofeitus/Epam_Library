@@ -17,6 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Filter, checks if user in session is valid
+ */
 public class UserSessionFilter implements Filter {
     private final Logger logger = LogManager.getLogger();
 

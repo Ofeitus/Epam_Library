@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Command to sign up.
+ */
 public class SignUpCommand implements Command {
     private final Logger logger = LogManager.getLogger(SignUpCommand.class);
 
