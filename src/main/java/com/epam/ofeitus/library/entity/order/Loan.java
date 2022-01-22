@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Objects;
 
+/**
+ * Loan bean class.
+ */
 public class Loan implements Serializable {
     private int loanId;
     private Date issueDate;

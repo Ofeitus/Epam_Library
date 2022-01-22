@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Objects;
 
+/**
+ * Loan Dto bean class.
+ */
 public class LoanDto {
     private int loanId;
     private Date issueDate;

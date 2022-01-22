@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Books stock report bean class.
+ */
 public class BooksStockReport {
     private int totalCountFrom;
     private int totalCountTo;

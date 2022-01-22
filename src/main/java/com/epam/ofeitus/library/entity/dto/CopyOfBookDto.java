@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Copy of book Dto bean class.
+ */
 public class CopyOfBookDto {
     private int inventoryId;
     private Date receiptDate;

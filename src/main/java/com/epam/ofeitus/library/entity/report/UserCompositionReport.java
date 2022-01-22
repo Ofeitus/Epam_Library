@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * User composition report bean class.
+ */
 public class UserCompositionReport {
     private int totalCountFrom;
     private int totalCountTo;

@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Issue report bean class.
+ */
 public class IssueReport {
     private int totalIssuedFrom;
     private int totalIssuedTo;

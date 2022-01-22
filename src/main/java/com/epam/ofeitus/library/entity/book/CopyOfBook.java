@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Copy of book bean class.
+ */
 public class CopyOfBook implements Serializable {
     private int inventoryId;
     private Date receiptDate;

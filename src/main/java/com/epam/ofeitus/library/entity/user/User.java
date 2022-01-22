@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * User bean class.
+ */
 public class User implements Serializable {
     private int userId;
     private Date registrationDate;

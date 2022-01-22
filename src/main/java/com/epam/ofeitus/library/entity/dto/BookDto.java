@@ -5,6 +5,9 @@ import com.epam.ofeitus.library.entity.book.Author;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Book Dto bean class.
+ */
 public class BookDto {
     private String isbn;
     private String title;

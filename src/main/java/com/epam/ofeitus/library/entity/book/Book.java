@@ -3,6 +3,9 @@ package com.epam.ofeitus.library.entity.book;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Book bean class.
+ */
 public class Book implements Serializable {
     private String isbn;
     private String title;

@@ -6,6 +6,9 @@ import com.epam.ofeitus.library.entity.order.constiuent.ReservationStatus;
 import java.sql.Date;
 import java.util.Objects;
 
+/**
+ * Reservation Dto bean class.
+ */
 public class ReservationDto {
     private int reservationId;
     private Date date;

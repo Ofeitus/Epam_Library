@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
+/**
+ * Reservation bean class.
+ */
 public class Reservation implements Serializable {
     private int reservationId;
     private Date date;
