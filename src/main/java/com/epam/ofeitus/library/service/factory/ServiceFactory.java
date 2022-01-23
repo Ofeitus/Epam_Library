@@ -9,6 +9,9 @@ import com.epam.ofeitus.library.service.impl.LoanServiceImpl;
 import com.epam.ofeitus.library.service.impl.ReservationsServiceImpl;
 import com.epam.ofeitus.library.service.impl.UserServiceImpl;
 
+/**
+ * Factory, that provides services.
+ */
 public class ServiceFactory {
     private static final ServiceFactory instance = new ServiceFactory();
 
@@ -20,6 +23,11 @@ public class ServiceFactory {
     private ServiceFactory() {
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return instance of ServiceFactory
+     */
     public static ServiceFactory getInstance() {
         return instance;
     }
