@@ -159,21 +159,6 @@ public class MySqlBookDao extends AbstractMySqlDao<Book> implements BookDao {
     }
 
     @Override
-    public List<Book> findByTitle(String title) throws DaoException {
-        return queryOperator.executeQuery(FIND_BY_TITLE_QUERY, title);
-    }
-
-    @Override
-    public List<Book> findByAuthorId(int authorId) throws DaoException {
-        return queryOperator.executeQuery(FIND_BY_AUTHOR_ID_QUERY, authorId);
-    }
-
-    @Override
-    public List<Book> findByCategoryId(int categoryId) throws DaoException {
-        return queryOperator.executeQuery(FIND_BY_CATEGORY_ID_QUERY, categoryId);
-    }
-
-    @Override
     public List<Book> findBySearchRequest(String searchRequest, int categoryId, int authorId, int yearFrom, int yearTo, int offset, int itemsOnPage) throws DaoException {
         List<Object> parameters = new ArrayList<>();
 

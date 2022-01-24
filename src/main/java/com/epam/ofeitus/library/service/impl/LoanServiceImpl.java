@@ -24,7 +24,7 @@ public class LoanServiceImpl implements LoansService {
         LoanDao loanDao = MySqlDaoFactory.getInstance().getLoanDao();
 
         try {
-            return loanDao.loan(userId, bookIsbn, loanPeriod) != -1;
+            return loanDao.loanByUserId(userId, bookIsbn, loanPeriod) != -1;
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
