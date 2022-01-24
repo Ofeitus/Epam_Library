@@ -90,9 +90,6 @@
                                 <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.SET_ROLE_COMMAND}">
                                 <input type="hidden" name="${RequestParameter.USER_ID}" value="${user.userId}">
                                 <select onchange="this.form.submit()" name="${RequestParameter.USER_ROLE_ID}">
-                                    <option data-content="<i class='fa fa-circle red'></i>" <c:if test="${user.userRole == 'ADMIN'}">selected</c:if> value="1">
-                                        <fmt:message key="user-role.admin" />
-                                    </option>
                                     <option data-content="<i class='fa fa-circle red'></i>" <c:if test="${user.userRole == 'MANAGER'}">selected</c:if> value="2">
                                         <fmt:message key="user-role.manager" />
                                     </option>

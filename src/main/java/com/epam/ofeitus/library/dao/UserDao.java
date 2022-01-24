@@ -11,6 +11,15 @@ import java.util.List;
  */
 public interface UserDao extends AbstractDao<User> {
     /**
+     * Find existing by userId.
+     *
+     * @param userId      userId
+     * @return User
+     * @throws DaoException thrown when dao exception occurs while executing a query
+     */
+    User findExistingById(int userId) throws DaoException;
+
+    /**
      * Find all.
      *
      * @param page        page

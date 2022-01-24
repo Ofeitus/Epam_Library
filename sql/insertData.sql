@@ -97,7 +97,7 @@ INSERT INTO `library`.`loan_status` (loan_status_id, loan_status_value) VALUES
 
 -- Loans
 INSERT INTO `library`.`loans` (loan_id, issue_date, due_date, return_date, fine_amount, user_id, inventory_id, loan_status_id) VALUES
-    ('0', '2021-12-20', '2022-01-20', null, null, '3', '6', '1'),
+    ('0', '2021-12-29', '2022-01-28', null, null, '3', '6', '1'),
     ('0', '2021-11-29', '2021-12-29', null, null, '3', '9', '1'),
     ('0', '2021-11-01', '2021-12-01', null, null, '3', '1', '1'),
     ('0', '2021-11-01', '2021-12-01', '2021-12-11', '1.5', '3', '5', '3'),

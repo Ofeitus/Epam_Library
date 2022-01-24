@@ -85,6 +85,11 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
 
     @Override
     public User findById(int userId) throws DaoException {
+        return queryOperator.executeSingleEntityQuery(FIND_BY_ID_QUERY, userId);
+    }
+
+    @Override
+    public User findExistingById(int userId) throws DaoException {
         return queryOperator.executeSingleEntityQuery(FIND_EXISTING_BY_ID_QUERY, userId);
     }
 

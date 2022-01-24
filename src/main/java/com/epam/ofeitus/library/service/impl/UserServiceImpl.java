@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
         EntityValidator<User> userValidator = ValidatorFactory.getInstance().getUserValidator();
 
         try {
-            User user = userDao.findById(userId);
+            User user = userDao.findExistingById(userId);
             user.setName(name);
             user.setSurname(surname);
             user.setPhoneNumber(phoneNumber);
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
 
         try {
-            User user = userDao.findById(userId);
+            User user = userDao.findExistingById(userId);
             if (user.getUserRole() == UserRole.ADMIN) {
                 throw new ServiceException("Can't delete.");
             }
@@ -112,7 +112,7 @@ public class UserServiceImpl implements UserService {
 
         try {
             User user = userDao.findById(userId);
-            if (user.getUserRole() == UserRole.ADMIN) {
+            if (user.getUserRole() == UserRole.ADMIN || roleId == 1) {
                 throw new ServiceException("Can't change role.");
             }
             user.setUserRole(UserRole.values()[roleId - 1]);
@@ -127,7 +127,7 @@ public class UserServiceImpl implements UserService {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
 
         try {
-            return userDao.findById(userId);
+            return userDao.findExistingById(userId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
