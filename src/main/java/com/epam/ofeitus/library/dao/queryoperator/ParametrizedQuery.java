@@ -1,5 +1,8 @@
 package com.epam.ofeitus.library.dao.queryoperator;
 
+/**
+ * Parametrized query container.
+ */
 public class ParametrizedQuery {
     private String query;
     private Object[] params;

@@ -81,7 +81,7 @@ public class MySqlReservationDao extends AbstractMySqlDao<Reservation> implement
             Column.COPY_OF_BOOK_INVENTORY_ID);
 
     public MySqlReservationDao() {
-        super(RowMapperFactory.getReservationRowMapper(), Table.RESERVATION_TABLE, Column.RESERVATION_ID);
+        super(RowMapperFactory.getInstance().getReservationRowMapper(), Table.RESERVATION_TABLE, Column.RESERVATION_ID);
     }
 
     @Override

@@ -82,7 +82,7 @@ public class MySqlCopyOfBookDao extends AbstractMySqlDao<CopyOfBook> implements 
             Column.COPY_OF_BOOK_RECEIPT_DATE);
 
     public MySqlCopyOfBookDao() {
-        super(RowMapperFactory.getCopyOfBookRowMapper(), Table.COPY_OF_BOOK_TABLE, Column.COPY_OF_BOOK_INVENTORY_ID);
+        super(RowMapperFactory.getInstance().getCopyOfBookRowMapper(), Table.COPY_OF_BOOK_TABLE, Column.COPY_OF_BOOK_INVENTORY_ID);
     }
 
     @Override

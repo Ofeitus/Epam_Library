@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlQueryOperator<T> implements QueryOperator<T> {
-    Logger logger = LogManager.getLogger(MySqlQueryOperator.class);
+    private static final Logger logger = LogManager.getLogger(MySqlQueryOperator.class);
     private final RowMapper<T> mapper;
 
     public MySqlQueryOperator(RowMapper<T> mapper) {

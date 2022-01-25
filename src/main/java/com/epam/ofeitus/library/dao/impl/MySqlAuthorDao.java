@@ -37,7 +37,7 @@ public class MySqlAuthorDao extends AbstractMySqlDao<Author> implements AuthorDa
             Column.BOOK_HAS_AUTHOR_BOOK_ISBN);
 
     public MySqlAuthorDao() {
-        super(RowMapperFactory.getAuthorRowMapper(), Table.AUTHOR_TABLE, Column.AUTHOR_ID);
+        super(RowMapperFactory.getInstance().getAuthorRowMapper(), Table.AUTHOR_TABLE, Column.AUTHOR_ID);
     }
 
     @Override

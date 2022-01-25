@@ -75,7 +75,7 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
             Column.USER_ID);
 
     public MySqlUserDao() {
-        super(RowMapperFactory.getUserRowMapper(), Table.USER_TABLE, Column.USER_ID);
+        super(RowMapperFactory.getInstance().getUserRowMapper(), Table.USER_TABLE, Column.USER_ID);
     }
 
     @Override

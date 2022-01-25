@@ -133,7 +133,7 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
             Column.LOAN_ISSUE_DATE);
 
     public MySqlLoanDao() {
-        super(RowMapperFactory.getLoanRowMapper(), Table.LOAN_TABLE, Column.LOAN_ID);
+        super(RowMapperFactory.getInstance().getLoanRowMapper(), Table.LOAN_TABLE, Column.LOAN_ID);
     }
 
     @Override

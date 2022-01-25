@@ -4,6 +4,9 @@ import com.epam.ofeitus.library.dao.*;
 import com.epam.ofeitus.library.dao.factory.DaoFactory;
 import com.epam.ofeitus.library.dao.impl.*;
 
+/**
+ * Factory, that provides dao's.
+ */
 public class MySqlDaoFactory implements DaoFactory {
     private static final MySqlDaoFactory instance = new MySqlDaoFactory();
 
@@ -18,6 +21,11 @@ public class MySqlDaoFactory implements DaoFactory {
     private MySqlDaoFactory() {
     }
 
+    /**
+     * Gets instance.
+     *
+     * @return instance of ServiceFactory
+     */
     public static MySqlDaoFactory getInstance() {
         return instance;
     }

@@ -24,7 +24,7 @@ public class MySqlBookCategoryDao extends AbstractMySqlDao<BookCategory> impleme
             Column.CATEGORY_NAME);
 
     public MySqlBookCategoryDao() {
-        super(RowMapperFactory.getBookCategoryRowMapper(), Table.BOOK_CATEGORY_TABLE, Column.BOOK_CATEGORY_ID);
+        super(RowMapperFactory.getInstance().getBookCategoryRowMapper(), Table.BOOK_CATEGORY_TABLE, Column.BOOK_CATEGORY_ID);
     }
 
     @Override

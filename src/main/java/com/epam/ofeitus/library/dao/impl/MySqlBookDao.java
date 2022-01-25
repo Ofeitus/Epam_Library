@@ -62,7 +62,7 @@ public class MySqlBookDao extends AbstractMySqlDao<Book> implements BookDao {
             Column.BOOK_CATEGORY_ID);
 
     public MySqlBookDao() {
-        super(RowMapperFactory.getBookRowMapper(), Table.BOOK_TABLE, Column.BOOK_ISBN);
+        super(RowMapperFactory.getInstance().getBookRowMapper(), Table.BOOK_TABLE, Column.BOOK_ISBN);
     }
 
     @Override
