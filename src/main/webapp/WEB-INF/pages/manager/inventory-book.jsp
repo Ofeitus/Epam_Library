@@ -53,7 +53,7 @@
                 <form style="width: 50%" class="form-horizontal" action="controller" method="post">
                     <h3 class="title"><fmt:message key="inventory-book.arrival" /></h3>
                     <input id="arrival-command" type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.WRITE_IN_COPIES_OF_BOOK_COMMAND}">
-                    <div class="form-group">
+                    <div class="form-group" id="write-in-method">
                         <label><fmt:message key="inventory-book.write-in-method" />
                             <select id="method-select" class="form-control" name="write-in-method" onchange="changeMethod()">
                                 <option value="existing-book" selected><fmt:message key="inventory-book.existing-book" /></option>
@@ -218,6 +218,7 @@
 </body>
 
 <script>
+    let selectForm = document.getElementById('write-in-method');
     let select = document.getElementById('method-select');
     let subForms = document.getElementsByClassName('existing-book');
     let arrivalCommand = document.getElementById('arrival-command');
@@ -227,13 +228,17 @@
 
     function changeMethod() {
         if (select.value === "existing-book") {
+            selectForm.setAttribute('style', 'width:50%');
             subForms[0].setAttribute('style', 'display:inline-block');
             subForms[1].setAttribute('style', 'display:inline-block');
+            subForms[2].setAttribute('style', 'display:inline-block');
             arrivalCommand.setAttribute('value', '${CommandName.WRITE_IN_COPIES_OF_BOOK_COMMAND}');
             submitArrival.innerHTML = "<fmt:message key="inventory-book.write-in" />";
         } else {
+            selectForm.setAttribute('style', 'width:100%');
             subForms[0].setAttribute('style', 'display:none');
             subForms[1].setAttribute('style', 'display:none');
+            subForms[2].setAttribute('style', 'display:none');
             arrivalCommand.setAttribute('value', '${CommandName.GOTO_ADD_NEW_BOOK_PAGE_COMMAND}');
             submitArrival.innerHTML = "<fmt:message key="inventory-book.add-new-book" />";
         }

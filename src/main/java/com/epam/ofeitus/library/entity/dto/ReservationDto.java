@@ -3,13 +3,14 @@ package com.epam.ofeitus.library.entity.dto;
 import com.epam.ofeitus.library.entity.book.Book;
 import com.epam.ofeitus.library.entity.order.constiuent.ReservationStatus;
 
-import java.sql.Date;
+import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 /**
  * Reservation Dto bean class.
  */
-public class ReservationDto {
+public class ReservationDto implements Serializable {
     private int reservationId;
     private Date date;
     private int userId;

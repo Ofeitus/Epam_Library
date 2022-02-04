@@ -35,7 +35,7 @@ public class GoToEditBookDataPageCommand implements Command {
         String bookIsbn = request.getParameter(RequestParameter.BOOK_ISBN);
 
         session.setAttribute(SessionAttribute.URL, "/controller?" +
-                RequestParameter.COMMAND + "=" + CommandName.GOTO_CATALOG_PAGE_COMMAND +
+                RequestParameter.COMMAND + "=" + CommandName.GOTO_EDIT_BOOK_DATA_PAGE_COMMAND +
                 "&" + RequestParameter.BOOK_ISBN + "=" + bookIsbn);
 
         try {

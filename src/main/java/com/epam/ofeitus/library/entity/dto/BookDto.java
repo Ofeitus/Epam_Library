@@ -2,13 +2,14 @@ package com.epam.ofeitus.library.entity.dto;
 
 import com.epam.ofeitus.library.entity.book.Author;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 /**
  * Book Dto bean class.
  */
-public class BookDto {
+public class BookDto implements Serializable {
     private String isbn;
     private String title;
     private List<Author> authors;

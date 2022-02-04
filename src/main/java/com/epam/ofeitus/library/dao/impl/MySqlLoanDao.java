@@ -235,7 +235,7 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
     }
 
     @Override
-    public void loanFromReservation(Reservation reservation, int loanPeriod) throws DaoException {
+    public int loanFromReservation(Reservation reservation, int loanPeriod) throws DaoException {
         List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
         parametrizedQueries.add(new ParametrizedQuery(
                 MAKE_RESERVED_COPY_OF_BOOK_LOANED_BY_ID_QUERY,
@@ -252,11 +252,11 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
                 reservation.getUserId(),
                 reservation.getInventoryId(),
                 LoanStatus.ISSUED.ordinal() + 1));
-        queryOperator.executeTransaction(parametrizedQueries);
+        return queryOperator.executeTransaction(parametrizedQueries);
     }
 
     @Override
-    public void returnNoFine(Loan loan) throws DaoException {
+    public int returnNoFine(Loan loan) throws DaoException {
         List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
         parametrizedQueries.add(new ParametrizedQuery(
                 MAKE_COPY_OF_BOOK_AVAILABLE_QUERY,
@@ -271,11 +271,11 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
                 loan.getInventoryId(),
                 LoanStatus.RETURNED.ordinal() + 1,
                 loan.getLoanId()));
-        queryOperator.executeTransaction(parametrizedQueries);
+        return queryOperator.executeTransaction(parametrizedQueries);
     }
 
     @Override
-    public void returnWithFine(Loan loan, BigDecimal fineRate) throws DaoException {
+    public int returnWithFine(Loan loan, BigDecimal fineRate) throws DaoException {
         List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
         parametrizedQueries.add(new ParametrizedQuery(
                 MAKE_COPY_OF_BOOK_AVAILABLE_QUERY,
@@ -293,7 +293,7 @@ public class MySqlLoanDao extends AbstractMySqlDao<Loan> implements LoanDao {
                 loan.getInventoryId(),
                 LoanStatus.FINED.ordinal() + 1,
                 loan.getLoanId()));
-        queryOperator.executeTransaction(parametrizedQueries);
+        return queryOperator.executeTransaction(parametrizedQueries);
     }
 
     @Override

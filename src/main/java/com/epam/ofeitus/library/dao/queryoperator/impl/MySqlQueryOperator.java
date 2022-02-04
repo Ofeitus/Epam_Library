@@ -81,13 +81,7 @@ public class MySqlQueryOperator<T> implements QueryOperator<T> {
         try (Connection connection = ConnectionPool.getInstance().takeConnection();
              PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             setStatementParams(statement, params);
-            int rowsAffected = statement.executeUpdate();
-            ResultSet generatedKeys = statement.getGeneratedKeys();
-            if (generatedKeys != null && generatedKeys.next()) {
-                return generatedKeys.getInt(1);
-            } else {
-                return rowsAffected;
-            }
+            return statement.executeUpdate();
         } catch (SQLException e) {
             logger.error("Unable to execute update query.", e);
             throw new DaoException("Unable to execute update query.", e);
@@ -126,20 +120,19 @@ public class MySqlQueryOperator<T> implements QueryOperator<T> {
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             connection.setAutoCommit(false);
-            int firstQueryGeneratedKey = -1;
+            int firstQueryResult = -1;
             boolean idSet = false;
             for (ParametrizedQuery query : queries) {
                 PreparedStatement statement = connection.prepareStatement(query.getQuery(), Statement.RETURN_GENERATED_KEYS);
                 setStatementParams(statement, query.getParams());
-                statement.executeUpdate();
-                ResultSet generatedKeys = statement.getGeneratedKeys();
-                if (!idSet && generatedKeys != null && generatedKeys.next()) {
-                    firstQueryGeneratedKey = generatedKeys.getInt(1);
+                int result = statement.executeUpdate();
+                if (!idSet) {
+                    firstQueryResult = result;
                     idSet = true;
                 }
             }
             connection.commit();
-            return firstQueryGeneratedKey;
+            return firstQueryResult;
         } catch (SQLException e) {
             logger.error("Unable to execute update query.", e);
             rollbackTransaction(connection);

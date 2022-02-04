@@ -1,5 +1,6 @@
 package com.epam.ofeitus.library.entity.report;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -7,7 +8,7 @@ import java.util.Objects;
 /**
  * Issue report bean class.
  */
-public class IssueReport {
+public class IssueReport implements Serializable {
     private int totalIssuedFrom;
     private int totalIssuedTo;
     private int totalIssuedReservedFrom;

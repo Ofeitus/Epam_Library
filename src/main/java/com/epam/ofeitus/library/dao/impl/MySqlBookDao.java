@@ -44,22 +44,6 @@ public class MySqlBookDao extends AbstractMySqlDao<Book> implements BookDao {
             "SELECT * FROM %s WHERE %s=?",
             Table.BOOK_TABLE,
             Column.BOOK_ISBN);
-    private static final String FIND_BY_TITLE_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=?",
-            Table.BOOK_TABLE,
-            Column.BOOK_TITLE);
-    private static final String FIND_BY_AUTHOR_ID_QUERY = String.format(
-            "SELECT * FROM %s JOIN %s BhA ON %s.%s = BhA.%s WHERE %s=?",
-            Table.BOOK_TABLE,
-            Table.BOOK_HAS_AUTHOR_TABLE,
-            Table.BOOK_TABLE,
-            Column.BOOK_ISBN,
-            Column.BOOK_ISBN,
-            Column.AUTHOR_ID);
-    private static final String FIND_BY_CATEGORY_ID_QUERY = String.format(
-            "SELECT * FROM %s WHERE %s=?",
-            Table.BOOK_TABLE,
-            Column.BOOK_CATEGORY_ID);
 
     public MySqlBookDao() {
         super(RowMapperFactory.getInstance().getBookRowMapper(), Table.BOOK_TABLE, Column.BOOK_ISBN);

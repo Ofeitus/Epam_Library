@@ -79,6 +79,12 @@
                             </c:forEach>
                         </label>
                     </div>
+                    <c:if test="${sessionScope.error != null}">
+                        <div class="w-100 row justify-content-left">
+                            <label class="error-message">${sessionScope.error}</label>
+                                ${sessionScope.remove("error")}
+                        </div>
+                    </c:if>
                     <i id="addAuthor" class="bi bi-plus" style="font-size: 32px;color: forestgreen"></i>
                     <div class="w-100 row justify-content-end">
                         <button class="h-50 col-3 btn submit"><fmt:message key="edit-book-data.save-changes" /></button>

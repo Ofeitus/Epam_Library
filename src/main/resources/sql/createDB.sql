@@ -244,4 +244,4 @@ DROP EVENT IF EXISTS delete_outdated_reservations;
 
 CREATE EVENT IF NOT EXISTS delete_outdated_reservations ON SCHEDULE
     EVERY 1 DAY STARTS (TIMESTAMP(CURRENT_DATE) + INTERVAL 1 DAY + INTERVAL 1 HOUR) DO
-    DELETE FROM reservations WHERE reservation_status_id != 3 AND date < DATE_SUB(CURRENT_DATE(), INTERVAL 5 DAY)
+    DELETE FROM reservations WHERE reservation_status_id != 3 AND date < DATE_SUB(CURDATE(), INTERVAL 5 DAY)

@@ -6,7 +6,6 @@ import com.epam.ofeitus.library.dao.UserDao;
 import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
 import com.epam.ofeitus.library.entity.user.User;
-import com.epam.ofeitus.library.service.exception.ServiceException;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -117,16 +117,18 @@ public interface LoanDao extends AbstractDao<Loan> {
      * @param reservation reservation
      * @param loanPeriod  loan period
      * @throws DaoException thrown when dao exception occurs while executing a query
+     * @return
      */
-    void loanFromReservation(Reservation reservation, int loanPeriod) throws DaoException;
+    int loanFromReservation(Reservation reservation, int loanPeriod) throws DaoException;
 
     /**
      * Makes copy of book available, updates loan return date and makes it returned.
      *
      * @param loan loan
      * @throws DaoException thrown when dao exception occurs while executing a query
+     * @return
      */
-    void returnNoFine(Loan loan) throws DaoException;
+    int returnNoFine(Loan loan) throws DaoException;
 
     /**
      * Makes copy of book available, updates loan return date and fine amount, makes it fined.
@@ -134,6 +136,7 @@ public interface LoanDao extends AbstractDao<Loan> {
      * @param loan     loan
      * @param fineRate fine rate
      * @throws DaoException thrown when dao exception occurs while executing a query
+     * @return
      */
-    void returnWithFine(Loan loan, BigDecimal fineRate) throws DaoException;
+    int returnWithFine(Loan loan, BigDecimal fineRate) throws DaoException;
 }

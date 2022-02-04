@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.epam.ofeitus.library</groupId>
-    <artifactId>Epam_Library</artifactId>
+    <artifactId>WebLib</artifactId>
     <version>0.0.1</version>
     <packaging>war</packaging>
 
@@ -23,6 +23,12 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.4.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
 
@@ -49,6 +55,11 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.25</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>sqltool</artifactId>
+            <version>2.6.1</version>
         </dependency>
 
         <!-- Log4j -->
@@ -77,11 +88,15 @@
     </dependencies>
 
     <build>
+        <finalName>WebLib</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.1</version>
+                <configuration>
+                    <outputDirectory>D:\Tomcat\apache-tomcat-9.0.56\webapps\</outputDirectory>
+                </configuration>
             </plugin>
         </plugins>
     </build>

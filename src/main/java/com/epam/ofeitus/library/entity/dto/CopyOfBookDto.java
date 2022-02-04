@@ -2,6 +2,7 @@ package com.epam.ofeitus.library.entity.dto;
 
 import com.epam.ofeitus.library.entity.book.constituent.CopyOfBookStatus;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
@@ -9,7 +10,7 @@ import java.util.Objects;
 /**
  * Copy of book Dto bean class.
  */
-public class CopyOfBookDto {
+public class CopyOfBookDto implements Serializable {
     private int inventoryId;
     private Date receiptDate;
     private BigDecimal price;

@@ -1,5 +1,6 @@
 package com.epam.ofeitus.library.entity.report;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -7,7 +8,7 @@ import java.util.Objects;
 /**
  * User composition report bean class.
  */
-public class UserCompositionReport {
+public class UserCompositionReport implements Serializable {
     private int totalCountFrom;
     private int totalCountTo;
     private int adminCountFrom;

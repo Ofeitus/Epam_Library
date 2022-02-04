@@ -3,14 +3,15 @@ package com.epam.ofeitus.library.entity.dto;
 import com.epam.ofeitus.library.entity.book.Book;
 import com.epam.ofeitus.library.entity.order.constiuent.LoanStatus;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 
 /**
  * Loan Dto bean class.
  */
-public class LoanDto {
+public class LoanDto implements Serializable {
     private int loanId;
     private Date issueDate;
     private Date dueDate;

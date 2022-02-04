@@ -1,5 +1,6 @@
 package com.epam.ofeitus.library.entity.report;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
@@ -7,7 +8,7 @@ import java.util.Objects;
 /**
  * Books stock report bean class.
  */
-public class BooksStockReport {
+public class BooksStockReport implements Serializable {
     private int totalCountFrom;
     private int totalCountTo;
     private BigDecimal totalPriceFrom;
