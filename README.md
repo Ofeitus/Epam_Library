@@ -80,4 +80,4 @@
     - Get report for the period
 
 ## Database Diagram
-![](https://i.ibb.co/YhgZdRS/db.png)
+[![db.png](https://i.postimg.cc/RZNn5QCN/db.png)](https://postimg.cc/5XWt8zCV)
