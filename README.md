@@ -78,3 +78,6 @@
     - Restore user
 - View reports
     - Get report for the period
+
+## Database Diagram
+![](https://i.ibb.co/YhgZdRS/db.png)
