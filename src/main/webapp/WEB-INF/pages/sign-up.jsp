@@ -20,7 +20,7 @@
                 <div class="form-container">
                     <h3 class="title"><fmt:message key="sign-up.sign-up" /></h3>
                     <form class="form-horizontal" action="controller" method="post">
-                        <--input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.SIGN_UP_COMMAND}">
+                        <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.SIGN_UP_COMMAND}">
                         <div class="form-group">
                             <label><fmt:message key="sign-up.name" />
                                 <input class="form-control" type="text" pattern="${ValidationPattern.NAME_PATTERN}" title="<fmt:message key="validation-pattern.name" />"

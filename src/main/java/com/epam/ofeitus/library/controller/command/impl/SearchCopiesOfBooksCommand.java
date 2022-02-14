@@ -36,7 +36,11 @@ public class SearchCopiesOfBooksCommand implements Command {
         String status = request.getParameter(RequestParameter.STATUS);
 
         try {
-            int inventoryId = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.INVENTORY_ID)).orElse("0"));
+            String invIdParam = request.getParameter(RequestParameter.INVENTORY_ID);
+            if (invIdParam == null || invIdParam.equals("")) {
+                invIdParam = "0";
+            }
+            int inventoryId = Integer.parseInt(invIdParam);
             int statusId;
             switch (status) {
                 case RequestParameter.STATUS_EXISTING:
