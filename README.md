@@ -1,12 +1,12 @@
 # WebLib - Web library platform
 
-*description*
+The WebLib platform provides functionality to automate library management, including an interactive catalog, online booking, book stock management, and library activity reports.
 
 ## Roles
 
 ### Guest
 - Log in
-- Sign up *(needs validation)*
+- Sign up
 - View "About" page
 - View "Contacts" page
 - View books catalog
@@ -23,7 +23,7 @@
 - View book details
     - Reserve book
 - View your profile
-    - Edit personal data *(needs validation)*
+    - Edit personal data
 - View your loan
 - View your reservations
     - Cancel reservation
@@ -37,15 +37,15 @@
 - View books catalog
     - Search books
 - View book details
-    - Edit book data *(needs validation)*
+    - Edit book data
     - Delete book
     - Issue book by user id
 - View your profile
-    - Edit personal data *(needs validation)*
+    - Edit personal data
 - View inventory book
     - Search copies of books
     - Write in copies of existing book
-    - Write in copies of new book *(needs validation)*
+    - Write in copies of new book
     - Write off copies of books
     - Delete copy of book
 - View recent reservations
