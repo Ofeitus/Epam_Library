@@ -14,7 +14,6 @@ The WebLib platform provides functionality to automate library management, inclu
 - View book details
 
 ### Member
-- Log in
 - Log out
 - View "About" page
 - View "Contacts" page
@@ -30,7 +29,6 @@ The WebLib platform provides functionality to automate library management, inclu
 - View your fines
 
 ### Manager
-- Log in
 - Log out
 - View "About" page
 - View "Contacts" page
@@ -64,13 +62,14 @@ The WebLib platform provides functionality to automate library management, inclu
             - Set fine status as paid
 
 ### Admin (Director)
-- Log in
 - Log out
 - View "About" page
 - View "Contacts" page
 - View books catalog
     - Search books
 - View book details
+- View your profile
+    - Edit personal data
 - View list of users
     - Search users
     - Set user role
