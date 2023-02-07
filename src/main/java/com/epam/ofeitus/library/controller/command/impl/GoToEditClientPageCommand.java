@@ -40,7 +40,7 @@ public class GoToEditClientPageCommand implements Command {
 
             return new CommandResult(Page.EDIT_CLIENT_DATA_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
-            logger.error("Unable to get book DTO.", e);
+            logger.error("Unable to go to edit client page.", e);
         }
         return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }

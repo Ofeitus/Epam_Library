@@ -20,6 +20,7 @@ public class CommandFactory {
         put(CommandName.DELETE_COPY_OF_BOOK_COMMAND, new DeleteCopyOfBookCommand());
         put(CommandName.DELETE_USER_COMMAND, new DeleteUserCommand());
         put(CommandName.EDIT_BOOK_DATA_COMMAND, new EditBookDataCommand());
+        put(CommandName.EDIT_CLIENT_DATA_COMMAND, new EditClientDataCommand());
         put(CommandName.EDIT_PERSONAL_DATA_COMMAND, new EditPersonalDataCommand());
         put(CommandName.GET_PERIOD_REPORTS_COMMAND, new GetPeriodReportsCommand());
         put(CommandName.GOTO_403_PAGE_COMMAND, new GoTo403PageCommand());

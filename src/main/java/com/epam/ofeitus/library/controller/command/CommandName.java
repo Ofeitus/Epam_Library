@@ -10,7 +10,7 @@ public class CommandName {
     public static final String DELETE_COPY_OF_BOOK_COMMAND = "delete-copy-of-book";
     public static final String DELETE_USER_COMMAND = "delete-user";
     public static final String EDIT_BOOK_DATA_COMMAND = "edit-book-data";
-    public static final String EDIT_CLIENT_DATA_COMMAND = "edit-personal-data";
+    public static final String EDIT_CLIENT_DATA_COMMAND = "edit-client-data";
     public static final String EDIT_PERSONAL_DATA_COMMAND = "edit-personal-data";
     public static final String GET_PERIOD_REPORTS_COMMAND = "get-period-reports";
     public static final String GOTO_403_PAGE_COMMAND = "goto-403-page";

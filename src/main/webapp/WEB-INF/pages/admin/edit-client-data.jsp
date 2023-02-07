@@ -189,17 +189,17 @@
                     <div class="form-group" style="width: 25%;">
                         <label>Пенсионер
                             <input type="checkbox"
-                                   name="${RequestParameter.USER_PENSIONER}" value="${requestScope.client.pensioner}" required>
+                                   name="${RequestParameter.USER_PENSIONER}" value="${requestScope.client.pensioner}">
                         </label>
                     </div>
                     <div class="form-group" style="width: 25%;">
                         <label>Военнообязанный
                             <input type="checkbox"
-                                   name="${RequestParameter.USER_CONSCRIPT}" value="${requestScope.client.conscript}" required>
+                                   name="${RequestParameter.USER_CONSCRIPT}" value="${requestScope.client.conscript}">
                         </label>
                     </div>
                     <div class="w-100 row justify-content-end">
-                        <button class="h-50 col-3 btn submit"><fmt:message key="edit-book-data.save-changes" /></button>
+                        <button type="submit" class="h-50 col-3 btn submit"><fmt:message key="edit-book-data.save-changes" /></button>
                     </div>
                 </form>
             </div>

@@ -1,5 +1,6 @@
 package com.epam.ofeitus.library.service.impl;
 
+import com.epam.ofeitus.library.constant.Column;
 import com.epam.ofeitus.library.dao.UserDao;
 import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.dao.factory.impl.MySqlDaoFactory;
@@ -14,6 +15,7 @@ import com.epam.ofeitus.library.service.validator.ValidationPattern;
 import com.epam.ofeitus.library.service.validator.ValidatorFactory;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -53,6 +55,49 @@ public class UserServiceImpl implements UserService {
         }
 
         return user;
+    }
+
+    @Override
+    public boolean editUser(int userId, String name, String surname, String patronymic, Date dateOfBirth, boolean gender, String passportSeries, String passportNumber, String issuedBy, Date dateOfIssuing, String passportId, String placeOfBirth, int cityOfLiving, String address, String phoneHome, String phoneMobile, String email, String placeOfWork, String jobTitle, int cityOfRegistration, String addressOfRegistration, int familyStatus, int disability, boolean pensioner, BigDecimal salary, boolean conscript) throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+        //EntityValidator<User> userValidator = ValidatorFactory.getInstance().getUserValidator();
+
+        try {
+            User user = userDao.findExistingById(userId);
+            user.setName(name);
+            user.setSurname(surname);
+            user.setPatronymic(patronymic);
+            user.setDateOfBirth(dateOfBirth);
+            user.setGender(gender);
+            user.setPassportSeries(passportSeries);
+            user.setPassportNumber(passportNumber);
+            user.setIssuedBy(issuedBy);
+            user.setDateOfIssuing(dateOfIssuing);
+            user.setPassportId(passportId);
+            user.setPlaceOfBirth(placeOfBirth);
+            user.setCityOfLiving(cityOfLiving);
+            user.setAddress(address);
+            user.setPhoneHome(phoneHome);
+            user.setPhoneMobile(phoneMobile);
+            user.setEmail(email);
+            user.setPlaceOfWork(placeOfWork);
+            user.setJobTitle(jobTitle);
+            user.setCityOfRegistration(cityOfRegistration);
+            user.setAddressOfRegistration(addressOfRegistration);
+            user.setFamilyStatus(familyStatus);
+            user.setDisability(disability);
+            user.setPensioner(pensioner);
+            user.setSalary(salary);
+            user.setConscript(conscript);
+
+            //if (!userValidator.validate(user)) {
+            //    return false;
+            //}
+
+            return userDao.update(user) == 1;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override

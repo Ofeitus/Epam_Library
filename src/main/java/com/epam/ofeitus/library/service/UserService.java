@@ -4,6 +4,7 @@ import com.epam.ofeitus.library.entity.report.UserCompositionReport;
 import com.epam.ofeitus.library.entity.user.User;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -33,16 +34,18 @@ public interface UserService {
      */
     User login(String email, String password) throws ServiceException;
 
-    /**
-     * Edit personal data.
-     *
-     * @param userId      user id
-     * @param name        user name
-     * @param surname     user surname
-     * @param phoneNumber user phone number
-     * @return if user data was successfully edited
-     * @throws ServiceException thrown when dao exception occurs
-     */
+    boolean editUser(int userId, String name, String surname, String patronymic, Date dateOfBirth, boolean gender, String passportSeries, String passportNumber, String issuedBy, Date dateOfIssuing, String passportId, String placeOfBirth, int cityOfLiving, String address, String phoneHome, String phoneMobile, String email, String placeOfWork, String jobTitle, int cityOfRegistration, String addressOfRegistration, int familyStatus, int disability, boolean pensioner, BigDecimal salary, boolean conscript) throws ServiceException;
+
+        /**
+         * Edit personal data.
+         *
+         * @param userId      user id
+         * @param name        user name
+         * @param surname     user surname
+         * @param phoneNumber user phone number
+         * @return if user data was successfully edited
+         * @throws ServiceException thrown when dao exception occurs
+         */
     boolean editPersonalData(int userId, String name, String surname, String phoneNumber) throws ServiceException;
 
     /**

@@ -9,6 +9,7 @@ import com.epam.ofeitus.library.controller.constant.RequestAttribute;
 import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
 import com.epam.ofeitus.library.entity.user.User;
+import com.epam.ofeitus.library.entity.user.constituent.UserRole;
 import com.epam.ofeitus.library.service.UserService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 import com.epam.ofeitus.library.service.factory.ServiceFactory;
@@ -42,6 +43,7 @@ public class GoToManageUsersPageCommand implements Command {
             session.setAttribute(SessionAttribute.URL_WITHOUT_PAGE, command);
 
             List<User> users = userService.getAll(page, itemsOnPage);
+            users.removeIf(user -> user.getUserRole() == UserRole.ADMIN);
 
             int itemsCount = userService.countAll();
             int pagesCount = itemsCount / itemsOnPage;

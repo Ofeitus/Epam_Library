@@ -3,6 +3,7 @@ package com.epam.ofeitus.library.entity.user;
 import com.epam.ofeitus.library.entity.user.constituent.UserRole;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
@@ -34,7 +35,7 @@ public class User implements Serializable {
     private int familyStatus;
     private int disability;
     private boolean pensioner;
-    private int salary;
+    private BigDecimal salary;
     private boolean conscript;
     private String phoneNumber;
     private String email;
@@ -57,7 +58,7 @@ public class User implements Serializable {
         this.deleted = deleted;
     }
 
-    public User(int userId, Date registrationDate, String name, String surname, String patronymic, Date dateOfBirth, boolean gender, String passportSeries, String passportNumber, String issuedBy, Date dateOfIssuing, String passportId, String placeOfBirth, int cityOfLiving, String address, String phoneHome, String phoneMobile, String placeOfWork, String jobTitle, int cityOfRegistration, String addressOfRegistration, int familyStatus, int disability, boolean pensioner, int salary, boolean conscript, String phoneNumber, String email, String passwordHash, UserRole userRole, boolean deleted) {
+    public User(int userId, Date registrationDate, String name, String surname, String patronymic, Date dateOfBirth, boolean gender, String passportSeries, String passportNumber, String issuedBy, Date dateOfIssuing, String passportId, String placeOfBirth, int cityOfLiving, String address, String phoneHome, String phoneMobile, String placeOfWork, String jobTitle, int cityOfRegistration, String addressOfRegistration, int familyStatus, int disability, boolean pensioner, BigDecimal salary, boolean conscript, String phoneNumber, String email, String passwordHash, UserRole userRole, boolean deleted) {
         this.userId = userId;
         this.registrationDate = registrationDate;
         this.name = name;
@@ -323,11 +324,11 @@ public class User implements Serializable {
         this.pensioner = pensioner;
     }
 
-    public int getSalary() {
+    public BigDecimal getSalary() {
         return salary;
     }
 
-    public void setSalary(int salary) {
+    public void setSalary(BigDecimal salary) {
         this.salary = salary;
     }
 

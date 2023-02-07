@@ -15,7 +15,8 @@
 <body>
 <jsp:include page="../tamplate/header.jsp" />
 <div class="manage-members-container">
-    <h2><fmt:message key="header.manage-users" /></h2>
+    <h2>Управление клиентами</h2>
+    <!--
     <div class="manage-members-forms">
         <div class="form-container" style="width: 60%">
             <h3 class="title"><fmt:message key="inventory-book.search-page" /></h3>
@@ -49,13 +50,14 @@
         </div>
         <img style="align-self: center; height: 250px" src="${pageContext.request.contextPath}/images/manager-pusheen.png" alt="">
     </div>
+    -->
 </div>
 <div class="table-container" style="margin-top: 0">
     <div style="display: flex; justify-content: space-between">
-        <h3><fmt:message key="manage-users.registered-users" /></h3>
+        <h3>Зарегистрированные клиенты</h3>
         <form class="lab-piris" action="controller" method="post">
             <input type="hidden" name="${RequestParameter.COMMAND}" value="goto-add-client-page">
-            <button type="submit" class="link-h-50 col-3 btn submit">Add client</button>
+            <button type="submit" class="link-h-50 col-4 btn submit">Добавить клиента</button>
         </form>
     </div>
     <table class="table table-bordered table-striped">
@@ -64,9 +66,10 @@
             <th scope="col"><fmt:message key="manage-users.id" /></th>
             <th scope="col"><fmt:message key="manage-users.name" /></th>
             <th scope="col"><fmt:message key="manage-users.surname" /></th>
-            <th scope="col"><fmt:message key="manage-users.phone-number" /></th>
+            <th scope="col">Дата рождения</th>
+            <!--th scope="col"><fmt:message key="manage-users.phone-number" /></th-->
             <th scope="col"><fmt:message key="manage-users.email" /></th>
-            <th scope="col"><fmt:message key="manage-users.role" /></th>
+            <!--th scope="col"><fmt:message key="manage-users.role" /></th-->
             <th scope="col">Edit</th>
             <th scope="col"><fmt:message key="manage-users.deletion" /></th>
         </tr>
@@ -77,8 +80,9 @@
                 <td>${user.userId}</td>
                 <td>${user.name}</td>
                 <td>${user.surname}</td>
-                <td>${user.phoneNumber}</td>
+                <td>${user.dateOfBirth}</td>
                 <td>${user.email}</td>
+                <!--
                 <td>
                     <c:choose>
                         <c:when test="${user.userRole == 'ADMIN'}">
@@ -121,6 +125,7 @@
                         </c:choose>
                     </c:if>
                 </td>
+                -->
                 <td style="text-align: center">
                     <form action="controller" method="post">
                         <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.GOTO_EDIT_CLIENT_PAGE_COMMAND}">

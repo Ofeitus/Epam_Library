@@ -36,7 +36,7 @@ public class UserRowMapper implements RowMapper<User> {
         user.setFamilyStatus(resultSet.getInt(Column.USER_FAMILY_STATUS));
         user.setDisability(resultSet.getInt(Column.USER_DISABILITY));
         user.setPensioner(resultSet.getBoolean(Column.USER_PENSIONER));
-        user.setSalary(resultSet.getInt(Column.USER_SALARY));
+        user.setSalary(resultSet.getBigDecimal(Column.USER_SALARY));
         user.setConscript(resultSet.getBoolean(Column.USER_CONSCRIPT));
         user.setPhoneNumber(resultSet.getString(Column.USER_PHONE_NUMBER));
         user.setEmail(resultSet.getString(Column.USER_EMAIL));
