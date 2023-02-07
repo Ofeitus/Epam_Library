@@ -15,7 +15,7 @@ public class UserValidator implements EntityValidator<User> {
                 user.getSurname() != null &&
                 Pattern.compile(ValidationPattern.NAME_PATTERN).matcher(user.getSurname()).matches() &&
                 user.getPhoneNumber() != null &&
-                Pattern.compile(ValidationPattern.PHONE_PATTERN).matcher(user.getPhoneNumber()).matches() &&
+                Pattern.compile(ValidationPattern.MOBILE_PHONE_PATTERN).matcher(user.getPhoneNumber()).matches() &&
                 user.getEmail() != null &&
                 Pattern.compile(ValidationPattern.EMAIL_PATTERN).matcher(user.getEmail()).matches();
     }

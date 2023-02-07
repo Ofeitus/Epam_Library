@@ -70,7 +70,7 @@
             <!--th scope="col"><fmt:message key="manage-users.phone-number" /></th-->
             <th scope="col"><fmt:message key="manage-users.email" /></th>
             <!--th scope="col"><fmt:message key="manage-users.role" /></th-->
-            <th scope="col">Edit</th>
+            <th scope="col">Редактировать</th>
             <th scope="col"><fmt:message key="manage-users.deletion" /></th>
         </tr>
         </thead>

@@ -24,7 +24,7 @@
                     <input type="hidden" name="${RequestParameter.USER_ID}" value="${requestScope.client.userId}">
                     <div class="form-group" style="width: 33%;">
                         <label>Фамилия
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control" pattern="${ValidationPattern.NAME_PATTERN}"
                                    name="${RequestParameter.USER_SURNAME}" value="${requestScope.client.surname}" minlength="1" maxlength="100" required>
                         </label>
                     </div>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="form-group" style="width: 33%;">
                         <label>Отчество
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control" pattern="${ValidationPattern.NAME_PATTERN}"
                                    name="${RequestParameter.USER_PATRONYMIC}" value="${requestScope.client.patronymic}" minlength="1" maxlength="100" required>
                         </label>
                     </div>
@@ -50,10 +50,10 @@
                         <label>Пол</label>
                         <fieldset style="display: flex; flex-direction: row">
                             <input type="radio" id="male"
-                                   name="${RequestParameter.USER_GENDER}" value="${requestScope.client.gender}" required>
+                                   name="${RequestParameter.USER_GENDER}" value="m" <c:if test="${requestScope.client.gender}">checked</c:if> required>
                             <label for="male">М</label>
                             <input type="radio" id="female"
-                                   name="${RequestParameter.USER_GENDER}" value="${requestScope.client.gender}" required>
+                                   name="${RequestParameter.USER_GENDER}" value="f" <c:if test="${!requestScope.client.gender}">checked</c:if> required>
                             <label for="female">Ж</label>
                         </fieldset>
                     </div>
@@ -66,13 +66,13 @@
                     </div>
                     <div class="form-group" style="width: 33%;">
                         <label>Номер паспорта
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control" pattern="${ValidationPattern.PASSPORT_NUMBER}"
                                    name="${RequestParameter.USER_PASSPORT_NUMBER}" value="${requestScope.client.passportNumber}" minlength="1" maxlength="100" required>
                         </label>
                     </div>
                     <div class="form-group" style="width: 33%;">
                         <label>Идент. номер
-                            <input type="text" class="form-control"
+                            <input type="text" class="form-control" pattern="${ValidationPattern.PASSPORT_ID}"
                                    name="${RequestParameter.USER_PASSPORT_ID}" value="${requestScope.client.passportId}" minlength="1" maxlength="100" required>
                         </label>
                     </div>
@@ -97,11 +97,12 @@
                     </div>
                     <div class="form-group" style="width: 33%">
                         <label>Город факт. проживания
-                            <select class="form-control" name="${RequestParameter.CITY_OF_LIVING}">
+                            <select id="select4" class="form-control" name="${RequestParameter.CITY_OF_LIVING}">
                                 <option value="1" selected>Минск</option>
                                 <option value="2">Столбцы</option>
                                 <option value="3">Барановичи</option>
                                 <option value="4">Вилейка</option>
+                                <option value="5">Гомель</option>
                             </select>
                         </label>
                     </div>
@@ -113,11 +114,12 @@
                     </div>
                     <div class="form-group" style="width: 33%;">
                         <label>Город прописки
-                            <select class="form-control" name="${RequestParameter.CITY_OF_REGISTRATION}">
+                            <select id="select3" class="form-control" name="${RequestParameter.CITY_OF_REGISTRATION}">
                                 <option value="1" selected>Минск</option>
                                 <option value="2">Столбцы</option>
                                 <option value="3">Барановичи</option>
                                 <option value="4">Вилейка</option>
+                                <option value="5">Гомель</option>
                             </select>
                         </label>
                     </div>
@@ -130,19 +132,19 @@
                     <h3 class="title">Контакты</h3>
                     <div class="form-group" style="width: 33%;">
                         <label>Телефон дом.
-                            <input type="tel" class="form-control"
+                            <input type="tel" class="form-control" pattern="${ValidationPattern.HOME_PHONE_PATTERN}"
                                    name="${RequestParameter.USER_PHONE_HOME}" value="${requestScope.client.phoneHome}">
                         </label>
                     </div>
                     <div class="form-group" style="width: 33%;">
                         <label>Телефон моб.
-                            <input type="tel" class="form-control"
+                            <input type="tel" class="form-control" pattern="${ValidationPattern.MOBILE_PHONE_PATTERN}"
                                    name="${RequestParameter.USER_PHONE_MOBILE}" value="${requestScope.client.phoneMobile}">
                         </label>
                     </div>
                     <div class="form-group" style="width: 33%;">
                         <label>Email
-                            <input type="email" class="form-control"
+                            <input type="email" class="form-control" pattern="${ValidationPattern.EMAIL_PATTERN}"
                                    name="${RequestParameter.USER_EMAIL}" value="${requestScope.client.email}" minlength="1" maxlength="100">
                         </label>
                     </div>
@@ -168,7 +170,7 @@
                     <h3 class="title">Другое</h3>
                     <div class="form-group" style="width: 25%;">
                         <label>Семейное положение
-                            <select class="form-control" name="${RequestParameter.FAMILY_STATUS}">
+                            <select id="select2" class="form-control" name="${RequestParameter.FAMILY_STATUS}">
                                 <option value="1" selected>Не замужем, не женат</option>
                                 <option value="2">Замужем, женат</option>
                                 <option value="3">Разведён, разведена</option>
@@ -178,8 +180,8 @@
                     </div>
                     <div class="form-group" style="width: 25%;">
                         <label>Инвалидность
-                            <select class="form-control" name="${RequestParameter.DISABILITY}">
-                                <option value="1" selected>Нет</option>
+                            <select id="select1" class="form-control" name="${RequestParameter.DISABILITY}">
+                                <option value="1">Нет</option>
                                 <option value="2">I группа</option>
                                 <option value="3">II группа</option>
                                 <option value="4">III группа</option>
@@ -189,13 +191,13 @@
                     <div class="form-group" style="width: 25%;">
                         <label>Пенсионер
                             <input type="checkbox"
-                                   name="${RequestParameter.USER_PENSIONER}" value="${requestScope.client.pensioner}">
+                                   name="${RequestParameter.USER_PENSIONER}" <c:if test="${requestScope.client.pensioner}">checked</c:if>>
                         </label>
                     </div>
                     <div class="form-group" style="width: 25%;">
                         <label>Военнообязанный
                             <input type="checkbox"
-                                   name="${RequestParameter.USER_CONSCRIPT}" value="${requestScope.client.conscript}">
+                                   name="${RequestParameter.USER_CONSCRIPT}" <c:if test="${requestScope.client.conscript}">checked</c:if>>
                         </label>
                     </div>
                     <div class="w-100 row justify-content-end">
@@ -208,4 +210,28 @@
 </div>
 <jsp:include page="../tamplate/footer.jsp" />
 </body>
+
+<script>
+    document.getElementById("select1").value = ${requestScope.client.disability};
+    document.getElementById("select2").value = ${requestScope.client.familyStatus};
+    document.getElementById("select3").value = ${requestScope.client.cityOfRegistration};
+    document.getElementById("select4").value = ${requestScope.client.cityOfLiving};
+
+    <c:if test="${sessionScope.error != null}">
+        Toastify({
+            text: "${sessionScope.error}",
+            duration: 5000,
+            newWindow: true,
+            close: true,
+            gravity: "bottom", // `top` or `bottom`
+            position: "center", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+                background: "#ff4545",
+            },
+            onClick: function(){} // Callback after click
+        }).showToast();
+        ${sessionScope.remove("error")}
+    </c:if>
+</script>
 </html>

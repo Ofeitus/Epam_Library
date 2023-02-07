@@ -35,7 +35,7 @@
                     </div>
                     <div class="form-group" style="width: 100%">
                         <label><fmt:message key="edit-personal-data.phone-number" />
-                            <input type="tel" class="form-control" pattern="${ValidationPattern.PHONE_PATTERN}" title="<fmt:message key="validation-pattern.phone-number" />" name="${RequestParameter.PHONE_NUMBER}" value="${sessionScope.user_phone_number}" placeholder="<fmt:message key="edit-personal-data.phone-number-placeholder" />">
+                            <input type="tel" class="form-control" pattern="${ValidationPattern.MOBILE_PHONE_PATTERN}" title="<fmt:message key="validation-pattern.phone-number" />" name="${RequestParameter.PHONE_NUMBER}" value="${sessionScope.user_phone_number}" placeholder="<fmt:message key="edit-personal-data.phone-number-placeholder" />">
                         </label>
                     </div>
                     <div class="w-100 row justify-content-end">
