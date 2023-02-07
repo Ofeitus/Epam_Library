@@ -32,6 +32,7 @@ public class Page {
     // admin
     public static final String MANAGE_USERS_PAGE = "WEB-INF/pages/admin/manage-users.jsp";
     public static final String REPORTS_PAGE = "WEB-INF/pages/admin/reports.jsp";
+    public static final String EDIT_CLIENT_DATA_PAGE = "WEB-INF/pages/admin/edit-client-data.jsp";
 
     private Page() {
     }

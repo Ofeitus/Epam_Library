@@ -10,6 +10,7 @@ public class CommandName {
     public static final String DELETE_COPY_OF_BOOK_COMMAND = "delete-copy-of-book";
     public static final String DELETE_USER_COMMAND = "delete-user";
     public static final String EDIT_BOOK_DATA_COMMAND = "edit-book-data";
+    public static final String EDIT_CLIENT_DATA_COMMAND = "edit-personal-data";
     public static final String EDIT_PERSONAL_DATA_COMMAND = "edit-personal-data";
     public static final String GET_PERIOD_REPORTS_COMMAND = "get-period-reports";
     public static final String GOTO_403_PAGE_COMMAND = "goto-403-page";
@@ -20,6 +21,7 @@ public class CommandName {
     public static final String GOTO_CATALOG_PAGE_COMMAND = "goto-catalog-page";
     public static final String GOTO_CONTACTS_PAGE_COMMAND = "goto-contacts-page";
     public static final String GOTO_EDIT_BOOK_DATA_PAGE_COMMAND = "goto-edit-book-data-page";
+    public static final String GOTO_EDIT_CLIENT_PAGE_COMMAND = "goto-edit-client-page";
     public static final String GOTO_EDIT_PERSONAL_DATA_PAGE_COMMAND = "goto-edit-personal-data-page";
     public static final String GOTO_HOME_PAGE_COMMAND = "goto-home-page";
     public static final String GOTO_INVENTORY_BOOK_PAGE_COMMAND = "goto-inventory-book-page";

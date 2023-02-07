@@ -51,7 +51,13 @@
     </div>
 </div>
 <div class="table-container" style="margin-top: 0">
-    <h3><fmt:message key="manage-users.registered-users" /></h3>
+    <div style="display: flex; justify-content: space-between">
+        <h3><fmt:message key="manage-users.registered-users" /></h3>
+        <form class="lab-piris" action="controller" method="post">
+            <input type="hidden" name="${RequestParameter.COMMAND}" value="goto-add-client-page">
+            <button type="submit" class="link-h-50 col-3 btn submit">Add client</button>
+        </form>
+    </div>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -61,6 +67,7 @@
             <th scope="col"><fmt:message key="manage-users.phone-number" /></th>
             <th scope="col"><fmt:message key="manage-users.email" /></th>
             <th scope="col"><fmt:message key="manage-users.role" /></th>
+            <th scope="col">Edit</th>
             <th scope="col"><fmt:message key="manage-users.deletion" /></th>
         </tr>
         </thead>
@@ -113,6 +120,13 @@
                             </c:when>
                         </c:choose>
                     </c:if>
+                </td>
+                <td style="text-align: center">
+                    <form action="controller" method="post">
+                        <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.GOTO_EDIT_CLIENT_PAGE_COMMAND}">
+                        <input type="hidden" name="${RequestParameter.USER_ID}" value="${user.userId}">
+                        <button type="submit" class="link-button"><i class="bi bi-pencil-fill" style="font-size: 20px;color: royalblue"></i></button>
+                    </form>
                 </td>
                 <td style="text-align: center">
                     <c:if test="${!user.deleted and user.userId != sessionScope.user_id}">

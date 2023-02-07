@@ -103,8 +103,8 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
                 SAVE_USER_QUERY,
                 entity.getName(),
                 entity.getSurname(),
-                entity.getEmail(),
                 entity.getPhoneNumber(),
+                entity.getEmail(),
                 entity.getPasswordHash(),
                 entity.getUserRole().ordinal() + 1
         );
