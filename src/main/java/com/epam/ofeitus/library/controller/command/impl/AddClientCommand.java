@@ -25,8 +25,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 
-public class EditClientDataCommand implements Command {
-    private final Logger logger = LogManager.getLogger(EditClientDataCommand.class);
+public class AddClientCommand implements Command {
+    private final Logger logger = LogManager.getLogger(AddClientCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
@@ -35,7 +35,6 @@ public class EditClientDataCommand implements Command {
 
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
 
             String name = request.getParameter(RequestParameter.USER_NAME);
             if (name == null || !name.matches(ValidationPattern.NAME_PATTERN)) {
@@ -89,7 +88,7 @@ public class EditClientDataCommand implements Command {
                 return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
             }
             User testPasswordNumber = userService.getByPassportNumber(passportNumber);
-            if (testPasswordNumber != null && testPasswordNumber.getUserId() != userId) {
+            if (testPasswordNumber != null) {
                 session.setAttribute(SessionAttribute.ERROR, "Введённый номер паспорта занят");
                 return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
             }
@@ -122,7 +121,7 @@ public class EditClientDataCommand implements Command {
                 return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
             }
             User testPasswordId = userService.getByPassportId(passportId);
-            if (testPasswordId != null && testPasswordId.getUserId() != userId) {
+            if (testPasswordId != null) {
                 session.setAttribute(SessionAttribute.ERROR, "Введённый идент. номер паспорта занят");
                 return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
             }
@@ -233,7 +232,7 @@ public class EditClientDataCommand implements Command {
 
             boolean conscript = request.getParameter(RequestParameter.USER_CONSCRIPT) != null;
 
-            userService.editUser(userId, name, surname, patronymic, dateOfBirth, gender, passportSeries, passportNumber, issuedBy, dateOfIssuing, passportId, placeOfBirth, cityOfLiving, address, phoneHome, phoneMobile, email, placeOfWork, jobTitle, cityOfRegistration, addressOfRegistration, familyStatus, disability, pensioner, salary, conscript);
+            userService.addUser(name, surname, patronymic, dateOfBirth, gender, passportSeries, passportNumber, issuedBy, dateOfIssuing, passportId, placeOfBirth, cityOfLiving, address, phoneHome, phoneMobile, email, placeOfWork, jobTitle, cityOfRegistration, addressOfRegistration, familyStatus, disability, pensioner, salary, conscript);
 
             int page = Integer.parseInt(Optional.ofNullable(request.getParameter(RequestParameter.PAGE)).orElse("1"));
 

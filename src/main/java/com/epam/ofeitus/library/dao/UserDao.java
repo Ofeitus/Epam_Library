@@ -46,6 +46,10 @@ public interface UserDao extends AbstractDao<User> {
      */
     User findByEmail(String email) throws DaoException;
 
+    User findByPassportNumber(String passportNumber) throws DaoException;
+
+    User findByPassportId(String passportId) throws DaoException;
+
     /**
      * Find by role id.
      *

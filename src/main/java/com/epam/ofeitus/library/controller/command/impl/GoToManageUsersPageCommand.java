@@ -44,6 +44,7 @@ public class GoToManageUsersPageCommand implements Command {
 
             List<User> users = userService.getAll(page, itemsOnPage);
             users.removeIf(user -> user.getUserRole() == UserRole.ADMIN);
+            users.removeIf(user -> user.isDeleted());
 
             int itemsCount = userService.countAll();
             int pagesCount = itemsCount / itemsOnPage;

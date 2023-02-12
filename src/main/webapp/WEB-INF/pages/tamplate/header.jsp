@@ -63,6 +63,7 @@
                         <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_USER_LOANS_PAGE_COMMAND}"><fmt:message key="header.your-loan" /></a>
                         <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_USER_RESERVATIONS_PAGE_COMMAND}"><fmt:message key="header.your-reservations" /></a>
                         <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_USER_FINES_PAGE_COMMAND}"><fmt:message key="header.your-fines" /></a>
+                        <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_ATM_PAGE_COMMAND}">Банкомат</a>
                     </c:if>
                     <c:if test="${sessionScope.user_role.toString() == 'MANAGER'}">
                         <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_PROFILE_PAGE_COMMAND}"><fmt:message key="header.manager-profile" /></a>

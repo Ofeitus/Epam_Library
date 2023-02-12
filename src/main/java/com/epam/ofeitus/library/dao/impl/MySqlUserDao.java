@@ -26,7 +26,7 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
             Column.USER_ISSUED_BY,
             Column.USER_DATE_OF_ISSUING,
             Column.USER_PASSWORD_ID,
-            Column.USER_PLACE_OF_WORK,
+            Column.USER_PLACE_OF_BIRTH,
             Column.USER_CITY_OF_LIVING,
             Column.USER_ADDRESS,
             Column.USER_PHONE_HOME,
@@ -86,6 +86,14 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
             "SELECT * FROM %s WHERE %s=?",
             Table.USER_TABLE,
             Column.USER_EMAIL);
+    private static final String FIND_BY_PASSPORT_NUMBER_QUERY = String.format(
+            "SELECT * FROM %s WHERE %s=?",
+            Table.USER_TABLE,
+            Column.USER_PASSWORD_NUMBER);
+    private static final String FIND_BY_PASSPORT_ID_QUERY = String.format(
+            "SELECT * FROM %s WHERE %s=?",
+            Table.USER_TABLE,
+            Column.USER_PASSWORD_ID);
     private static final String FIND_BY_ROLE_ID_QUERY = String.format(
             "SELECT * FROM %s WHERE %s=false AND %s=? LIMIT ?, ?",
             Table.USER_TABLE,
@@ -215,6 +223,16 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
     @Override
     public User findByEmail(String email) throws DaoException {
         return queryOperator.executeSingleEntityQuery(FIND_BY_EMAIL_QUERY, email);
+    }
+
+    @Override
+    public User findByPassportNumber(String passportNumber) throws DaoException {
+        return queryOperator.executeSingleEntityQuery(FIND_BY_PASSPORT_NUMBER_QUERY, passportNumber);
+    }
+
+    @Override
+    public User findByPassportId(String passportId) throws DaoException {
+        return queryOperator.executeSingleEntityQuery(FIND_BY_PASSPORT_ID_QUERY, passportId);
     }
 
     @Override

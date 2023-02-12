@@ -41,6 +41,7 @@ public class AccessFilter implements Filter {
                 CommandName.GOTO_404_PAGE_COMMAND,
                 CommandName.GOTO_500_PAGE_COMMAND,
                 CommandName.GOTO_ADD_NEW_BOOK_PAGE_COMMAND,
+                CommandName.GOTO_ADD_CLIENT_PAGE,
                 CommandName.GOTO_BOOK_DETAILS_PAGE_COMMAND,
                 CommandName.GOTO_CATALOG_PAGE_COMMAND,
                 CommandName.GOTO_CONTACTS_PAGE_COMMAND,
@@ -77,7 +78,8 @@ public class AccessFilter implements Filter {
                 CommandName.SIGN_UP_COMMAND,
                 CommandName.WRITE_IN_COPIES_OF_BOOK_COMMAND,
                 CommandName.WRITE_IN_COPIES_OF_NEW_BOOK_COMMAND,
-                CommandName.WRITE_OFF_COPIES_OF_BOOKS_COMMAND
+                CommandName.WRITE_OFF_COPIES_OF_BOOKS_COMMAND,
+                CommandName.ADD_CLIENT_COMMAND
         ));
         commandsAvailableToRoles.put(UserRole.MANAGER, Arrays.asList(
                 CommandName.CANCEL_RESERVATION_COMMAND,
@@ -144,7 +146,8 @@ public class AccessFilter implements Filter {
                 CommandName.RESERVE_BOOK_COMMAND,
                 CommandName.SEARCH_BOOKS_COMMAND,
                 CommandName.SET_LOCALE_COMMAND,
-                CommandName.SIGN_UP_COMMAND
+                CommandName.SIGN_UP_COMMAND,
+                CommandName.GOTO_ATM_PAGE_COMMAND
         ));
         commandsAvailableToRoles.put(UserRole.GUEST, Arrays.asList(
                 CommandName.GOTO_403_PAGE_COMMAND,

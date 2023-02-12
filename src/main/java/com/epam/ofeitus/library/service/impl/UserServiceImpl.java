@@ -41,6 +41,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean addUser(String name, String surname, String patronymic, Date dateOfBirth, boolean gender, String passportSeries, String passportNumber, String issuedBy, Date dateOfIssuing, String passportId, String placeOfBirth, int cityOfLiving, String address, String phoneHome, String phoneMobile, String email, String placeOfWork, String jobTitle, int cityOfRegistration, String addressOfRegistration, int familyStatus, int disability, boolean pensioner, BigDecimal salary, boolean conscript) throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+
+        User user = new User(0, new Date(), name, surname, patronymic, dateOfBirth, gender, passportSeries, passportNumber, issuedBy, dateOfIssuing, passportId, placeOfBirth, cityOfLiving, address, phoneHome, phoneMobile, placeOfWork, jobTitle, cityOfRegistration, addressOfRegistration, familyStatus, disability, pensioner, salary, conscript, "", email, DigestUtils.sha256Hex(email), UserRole.MEMBER, false);
+
+        try {
+            return userDao.save(user) == 1;
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public User login(String email, String password) throws ServiceException {
         UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
 
@@ -184,6 +197,28 @@ public class UserServiceImpl implements UserService {
 
         try {
             return userDao.findByEmail(email);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public User getByPassportNumber(String passportNumber) throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+
+        try {
+            return userDao.findByPassportNumber(passportNumber);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public User getByPassportId(String passportId) throws ServiceException {
+        UserDao userDao = MySqlDaoFactory.getInstance().getUserDao();
+
+        try {
+            return userDao.findByPassportId(passportId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

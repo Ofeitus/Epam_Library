@@ -17,6 +17,7 @@ public class CommandName {
     public static final String GOTO_404_PAGE_COMMAND = "goto-404-page";
     public static final String GOTO_500_PAGE_COMMAND = "goto-500-page";
     public static final String GOTO_ADD_NEW_BOOK_PAGE_COMMAND = "goto-add-new-book-page";
+    public static final String GOTO_ADD_CLIENT_PAGE = "goto-add-client-page";
     public static final String GOTO_BOOK_DETAILS_PAGE_COMMAND = "goto-book-details-page";
     public static final String GOTO_CATALOG_PAGE_COMMAND = "goto-catalog-page";
     public static final String GOTO_CONTACTS_PAGE_COMMAND = "goto-contacts-page";
@@ -54,6 +55,8 @@ public class CommandName {
     public static final String WRITE_IN_COPIES_OF_BOOK_COMMAND = "write-in-copies-of-book";
     public static final String WRITE_IN_COPIES_OF_NEW_BOOK_COMMAND = "write-in-copies-of-new-book";
     public static final String WRITE_OFF_COPIES_OF_BOOKS_COMMAND = "write-off-copies-of-books";
+    public static final String ADD_CLIENT_COMMAND = "add-client";
+    public static final String GOTO_ATM_PAGE_COMMAND = "goto-atm-page";
 
     private CommandName() {
     }

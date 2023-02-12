@@ -56,7 +56,7 @@
     <div style="display: flex; justify-content: space-between">
         <h3>Зарегистрированные клиенты</h3>
         <form class="lab-piris" action="controller" method="post">
-            <input type="hidden" name="${RequestParameter.COMMAND}" value="goto-add-client-page">
+            <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.GOTO_ADD_CLIENT_PAGE}">
             <button type="submit" class="link-h-50 col-4 btn submit">Добавить клиента</button>
         </form>
     </div>

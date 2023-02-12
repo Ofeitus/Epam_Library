@@ -24,6 +24,8 @@ public interface UserService {
      */
     boolean register(String firstName, String lastName, String email, String password) throws ServiceException;
 
+    boolean addUser(String name, String surname, String patronymic, Date dateOfBirth, boolean gender, String passportSeries, String passportNumber, String issuedBy, Date dateOfIssuing, String passportId, String placeOfBirth, int cityOfLiving, String address, String phoneHome, String phoneMobile, String email, String placeOfWork, String jobTitle, int cityOfRegistration, String addressOfRegistration, int familyStatus, int disability, boolean pensioner, BigDecimal salary, boolean conscript) throws ServiceException;
+
     /**
      * Log in user.
      *
@@ -90,6 +92,10 @@ public interface UserService {
      * @throws ServiceException thrown when dao exception occurs
      */
     User getByEmail(String email) throws ServiceException;
+
+    User getByPassportNumber(String passportNumber) throws ServiceException;
+
+    User getByPassportId(String passportId) throws ServiceException;
 
     /**
      * Gets all users on given page.

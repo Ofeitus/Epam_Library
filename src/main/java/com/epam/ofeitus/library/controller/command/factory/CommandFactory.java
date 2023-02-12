@@ -27,6 +27,7 @@ public class CommandFactory {
         put(CommandName.GOTO_404_PAGE_COMMAND, new GoTo404PageCommand());
         put(CommandName.GOTO_500_PAGE_COMMAND, new GoTo500PageCommand());
         put(CommandName.GOTO_ADD_NEW_BOOK_PAGE_COMMAND, new GoToAddNewBookPageCommand());
+        put(CommandName.GOTO_ADD_CLIENT_PAGE, new GoToAddClientPageCommand());
         put(CommandName.GOTO_BOOK_DETAILS_PAGE_COMMAND, new GoToBookDetailsPageCommand());
         put(CommandName.GOTO_CATALOG_PAGE_COMMAND, new GoToCatalogPageCommand());
         put(CommandName.GOTO_CONTACTS_PAGE_COMMAND, new GoToContactsPageCommand());
@@ -64,6 +65,8 @@ public class CommandFactory {
         put(CommandName.WRITE_IN_COPIES_OF_BOOK_COMMAND, new WriteInCopiesOfBookCommand());
         put(CommandName.WRITE_IN_COPIES_OF_NEW_BOOK_COMMAND, new WriteInCopiesOfNewBookCommand());
         put(CommandName.WRITE_OFF_COPIES_OF_BOOKS_COMMAND, new WriteOffCopiesOfBooksCommand());
+        put(CommandName.ADD_CLIENT_COMMAND, new AddClientCommand());
+        put(CommandName.GOTO_ATM_PAGE_COMMAND, new GoToATMPageCommand());
     }};
 
     private CommandFactory() {
