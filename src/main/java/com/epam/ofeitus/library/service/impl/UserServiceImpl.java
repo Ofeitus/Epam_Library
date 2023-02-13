@@ -1,6 +1,5 @@
 package com.epam.ofeitus.library.service.impl;
 
-import com.epam.ofeitus.library.constant.Column;
 import com.epam.ofeitus.library.dao.UserDao;
 import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.dao.factory.impl.MySqlDaoFactory;

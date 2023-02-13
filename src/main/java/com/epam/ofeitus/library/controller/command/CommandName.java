@@ -56,7 +56,12 @@ public class CommandName {
     public static final String WRITE_IN_COPIES_OF_NEW_BOOK_COMMAND = "write-in-copies-of-new-book";
     public static final String WRITE_OFF_COPIES_OF_BOOKS_COMMAND = "write-off-copies-of-books";
     public static final String ADD_CLIENT_COMMAND = "add-client";
+    public static final String ADD_DEPOSIT_COMMAND = "add-deposit";
+    public static final String ADD_CREDIT_COMMAND = "add-credit";
     public static final String GOTO_ATM_PAGE_COMMAND = "goto-atm-page";
+    public static final String GOTO_ACCOUNTS_PAGE_COMMAND = "goto-accounts-page";
+    public static final String GOTO_ADD_DEPOSIT_PAGE_COMMAND = "goto-add-deposit-page";
+    public static final String GOTO_ADD_CREDIT_PAGE_COMMAND = "goto-add-credit-page";
 
     private CommandName() {
     }

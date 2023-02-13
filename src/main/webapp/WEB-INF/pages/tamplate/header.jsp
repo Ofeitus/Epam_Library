@@ -77,6 +77,10 @@
                         <hr>
                         <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_MANAGE_USERS_PAGE_COMMAND}"><fmt:message key="header.manage-users" /></a>
                         <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_REPORTS_PAGE_COMMAND}"><fmt:message key="header.reports" /></a>
+                        <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_ACCOUNTS_PAGE_COMMAND}">Счета</a>
+                        <hr>
+                        <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_ADD_DEPOSIT_PAGE_COMMAND}">Депозит</a>
+                        <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_ADD_CREDIT_PAGE_COMMAND}">Кредит</a>
                     </c:if>
                     <hr>
                     <a href="?${RequestParameter.COMMAND}=${CommandName.LOG_OUT_COMMAND}"><fmt:message key="header.log-out" /></a>

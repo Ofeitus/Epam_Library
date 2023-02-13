@@ -1,6 +1,7 @@
 package com.epam.ofeitus.library.dao;
 
 import com.epam.ofeitus.library.dao.exception.DaoException;
+import com.epam.ofeitus.library.entity.user.User;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public interface AbstractDao<T> {
      * Save entity to data source.
      *
      * @param entity entity
+     * @param user
      * @return result of data source query
      * @throws DaoException thrown when dao exception occurs while executing a query
      */

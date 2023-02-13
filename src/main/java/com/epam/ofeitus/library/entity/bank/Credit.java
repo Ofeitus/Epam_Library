@@ -1,5 +1,6 @@
 package com.epam.ofeitus.library.entity.bank;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
@@ -10,15 +11,16 @@ public class Credit {
     private Currency currency;
     private Date start;
     private Date end;
-    private Date term;
-    private int amount;
-    private int percent;
-    private Account account;
+    private int term;
+    private BigDecimal amount;
+    private BigDecimal percent;
+    private Account currentAccount;
+    private Account percentAccount;
 
     public Credit() {
     }
 
-    public Credit(int id, int type, int number, Currency currency, Date start, Date end, Date term, int amount, int percent, Account account) {
+    public Credit(int id, int type, int number, Currency currency, Date start, Date end, int term, BigDecimal amount, BigDecimal percent, Account currentAccount, Account percentAccount) {
         this.id = id;
         this.type = type;
         this.number = number;
@@ -28,7 +30,8 @@ public class Credit {
         this.term = term;
         this.amount = amount;
         this.percent = percent;
-        this.account = account;
+        this.currentAccount = currentAccount;
+        this.percentAccount = percentAccount;
     }
 
     public int getId() {
@@ -79,36 +82,44 @@ public class Credit {
         this.end = end;
     }
 
-    public Date getTerm() {
+    public int getTerm() {
         return term;
     }
 
-    public void setTerm(Date term) {
+    public void setTerm(int term) {
         this.term = term;
     }
 
-    public int getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
-    public int getPercent() {
+    public BigDecimal getPercent() {
         return percent;
     }
 
-    public void setPercent(int percent) {
+    public void setPercent(BigDecimal percent) {
         this.percent = percent;
     }
 
-    public Account getAccount() {
-        return account;
+    public Account getCurrentAccount() {
+        return currentAccount;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setCurrentAccount(Account currentAccount) {
+        this.currentAccount = currentAccount;
+    }
+
+    public Account getPercentAccount() {
+        return percentAccount;
+    }
+
+    public void setPercentAccount(Account percentAccount) {
+        this.percentAccount = percentAccount;
     }
 
     @Override
@@ -116,12 +127,12 @@ public class Credit {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Credit credit = (Credit) o;
-        return id == credit.id && type == credit.type && number == credit.number && amount == credit.amount && percent == credit.percent && Objects.equals(currency, credit.currency) && Objects.equals(start, credit.start) && Objects.equals(end, credit.end) && Objects.equals(term, credit.term) && Objects.equals(account, credit.account);
+        return id == credit.id && type == credit.type && number == credit.number && term == credit.term && currency == credit.currency && Objects.equals(start, credit.start) && Objects.equals(end, credit.end) && Objects.equals(amount, credit.amount) && Objects.equals(percent, credit.percent) && Objects.equals(currentAccount, credit.currentAccount) && Objects.equals(percentAccount, credit.percentAccount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, number, currency, start, end, term, amount, percent, account);
+        return Objects.hash(id, type, number, currency, start, end, term, amount, percent, currentAccount, percentAccount);
     }
 
     @Override
@@ -136,7 +147,8 @@ public class Credit {
                 ", term=" + term +
                 ", amount=" + amount +
                 ", percent=" + percent +
-                ", account=" + account +
+                ", currentAccount=" + currentAccount +
+                ", percentAccount=" + percentAccount +
                 '}';
     }
 }

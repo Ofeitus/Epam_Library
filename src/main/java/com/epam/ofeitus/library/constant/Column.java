@@ -79,6 +79,42 @@ public final class Column {
     public static final String ROLE_ID = "role_id";
     public static final String ROLE_NAME = "role_name";
 
+    public static final String ACCOUNT_ID = "acc_id";
+    public static final String ACCOUNT_BALANCE = "acc_balance";
+    public static final String ACCOUNT_NAME = "acc_name";
+    public static final String ACCOUNT_CODE = "acc_code";
+    public static final String ACCOUNT_NUMBER = "acc_number";
+    public static final String ACCOUNT_TYPE = "acc_type";
+    public static final String ACCOUNT_PURPOSE = "acc_purpose";
+    public static final String ACCOUNT_CURRENCY = "acc_currency";
+    public static final String ACCOUNT_CLIENT_TYPE = "acc_client_type";
+    public static final Object ACCOUNT_CLIENT = "acc_client";
+
+    public static final String DEPOSIT_ID = "d_id";
+    public static final String DEPOSIT_TYPE = "d_type";
+    public static final String DEPOSIT_NUMBER = "d_number";
+    public static final String DEPOSIT_CURRENCY = "d_currency";
+    public static final String DEPOSIT_START = "d_start";
+    public static final String DEPOSIT_END = "d_end";
+    public static final String DEPOSIT_TERM = "d_term";
+    public static final String DEPOSIT_AMOUNT = "d_amount";
+    public static final String DEPOSIT_PERCENT = "d_percent";
+    public static final String DEPOSIT_CURRENT_ACCOUNT = "d_current_account";
+    public static final String DEPOSIT_PERCENT_ACCOUNT = "d_percent_account";
+
+    public static final String CREDIT_ID = "cr_id";
+    public static final String CREDIT_TYPE = "cr_type";
+    public static final String CREDIT_NUMBER = "cr_number";
+    public static final String CREDIT_CURRENCY = "cr_currency";
+    public static final String CREDIT_START = "cr_start";
+    public static final String CREDIT_END = "cr_end";
+    public static final String CREDIT_TERM = "cr_term";
+    public static final String CREDIT_AMOUNT = "cr_amount";
+    public static final String CREDIT_PERCENT = "cr_percent";
+    public static final String CREDIT_CURRENT_ACCOUNT = "cr_current_account";
+    public static final String CREDIT_PERCENT_ACCOUNT = "cr_percent_account";
+
     private Column() {
     }
+
 }

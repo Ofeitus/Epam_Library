@@ -13,6 +13,9 @@ public class Table {
     public static final String RESERVATION_TABLE = "reservations";
     public static final String USER_ROLE_TABLE = "users_roles";
     public static final String USER_TABLE = "users";
+    public static final String ACCOUNT_TABLE = "accounts";
+    public static final String DEPOSIT_TABLE = "deposits";
+    public static final String CREDIT_TABLE = "credits";
 
     private Table() {
     }

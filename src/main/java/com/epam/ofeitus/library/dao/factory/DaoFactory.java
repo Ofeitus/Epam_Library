@@ -19,4 +19,10 @@ public interface DaoFactory {
     LoanDao getLoanDao();
 
     ReservationDao getReservationDao();
+
+    AccountDao getAccountDao();
+
+    DepositDao getDepositDao();
+
+    CreditDao getCreditDao();
 }

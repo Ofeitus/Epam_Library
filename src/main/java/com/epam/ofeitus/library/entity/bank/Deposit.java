@@ -1,5 +1,6 @@
 package com.epam.ofeitus.library.entity.bank;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
@@ -7,18 +8,19 @@ public class Deposit {
     private int id;
     private int type;
     private int number;
-    private String currency;
+    private Currency currency;
     private Date start;
     private Date end;
-    private Date term;
-    private int amount;
-    private int percent;
-    private Account account;
+    private int term;
+    private BigDecimal amount;
+    private BigDecimal percent;
+    private Account currentAccount;
+    private Account percentAccount;
 
     public Deposit() {
     }
 
-    public Deposit(int id, int type, int number, String currency, Date start, Date end, Date term, int amount, int percent, Account account) {
+    public Deposit(int id, int type, int number, Currency currency, Date start, Date end, int term, BigDecimal amount, BigDecimal percent, Account currentAccount, Account percentAccount) {
         this.id = id;
         this.type = type;
         this.number = number;
@@ -28,7 +30,8 @@ public class Deposit {
         this.term = term;
         this.amount = amount;
         this.percent = percent;
-        this.account = account;
+        this.currentAccount = currentAccount;
+        this.percentAccount = percentAccount;
     }
 
     public int getId() {
@@ -55,11 +58,11 @@ public class Deposit {
         this.number = number;
     }
 
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 
@@ -79,36 +82,44 @@ public class Deposit {
         this.end = end;
     }
 
-    public Date getTerm() {
+    public int getTerm() {
         return term;
     }
 
-    public void setTerm(Date term) {
+    public void setTerm(int term) {
         this.term = term;
     }
 
-    public int getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
-    public int getPercent() {
+    public BigDecimal getPercent() {
         return percent;
     }
 
-    public void setPercent(int percent) {
+    public void setPercent(BigDecimal percent) {
         this.percent = percent;
     }
 
-    public Account getAccount() {
-        return account;
+    public Account getCurrentAccount() {
+        return currentAccount;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setCurrentAccount(Account account) {
+        this.currentAccount = account;
+    }
+
+    public Account getPercentAccount() {
+        return percentAccount;
+    }
+
+    public void setPercentAccount(Account percentAccount) {
+        this.percentAccount = percentAccount;
     }
 
     @Override
@@ -116,12 +127,12 @@ public class Deposit {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Deposit deposit = (Deposit) o;
-        return id == deposit.id && type == deposit.type && number == deposit.number && amount == deposit.amount && percent == deposit.percent && Objects.equals(currency, deposit.currency) && Objects.equals(start, deposit.start) && Objects.equals(end, deposit.end) && Objects.equals(term, deposit.term) && Objects.equals(account, deposit.account);
+        return id == deposit.id && type == deposit.type && number == deposit.number && term == deposit.term && Objects.equals(currency, deposit.currency) && Objects.equals(start, deposit.start) && Objects.equals(end, deposit.end) && Objects.equals(amount, deposit.amount) && Objects.equals(percent, deposit.percent) && Objects.equals(currentAccount, deposit.currentAccount) && Objects.equals(percentAccount, deposit.percentAccount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, number, currency, start, end, term, amount, percent, account);
+        return Objects.hash(id, type, number, currency, start, end, term, amount, percent, currentAccount, percentAccount);
     }
 
     @Override
@@ -136,7 +147,8 @@ public class Deposit {
                 ", term=" + term +
                 ", amount=" + amount +
                 ", percent=" + percent +
-                ", account=" + account +
+                ", currentAccount=" + currentAccount +
+                ", percentAccount=" + percentAccount +
                 '}';
     }
 }

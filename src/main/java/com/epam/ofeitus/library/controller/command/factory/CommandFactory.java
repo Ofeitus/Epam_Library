@@ -66,7 +66,12 @@ public class CommandFactory {
         put(CommandName.WRITE_IN_COPIES_OF_NEW_BOOK_COMMAND, new WriteInCopiesOfNewBookCommand());
         put(CommandName.WRITE_OFF_COPIES_OF_BOOKS_COMMAND, new WriteOffCopiesOfBooksCommand());
         put(CommandName.ADD_CLIENT_COMMAND, new AddClientCommand());
+        put(CommandName.ADD_DEPOSIT_COMMAND, new AddDepositCommand());
+        put(CommandName.ADD_CREDIT_COMMAND, new AddCreditCommand());
         put(CommandName.GOTO_ATM_PAGE_COMMAND, new GoToATMPageCommand());
+        put(CommandName.GOTO_ACCOUNTS_PAGE_COMMAND, new GoToAccountsPageCommand());
+        put(CommandName.GOTO_ADD_DEPOSIT_PAGE_COMMAND, new GoToAddDepositPageCommand());
+        put(CommandName.GOTO_ADD_CREDIT_PAGE_COMMAND, new GoToAddCreditPageCommand());
     }};
 
     private CommandFactory() {

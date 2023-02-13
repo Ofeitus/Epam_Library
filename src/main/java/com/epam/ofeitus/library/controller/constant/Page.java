@@ -35,6 +35,9 @@ public class Page {
     public static final String EDIT_CLIENT_DATA_PAGE = "WEB-INF/pages/admin/edit-client-data.jsp";
     public static final String ADD_CLIENT_PAGE = "WEB-INF/pages/admin/add-client.jsp";
     public static final String ATM_PAGE = "WEB-INF/pages/user/atm.jsp";
+    public static final String ACCOUNTS_PAGE = "WEB-INF/pages/admin/accounts.jsp";
+    public static final String ADD_DEPOSIT_PAGE = "WEB-INF/pages/admin/add-deposit.jsp";
+    public static final String ADD_CREDIT_PAGE = "WEB-INF/pages/admin/add-credit.jsp";
 
     private Page() {
     }

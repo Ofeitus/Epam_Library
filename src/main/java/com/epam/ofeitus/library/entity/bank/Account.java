@@ -2,7 +2,7 @@ package com.epam.ofeitus.library.entity.bank;
 
 import com.epam.ofeitus.library.entity.user.User;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Account {
@@ -12,20 +12,22 @@ public class Account {
     private String name;
     private int code;
     private AccountPurpose purpose;
-    private BigInteger balance;
+    private Currency currency;
+    private BigDecimal balance;
     private ClientType clientType;
     private User client;
 
     public Account() {
     }
 
-    public Account(int id, AccountType type, String number, String name, int code, AccountPurpose purpose, BigInteger balance, ClientType clientType, User client) {
+    public Account(int id, AccountType type, String number, String name, int code, AccountPurpose purpose, Currency currency, BigDecimal balance, ClientType clientType, User client) {
         this.id = id;
         this.type = type;
         this.number = number;
         this.name = name;
         this.code = code;
         this.purpose = purpose;
+        this.currency = currency;
         this.balance = balance;
         this.clientType = clientType;
         this.client = client;
@@ -79,11 +81,19 @@ public class Account {
         this.purpose = purpose;
     }
 
-    public BigInteger getBalance() {
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(BigInteger balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
@@ -108,12 +118,12 @@ public class Account {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return id == account.id && code == account.code && type == account.type && Objects.equals(number, account.number) && Objects.equals(name, account.name) && purpose == account.purpose && Objects.equals(balance, account.balance) && clientType == account.clientType && Objects.equals(client, account.client);
+        return id == account.id && code == account.code && type == account.type && Objects.equals(number, account.number) && Objects.equals(name, account.name) && purpose == account.purpose && currency == account.currency && Objects.equals(balance, account.balance) && clientType == account.clientType && Objects.equals(client, account.client);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, number, name, code, purpose, balance, clientType, client);
+        return Objects.hash(id, type, number, name, code, purpose, currency, balance, clientType, client);
     }
 
     @Override
@@ -125,6 +135,7 @@ public class Account {
                 ", name='" + name + '\'' +
                 ", code=" + code +
                 ", purpose=" + purpose +
+                ", currency=" + currency +
                 ", balance=" + balance +
                 ", clientType=" + clientType +
                 ", client=" + client +

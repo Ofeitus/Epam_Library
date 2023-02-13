@@ -79,7 +79,12 @@ public class AccessFilter implements Filter {
                 CommandName.WRITE_IN_COPIES_OF_BOOK_COMMAND,
                 CommandName.WRITE_IN_COPIES_OF_NEW_BOOK_COMMAND,
                 CommandName.WRITE_OFF_COPIES_OF_BOOKS_COMMAND,
-                CommandName.ADD_CLIENT_COMMAND
+                CommandName.ADD_CLIENT_COMMAND,
+                CommandName.GOTO_ACCOUNTS_PAGE_COMMAND,
+                CommandName.GOTO_ADD_DEPOSIT_PAGE_COMMAND,
+                CommandName.GOTO_ADD_CREDIT_PAGE_COMMAND,
+                CommandName.ADD_DEPOSIT_COMMAND,
+                CommandName.ADD_CREDIT_COMMAND
         ));
         commandsAvailableToRoles.put(UserRole.MANAGER, Arrays.asList(
                 CommandName.CANCEL_RESERVATION_COMMAND,

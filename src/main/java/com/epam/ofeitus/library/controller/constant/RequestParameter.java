@@ -60,6 +60,14 @@ public class RequestParameter {
     public static final String USER_PENSIONER = "user-pensioner";
     public static final String USER_SALARY = "user-salary";
     public static final String USER_CONSCRIPT = "user-conscript";
+    public static final String AGREEMENT_NUMBER = "agreement-number";
+    public static final String DATE_OF_START = "date-of-start";
+    public static final String DATE_OF_END = "date-of-end";
+    public static final String TERM = "term";
+    public static final String CURRENCY = "currency";
+    public static final String AMOUNT = "amount";
+    public static final String PERCENT = "percent";
+    public static final String TYPE = "type";
 
 
     private RequestParameter() {

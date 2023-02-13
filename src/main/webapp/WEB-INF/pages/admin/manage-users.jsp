@@ -14,45 +14,7 @@
 </head>
 <body>
 <jsp:include page="../tamplate/header.jsp" />
-<div class="manage-members-container">
-    <h2>Управление клиентами</h2>
-    <!--
-    <div class="manage-members-forms">
-        <div class="form-container" style="width: 60%">
-            <h3 class="title"><fmt:message key="inventory-book.search-page" /></h3>
-            <form class="form-horizontal" action="controller" method="get">
-                <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.SEARCH_MEMBERS_COMMAND}">
-                <div class="form-group" style="width: 100%">
-                    <label><fmt:message key="manage-users.role" />
-                        <select class="form-control" name="${RequestParameter.USER_ROLE_ID}">
-                            <option value="0" selected><fmt:message key="manage-users.all-users" /></option>
-                            <option value="1"><fmt:message key="user-role.admin" /></option>
-                            <option value="2"><fmt:message key="user-role.manager" /></option>
-                            <option value="3"><fmt:message key="user-role.member" /></option>
-                        </select>
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label><fmt:message key="manage-users.id" />
-                        <input type="number" name="${RequestParameter.USER_ID}" value="0" class="form-control" required placeholder="<fmt:message key="manage-users.id" />">
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label><fmt:message key="manage-users.email" />
-                        <input type="email" name="${RequestParameter.EMAIL}" value="" class="form-control" placeholder="<fmt:message key="manage-users.email-placeholder" />">
-                    </label>
-                </div>
-                <div class="w-100 row justify-content-between search-buttons">
-                    <button type="reset" class="h-50 col-3 btn reset"><fmt:message key="inventory-book.clear" /></button>
-                    <button type="submit" class="h-50 col-2 btn submit"><fmt:message key="inventory-book.search" /></button>
-                </div>
-            </form>
-        </div>
-        <img style="align-self: center; height: 250px" src="${pageContext.request.contextPath}/images/manager-pusheen.png" alt="">
-    </div>
-    -->
-</div>
-<div class="table-container" style="margin-top: 0">
+<div class="table-container" style="margin-top: 50px">
     <div style="display: flex; justify-content: space-between">
         <h3>Зарегистрированные клиенты</h3>
         <form class="lab-piris" action="controller" method="post">
