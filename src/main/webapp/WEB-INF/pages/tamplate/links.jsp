@@ -7,16 +7,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 <link rel="stylesheet" href="static/style.css">
-<link rel="stylesheet" href="static/contacts-style.css">
 <link rel="stylesheet" href="static/forms-style.css">
 <link rel="stylesheet" href="static/header-style.css">
 <link rel="stylesheet" href="static/footer-style.css">
 <link rel="stylesheet" href="static/error-style.css">
 <link rel="stylesheet" href="static/catalog-style.css">
 <link rel="stylesheet" href="static/book-details-style.css">
-<link rel="stylesheet" href="static/navbar-style.css">
 <link rel="stylesheet" href="static/table-style.css">
-<link rel="stylesheet" href="static/profile-style.css">
-<link rel="stylesheet" href="static/inventory-book-style.css">
-<link rel="stylesheet" href="static/manage-members-style.css">
-<link rel="stylesheet" href="static/reports-style.css">

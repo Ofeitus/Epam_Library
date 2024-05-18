@@ -22,7 +22,7 @@ public class LogOutCommand implements Command {
         HttpSession session = request.getSession();
 
         session.setAttribute(SessionAttribute.URL, "/controller?" +
-                RequestParameter.COMMAND + "=" + CommandName.GOTO_HOME_PAGE_COMMAND);
+                RequestParameter.COMMAND + "=" + CommandName.GOTO_LOG_IN_PAGE_COMMAND);
 
         session.removeAttribute(SessionAttribute.USER_ID);
         session.removeAttribute(SessionAttribute.USER_NAME);
@@ -30,6 +30,6 @@ public class LogOutCommand implements Command {
         session.removeAttribute(SessionAttribute.USER_EMAIL);
         session.setAttribute(SessionAttribute.USER_ROLE, UserRole.GUEST);
 
-        return new CommandResult(Page.HOME_PAGE, RoutingType.FORWARD);
+        return new CommandResult(Page.LOG_IN_PAGE, RoutingType.FORWARD);
     }
 }

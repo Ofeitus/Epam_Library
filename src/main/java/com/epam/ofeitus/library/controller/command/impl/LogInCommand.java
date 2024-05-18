@@ -51,9 +51,9 @@ public class LogInCommand implements Command {
             }
 
             session.setAttribute(SessionAttribute.URL, "/controller?" +
-                    RequestParameter.COMMAND + "=" + CommandName.GOTO_HOME_PAGE_COMMAND);
+                    RequestParameter.COMMAND + "=" + CommandName.GOTO_CATALOG_PAGE_COMMAND);
 
-            return new CommandResult(Page.HOME_PAGE, RoutingType.FORWARD);
+            return new CommandResult(Page.CATALOG_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Unable to check user log-in data.", e);
         }

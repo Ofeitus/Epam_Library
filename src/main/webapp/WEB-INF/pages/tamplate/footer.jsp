@@ -9,5 +9,5 @@
 <fmt:setBundle basename="locale"/>
 <footer>
     <label>2022 WebLib by Ofeitus</label>
-    <a id="home-link" href="?${RequestParameter.COMMAND}=${CommandName.GOTO_HOME_PAGE_COMMAND}">WebLib</a>
+    <a id="home-link">WebLib</a>
 </footer>
