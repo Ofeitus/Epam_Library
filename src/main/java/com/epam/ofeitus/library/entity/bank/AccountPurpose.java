@@ -1,8 +1,8 @@
 package com.epam.ofeitus.library.entity.bank;
 
 public enum AccountPurpose {
-    DEPOSIT("Дебет"),
-    CREDIT("Кредит");
+    CURRENT("Текущий"),
+    PERCENT("Процентный");
 
     private String name;
 

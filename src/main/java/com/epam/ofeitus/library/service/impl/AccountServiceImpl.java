@@ -1,7 +1,6 @@
 package com.epam.ofeitus.library.service.impl;
 
 import com.epam.ofeitus.library.dao.AccountDao;
-import com.epam.ofeitus.library.dao.UserDao;
 import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.dao.factory.impl.MySqlDaoFactory;
 import com.epam.ofeitus.library.entity.bank.Account;
@@ -30,6 +29,17 @@ public class AccountServiceImpl implements AccountService {
 
         try {
             return accountDao.countAll();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public List<Account> getByUserId(int userId) throws ServiceException {
+        AccountDao accountDao = MySqlDaoFactory.getInstance().getAccountDao();
+
+        try {
+            return accountDao.findByUserId(userId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

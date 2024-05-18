@@ -6,7 +6,6 @@ import com.epam.ofeitus.library.dao.AccountDao;
 import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
 import com.epam.ofeitus.library.entity.bank.Account;
-import com.epam.ofeitus.library.entity.user.User;
 
 import java.util.List;
 
@@ -28,6 +27,8 @@ public class MySqlAccountDao extends AbstractMySqlDao<Account> implements Accoun
             "SELECT * FROM accounts AS a JOIN users AS u ON (a.acc_client = u.user_id) LIMIT ?, ?";
     private static final String COUNT_ALL_QUERY =
             "SELECT COUNT(*) FROM accounts";
+    private static final String FIND_BY_USER_ID_QUERY =
+            "SELECT * FROM accounts AS a JOIN users AS u ON (a.acc_client = u.user_id) WHERE acc_client = ?";
 
     public MySqlAccountDao() {
         super(RowMapperFactory.getInstance().getAccountRowMapper(), Table.ACCOUNT_TABLE, Column.ACCOUNT_ID);
@@ -61,5 +62,10 @@ public class MySqlAccountDao extends AbstractMySqlDao<Account> implements Accoun
     @Override
     public int countAll() throws DaoException {
         return queryOperator.executeCountQuery(COUNT_ALL_QUERY);
+    }
+
+    @Override
+    public List<Account> findByUserId(int userId) throws DaoException {
+        return queryOperator.executeQuery(FIND_BY_USER_ID_QUERY, userId);
     }
 }

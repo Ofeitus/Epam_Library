@@ -56,8 +56,8 @@ public class MySqlDepositDao extends AbstractMySqlDao<Deposit> implements Deposi
 
     @Override
     public int save(Deposit entity, User user) throws DaoException {
-        Account currentAccount = new Account(0, AccountType.PASSIVE, user.getPassportId() + String.valueOf(Instant.now().toEpochMilli()), "Текущий счёт клиента", 3014, AccountPurpose.DEPOSIT, entity.getCurrency(), new BigDecimal(0), ClientType.INDIVIDUAL, user);
-        Account percentAccount = new Account(0, AccountType.PASSIVE, user.getPassportId() + String.valueOf(Instant.now().toEpochMilli() + 1), "Процентный счёт клиента", 3014, AccountPurpose.DEPOSIT, entity.getCurrency(), new BigDecimal(0), ClientType.INDIVIDUAL, user);
+        Account currentAccount = new Account(0, AccountType.PASSIVE, user.getPassportId() + String.valueOf(Instant.now().toEpochMilli()), "Текущий счёт клиента", 3014, AccountPurpose.CURRENT, entity.getCurrency(), new BigDecimal(0), ClientType.INDIVIDUAL, user);
+        Account percentAccount = new Account(0, AccountType.PASSIVE, user.getPassportId() + String.valueOf(Instant.now().toEpochMilli() + 1), "Процентный счёт клиента", 3014, AccountPurpose.PERCENT, entity.getCurrency(), new BigDecimal(0), ClientType.INDIVIDUAL, user);
         List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
         parametrizedQueries.add(new ParametrizedQuery(
                 SAVE_CURRENT_ACCOUNT,

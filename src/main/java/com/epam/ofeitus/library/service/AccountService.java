@@ -9,4 +9,6 @@ public interface AccountService {
     List<Account> getAllAccounts(int page, int itemsOnPage) throws ServiceException;
 
     int countAllAccounts() throws ServiceException;
+
+    List<Account> getByUserId(int userId) throws ServiceException;
 }

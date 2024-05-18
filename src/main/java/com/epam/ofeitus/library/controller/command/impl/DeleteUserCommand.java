@@ -6,6 +6,7 @@ import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
 import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
+import com.epam.ofeitus.library.service.AccountService;
 import com.epam.ofeitus.library.service.UserService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 import com.epam.ofeitus.library.service.factory.ServiceFactory;
@@ -26,9 +27,15 @@ public class DeleteUserCommand implements Command {
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         UserService userService = ServiceFactory.getInstance().getUserService();
+        AccountService accountService = ServiceFactory.getInstance().getAccountService();
 
         try {
             int userId = Integer.parseInt(request.getParameter(RequestParameter.USER_ID));
+
+            if (accountService.getByUserId(userId).size() > 0) {
+                session.setAttribute(SessionAttribute.ERROR, "Невозможно удалить пользователя с открытым счётом");
+                return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
+            }
 
             userService.deleteUser(userId);
 

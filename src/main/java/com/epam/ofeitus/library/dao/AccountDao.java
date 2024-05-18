@@ -9,4 +9,6 @@ public interface AccountDao extends AbstractDao<Account> {
     List<Account> findAll(int offset, int itemsOnPage) throws DaoException;
 
     int countAll() throws DaoException;
+
+    List<Account> findByUserId(int userId) throws DaoException;
 }

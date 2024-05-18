@@ -10,6 +10,7 @@
 <html>
 <head>
     <jsp:include page="../tamplate/links.jsp" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.js"></script>
     <title>Add client</title>
 </head>
 <body>
@@ -73,17 +74,21 @@
                     </div>
                     <div class="form-group" style="width: 33%;">
                         <label>Сумма
-                            <input type="number" min="0.00" max="any" value="" step="0.01" class="form-control"
+                            <input id="amount" type="number" min="0.00" max="any" value="" step="0.01" class="form-control"
                                    name="${RequestParameter.AMOUNT}" required>
                         </label>
                     </div>
                     <div class="form-group" style="width: 33%;">
                         <label>Процент
-                            <input type="number" min="0.00" max="any" value="" step="0.001" class="form-control"
+                            <input id="percent" type="number" min="0.00" max="any" value="" step="0.001" class="form-control"
                                    name="${RequestParameter.PERCENT}" required>
                         </label>
                     </div>
-                    <div class="w-100 row justify-content-end">
+                    <div id="credit-plan">
+
+                    </div>
+                    <div class="w-100 row justify-content-between">
+                        <button onclick="calculatePlan()" type="button" class="h-50 col-3 btn">Посчитать график платежей</button>
                         <button type="submit" class="h-50 col-3 btn submit">Заключить договор</button>
                     </div>
                 </form>
@@ -95,6 +100,72 @@
 </body>
 
 <script>
+    const monthDiff = (d1, d2) => {
+        let months;
+        months = (d2.getFullYear() - d1.getFullYear()) * 12;
+        months -= d1.getMonth();
+        months += d2.getMonth();
+        return months <= 0 ? 0 : months;
+    }
+
+    const calculatePlan = () => {
+        let rows = "";
+
+        const date1 = new Date(document.getElementById("from").value);
+        const date2 = new Date(document.getElementById("to").value);
+        const amount = Number(document.getElementById("amount").value);
+        const percent = Number(document.getElementById("percent").value);
+
+        if (document.getElementById("type-input").value == "1") {
+            const n = monthDiff(date1, date2);
+            const p = percent / 100 / 12;
+
+            // Итог
+            const percents = amount * p * n;
+
+            for (let i = 0; i < n; i++) {
+                rows += `<tr>`;
+                rows += `<td>` + (i + 1) + `</td>`;
+                rows += `<td>` + new Date(date1.setMonth(date1.getMonth() + 1)).toISOString().split('T')[0] + `</td>`;
+                rows += `<td>` + (amount * p).toFixed(2) + `</td>`;
+                rows += `</tr>`;
+            }
+
+            rows += `<tr>`;
+            rows += `<td></td>`;
+            rows += `<td></td>`;
+            rows += `<td>` + percents.toFixed(2) + `</td>`;
+            rows += `</tr>`;
+
+        } else {
+            const n = monthDiff(date1, date2);
+            const p = percent / 100;
+
+            // Итог
+            const percents = amount * p * n;
+
+            rows += `<tr>`;
+            rows += `<td>` + 1 + `</td>`;
+            rows += `<td>` + date2.toISOString().split('T')[0] + `</td>`;
+            rows += `<td>` + percents.toFixed(2) + `</td>`;
+            rows += `</tr>`;
+        }
+
+        document.getElementById("credit-plan").innerHTML =
+            `<table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">№ выплаты</th>
+                        <th scope="col">Дата</th>
+                        <th scope="col">Начислено процентов</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        ` + rows + `
+                    </tbody>
+                 </table>`;
+    }
+
     const setTerm = () => {
         const date1 = new Date(document.getElementById("from").value);
         const date2 = new Date(document.getElementById("to").value);

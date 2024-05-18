@@ -56,8 +56,8 @@ public class MySqlCreditDao extends AbstractMySqlDao<Credit> implements CreditDa
 
     @Override
     public int save(Credit entity, User user) throws DaoException {
-        Account currentAccount = new Account(0, AccountType.ACTIVE, user.getPassportId() + String.valueOf(Instant.now().toEpochMilli()), "Текущий счёт клиента", 3014, AccountPurpose.CREDIT, entity.getCurrency(), new BigDecimal(0), ClientType.INDIVIDUAL, user);
-        Account percentAccount = new Account(0, AccountType.ACTIVE, user.getPassportId() + String.valueOf(Instant.now().toEpochMilli() + 1), "Процентный счёт клиента", 3014, AccountPurpose.CREDIT, entity.getCurrency(), new BigDecimal(0), ClientType.INDIVIDUAL, user);
+        Account currentAccount = new Account(0, AccountType.ACTIVE, user.getPassportId() + String.valueOf(Instant.now().toEpochMilli()), "Текущий счёт клиента", 3014, AccountPurpose.CURRENT, entity.getCurrency(), entity.getAmount(), ClientType.INDIVIDUAL, user);
+        Account percentAccount = new Account(0, AccountType.ACTIVE, user.getPassportId() + String.valueOf(Instant.now().toEpochMilli() + 1), "Процентный счёт клиента", 3014, AccountPurpose.PERCENT, entity.getCurrency(), new BigDecimal(0), ClientType.INDIVIDUAL, user);
         List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
         parametrizedQueries.add(new ParametrizedQuery(
                         SAVE_CURRENT_ACCOUNT,
