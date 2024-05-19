@@ -14,13 +14,13 @@ public class CommandFactory {
     private static final CommandFactory instance = new CommandFactory();
 
     private static final Map<String, Command> commands = new HashMap<>() {{
-        put(CommandName.DELETE_BOOK_COMMAND, new DeleteSubjectCommand());
+        put(CommandName.DELETE_SUBJECT_COMMAND, new DeleteSubjectCommand());
         put(CommandName.DELETE_USER_COMMAND, new DeleteUserCommand());
-        put(CommandName.EDIT_BOOK_DATA_COMMAND, new EditSubjectCommand());
+        put(CommandName.EDIT_SUBJECT_COMMAND, new EditSubjectCommand());
         put(CommandName.GOTO_403_PAGE_COMMAND, new GoTo403PageCommand());
         put(CommandName.GOTO_404_PAGE_COMMAND, new GoTo404PageCommand());
         put(CommandName.GOTO_500_PAGE_COMMAND, new GoTo500PageCommand());
-        put(CommandName.GOTO_ADD_NEW_BOOK_PAGE_COMMAND, new GoToAddNewSubjectPageCommand());
+        put(CommandName.GOTO_ADD_NEW_SUBJECT_PAGE_COMMAND, new GoToAddNewSubjectPageCommand());
         put(CommandName.GOTO_SUBJECT_DETAILS_PAGE_COMMAND, new GoToSubjectDetailsPageCommand());
         put(CommandName.GOTO_SUBJECTS_PAGE_COMMAND, new GoToSubjectsPageCommand());
         put(CommandName.GOTO_EDIT_SUBJECT_PAGE_COMMAND, new GoToEditSubjectPageCommand());

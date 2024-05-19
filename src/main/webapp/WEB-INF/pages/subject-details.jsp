@@ -35,7 +35,7 @@
                     </c:if>
                     <c:if test="${requestScope.copies_count == 0}">
                         <form action="controller" method="post" style="margin-top: 10px">
-                            <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.DELETE_BOOK_COMMAND}">
+                            <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.DELETE_SUBJECT_COMMAND}">
                             <input type="hidden" name="${RequestParameter.SUBJECT_ID}" value="${requestScope.subject.id}">
                             <button type="submit" class="link-button"><i class="bi bi-trash-fill edit-data-link" style="color: firebrick"></i></button>
                         </form>

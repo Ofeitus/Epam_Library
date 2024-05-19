@@ -22,7 +22,7 @@ public class GoToAddNewSubjectPageCommand implements Command {
         HttpSession session = request.getSession();
 
         session.setAttribute(SessionAttribute.URL, "/controller?" +
-                RequestParameter.COMMAND + "=" + CommandName.GOTO_ADD_NEW_BOOK_PAGE_COMMAND);
+                RequestParameter.COMMAND + "=" + CommandName.GOTO_ADD_NEW_SUBJECT_PAGE_COMMAND);
 
         return new CommandResult(Page.ADD_NEW_SUBJECT_PAGE, RoutingType.FORWARD);
     }

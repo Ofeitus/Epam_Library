@@ -20,7 +20,7 @@
             <div class="form-container">
                 <h3 class="title"><fmt:message key="edit-book-data.edit-book-data" /></h3>
                 <form class="form-horizontal" action="controller" method="post">
-                    <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.EDIT_BOOK_DATA_COMMAND}">
+                    <input type="hidden" name="${RequestParameter.COMMAND}" value="${CommandName.EDIT_SUBJECT_COMMAND}">
                     <input type="hidden" name="${RequestParameter.SUBJECT_ID}" value="${requestScope.subject.id}">
                     <div class="form-group" style="width: 100%;">
                         <label><fmt:message key="edit-book-data.title" />
