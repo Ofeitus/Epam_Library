@@ -15,24 +15,12 @@ public class CommandName {
     public static final String GOTO_403_PAGE_COMMAND = "goto-403-page";
     public static final String GOTO_404_PAGE_COMMAND = "goto-404-page";
     public static final String GOTO_500_PAGE_COMMAND = "goto-500-page";
-    public static final String GOTO_ADD_NEW_BOOK_PAGE_COMMAND = "goto-add-new-book-page";
-    public static final String GOTO_BOOK_DETAILS_PAGE_COMMAND = "goto-book-details-page";
-    public static final String GOTO_CATALOG_PAGE_COMMAND = "goto-catalog-page";
-    public static final String GOTO_CONTACTS_PAGE_COMMAND = "goto-contacts-page";
-    public static final String GOTO_EDIT_BOOK_DATA_PAGE_COMMAND = "goto-edit-book-data-page";
-    public static final String GOTO_EDIT_PERSONAL_DATA_PAGE_COMMAND = "goto-edit-personal-data-page";
-    public static final String GOTO_HOME_PAGE_COMMAND = "goto-home-page";
-    public static final String GOTO_INVENTORY_BOOK_PAGE_COMMAND = "goto-inventory-book-page";
+    public static final String GOTO_ADD_NEW_BOOK_PAGE_COMMAND = "goto-add-new-subject-page";
+    public static final String GOTO_SUBJECT_DETAILS_PAGE_COMMAND = "goto-subject-details-page";
+    public static final String GOTO_SUBJECTS_PAGE_COMMAND = "goto-subjects-page";
+    public static final String GOTO_EDIT_SUBJECT_PAGE_COMMAND = "goto-edit-subject-page";
     public static final String GOTO_LOG_IN_PAGE_COMMAND = "goto-log-in-page";
-    public static final String GOTO_MANAGE_MEMBERS_PAGE_COMMAND = "goto-manage-members-page";
-    public static final String GOTO_MANAGE_RESERVATIONS_PAGE_COMMAND = "goto-manage-reservations-page";
-    public static final String GOTO_MANAGE_USERS_PAGE_COMMAND = "goto-manage-users-page";
-    public static final String GOTO_PROFILE_PAGE_COMMAND = "goto-profile-page";
-    public static final String GOTO_REPORTS_PAGE_COMMAND = "goto-reports-page";
     public static final String GOTO_SIGN_UP_PAGE_COMMAND = "goto-sign-up-page";
-    public static final String GOTO_USER_FINES_PAGE_COMMAND = "goto-user-fines-page";
-    public static final String GOTO_USER_LOANS_PAGE_COMMAND = "goto-user-loans-page";
-    public static final String GOTO_USER_RESERVATIONS_PAGE_COMMAND = "goto-user-reservations-page";
     public static final String ISSUE_BY_INVENTORY_ID_COMMAND = "issue-by-inventory-id";
     public static final String ISSUE_BY_USER_ID_COMMAND = "issue-by-user-id-book";
     public static final String ISSUE_RESERVED_BOOK_COMMAND = "issue-reserved-book";
@@ -49,9 +37,6 @@ public class CommandName {
     public static final String SET_LOCALE_COMMAND = "set-locale";
     public static final String SET_ROLE_COMMAND = "set-role";
     public static final String SIGN_UP_COMMAND = "sign-up";
-    public static final String WRITE_IN_COPIES_OF_BOOK_COMMAND = "write-in-copies-of-book";
-    public static final String WRITE_IN_COPIES_OF_NEW_BOOK_COMMAND = "write-in-copies-of-new-book";
-    public static final String WRITE_OFF_COPIES_OF_BOOKS_COMMAND = "write-off-copies-of-books";
 
     private CommandName() {
     }

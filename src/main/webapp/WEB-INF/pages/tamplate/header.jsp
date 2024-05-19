@@ -9,6 +9,13 @@
 <fmt:setBundle basename="locale"/>
 <header class="header">
     <a id="home-link">WebLib</a>
+    <div class="navbar-container">
+        <ul class="navbar-menu">
+            <li class="navbar-item" id="catalog-page">
+                <a href="?${RequestParameter.COMMAND}=${CommandName.GOTO_SUBJECTS_PAGE_COMMAND}" class="navbar-link"><fmt:message key="header.catalog" /></a>
+            </li>
+        </ul>
+    </div>
     <div class="info">
         <div class="locale">
             <div class="locale-button">

@@ -10,12 +10,7 @@ import com.epam.ofeitus.library.dao.impl.*;
 public class MySqlDaoFactory implements DaoFactory {
     private static final MySqlDaoFactory instance = new MySqlDaoFactory();
 
-    private static final AuthorDao mySqlAuthorDao = new MySqlAuthorDao();
-    private static final BookCategoryDao mySqlBookCategoryDao = new MySqlBookCategoryDao();
-    private static final BookDao mySqlBookDao = new MySqlBookDao();
-    private static final CopyOfBookDao mySqlCopyOfBookDao = new MySqlCopyOfBookDao();
-    private static final LoanDao mySqlLoanDao = new MySqlLoanDao();
-    private static final ReservationDao mySqlReservationDao = new MySqlReservationDao();
+    private static final SubjectDao mySqlSubjectDao = new MySqlSubjectDao();
     private static final UserDao mySqlUserDao = new MySqlUserDao();
 
     private MySqlDaoFactory() {
@@ -31,33 +26,8 @@ public class MySqlDaoFactory implements DaoFactory {
     }
 
     @Override
-    public AuthorDao getAuthorDao() {
-        return mySqlAuthorDao;
-    }
-
-    @Override
-    public BookCategoryDao getBookCategoryDao() {
-        return mySqlBookCategoryDao;
-    }
-
-    @Override
-    public BookDao getBookDao() {
-        return mySqlBookDao;
-    }
-
-    @Override
-    public CopyOfBookDao getCopyOfBookDao() {
-        return mySqlCopyOfBookDao;
-    }
-
-    @Override
-    public LoanDao getLoanDao() {
-        return mySqlLoanDao;
-    }
-
-    @Override
-    public ReservationDao getReservationDao() {
-        return mySqlReservationDao;
+    public SubjectDao getBookDao() {
+        return mySqlSubjectDao;
     }
 
     @Override

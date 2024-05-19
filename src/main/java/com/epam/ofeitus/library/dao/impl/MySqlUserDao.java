@@ -5,7 +5,7 @@ import com.epam.ofeitus.library.constant.Table;
 import com.epam.ofeitus.library.dao.UserDao;
 import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.dao.rowmapper.RowMapperFactory;
-import com.epam.ofeitus.library.entity.user.User;
+import com.epam.ofeitus.library.entity.User;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,11 +80,6 @@ public class MySqlUserDao extends AbstractMySqlDao<User> implements UserDao {
     @Override
     public List<User> findAll(int offset, int itemsOnPage) throws DaoException {
         return queryOperator.executeQuery(FIND_ALL_USERS_QUERY, offset, itemsOnPage);
-    }
-
-    @Override
-    public User findById(int userId) throws DaoException {
-        return queryOperator.executeSingleEntityQuery(FIND_BY_ID_QUERY, userId);
     }
 
     @Override

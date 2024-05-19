@@ -1,6 +1,6 @@
 package com.epam.ofeitus.library.service.validator.impl;
 
-import com.epam.ofeitus.library.entity.user.User;
+import com.epam.ofeitus.library.entity.User;
 import com.epam.ofeitus.library.service.validator.EntityValidator;
 import com.epam.ofeitus.library.service.validator.ValidationPattern;
 

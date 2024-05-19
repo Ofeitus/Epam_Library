@@ -5,10 +5,13 @@ import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
+import com.epam.ofeitus.library.controller.constant.RequestAttribute;
 import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
-import com.epam.ofeitus.library.entity.user.User;
-import com.epam.ofeitus.library.entity.user.constituent.UserRole;
+import com.epam.ofeitus.library.entity.Subject;
+import com.epam.ofeitus.library.entity.User;
+import com.epam.ofeitus.library.entity.UserRole;
+import com.epam.ofeitus.library.service.SubjectService;
 import com.epam.ofeitus.library.service.UserService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 import com.epam.ofeitus.library.service.factory.ServiceFactory;
@@ -18,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Command to log in.
@@ -29,6 +33,7 @@ public class LogInCommand implements Command {
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         UserService userService = ServiceFactory.getInstance().getUserService();
+        SubjectService subjectService = ServiceFactory.getInstance().getBookService();
 
         String email = request.getParameter(RequestParameter.EMAIL);
         String password = request.getParameter((RequestParameter.PASSWORD));
@@ -50,10 +55,14 @@ public class LogInCommand implements Command {
                 return new CommandResult(Page.LOG_IN_PAGE, RoutingType.FORWARD);
             }
 
-            session.setAttribute(SessionAttribute.URL, "/controller?" +
-                    RequestParameter.COMMAND + "=" + CommandName.GOTO_CATALOG_PAGE_COMMAND);
+            List<Subject> subjects = subjectService.getAllSubjects();
 
-            return new CommandResult(Page.CATALOG_PAGE, RoutingType.FORWARD);
+            request.setAttribute(RequestAttribute.SUBJECTS, subjects);
+
+            session.setAttribute(SessionAttribute.URL, "/controller?" +
+                    RequestParameter.COMMAND + "=" + CommandName.GOTO_SUBJECTS_PAGE_COMMAND);
+
+            return new CommandResult(Page.SUBJECTS_PAGE, RoutingType.FORWARD);
         } catch (ServiceException e) {
             logger.error("Unable to check user log-in data.", e);
         }

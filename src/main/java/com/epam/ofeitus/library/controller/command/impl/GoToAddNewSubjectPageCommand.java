@@ -7,29 +7,23 @@ import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
 import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
-import com.epam.ofeitus.library.entity.UserRole;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Command to log out.
+ * Command to go to add new book page.
  */
-public class LogOutCommand implements Command {
+public class GoToAddNewSubjectPageCommand implements Command {
+
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
 
         session.setAttribute(SessionAttribute.URL, "/controller?" +
-                RequestParameter.COMMAND + "=" + CommandName.GOTO_LOG_IN_PAGE_COMMAND);
+                RequestParameter.COMMAND + "=" + CommandName.GOTO_ADD_NEW_BOOK_PAGE_COMMAND);
 
-        session.removeAttribute(SessionAttribute.USER_ID);
-        session.removeAttribute(SessionAttribute.USER_NAME);
-        session.removeAttribute(SessionAttribute.USER_SURNAME);
-        session.removeAttribute(SessionAttribute.USER_EMAIL);
-        session.setAttribute(SessionAttribute.USER_ROLE, UserRole.GUEST);
-
-        return new CommandResult(Page.LOG_IN_PAGE, RoutingType.FORWARD);
+        return new CommandResult(Page.ADD_NEW_SUBJECT_PAGE, RoutingType.FORWARD);
     }
 }

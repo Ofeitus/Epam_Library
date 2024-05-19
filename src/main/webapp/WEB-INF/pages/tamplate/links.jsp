@@ -12,5 +12,6 @@
 <link rel="stylesheet" href="static/footer-style.css">
 <link rel="stylesheet" href="static/error-style.css">
 <link rel="stylesheet" href="static/catalog-style.css">
-<link rel="stylesheet" href="static/book-details-style.css">
+<link rel="stylesheet" href="static/subject-details-style.css">
+<link rel="stylesheet" href="static/navbar-style.css">
 <link rel="stylesheet" href="static/table-style.css">

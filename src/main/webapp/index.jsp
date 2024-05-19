@@ -6,6 +6,6 @@
     <title>Library</title>
   </head>
   <body>
-    <jstl:redirect url="/controller?command=goto-home-page" />
+    <jstl:redirect url="/controller?command=goto-log-in-page" />
   </body>
 </html>

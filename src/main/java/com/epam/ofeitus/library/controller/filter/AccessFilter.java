@@ -5,7 +5,7 @@ import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.factory.CommandFactory;
 import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
-import com.epam.ofeitus.library.entity.user.constituent.UserRole;
+import com.epam.ofeitus.library.entity.UserRole;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -40,10 +40,10 @@ public class AccessFilter implements Filter {
                 CommandName.GOTO_404_PAGE_COMMAND,
                 CommandName.GOTO_500_PAGE_COMMAND,
                 CommandName.GOTO_ADD_NEW_BOOK_PAGE_COMMAND,
-                CommandName.GOTO_BOOK_DETAILS_PAGE_COMMAND,
-                CommandName.GOTO_CATALOG_PAGE_COMMAND,
+                CommandName.GOTO_SUBJECT_DETAILS_PAGE_COMMAND,
+                CommandName.GOTO_SUBJECTS_PAGE_COMMAND,
                 CommandName.GOTO_CONTACTS_PAGE_COMMAND,
-                CommandName.GOTO_EDIT_BOOK_DATA_PAGE_COMMAND,
+                CommandName.GOTO_EDIT_SUBJECT_PAGE_COMMAND,
                 CommandName.GOTO_EDIT_PERSONAL_DATA_PAGE_COMMAND,
                 CommandName.GOTO_HOME_PAGE_COMMAND,
                 CommandName.GOTO_INVENTORY_BOOK_PAGE_COMMAND,
@@ -88,10 +88,10 @@ public class AccessFilter implements Filter {
                 CommandName.GOTO_404_PAGE_COMMAND,
                 CommandName.GOTO_500_PAGE_COMMAND,
                 CommandName.GOTO_ADD_NEW_BOOK_PAGE_COMMAND,
-                CommandName.GOTO_BOOK_DETAILS_PAGE_COMMAND,
-                CommandName.GOTO_CATALOG_PAGE_COMMAND,
+                CommandName.GOTO_SUBJECT_DETAILS_PAGE_COMMAND,
+                CommandName.GOTO_SUBJECTS_PAGE_COMMAND,
                 CommandName.GOTO_CONTACTS_PAGE_COMMAND,
-                CommandName.GOTO_EDIT_BOOK_DATA_PAGE_COMMAND,
+                CommandName.GOTO_EDIT_SUBJECT_PAGE_COMMAND,
                 CommandName.GOTO_EDIT_PERSONAL_DATA_PAGE_COMMAND,
                 CommandName.GOTO_HOME_PAGE_COMMAND,
                 CommandName.GOTO_INVENTORY_BOOK_PAGE_COMMAND,
@@ -126,8 +126,8 @@ public class AccessFilter implements Filter {
                 CommandName.GOTO_403_PAGE_COMMAND,
                 CommandName.GOTO_404_PAGE_COMMAND,
                 CommandName.GOTO_500_PAGE_COMMAND,
-                CommandName.GOTO_BOOK_DETAILS_PAGE_COMMAND,
-                CommandName.GOTO_CATALOG_PAGE_COMMAND,
+                CommandName.GOTO_SUBJECT_DETAILS_PAGE_COMMAND,
+                CommandName.GOTO_SUBJECTS_PAGE_COMMAND,
                 CommandName.GOTO_CONTACTS_PAGE_COMMAND,
                 CommandName.GOTO_EDIT_PERSONAL_DATA_PAGE_COMMAND,
                 CommandName.GOTO_HOME_PAGE_COMMAND,
@@ -148,8 +148,8 @@ public class AccessFilter implements Filter {
                 CommandName.GOTO_403_PAGE_COMMAND,
                 CommandName.GOTO_404_PAGE_COMMAND,
                 CommandName.GOTO_500_PAGE_COMMAND,
-                CommandName.GOTO_BOOK_DETAILS_PAGE_COMMAND,
-                CommandName.GOTO_CATALOG_PAGE_COMMAND,
+                CommandName.GOTO_SUBJECT_DETAILS_PAGE_COMMAND,
+                CommandName.GOTO_SUBJECTS_PAGE_COMMAND,
                 CommandName.GOTO_CONTACTS_PAGE_COMMAND,
                 CommandName.GOTO_HOME_PAGE_COMMAND,
                 CommandName.GOTO_LOG_IN_PAGE_COMMAND,
