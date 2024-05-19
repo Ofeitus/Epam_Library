@@ -5,10 +5,8 @@ import com.epam.ofeitus.library.controller.command.CommandName;
 import com.epam.ofeitus.library.controller.command.CommandResult;
 import com.epam.ofeitus.library.controller.command.RoutingType;
 import com.epam.ofeitus.library.controller.constant.Page;
-import com.epam.ofeitus.library.controller.constant.RequestAttribute;
 import com.epam.ofeitus.library.controller.constant.RequestParameter;
 import com.epam.ofeitus.library.controller.constant.SessionAttribute;
-import com.epam.ofeitus.library.entity.Subject;
 import com.epam.ofeitus.library.service.SubjectService;
 import com.epam.ofeitus.library.service.exception.ServiceException;
 import com.epam.ofeitus.library.service.factory.ServiceFactory;
@@ -18,30 +16,34 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
- * Command to go to catalog page.
+ * Command to create new subject.
  */
-public class GoToSubjectsPageCommand implements Command {
-    private final Logger logger = LogManager.getLogger(GoToSubjectsPageCommand.class);
+public class AddNewSubjectCommand implements Command {
+    private final Logger logger = LogManager.getLogger(AddNewSubjectCommand.class);
 
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         SubjectService subjectService = ServiceFactory.getInstance().getSubjectService();
 
-        session.setAttribute(SessionAttribute.URL, "/controller?" +
-                RequestParameter.COMMAND + "=" + CommandName.GOTO_SUBJECTS_PAGE_COMMAND);
-
         try {
-            List<Subject> subjects = subjectService.getAllSubjects();
+            String name = request.getParameter(RequestParameter.SUBJECT_NAME);
+            int hours = Integer.parseInt(request.getParameter(RequestParameter.HOURS));
 
-            request.setAttribute(RequestAttribute.SUBJECTS, subjects);
+            if (!subjectService.saveSubject(name, hours)) {
+                session.setAttribute(SessionAttribute.ERROR, "Invalid data");
+                return new CommandResult((String) session.getAttribute(SessionAttribute.URL), RoutingType.REDIRECT);
+            }
 
-            return new CommandResult(Page.SUBJECTS_PAGE, RoutingType.FORWARD);
-        } catch (ServiceException e) {
-            logger.error("Unable to get subjects.", e);
+            String url = "/controller?" +
+                    RequestParameter.COMMAND + "=" + CommandName.GOTO_SUBJECTS_PAGE_COMMAND;
+            session.setAttribute(SessionAttribute.URL, url);
+
+            return new CommandResult(url, RoutingType.REDIRECT);
+        } catch (ServiceException | NumberFormatException e) {
+            logger.error("Unable to add new subject.", e);
         }
         return new CommandResult(Page.ERROR_500_PAGE, RoutingType.FORWARD);
     }

@@ -25,7 +25,7 @@ public class MySqlSubjectDao extends AbstractMySqlDao<Subject> implements Subjec
             Column.SUBJECT_ID);
 
     public MySqlSubjectDao() {
-        super(RowMapperFactory.getInstance().getBookRowMapper(), Table.SUBJECT_TABLE, Column.SUBJECT_ID);
+        super(RowMapperFactory.getInstance().getSubjectRowMapper(), Table.SUBJECT_TABLE, Column.SUBJECT_ID);
     }
 
     @Override
@@ -44,9 +44,9 @@ public class MySqlSubjectDao extends AbstractMySqlDao<Subject> implements Subjec
         List<ParametrizedQuery> parametrizedQueries = new ArrayList<>();
         parametrizedQueries.add(new ParametrizedQuery(
                 UPDATE_SUBJECT_QUERY,
-                entity.getId(),
                 entity.getName(),
-                entity.getHours()
+                entity.getHours(),
+                entity.getId()
         ));
         return queryOperator.executeTransaction(parametrizedQueries);
     }

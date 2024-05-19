@@ -6,7 +6,7 @@ import com.epam.ofeitus.library.dao.*;
  * Factory, that provides dao's.
  */
 public interface DaoFactory {
-    SubjectDao getBookDao();
+    SubjectDao getSubjectDao();
 
     UserDao getUserDao();
 }

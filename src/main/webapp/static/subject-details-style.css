@@ -7,7 +7,7 @@
     box-shadow: 10px 10px 15px 0 rgba(0, 0, 0, 0.2);
 }
 
-.details-container .book-title {
+.details-container .subject-title {
     font-size: 36px;
     font-weight: 300;
 }
@@ -25,45 +25,41 @@
     object-fit: contain;
 }
 
-.details-container .book-data {
+.details-container .subject-data {
     font-size: 18px;
     width: 100%;
 }
 
-.edit-book-data-links {
+.edit-subject-data-links {
     display: flex;
-    height: 75px;
-    width: 55px;
-    flex-direction: column;
-    justify-content: space-between;
 }
 
-.details-container .book-data .form-container {
+.details-container .subject-data .form-container {
     margin-top: 20px;
 }
 
-.details-container .book-data .reservation-info {
+.details-container .subject-data .reservation-info {
     display: flex;
     justify-content: left;
     font-size: 20px;
     margin-bottom: 15px;
 }
 
-.details-container .book-data .reservation-info i {
+.details-container .subject-data .reservation-info i {
     margin: 6px;
 }
 
-.details-container .book-data .reservation-info a {
+.details-container .subject-data .reservation-info a {
     color: #5f5148;
     text-decoration: underline;
     font-weight: 600;
     transition: all 0.3s ease 0s;
 }
 
-.details-container .book-data td {
+.details-container .subject-data td {
     padding: 10px;
 }
 
-.details-container .book-data .book-field-name {
+.details-container .subject-data .subject-field-name {
     color: #888888;
 }

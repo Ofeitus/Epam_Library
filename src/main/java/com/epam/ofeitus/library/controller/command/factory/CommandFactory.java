@@ -14,6 +14,7 @@ public class CommandFactory {
     private static final CommandFactory instance = new CommandFactory();
 
     private static final Map<String, Command> commands = new HashMap<>() {{
+        put(CommandName.ADD_NEW_SUBJECT_COMMAND, new AddNewSubjectCommand());
         put(CommandName.DELETE_SUBJECT_COMMAND, new DeleteSubjectCommand());
         put(CommandName.DELETE_USER_COMMAND, new DeleteUserCommand());
         put(CommandName.EDIT_SUBJECT_COMMAND, new EditSubjectCommand());

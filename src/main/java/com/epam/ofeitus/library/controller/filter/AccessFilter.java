@@ -28,6 +28,7 @@ public class AccessFilter implements Filter {
         Filter.super.init(filterConfig);
 
         commandsAvailableToRoles.put(UserRole.ADMIN, Arrays.asList(
+                CommandName.ADD_NEW_SUBJECT_COMMAND,
                 CommandName.DELETE_SUBJECT_COMMAND,
                 CommandName.DELETE_USER_COMMAND,
                 CommandName.EDIT_SUBJECT_COMMAND,
@@ -48,7 +49,9 @@ public class AccessFilter implements Filter {
                 CommandName.SIGN_UP_COMMAND
         ));
         commandsAvailableToRoles.put(UserRole.MANAGER, Arrays.asList(
+                CommandName.ADD_NEW_SUBJECT_COMMAND,
                 CommandName.DELETE_SUBJECT_COMMAND,
+                CommandName.DELETE_USER_COMMAND,
                 CommandName.EDIT_SUBJECT_COMMAND,
                 CommandName.GOTO_403_PAGE_COMMAND,
                 CommandName.GOTO_404_PAGE_COMMAND,
@@ -61,20 +64,30 @@ public class AccessFilter implements Filter {
                 CommandName.GOTO_SIGN_UP_PAGE_COMMAND,
                 CommandName.LOG_IN_COMMAND,
                 CommandName.LOG_OUT_COMMAND,
+                CommandName.RESTORE_USER_COMMAND,
                 CommandName.SET_LOCALE_COMMAND,
+                CommandName.SET_ROLE_COMMAND,
                 CommandName.SIGN_UP_COMMAND
         ));
         commandsAvailableToRoles.put(UserRole.MEMBER, Arrays.asList(
+                CommandName.ADD_NEW_SUBJECT_COMMAND,
+                CommandName.DELETE_SUBJECT_COMMAND,
+                CommandName.DELETE_USER_COMMAND,
+                CommandName.EDIT_SUBJECT_COMMAND,
                 CommandName.GOTO_403_PAGE_COMMAND,
                 CommandName.GOTO_404_PAGE_COMMAND,
                 CommandName.GOTO_500_PAGE_COMMAND,
+                CommandName.GOTO_ADD_NEW_SUBJECT_PAGE_COMMAND,
                 CommandName.GOTO_SUBJECT_DETAILS_PAGE_COMMAND,
                 CommandName.GOTO_SUBJECTS_PAGE_COMMAND,
+                CommandName.GOTO_EDIT_SUBJECT_PAGE_COMMAND,
                 CommandName.GOTO_LOG_IN_PAGE_COMMAND,
                 CommandName.GOTO_SIGN_UP_PAGE_COMMAND,
                 CommandName.LOG_IN_COMMAND,
                 CommandName.LOG_OUT_COMMAND,
+                CommandName.RESTORE_USER_COMMAND,
                 CommandName.SET_LOCALE_COMMAND,
+                CommandName.SET_ROLE_COMMAND,
                 CommandName.SIGN_UP_COMMAND
         ));
         commandsAvailableToRoles.put(UserRole.GUEST, Arrays.asList(

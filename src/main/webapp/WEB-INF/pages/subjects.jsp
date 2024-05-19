@@ -18,8 +18,11 @@
         border-bottom: 3px solid #5f5148;
     }
 </style>
-<div class="table-container" style="margin-top: 0">
-    <h3>Дисциплины</h3>
+<div class="table-container" style="margin-top: 2rem">
+    <div style="display: flex; justify-content: space-between">
+        <h3>Дисциплины</h3>
+        <a style="padding-top: 5px; display: flex; align-items: center;" href="?${RequestParameter.COMMAND}=${CommandName.GOTO_ADD_NEW_SUBJECT_PAGE_COMMAND}"><i class="bi bi-plus" style="font-size: 40px;"></i>Добавить</a>
+    </div>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>

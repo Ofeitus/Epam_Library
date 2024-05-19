@@ -22,7 +22,7 @@ public class RowMapperFactory {
         return instance;
     }
 
-    public SubjectRowMapper getBookRowMapper() {
+    public SubjectRowMapper getSubjectRowMapper() {
         return subjectRowMapper;
     }
 

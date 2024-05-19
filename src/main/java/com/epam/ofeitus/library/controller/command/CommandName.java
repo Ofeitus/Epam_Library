@@ -4,6 +4,7 @@ package com.epam.ofeitus.library.controller.command;
  * Class with constants corresponding to command names
  */
 public class CommandName {
+    public static final String ADD_NEW_SUBJECT_COMMAND = "add-new-subject";
     public static final String DELETE_SUBJECT_COMMAND = "delete-subject";
     public static final String DELETE_USER_COMMAND = "delete-user";
     public static final String EDIT_SUBJECT_COMMAND = "edit-subject";

@@ -6,7 +6,7 @@ import com.epam.ofeitus.library.service.exception.ServiceException;
 import java.util.List;
 
 /**
- * Book service interface.
+ * Subject service interface.
  */
 public interface SubjectService {
 

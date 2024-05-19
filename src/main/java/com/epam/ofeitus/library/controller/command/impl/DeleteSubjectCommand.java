@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Command to delete book.
+ * Command to delete subject.
  */
 public class DeleteSubjectCommand implements Command {
     private final Logger logger = LogManager.getLogger(DeleteSubjectCommand.class);
@@ -26,7 +26,7 @@ public class DeleteSubjectCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        SubjectService subjectService = ServiceFactory.getInstance().getBookService();
+        SubjectService subjectService = ServiceFactory.getInstance().getSubjectService();
 
         int subjectId = Integer.parseInt(request.getParameter(RequestParameter.SUBJECT_ID));
 

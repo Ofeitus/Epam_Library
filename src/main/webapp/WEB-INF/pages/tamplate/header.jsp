@@ -8,7 +8,7 @@
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
 <fmt:setBundle basename="locale"/>
 <header class="header">
-    <a id="home-link">WebLib</a>
+    <a id="home-link">Subjects</a>
     <div class="navbar-container">
         <ul class="navbar-menu">
             <li class="navbar-item" id="catalog-page">

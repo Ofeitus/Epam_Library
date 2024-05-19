@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Book bean class.
+ * Subject bean class.
  */
 public class Subject implements Serializable {
     private int id;
@@ -64,7 +64,7 @@ public class Subject implements Serializable {
 
     @Override
     public String toString() {
-        return "Book{" +
+        return "Subject{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", hours=" + hours +

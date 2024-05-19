@@ -26,7 +26,7 @@ public class MySqlDaoFactory implements DaoFactory {
     }
 
     @Override
-    public SubjectDao getBookDao() {
+    public SubjectDao getSubjectDao() {
         return mySqlSubjectDao;
     }
 

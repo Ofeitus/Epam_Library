@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Command to go to add new book page.
+ * Command to go to add new subject page.
  */
 public class GoToAddNewSubjectPageCommand implements Command {
 

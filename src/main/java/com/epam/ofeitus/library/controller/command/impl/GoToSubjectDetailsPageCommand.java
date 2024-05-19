@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Command to go to book details page.
+ * Command to go to subject details page.
  */
 public class GoToSubjectDetailsPageCommand implements Command {
     private final Logger logger = LogManager.getLogger(GoToSubjectDetailsPageCommand.class);
@@ -30,7 +30,7 @@ public class GoToSubjectDetailsPageCommand implements Command {
         HttpSession session = request.getSession();
 
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
-        SubjectService subjectService = serviceFactory.getBookService();
+        SubjectService subjectService = serviceFactory.getSubjectService();
 
         int subjectId = Integer.parseInt(request.getParameter(RequestParameter.SUBJECT_ID));
 

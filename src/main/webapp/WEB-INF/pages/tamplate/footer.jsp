@@ -8,6 +8,6 @@
 <fmt:setLocale value="${sessionScope.locale != null ? sessionScope.locale : 'en'}"/>
 <fmt:setBundle basename="locale"/>
 <footer>
-    <label>2022 WebLib by Ofeitus</label>
-    <a id="home-link">WebLib</a>
+    <label>2024 Subjects by Dashkevich</label>
+    <a id="home-link">Subjects</a>
 </footer>

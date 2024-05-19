@@ -12,7 +12,7 @@ public class ServiceFactory {
     private static final ServiceFactory instance = new ServiceFactory();
 
     private static final UserService userService = new UserServiceImpl();
-    private static final SubjectService SUBJECT_SERVICE = new SubjectServiceImpl();
+    private static final SubjectService subjectService = new SubjectServiceImpl();
 
     private ServiceFactory() {
     }
@@ -30,7 +30,7 @@ public class ServiceFactory {
         return userService;
     }
 
-    public SubjectService getBookService() {
-        return SUBJECT_SERVICE;
+    public SubjectService getSubjectService() {
+        return subjectService;
     }
 }

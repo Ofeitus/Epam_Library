@@ -15,7 +15,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public boolean saveSubject(String name, int hours) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
-        SubjectDao subjectDao = daoFactory.getBookDao();
+        SubjectDao subjectDao = daoFactory.getSubjectDao();
 
         try {
             Subject subject = new Subject(name, hours);
@@ -28,7 +28,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public boolean updateSubject(int id, String name, int hours) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
-        SubjectDao subjectDao = daoFactory.getBookDao();
+        SubjectDao subjectDao = daoFactory.getSubjectDao();
 
         try {
             Subject subject = new Subject(id, name, hours);
@@ -40,7 +40,7 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public void deleteSubject(int id) throws ServiceException {
-        SubjectDao subjectDao = MySqlDaoFactory.getInstance().getBookDao();
+        SubjectDao subjectDao = MySqlDaoFactory.getInstance().getSubjectDao();
 
         try {
             subjectDao.deleteById(id);
@@ -52,7 +52,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public List<Subject> getAllSubjects() throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
-        SubjectDao subjectDao = daoFactory.getBookDao();
+        SubjectDao subjectDao = daoFactory.getSubjectDao();
 
         try {
             return subjectDao.findAll();
@@ -64,7 +64,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public Subject getSubjectById(int id) throws ServiceException {
         DaoFactory daoFactory = MySqlDaoFactory.getInstance();
-        SubjectDao subjectDao = daoFactory.getBookDao();
+        SubjectDao subjectDao = daoFactory.getSubjectDao();
 
         try {
             return subjectDao.findById(id);

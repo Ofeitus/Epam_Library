@@ -33,7 +33,7 @@ public class LogInCommand implements Command {
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         UserService userService = ServiceFactory.getInstance().getUserService();
-        SubjectService subjectService = ServiceFactory.getInstance().getBookService();
+        SubjectService subjectService = ServiceFactory.getInstance().getSubjectService();
 
         String email = request.getParameter(RequestParameter.EMAIL);
         String password = request.getParameter((RequestParameter.PASSWORD));

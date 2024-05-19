@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Command to go to edit book data page.
+ * Command to go to edit subject data page.
  */
 public class GoToEditSubjectPageCommand implements Command {
     private final Logger logger = LogManager.getLogger(GoToEditSubjectPageCommand.class);
@@ -28,7 +28,7 @@ public class GoToEditSubjectPageCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        SubjectService subjectService = ServiceFactory.getInstance().getBookService();
+        SubjectService subjectService = ServiceFactory.getInstance().getSubjectService();
 
         int subjectId = Integer.parseInt(request.getParameter(RequestParameter.SUBJECT_ID));
 

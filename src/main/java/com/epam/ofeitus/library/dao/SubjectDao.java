@@ -4,7 +4,7 @@ import com.epam.ofeitus.library.dao.exception.DaoException;
 import com.epam.ofeitus.library.entity.Subject;
 
 /**
- * Book dao interface.
+ * Subject dao interface.
  */
 public interface SubjectDao extends AbstractDao<Subject> {
 
